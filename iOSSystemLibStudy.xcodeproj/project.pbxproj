@@ -13,6 +13,7 @@
 		5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568D215A8D4B00E26E01 /* Assets.xcassets */; };
 		5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568F215A8D4B00E26E01 /* LaunchScreen.storyboard */; };
 		5FCD5694215A8D4B00E26E01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5693215A8D4B00E26E01 /* main.m */; };
+		5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD569C215DB37800E26E01 /* ImageIOViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,9 @@
 		5FCD5690215A8D4B00E26E01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FCD5692215A8D4B00E26E01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FCD5693215A8D4B00E26E01 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5FCD569B215DB37800E26E01 /* ImageIOViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOViewController.h; sourceTree = "<group>"; };
+		5FCD569C215DB37800E26E01 /* ImageIOViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageIOViewController.m; sourceTree = "<group>"; };
+		5FCD569E215DB6E600E26E01 /* ImageIOHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOHeader.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,7 @@
 		5FCD5683215A8D4800E26E01 /* iOSSystemLibStudy */ = {
 			isa = PBXGroup;
 			children = (
+				5FCD569A215DAD0500E26E01 /* ImageIO */,
 				5FCD5684215A8D4800E26E01 /* AppDelegate.h */,
 				5FCD5685215A8D4800E26E01 /* AppDelegate.m */,
 				5FCD5687215A8D4800E26E01 /* ViewController.h */,
@@ -69,6 +74,16 @@
 				5FCD5693215A8D4B00E26E01 /* main.m */,
 			);
 			path = iOSSystemLibStudy;
+			sourceTree = "<group>";
+		};
+		5FCD569A215DAD0500E26E01 /* ImageIO */ = {
+			isa = PBXGroup;
+			children = (
+				5FCD569B215DB37800E26E01 /* ImageIOViewController.h */,
+				5FCD569C215DB37800E26E01 /* ImageIOViewController.m */,
+				5FCD569E215DB6E600E26E01 /* ImageIOHeader.h */,
+			);
+			path = ImageIO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -141,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
