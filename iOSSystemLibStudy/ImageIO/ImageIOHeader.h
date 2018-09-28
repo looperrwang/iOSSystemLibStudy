@@ -18,4 +18,9 @@
  CGImageDestination -
  */
 
+//https://www.jianshu.com/u/b3f97f005731
+//http://blog.leichunfeng.com/blog/2017/02/20/talking-about-the-decompression-of-the-image-in-ios/
+//https://my.oschina.net/u/2340880?tab=newest&catalogId=3294042
+//https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/ImageIOGuide/imageio_intro/ikpg_intro.html#//apple_ref/doc/uid/TP40005462-CH201-TPXREF101
+
 #endif /* ImageIOHeader_h */
