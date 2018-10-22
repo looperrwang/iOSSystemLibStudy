@@ -10,6 +10,10 @@
 
 @interface ImageIOViewController ()
 
+@property (nonatomic, strong) NSMutableArray *supportTypes;
+
+@property (nonatomic, strong) UITableView *tableView;
+
 @end
 
 @implementation ImageIOViewController
@@ -21,13 +25,22 @@
     self.title = @"ImageIO";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    CFArrayRef arrayRef = CGImageSourceCopyTypeIdentifiers();
-    CFIndex count = CFArrayGetCount(arrayRef);
+    self.supportTypes = [NSMutableArray new];
+    
+    CFArrayRef supportTypes = CGImageSourceCopyTypeIdentifiers();
+    CFIndex count = CFArrayGetCount(supportTypes);
     for (CFIndex index = 0; index < count; index++) {
-        const void *value = CFArrayGetValueAtIndex(arrayRef, index);
-        CFStringRef stringRef = (CFStringRef)value;
-        const char *c_str = CFStringGetCStringPtr(stringRef, kCFStringEncodingUTF8);
-        printf("%s\n", c_str);
+        const void *type = CFArrayGetValueAtIndex(supportTypes, index);
+        if (type != NULL) {
+            CFStringRef stringRef = (CFStringRef)type;
+            const char *c_str = CFStringGetCStringPtr(stringRef, kCFStringEncodingUTF8);
+            if (c_str != NULL) {
+                NSString *string = [NSString stringWithUTF8String:c_str];
+                [self.supportTypes addObject:string];
+            }
+        } else {
+            assert(0);
+        }
     }
 }
 
