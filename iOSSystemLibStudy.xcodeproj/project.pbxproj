@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F0B7B41217F5AAA008D28D1 /* ImageIOTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B7B40217F5AAA008D28D1 /* ImageIOTypeViewController.m */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
 		5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568A215A8D4800E26E01 /* Main.storyboard */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F0B7B3F217F5AAA008D28D1 /* ImageIOTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOTypeViewController.h; sourceTree = "<group>"; };
+		5F0B7B40217F5AAA008D28D1 /* ImageIOTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageIOTypeViewController.m; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCD5684215A8D4800E26E01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5FCD5685215A8D4800E26E01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -82,6 +85,8 @@
 				5FCD569B215DB37800E26E01 /* ImageIOViewController.h */,
 				5FCD569C215DB37800E26E01 /* ImageIOViewController.m */,
 				5FCD569E215DB6E600E26E01 /* ImageIOHeader.h */,
+				5F0B7B3F217F5AAA008D28D1 /* ImageIOTypeViewController.h */,
+				5F0B7B40217F5AAA008D28D1 /* ImageIOTypeViewController.m */,
 			);
 			path = ImageIO;
 			sourceTree = "<group>";
@@ -160,6 +165,7 @@
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
+				5F0B7B41217F5AAA008D28D1 /* ImageIOTypeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
