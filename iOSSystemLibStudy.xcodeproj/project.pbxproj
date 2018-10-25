@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F0B7B41217F5AAA008D28D1 /* ImageIOTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0B7B40217F5AAA008D28D1 /* ImageIOTypeViewController.m */; };
+		5F0B7B6621800584008D28D1 /* resource in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B7B6521800584008D28D1 /* resource */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
 		5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568A215A8D4800E26E01 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		5F0B7B3F217F5AAA008D28D1 /* ImageIOTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOTypeViewController.h; sourceTree = "<group>"; };
 		5F0B7B40217F5AAA008D28D1 /* ImageIOTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageIOTypeViewController.m; sourceTree = "<group>"; };
+		5F0B7B6521800584008D28D1 /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCD5684215A8D4800E26E01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5FCD5685215A8D4800E26E01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -49,6 +51,7 @@
 		5FCD5678215A8D4800E26E01 = {
 			isa = PBXGroup;
 			children = (
+				5F0B7B6521800584008D28D1 /* resource */,
 				5FCD5683215A8D4800E26E01 /* iOSSystemLibStudy */,
 				5FCD5682215A8D4800E26E01 /* Products */,
 			);
@@ -148,6 +151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,

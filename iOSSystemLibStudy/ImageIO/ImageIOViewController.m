@@ -44,6 +44,7 @@
 
 - (void)initSupportTypes
 {
+    //ImageIO支持的所有类型
     CFArrayRef supportTypes = CGImageSourceCopyTypeIdentifiers();
     CFIndex count = CFArrayGetCount(supportTypes);
     for (CFIndex index = 0; index < count; index++) {
@@ -110,49 +111,6 @@
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-}
-
-
-
-
-
-
-
-
-- (NSArray<UIImage *> *)imagesWithFilePath:(NSString *)filePath
-{
-    if (filePath.length == 0)
-        return nil;
-    
-    NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:NO];
-    if (!url)
-        return nil;
-    
-    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-    if (!imageSourceRef)
-        return nil;
-    
-    NSMutableArray<UIImage *> *array = [NSMutableArray<UIImage *> new];
-    
-    size_t imageCount = CGImageSourceGetCount(imageSourceRef);
-    for (size_t index = 0; index < imageCount; index++) {
-        CGImageRef imageRef = CGImageSourceCreateImageAtIndex(imageSourceRef, index, NULL);
-        if (!imageRef)
-            continue;
-        
-        UIImage *image = [UIImage imageWithCGImage:imageRef];
-        if (!image) {
-            CGImageRelease(imageRef);
-            continue;
-        }
-        
-        [array addObject:image];
-        CGImageRelease(imageRef);
-    }
-    
-    CFRelease(imageSourceRef);
-    
-    return [NSArray<UIImage *> arrayWithArray:array];
 }
 
 @end
