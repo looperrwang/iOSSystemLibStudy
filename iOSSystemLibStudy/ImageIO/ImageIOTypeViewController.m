@@ -80,9 +80,10 @@
             CFDictionaryAddValue(options, key3, (const void *)value3);
         }
         
-        CFDictionaryRef properties = CGImageSourceCopyProperties(self.isrc, options);
+        //CFDictionaryRef properties = CGImageSourceCopyProperties(self.isrc, options);
+        CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(self.isrc, 0, options);
         if (properties) {
-            [self printCFDictionaryRef:properties];
+            [self printCGImageProperties:properties];
             CFRelease(properties);
         }
         
@@ -92,10 +93,11 @@
     }
 }
 
-- (void)printCFDictionaryRef:(CFDictionaryRef)dic
+- (void)printCGImageProperties:(CFDictionaryRef)dic
 {
     CFIndex count = CFDictionaryGetCount(dic);
     if (count > 0) {
+        /*
         void **keys = calloc(count, sizeof(void *));
         void **values = calloc(count, sizeof(void *));
         CFDictionaryGetKeysAndValues(dic, (const void **)keys, (const void **)values);
@@ -103,9 +105,478 @@
         for (size_t index = 0; index < count; index++) {
             const void *key = keys[index];
             const void *value = values[index];
-            printf("");
+        }*/
+        
+        //CGImageSourceCopyProperties
+        Boolean isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyFileSize);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyFileSize);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyFileSize : %ld\n", num.longValue);
+            }
+        }
+        
+        //CGImageSourceCopyPropertiesAtIndex
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyPixelHeight);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyPixelHeight);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyPixelHeight : %ld\n", num.longValue);
+            }
+        }
+        
+        //CGImageSourceCopyPropertiesAtIndex
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyPixelWidth);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyPixelWidth);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyPixelWidth : %ld\n", num.longValue);
+            }
+        }
+        
+        //CGImageSourceCopyPropertiesAtIndex
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyDPIHeight);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyDPIHeight);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyDPIHeight : %f\n", num.floatValue);
+            }
+        }
+        
+        //CGImageSourceCopyPropertiesAtIndex
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyDPIWidth);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyDPIWidth);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyDPIWidth : %f\n", num.floatValue);
+            }
+        }
+        
+        //CGImageSourceCopyPropertiesAtIndex
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyDepth);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyDepth);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyDepth : %ld\n", num.longValue); //8
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyOrientation);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyOrientation);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyOrientation : %ld\n", num.longValue); //8
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyIsFloat);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyIsFloat);
+            if (value) {
+                CFNumberRef numRef = (CFNumberRef)value;
+                NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+                printf("    - CGImageSource Properties kCGImagePropertyIsFloat : %ld\n", num.longValue); //8
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyIsIndexed);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyIsIndexed);
+            if (value) {
+                CFBooleanRef booleanRef = (CFBooleanRef)value;
+                printf("    - CGImageSource Properties kCGImagePropertyIsIndexed : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyHasAlpha);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyHasAlpha);
+            if (value) {
+                CFBooleanRef booleanRef = (CFBooleanRef)value;
+                printf("    - CGImageSource Properties kCGImagePropertyHasAlpha : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyColorModel);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyColorModel);
+            if (value) {
+                CFStringRef strRef = (CFStringRef)value;
+                const char *str = CFStringGetCStringPtr(strRef, kCFStringEncodingUTF8);
+                //NSString *string = (__bridge_transfer NSString *)strRef;
+                printf("    - CGImageSource Properties kCGImagePropertyColorModel : %s\n", str == NULL ? "" : str);
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyProfileName);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyProfileName);
+            if (value) {
+                CFStringRef strRef = (CFStringRef)value;
+                const char *str = CFStringGetCStringPtr(strRef, kCFStringEncodingUTF8);
+                printf("    - CGImageSource Properties kCGImagePropertyProfileName : %s\n", str == NULL ? "" : str);
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyPrimaryImage);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyPrimaryImage);
+            if (value) {
+                CFBooleanRef booleanRef = (CFBooleanRef)value;
+                printf("    - CGImageSource Properties kCGImagePropertyPrimaryImage : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
+            }
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyTIFFDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyTIFFDictionary);
+            //TIFF
+            [self printCGImagePropertyTIFFDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyGIFDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyGIFDictionary);
+            //GIF
+            [self printCGImagePropertyGIFDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyJFIFDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyJFIFDictionary);
+            //JFIF
+            [self printCGImagePropertyJFIFDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyExifDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyExifDictionary);
+            //Exif
+            [self printCGImagePropertyExifDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyPNGDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyPNGDictionary);
+            //PNG
+            [self printCGImagePropertyPNGDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyIPTCDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyIPTCDictionary);
+            //IPTC
+            [self printCGImagePropertyIPTCDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyGPSDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyGPSDictionary);
+            //GPS
+            [self printCGImagePropertyGPSDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyRawDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyRawDictionary);
+            //RAW
+            [self printCGImagePropertyRawDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyCIFFDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyCIFFDictionary);
+            //CIFF
+            [self printCGImagePropertyCIFFDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerCanonDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerCanonDictionary);
+            //MakerCanon
+            [self printCGImagePropertyMakerCanonDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerNikonDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerNikonDictionary);
+            //MakerNikon
+            [self printCGImagePropertyMakerNikonDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerMinoltaDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerMinoltaDictionary);
+            //MakerMinolta
+            [self printCGImagePropertyMakerMinoltaDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerFujiDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerFujiDictionary);
+            //MakerFuji
+            [self printCGImagePropertyMakerFujiDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerOlympusDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerOlympusDictionary);
+            //MakerOlympus
+            [self printCGImagePropertyMakerOlympusDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerPentaxDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerPentaxDictionary);
+            //MakerPentax
+            [self printCGImagePropertyMakerPentaxDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImageProperty8BIMDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImageProperty8BIMDictionary);
+            //8BIM
+            [self printCGImageProperty8BIMDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyDNGDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyDNGDictionary);
+            //DNG
+            [self printCGImagePropertyDNGDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyExifAuxDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyExifAuxDictionary);
+            //ExifAux
+            [self printCGImagePropertyExifAuxDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyOpenEXRDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyOpenEXRDictionary);
+            //OpenEXR
+            [self printCGImagePropertyOpenEXRDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyMakerAppleDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyMakerAppleDictionary);
+            //MakerApple
+            [self printCGImagePropertyMakerAppleDictionary:(CFDictionaryRef)value];
+        }
+        
+        isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyFileContentsDictionary);
+        if (isContains) {
+            const void *value = CFDictionaryGetValue(dic, (const void *)kCGImagePropertyFileContentsDictionary);
+            //Contents
+            [self printCGImagePropertyFileContentsDictionary:(CFDictionaryRef)value];
         }
     }
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyTIFFDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyGIFDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyJFIFDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyExifDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyPNGDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyIPTCDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyGPSDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyRawDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyCIFFDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerCanonDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerNikonDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerMinoltaDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerFujiDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerOlympusDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerPentaxDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImageProperty8BIMDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyDNGDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyExifAuxDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyOpenEXRDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyMakerAppleDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
+}
+
+//CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
+- (void)printCGImagePropertyFileContentsDictionary:(CFDictionaryRef)dic
+{
+    if (!dic)
+        return;
+    
+    
 }
 
 - (NSString *)filePath
