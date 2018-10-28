@@ -20,8 +20,29 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self studyCGImageSource];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    if (_isrc) {
+        CFRelease(_isrc);
+    }
+    _isrc = NULL;
+}
+
+#pragma mark - CGImageSource
+
+- (void)studyCGImageSource
+{
     CFTypeID typeId = CGImageSourceGetTypeID();
-    printf("CGImageSource CFTypeID : %zd\n", typeId); //305
+    printf("%s : \n", self.type == NULL ? "" : self.type.UTF8String);
+    printf("    - CGImageSource CGImageSourceGetTypeID : %zd\n", typeId); //305
     
     _isrc = NULL;
     
@@ -29,16 +50,62 @@
         CFStringRef typeIdentifier = CGImageSourceGetType(self.isrc);
         const char *cType = CFStringGetCStringPtr(typeIdentifier, kCFStringEncodingUTF8);
         if (cType) {
-            printf("CGImageSource typeIdentifier : %s\n", cType); //public.jpeg/public.png/com.compuserve.gif
+            printf("    - CGImageSource CGImageSourceGetType : %s\n", cType); //public.jpeg/public.png/com.compuserve.gif
         }
         
+        size_t count = CGImageSourceGetCount(self.isrc);
+        printf("    - CGImageSource CGImageSourceGetCount : %zd\n", count);
         
+        /* CGImageSourceCopyPropertiesAtIndex/CGImageSourceCreateImageAtIndex调用时，可用的选项keys有:
+         * kCGImageSourceShouldCache - 指定是否解码image并缓存解码之后的image。
+         * kCGImageSourceShouldCacheImmediately - 指定解码并缓存image的时机，kCFBooleanFalse表示渲染时，kCFBooleanTrue表示创建该image时。
+         * kCGImageSourceShouldAllowFloat - 如果文件格式支持，是否将image作为浮点CGImageRef返回，对于扩展了范围的浮点CGImageRef可能需要额外的处理，渲染出来的结果才能令人满意。
+         */
+        CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 0, NULL, NULL);
+        const void *key1 = (const void *)kCGImageSourceShouldCache;
+        CFBooleanRef value1 = kCFBooleanTrue; //kCFBooleanFalse
+        if (key1 && value1) {
+            CFDictionaryAddValue(options, key1, (const void *)value1);
+        }
+        
+        const void *key2 = (const void *)kCGImageSourceShouldCacheImmediately;
+        CFBooleanRef value2 = kCFBooleanTrue;
+        if (key2 && value2) {
+            CFDictionaryAddValue(options, key2, (const void *)value2);
+        }
+        
+        const void *key3 = (const void *)kCGImageSourceShouldAllowFloat;
+        CFBooleanRef value3 = kCFBooleanTrue;
+        if (key3 && value3) {
+            CFDictionaryAddValue(options, key3, (const void *)value3);
+        }
+        
+        CFDictionaryRef properties = CGImageSourceCopyProperties(self.isrc, options);
+        if (properties) {
+            [self printCFDictionaryRef:properties];
+            CFRelease(properties);
+        }
+        
+        if (options) {
+            CFRelease(options);
+        }
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)printCFDictionaryRef:(CFDictionaryRef)dic
+{
+    CFIndex count = CFDictionaryGetCount(dic);
+    if (count > 0) {
+        void **keys = calloc(count, sizeof(void *));
+        void **values = calloc(count, sizeof(void *));
+        CFDictionaryGetKeysAndValues(dic, (const void **)keys, (const void **)values);
+        
+        for (size_t index = 0; index < count; index++) {
+            const void *key = keys[index];
+            const void *value = values[index];
+            printf("");
+        }
+    }
 }
 
 - (NSString *)filePath
@@ -68,20 +135,20 @@
     /* CGImageSourceCreateWithDataProvider/CGImageSourceCreateWithData/CGImageSourceCreateWithURL调用时，可用的选项keys有:
      * kCGImageSourceTypeIdentifierHint - 创建CGImageSourceRef时，需要知道文件的格式，这个格式由一个叫做type identifier（public.jpeg、public.png、com.compuserve.gif类似这种，更多见"UTType.h"文件）的东西指定，这个key对应的value说明对文件type identifier的一个大致推测。
      */
-    CFMutableDictionaryRef dicRef = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
     const void *key = (const void *)kCGImageSourceTypeIdentifierHint;
     CFStringRef stringRef = CFStringCreateWithCString(NULL, self.type.UTF8String, kCFStringEncodingUTF8);
     const void *value = (const void *)stringRef;
     if (key && value) {
-        CFDictionaryAddValue(dicRef, key, value);
+        CFDictionaryAddValue(options, key, value);
     }
     
-    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, dicRef);
+    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, options);
     if (stringRef) {
         CFRelease(stringRef);
     }
-    if (dicRef) {
-        CFRelease(dicRef);
+    if (options) {
+        CFRelease(options);
     }
     
     return imageSourceRef;
@@ -111,12 +178,6 @@
     NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:NO];
     if (!url)
         return nil;
-    
-    /* CGImageSourceCopyPropertiesAtIndex/CGImageSourceCreateImageAtIndex调用时，可用的选项keys有:
-     * kCGImageSourceShouldCache - 指定是否解码image并缓存解码之后的image。
-     * kCGImageSourceShouldCacheImmediately - 指定解码并缓存image的时机，kCFBooleanFalse表示渲染时，kCFBooleanTrue表示创建该image时。
-     * kCGImageSourceShouldAllowFloat - 如果文件格式支持，是否将image作为浮点CGImageRef返回，对于扩展了范围的浮点CGImageRef可能需要额外的处理，渲染出来的结果才能令人满意。
-     */
     
     /* CGImageSourceCreateThumbnailAtIndex调用时，可用的选项keys有:
      * kCGImageSourceCreateThumbnailFromImageIfAbsent - 如果image源文件中不存在缩略图的话，指定是否自动生成一个缩略图，如果为kCFBooleanTrue，缩略图将会由原始image生成，其大小由kCGImageSourceThumbnailMaxPixelSize对应的值指定，若没有指定kCGImageSourceThumbnailMaxPixelSize的话，缩略图的小小与原始image大小一致。
@@ -150,14 +211,6 @@
     CFRelease(imageSourceRef);
     
     return [NSArray<UIImage *> arrayWithArray:array];
-}
-
-- (void)dealloc
-{
-    if (_isrc) {
-        CFRelease(_isrc);
-    }
-    _isrc = NULL;
 }
 
 @end
