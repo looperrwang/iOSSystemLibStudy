@@ -485,6 +485,35 @@
         return;
     
     printf("    CGImagePropertyGIFDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFLoopCount];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFDelayTime];
+    if (value) {
+        CFNumberRef numRef = (CFNumberRef)value;
+        NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+        printf("        - CGImageSource Properties kCGImagePropertyGIFDelayTime : %f\n", num.doubleValue);
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFImageColorMap];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFHasGlobalColorMap];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFUnclampedDelayTime];
+    if (value) {
+        CFNumberRef numRef = (CFNumberRef)value;
+        NSNumber *num = (__bridge_transfer NSNumber *)numRef;
+        printf("        - CGImageSource Properties kCGImagePropertyGIFUnclampedDelayTime : %f\n", num.doubleValue);
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -900,6 +929,86 @@
         return;
     
     printf("    CGImagePropertyPNGDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGGamma];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGInterlaceType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGXPixelsPerMeter];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGYPixelsPerMeter];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGsRGBIntent];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGChromaticities];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGAuthor];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGCopyright];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGCreationTime];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGModificationTime];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGSoftware];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGTitle];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAPNGLoopCount];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAPNGDelayTime];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAPNGUnclampedDelayTime];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1017,6 +1126,51 @@
         return;
     
     printf("    CGImagePropertyExifAuxDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxLensInfo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxLensModel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxLensID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxLensSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxImageNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxFlashCompensation];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxOwnerName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyExifAuxFirmware];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
