@@ -409,6 +409,7 @@
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyTIFFOrientation];
     if (value) {
+        //枚举CGImagePropertyOrientation
         printf("        - \n");
     }
     
@@ -526,19 +527,19 @@
     
     const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyJFIFVersion];
     if (value) {
-//        CFArrayRef arrayRef = (CFArrayRef)value;
-//        NSArray *array = (__bridge NSArray *)arrayRef;
-//        printf("    - CGImageSource Properties kCGImagePropertyJFIFVersion : ");
-//        int count = (int)array.count;
-//        for (int index = 0; index < count; index++) {
-//            NSNumber *num = array[index];
-//            if (index != count - 1) {
-//                printf("%d.", num.intValue);
-//            } else {
-//                printf("%d", num.intValue);
-//            }
-//        }
-//        printf("\n");
+        CFArrayRef arrayRef = (CFArrayRef)value;
+        NSArray *array = (__bridge NSArray *)arrayRef;
+        printf("    - CGImageSource Properties kCGImagePropertyJFIFVersion : ");
+        int count = (int)array.count;
+        for (int index = 0; index < count; index++) {
+            NSNumber *num = array[index];
+            if (index != count - 1) {
+                printf("%d.", num.intValue);
+            } else {
+                printf("%d", num.intValue);
+            }
+        }
+        printf("\n");
     }
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyJFIFXDensity];
@@ -1235,196 +1236,990 @@
         printf("        - \n");
     }
     
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCCaptionAbstract  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCWriterEditor  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCImageType  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCImageOrientation  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCLanguageIdentifier  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCStarRating  IMAGEIO_AVAILABLE_STARTING(10.4, 4.0);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCCreatorContactInfo  IMAGEIO_AVAILABLE_STARTING(10.6, 4.0);  // IPTC Core
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCRightsUsageTerms  IMAGEIO_AVAILABLE_STARTING(10.6, 4.0);    // IPTC Core
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCScene  IMAGEIO_AVAILABLE_STARTING(10.6, 4.0);               // IPTC Core
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCCaptionAbstract];
+    if (value) {
+        printf("        - \n");
+    }
     
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAboutCvTerm  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAboutCvTermCvId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAboutCvTermId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAboutCvTermName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAboutCvTermRefinedAbout  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAddlModelInfo  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkOrObject  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCircaDateCreated  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkContentDescription  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkContributionDescription  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCopyrightNotice  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCreator  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCreatorID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCopyrightOwnerID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkCopyrightOwnerName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkLicensorID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkLicensorName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkDateCreated  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkPhysicalDescription  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkSource  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkSourceInventoryNo  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkSourceInvURL  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkStylePeriod  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtArtworkTitle  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAudioBitrate  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAudioBitrateMode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtAudioChannelCount  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCircaDateCreated  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContainerFormat  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContainerFormatIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContainerFormatName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContributor  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContributorIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContributorName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtContributorRole  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCopyrightYear  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCreator  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCreatorIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCreatorName     IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtCreatorRole  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtControlledVocabularyTerm  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreen  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegion  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionD  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionH  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionText  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionUnit  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionW  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionX  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDataOnScreenRegionY  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDigitalImageGUID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDigitalSourceFileType  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDigitalSourceType  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDopesheet  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDopesheetLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDopesheetLinkLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEmbdEncRightsExpr  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEmbeddedEncodedRightsExpr  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprType  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprLangID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEpisode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEpisodeIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEpisodeName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEpisodeNumber  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtEvent  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtShownEvent  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtShownEventIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtShownEventName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtExternalMetadataLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtFeedIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtGenre  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtGenreCvId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtGenreCvTermId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtGenreCvTermName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtGenreCvTermRefinedAbout  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtHeadline  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtIPTCLastEdited  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLinkedEncRightsExpr  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLinkedEncodedRightsExpr  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLinkedEncodedRightsExprType  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationCreated  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationCity  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationCountryCode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationCountryName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationGPSAltitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationGPSLatitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationGPSLongitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationLocationId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationLocationName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationProvinceState  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationSublocation  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationWorldRegion  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtLocationShown  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtMaxAvailHeight  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtMaxAvailWidth  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtModelAge  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtOrganisationInImageCode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtOrganisationInImageName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonHeard  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonHeardIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonHeardName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImage  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageWDetails  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageCharacteristic  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageCvTermCvId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageCvTermId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageCvTermName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageDescription  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPersonInImageName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtProductInImage  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtProductInImageDescription  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtProductInImageGTIN  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtProductInImageName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPublicationEvent  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPublicationEventDate  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPublicationEventIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtPublicationEventName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRating  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRatingRegion  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionCity  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionCountryCode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionCountryName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionGPSAltitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionGPSLatitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionGPSLongitude  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionLocationId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionLocationName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionProvinceState  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionSublocation  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingRegionWorldRegion  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingScaleMaxValue  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingScaleMinValue  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingSourceLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingValue  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRatingValueLogoLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRegistryID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRegistryEntryRole  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRegistryItemID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtRegistryOrganisationID  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtReleaseReady  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeason  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeasonIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeasonName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeasonNumber  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeries  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeriesIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSeriesName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtStorylineIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtStreamReady  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtStylePeriod  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSupplyChainSource  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSupplyChainSourceIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtSupplyChainSourceName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTemporalCoverage  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTemporalCoverageFrom  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTemporalCoverageTo  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTranscript  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTranscriptLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTranscriptLinkLink  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtTranscriptLinkLinkQualifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoBitrate  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoBitrateMode  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoDisplayAspectRatio  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoEncodingProfile  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoShotType  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoShotTypeIdentifier  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoShotTypeName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVideoStreamsCount  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtVisualColor  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtWorkflowTag  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtWorkflowTagCvId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtWorkflowTagCvTermId  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtWorkflowTagCvTermName  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
-    IMAGEIO_EXTERN const CFStringRef kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout  IMAGEIO_AVAILABLE_STARTING(10.13.4, 11.3);
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCWriterEditor];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCImageType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCImageOrientation];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCLanguageIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCStarRating];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCCreatorContactInfo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCRightsUsageTerms];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCScene];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAboutCvTerm];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAboutCvTermCvId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAboutCvTermId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAboutCvTermName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAboutCvTermRefinedAbout];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAddlModelInfo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkOrObject];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCircaDateCreated];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkContentDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkContributionDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCopyrightNotice];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCreator];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCreatorID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCopyrightOwnerID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkCopyrightOwnerName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkLicensorID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkLicensorName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkDateCreated];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkPhysicalDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkSource];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkSourceInventoryNo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkSourceInvURL];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkStylePeriod];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtArtworkTitle];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAudioBitrate];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAudioBitrateMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtAudioChannelCount];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCircaDateCreated];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContainerFormat];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContainerFormatIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContainerFormatName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContributor];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContributorIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContributorName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtContributorRole];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCopyrightYear];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCreator];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCreatorIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCreatorName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtCreatorRole];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtControlledVocabularyTerm];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreen];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionD];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionH];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionText];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionUnit];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionW];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionX];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDataOnScreenRegionY];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDigitalImageGUID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDigitalSourceFileType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDigitalSourceType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDopesheet];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDopesheetLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDopesheetLinkLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtDopesheetLinkLinkQualifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEmbdEncRightsExpr];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEmbeddedEncodedRightsExpr];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEmbeddedEncodedRightsExprLangID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEpisode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEpisodeIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEpisodeName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEpisodeNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtEvent];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtShownEvent];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtShownEventIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtShownEventName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtExternalMetadataLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtFeedIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtGenre];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtGenreCvId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtGenreCvTermId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtGenreCvTermName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtGenreCvTermRefinedAbout];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtHeadline];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtIPTCLastEdited];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLinkedEncRightsExpr];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLinkedEncodedRightsExpr];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLinkedEncodedRightsExprType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLinkedEncodedRightsExprLangID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationCreated];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationCity];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationCountryCode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationCountryName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationGPSAltitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationGPSLatitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationGPSLongitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationLocationId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationLocationName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationProvinceState];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationSublocation];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationWorldRegion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtLocationShown];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtMaxAvailHeight];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtMaxAvailWidth];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtModelAge];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtOrganisationInImageCode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtOrganisationInImageName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonHeard];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonHeardIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonHeardName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImage];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageWDetails];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageCharacteristic];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageCvTermCvId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageCvTermId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageCvTermName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageCvTermRefinedAbout];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPersonInImageName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtProductInImage];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtProductInImageDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtProductInImageGTIN];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtProductInImageName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPublicationEvent];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPublicationEventDate];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPublicationEventIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtPublicationEventName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRating];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRatingRegion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionCity];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionCountryCode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionCountryName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionGPSAltitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionGPSLatitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionGPSLongitude];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionLocationId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionLocationName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionProvinceState];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionSublocation];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingRegionWorldRegion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingScaleMaxValue];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingScaleMinValue];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingSourceLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingValue];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRatingValueLogoLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRegistryID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRegistryEntryRole];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRegistryItemID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtRegistryOrganisationID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtReleaseReady];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeason];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeasonIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeasonName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeasonNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeries];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeriesIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSeriesName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtStorylineIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtStreamReady];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtStylePeriod];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSupplyChainSource];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSupplyChainSourceIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtSupplyChainSourceName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTemporalCoverage];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTemporalCoverageFrom];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTemporalCoverageTo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTranscript];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTranscriptLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTranscriptLinkLink];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtTranscriptLinkLinkQualifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoBitrate];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoBitrateMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoDisplayAspectRatio];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoEncodingProfile];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoShotType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoShotTypeIdentifier];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoShotTypeName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVideoStreamsCount];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtVisualColor];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtWorkflowTag];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtWorkflowTagCvId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtWorkflowTagCvTermId];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtWorkflowTagCvTermName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCExtWorkflowTagCvTermRefinedAbout];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoCity];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoCountry];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoAddress];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoPostalCode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoStateProvince];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoEmails];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoPhones];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyIPTCContactInfoWebURLs];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1612,6 +2407,111 @@
         return;
     
     printf("    CGImagePropertyCIFFDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFDescription];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFFirmware];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFOwnerName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFImageName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFImageFileName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFReleaseMethod];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFReleaseTiming];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFRecordID];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFSelfTimingTime];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFCameraSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFImageSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFContinuousDrive];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFFocusMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFMeteringMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFShootingMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFLensModel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFLensMaxMM];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFLensMinMM];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFWhiteBalanceIndex];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFFlashExposureComp];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyCIFFMeasuredEV];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1621,6 +2521,46 @@
         return;
     
     printf("    CGImagePropertyMakerCanonDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonOwnerName];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonCameraSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonImageSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonFlashExposureComp];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonContinuousDrive];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonLensModel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonFirmware];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerCanonAspectRatioInfo];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1630,6 +2570,96 @@
         return;
     
     printf("    CGImagePropertyMakerNikonDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonISOSetting];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonColorMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonQuality];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonWhiteBalanceMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonSharpenMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonFocusMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonFlashSetting];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonISOSelection];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonFlashExposureComp];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonImageAdjustment];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonLensAdapter];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonLensType];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonLensInfo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonFocusDistance];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonDigitalZoom];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonShootingMode];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonCameraSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyMakerNikonShutterCount];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1675,6 +2705,16 @@
         return;
     
     printf("    CGImageProperty8BIMDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImageProperty8BIMLayerNames];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImageProperty8BIMVersion];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1684,6 +2724,136 @@
         return;
     
     printf("    CGImagePropertyDNGDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGVersion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGBackwardVersion];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGUniqueCameraModel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGLocalizedCameraModel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCameraSerialNumber];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGLensInfo];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGBlackLevel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGWhiteLevel];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCalibrationIlluminant1];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCalibrationIlluminant2];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGColorMatrix1];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGColorMatrix2];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCameraCalibration1];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCameraCalibration2];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGAsShotNeutral];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGAsShotWhiteXY];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGBaselineExposure];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGBaselineNoise];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGBaselineSharpness];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGPrivateData];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGCameraCalibrationSignature];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGProfileCalibrationSignature];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGNoiseProfile];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGWarpRectilinear];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGWarpFisheye];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyDNGFixVignetteRadial];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
@@ -1747,6 +2917,11 @@
         return;
     
     printf("    CGImagePropertyOpenEXRDictionary\n");
+    
+    const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyOpenEXRAspectRatio];
+    if (value) {
+        printf("        - \n");
+    }
 }
 
 //CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex
