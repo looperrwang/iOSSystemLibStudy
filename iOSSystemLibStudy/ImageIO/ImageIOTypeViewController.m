@@ -489,7 +489,9 @@
     
     const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFLoopCount];
     if (value) {
-        printf("        - \n");
+        CFNumberRef numRef = (CFNumberRef)value;
+        NSNumber *num = (__bridge NSNumber *)numRef;
+        printf("        - CGImageSource Properties kCGImagePropertyGIFLoopCount : %d\n", num.intValue);
     }
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFDelayTime];
@@ -506,7 +508,9 @@
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFHasGlobalColorMap];
     if (value) {
-        printf("        - \n");
+        CFNumberRef numRef = (CFNumberRef)value;
+        NSNumber *num = (__bridge NSNumber *)numRef;
+        printf("        - CGImageSource Properties kCGImagePropertyGIFHasGlobalColorMap : %s\n", num.boolValue == YES ? "YES" : "NO");
     }
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyGIFUnclampedDelayTime];
@@ -529,7 +533,7 @@
     if (value) {
         CFArrayRef arrayRef = (CFArrayRef)value;
         NSArray *array = (__bridge NSArray *)arrayRef;
-        printf("    - CGImageSource Properties kCGImagePropertyJFIFVersion : ");
+        printf("        - CGImageSource Properties kCGImagePropertyJFIFVersion : ");
         int count = (int)array.count;
         for (int index = 0; index < count; index++) {
             NSNumber *num = array[index];
@@ -1013,6 +1017,11 @@
     }
     
     value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAPNGUnclampedDelayTime];
+    if (value) {
+        printf("        - \n");
+    }
+    
+    value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPNGCompressionFilter];
     if (value) {
         printf("        - \n");
     }
