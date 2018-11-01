@@ -36,6 +36,61 @@
     _isrc = NULL;
 }
 
+- (NSString *)filePath
+{
+    NSString *dirPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"resource/ImageIO/"];
+    NSString *filePath = nil;
+    if ([self.type isEqualToString:@"public.jpeg"]) {
+        filePath = [dirPath stringByAppendingPathComponent:@"apple.jpeg"];
+    } else if ([self.type isEqualToString:@"public.png"]) {
+        filePath = [dirPath stringByAppendingPathComponent:@"apple.png"];
+    } else if ([self.type isEqualToString:@"com.compuserve.gif"]) {
+        filePath = [dirPath stringByAppendingPathComponent:@"peppa.gif"];
+    }
+    
+    return filePath;
+}
+
+- (CGImageSourceRef)imageSourceRefWithFilePath:(NSString *)filePath
+{
+    if (filePath.length == 0 || ![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        return nil;
+    
+    NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:NO];
+    if (!url)
+        return nil;
+    
+    /* CGImageSourceCreateWithDataProvider/CGImageSourceCreateWithData/CGImageSourceCreateWithURL调用时，可用的选项keys有:
+     * kCGImageSourceTypeIdentifierHint - 创建CGImageSourceRef时，需要知道文件的格式，这个格式由一个叫做type identifier（public.jpeg、public.png、com.compuserve.gif类似这种，更多见"UTType.h"文件）的东西指定，这个key对应的value说明对文件type identifier的一个大致推测。
+     */
+    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+    const void *key = (const void *)kCGImageSourceTypeIdentifierHint;
+    CFStringRef stringRef = CFStringCreateWithCString(NULL, self.type.UTF8String, kCFStringEncodingUTF8);
+    const void *value = (const void *)stringRef;
+    if (key && value) {
+        CFDictionaryAddValue(options, key, value);
+    }
+    
+    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, options);
+    if (stringRef) {
+        CFRelease(stringRef);
+    }
+    if (options) {
+        CFRelease(options);
+    }
+    
+    return imageSourceRef;
+}
+
+- (CGImageSourceRef)isrc
+{
+    if (!_isrc) {
+        _isrc = [self imageSourceRefWithFilePath:[self filePath]];
+    }
+    
+    return _isrc;
+}
+
 #pragma mark - CGImageSource
 
 - (void)studyCGImageSource
@@ -80,8 +135,13 @@
             CFDictionaryAddValue(options, key3, (const void *)value3);
         }
         
-        //CFDictionaryRef properties = CGImageSourceCopyProperties(self.isrc, options);
-        CFDictionaryRef properties = CGImageSourceCopyPropertiesAtIndex(self.isrc, 0, options);
+        CFDictionaryRef properties = CGImageSourceCopyProperties(self.isrc, options);
+        if (properties) {
+            [self printCGImageProperties:properties];
+            CFRelease(properties);
+        }
+        
+        properties = CGImageSourceCopyPropertiesAtIndex(self.isrc, 0, options);
         if (properties) {
             [self printCGImageProperties:properties];
             CFRelease(properties);
@@ -90,6 +150,8 @@
         if (options) {
             CFRelease(options);
         }
+        
+        CGImageMetadataRef metadataRef = CGImageSourceCopyMetadataAtIndex(self.isrc, 0, NULL);
     }
 }
 
@@ -219,6 +281,56 @@
             CFBooleanRef booleanRef = (CFBooleanRef)value;
             printf("    - CGImageSource Properties kCGImagePropertyPrimaryImage : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
         }*/
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyImageCount];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyWidth];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyHeight];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyBytesPerRow];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyNamedColorSpace];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPixelFormat];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyImages];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyThumbnailImages];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAuxiliaryData];
+        if (value) {
+            printf("    - ");
+        }
+        
+        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyAuxiliaryDataType];
+        if (value) {
+            printf("    - ");
+        }
         
         Boolean isContains = CFDictionaryContainsKey(dic, (const void *)kCGImagePropertyTIFFDictionary);
         if (isContains) {
@@ -2951,60 +3063,22 @@
     printf("    CGImagePropertyFileContentsDictionary\n");
 }
 
-- (NSString *)filePath
-{
-    NSString *dirPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"resource/ImageIO/"];
-    NSString *filePath = nil;
-    if ([self.type isEqualToString:@"public.jpeg"]) {
-        filePath = [dirPath stringByAppendingPathComponent:@"apple.jpeg"];
-    } else if ([self.type isEqualToString:@"public.png"]) {
-        filePath = [dirPath stringByAppendingPathComponent:@"apple.png"];
-    } else if ([self.type isEqualToString:@"com.compuserve.gif"]) {
-        filePath = [dirPath stringByAppendingPathComponent:@"peppa.gif"];
-    }
-    
-    return filePath;
-}
-
-- (CGImageSourceRef)imageSourceRefWithFilePath:(NSString *)filePath
-{
-    if (filePath.length == 0 || ![[NSFileManager defaultManager] fileExistsAtPath:filePath])
-        return nil;
-    
-    NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:NO];
-    if (!url)
-        return nil;
-    
-    /* CGImageSourceCreateWithDataProvider/CGImageSourceCreateWithData/CGImageSourceCreateWithURL调用时，可用的选项keys有:
-     * kCGImageSourceTypeIdentifierHint - 创建CGImageSourceRef时，需要知道文件的格式，这个格式由一个叫做type identifier（public.jpeg、public.png、com.compuserve.gif类似这种，更多见"UTType.h"文件）的东西指定，这个key对应的value说明对文件type identifier的一个大致推测。
-     */
-    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
-    const void *key = (const void *)kCGImageSourceTypeIdentifierHint;
-    CFStringRef stringRef = CFStringCreateWithCString(NULL, self.type.UTF8String, kCFStringEncodingUTF8);
-    const void *value = (const void *)stringRef;
-    if (key && value) {
-        CFDictionaryAddValue(options, key, value);
-    }
-    
-    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, options);
-    if (stringRef) {
-        CFRelease(stringRef);
-    }
-    if (options) {
-        CFRelease(options);
-    }
-    
-    return imageSourceRef;
-}
-
-- (CGImageSourceRef)isrc
-{
-    if (!_isrc) {
-        _isrc = [self imageSourceRefWithFilePath:[self filePath]];
-    }
-    
-    return _isrc;
-}
+///* For use with CGImageSourceCopyAuxiliaryDataInfoAtIndex and CGImageDestinationAddAuxiliaryDataInfo:
+// * These strings specify the 'auxiliaryImageDataType':
+// */
+//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataTypeDepth IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
+//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataTypeDisparity IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
+//
+//
+///* Depth/Disparity data support for JPEG, HEIF, and DNG images:
+// * CGImageSourceCopyAuxiliaryDataInfoAtIndex and CGImageDestinationAddAuxiliaryDataInfo will use these keys in the dictionary:
+// * kCGImageAuxiliaryDataInfoData - the depth data (CFDataRef)
+// * kCGImageAuxiliaryDataInfoDataDescription - the depth data description (CFDictionary)
+// * kCGImageAuxiliaryDataInfoMetadata - metadata (CGImageMetadataRef)
+// */
+//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoData IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
+//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoDataDescription IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
+//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoMetadata IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
 
 
 
