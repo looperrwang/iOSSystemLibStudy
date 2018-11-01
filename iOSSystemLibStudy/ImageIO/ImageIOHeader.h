@@ -21,7 +21,7 @@
  ImageIO - 包含基本头文件
  ImageIOBase - 包含一系列宏
  CGImageProperties - 定义了框架中使用的字符串常量和宏，CGImageSourceCopyProperties/CGImageSourceCopyPropertiesAtIndex返回的字典中包含的属性，描述file-format/metadata-format
- CGImageMetadata - 图片文件元数据
+ CGImageMetadata - 图片文件元数据，需要了解EXIF/IPTC/XMP metadata specifications，是CGImageMetadataTags的容器
  CGImageSource - 负责读取图片数据
  CGImageDestination - 负责写入图片数据
  */

@@ -99,6 +99,12 @@
     printf("%s : \n", self.type == NULL ? "" : self.type.UTF8String);
     printf("    - CGImageSource CGImageSourceGetTypeID : %zd\n", typeId); //305
     
+    typeId = CGImageMetadataGetTypeID();
+    printf("    - CGImageMetadata CGImageMetadataGetTypeID : %zd\n", typeId); //311
+    
+    typeId = CGImageMetadataTagGetTypeID(); //任何的tags都包含namespace、prefix、name、type和value
+    printf("    - CGImageMetadata CGImageMetadataTagGetTypeID : %zd\n", typeId); //308
+    
     _isrc = NULL;
     
     if (self.isrc) {
@@ -152,6 +158,10 @@
         }
         
         CGImageMetadataRef metadataRef = CGImageSourceCopyMetadataAtIndex(self.isrc, 0, NULL);
+        if (metadataRef) {
+            [self printCGImageMetadata:metadataRef];
+            CFRelease(metadataRef);
+        }
     }
 }
 
@@ -3080,6 +3090,50 @@
 //IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoDataDescription IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
 //IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoMetadata IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
 
+- (void)printCGImageMetadata:(CGImageMetadataRef)metadataRef
+{
+    CFArrayRef tags = CGImageMetadataCopyTags(metadataRef);
+    if (tags) {
+        CFIndex count = CFArrayGetCount(tags);
+        for (CFIndex index = 0; index < count; index++) {
+            const void *value = CFArrayGetValueAtIndex(tags, index);
+            CGImageMetadataTagRef tag = (CGImageMetadataTagRef)value;
+            if (tag) {
+                CFStringRef namespace = CGImageMetadataTagCopyNamespace(tag);
+                if (namespace) {
+                    const char *c = CFStringGetCStringPtr(namespace, kCFStringEncodingUTF8);
+                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyNamespace : %s\n", c == NULL ? "" : c);
+                }
+                
+                CFStringRef prefix = CGImageMetadataTagCopyPrefix(tag);
+                if (prefix) {
+                    const char *c = CFStringGetCStringPtr(prefix, kCFStringEncodingUTF8);
+                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyPrefix : %s\n", c == NULL ? "" : c);
+                }
+                
+                CFStringRef name = CGImageMetadataTagCopyName(tag);
+                if (name) {
+                    const char *c = CFStringGetCStringPtr(name, kCFStringEncodingUTF8);
+                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyName : %s\n", c == NULL ? "" : c);
+                }
+                
+                CFTypeRef value = CGImageMetadataTagCopyValue(tag);
+                if (value) {
+                    const char *c = CFStringGetCStringPtr(value, kCFStringEncodingUTF8);
+                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyValue : %s\n", c == NULL ? "" : c);
+                }
+                
+                CGImageMetadataType type = CGImageMetadataTagGetType(tag);
+                printf("        - CGImageMetadata Tags CGImageMetadataTagGetType : %d\n", type);
+                
+                CFArrayRef qualifiers = CGImageMetadataTagCopyQualifiers(tag);
+                //抽函数出来
+            }
+        }
+        
+        CFRelease(tags);
+    }
+}
 
 
 
