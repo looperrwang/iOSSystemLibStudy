@@ -3090,6 +3090,40 @@
 //IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoDataDescription IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
 //IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoMetadata IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
 
+- (void)printCGImageMetadataTag:(CGImageMetadataTagRef)tagRef
+{
+    CFStringRef namespace = CGImageMetadataTagCopyNamespace(tagRef);
+    if (namespace) {
+        const char *c = CFStringGetCStringPtr(namespace, kCFStringEncodingUTF8);
+        printf("        - CGImageMetadata Tags CGImageMetadataTagCopyNamespace : %s\n", c == NULL ? "" : c);
+        CFRelease(namespace);
+    }
+    
+    CFStringRef prefix = CGImageMetadataTagCopyPrefix(tagRef);
+    if (prefix) {
+        const char *c = CFStringGetCStringPtr(prefix, kCFStringEncodingUTF8);
+        printf("        - CGImageMetadata Tags CGImageMetadataTagCopyPrefix : %s\n", c == NULL ? "" : c);
+        CFRelease(prefix);
+    }
+    
+    CFStringRef name = CGImageMetadataTagCopyName(tagRef);
+    if (name) {
+        const char *c = CFStringGetCStringPtr(name, kCFStringEncodingUTF8);
+        printf("        - CGImageMetadata Tags CGImageMetadataTagCopyName : %s\n", c == NULL ? "" : c);
+        CFRelease(name);
+    }
+    
+    CFTypeRef value = CGImageMetadataTagCopyValue(tagRef);
+    if (value) {
+        const char *c = CFStringGetCStringPtr(value, kCFStringEncodingUTF8);
+        printf("        - CGImageMetadata Tags CGImageMetadataTagCopyValue : %s\n", c == NULL ? "" : c);
+        CFRelease(value);
+    }
+    
+    CGImageMetadataType type = CGImageMetadataTagGetType(tagRef);
+    printf("        - CGImageMetadata Tags CGImageMetadataTagGetType : %d\n", type);
+}
+
 - (void)printCGImageMetadata:(CGImageMetadataRef)metadataRef
 {
     CFArrayRef tags = CGImageMetadataCopyTags(metadataRef);
@@ -3099,35 +3133,17 @@
             const void *value = CFArrayGetValueAtIndex(tags, index);
             CGImageMetadataTagRef tag = (CGImageMetadataTagRef)value;
             if (tag) {
-                CFStringRef namespace = CGImageMetadataTagCopyNamespace(tag);
-                if (namespace) {
-                    const char *c = CFStringGetCStringPtr(namespace, kCFStringEncodingUTF8);
-                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyNamespace : %s\n", c == NULL ? "" : c);
-                }
-                
-                CFStringRef prefix = CGImageMetadataTagCopyPrefix(tag);
-                if (prefix) {
-                    const char *c = CFStringGetCStringPtr(prefix, kCFStringEncodingUTF8);
-                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyPrefix : %s\n", c == NULL ? "" : c);
-                }
-                
-                CFStringRef name = CGImageMetadataTagCopyName(tag);
-                if (name) {
-                    const char *c = CFStringGetCStringPtr(name, kCFStringEncodingUTF8);
-                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyName : %s\n", c == NULL ? "" : c);
-                }
-                
-                CFTypeRef value = CGImageMetadataTagCopyValue(tag);
-                if (value) {
-                    const char *c = CFStringGetCStringPtr(value, kCFStringEncodingUTF8);
-                    printf("        - CGImageMetadata Tags CGImageMetadataTagCopyValue : %s\n", c == NULL ? "" : c);
-                }
-                
-                CGImageMetadataType type = CGImageMetadataTagGetType(tag);
-                printf("        - CGImageMetadata Tags CGImageMetadataTagGetType : %d\n", type);
+                [self printCGImageMetadataTag:tag];
                 
                 CFArrayRef qualifiers = CGImageMetadataTagCopyQualifiers(tag);
-                //抽函数出来
+                CFIndex qCount = CFArrayGetCount(qualifiers);
+                for (CFIndex index = 0; index < qCount; index++) {
+                    const void *value = CFArrayGetValueAtIndex(qualifiers, index);
+                    CGImageMetadataTagRef tag = (CGImageMetadataTagRef)value;
+                    if (tag) {
+                        [self printCGImageMetadataTag:tag];
+                    }
+                }
             }
         }
         
