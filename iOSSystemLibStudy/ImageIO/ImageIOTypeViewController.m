@@ -153,9 +153,17 @@
             CFRelease(properties);
         }
         
+        [self readImages:options];
+        
         if (options) {
             CFRelease(options);
         }
+        
+        [self readThumbnailImages];
+        
+        [self readStatus];
+        
+        [self readAuxiliaryDataInfo];
         
         CGImageMetadataRef metadataRef = CGImageSourceCopyMetadataAtIndex(self.isrc, 0, NULL);
         if (metadataRef) {
@@ -3073,23 +3081,6 @@
     printf("    CGImagePropertyFileContentsDictionary\n");
 }
 
-///* For use with CGImageSourceCopyAuxiliaryDataInfoAtIndex and CGImageDestinationAddAuxiliaryDataInfo:
-// * These strings specify the 'auxiliaryImageDataType':
-// */
-//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataTypeDepth IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
-//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataTypeDisparity IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
-//
-//
-///* Depth/Disparity data support for JPEG, HEIF, and DNG images:
-// * CGImageSourceCopyAuxiliaryDataInfoAtIndex and CGImageDestinationAddAuxiliaryDataInfo will use these keys in the dictionary:
-// * kCGImageAuxiliaryDataInfoData - the depth data (CFDataRef)
-// * kCGImageAuxiliaryDataInfoDataDescription - the depth data description (CFDictionary)
-// * kCGImageAuxiliaryDataInfoMetadata - metadata (CGImageMetadataRef)
-// */
-//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoData IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
-//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoDataDescription IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
-//IMAGEIO_EXTERN const CFStringRef kCGImageAuxiliaryDataInfoMetadata IMAGEIO_AVAILABLE_STARTING(__MAC_10_13, __IPHONE_11_0);
-
 - (void)printCGImageMetadataTag:(CGImageMetadataTagRef)tagRef
 {
     CFStringRef namespace = CGImageMetadataTagCopyNamespace(tagRef);
@@ -3151,37 +3142,14 @@
     }
 }
 
-
-
-
-
-
-
-- (NSArray<UIImage *> *)imagesWithFilePath:(NSString *)filePath
+- (void)readImages:(CFDictionaryRef)options
 {
-    if (filePath.length == 0)
-        return nil;
+    NSMutableArray *imgArray = [NSMutableArray new];
     
-    NSURL *url = [NSURL fileURLWithPath:filePath isDirectory:NO];
-    if (!url)
-        return nil;
+    size_t count = CGImageSourceGetCount(self.isrc);
     
-    /* CGImageSourceCreateThumbnailAtIndex调用时，可用的选项keys有:
-     * kCGImageSourceCreateThumbnailFromImageIfAbsent - 如果image源文件中不存在缩略图的话，指定是否自动生成一个缩略图，如果为kCFBooleanTrue，缩略图将会由原始image生成，其大小由kCGImageSourceThumbnailMaxPixelSize对应的值指定，若没有指定kCGImageSourceThumbnailMaxPixelSize的话，缩略图的小小与原始image大小一致。
-     * kCGImageSourceCreateThumbnailFromImageAlways - 指定是否总是生成缩略图，即使源文件中存在。
-     * kCGImageSourceThumbnailMaxPixelSize - 指定缩略图的最大宽高，单位为像素，没有指定的话，缩略图宽高与原image一致
-     * kCGImageSourceCreateThumbnailWithTransform - 设置缩略图是否根据原image的旋转与宽高比进行旋转与缩放
-     * kCGImageSourceSubsampleFactor - 返回一个按照指定因子缩小了的image，返回的image与原始的image相比，将会更小但将保存同样的特征，如果指定的因子不支持的话，将返回不小于原始image的image，支持的文件格式为JPEG, HEIF, TIFF, and PNG，允许指定的因为有2, 4, 8
-     */
-    CGImageSourceRef imageSourceRef = CGImageSourceCreateWithURL((CFURLRef)url, NULL);
-    if (!imageSourceRef)
-        return nil;
-    
-    NSMutableArray<UIImage *> *array = [NSMutableArray<UIImage *> new];
-    
-    size_t imageCount = CGImageSourceGetCount(imageSourceRef);
-    for (size_t index = 0; index < imageCount; index++) {
-        CGImageRef imageRef = CGImageSourceCreateImageAtIndex(imageSourceRef, index, NULL);
+    for (size_t index = 0; index < count; index++) {
+        CGImageRef imageRef = CGImageSourceCreateImageAtIndex(self.isrc, index, options);
         if (!imageRef)
             continue;
         
@@ -3191,13 +3159,132 @@
             continue;
         }
         
-        [array addObject:image];
+        [imgArray addObject:image];
+        CGImageRelease(imageRef);
+    }
+}
+
+- (void)readThumbnailImages
+{
+    /* CGImageSourceCreateThumbnailAtIndex调用时，可用的选项keys有:
+     * kCGImageSourceCreateThumbnailFromImageIfAbsent - 如果image源文件中不存在缩略图的话，指定是否自动生成一个缩略图，如果为kCFBooleanTrue，缩略图将会由原始image生成，其大小由kCGImageSourceThumbnailMaxPixelSize对应的值指定，若没有指定kCGImageSourceThumbnailMaxPixelSize的话，缩略图的小小与原始image大小一致。
+     * kCGImageSourceCreateThumbnailFromImageAlways - 指定是否总是生成缩略图，即使源文件中存在。
+     * kCGImageSourceThumbnailMaxPixelSize - 指定缩略图的最大宽高，单位为像素，没有指定的话，缩略图宽高与原image一致
+     * kCGImageSourceCreateThumbnailWithTransform - 设置缩略图是否根据原image的旋转与宽高比进行旋转与缩放
+     * kCGImageSourceSubsampleFactor - 返回一个按照指定因子缩小了的image，返回的image与原始的image相比，将会更小但将保存同样的特征，如果指定的因子不支持的话，将返回不小于原始image的image，支持的文件格式为JPEG, HEIF, TIFF, and PNG，允许指定的因为有2, 4, 8
+     */
+    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 0, NULL, NULL);
+    const void *key1 = (const void *)kCGImageSourceCreateThumbnailFromImageIfAbsent;
+    CFBooleanRef value1 = kCFBooleanTrue; //kCFBooleanFalse
+    if (key1 && value1) {
+        CFDictionaryAddValue(options, key1, (const void *)value1);
+    }
+    
+    const void *key2 = (const void *)kCGImageSourceCreateThumbnailFromImageAlways;
+    CFBooleanRef value2 = kCFBooleanTrue;
+    if (key2 && value2) {
+        CFDictionaryAddValue(options, key2, (const void *)value2);
+    }
+    
+    const void *key3 = (const void *)kCGImageSourceThumbnailMaxPixelSize;
+    CFNumberRef value3 = (__bridge CFNumberRef)@(240);
+    if (key3 && value3) {
+        //CFDictionaryAddValue(options, key3, (const void *)value3);
+    }
+    
+    const void *key4 = (const void *)kCGImageSourceSubsampleFactor;
+    CFNumberRef value4 = (__bridge CFNumberRef)@(8); //2、4、8
+    if (key4 && value4) {
+        CFDictionaryAddValue(options, key4, (const void *)value4);
+    }
+    
+    const void *key5 = (const void *)kCGImageSourceCreateThumbnailWithTransform;
+    CFBooleanRef value5 = kCFBooleanFalse;
+    if (key5 && value5) {
+        CFDictionaryAddValue(options, key5, (const void *)value5);
+    }
+    
+    NSMutableArray *imgArray = [NSMutableArray new];
+    
+    size_t count = CGImageSourceGetCount(self.isrc);
+    
+    for (size_t index = 0; index < count; index++) {
+        CGImageRef imageRef = CGImageSourceCreateThumbnailAtIndex(self.isrc, index, options);
+        if (!imageRef)
+            continue;
+        
+        UIImage *image = [UIImage imageWithCGImage:imageRef];
+        if (!image) {
+            CGImageRelease(imageRef);
+            continue;
+        }
+        
+        [imgArray addObject:image];
         CGImageRelease(imageRef);
     }
     
-    CFRelease(imageSourceRef);
+    /* 1、若原文件中没有缩略图，并且kCGImageSourceCreateThumbnailFromImageIfAbsent与kCGImageSourceCreateThumbnailFromImageAlways均为kCFBooleanFalse，则拿不到缩略图，若原文件中有缩略图，不管kCGImageSourceCreateThumbnailFromImageIfAbsent与kCGImageSourceCreateThumbnailFromImageAlways是什么设置，都能拿到缩略图
+     * 2、拿到的缩略图与原图的宽高比一致，不管kCGImageSourceCreateThumbnailWithTransform为true或者false
+     * 3、不指定kCGImageSourceThumbnailMaxPixelSize，或者指定的kCGImageSourceThumbnailMaxPixelSize值大于原图大小时，返回的缩略图大小不超过原图大小
+     */
     
-    return [NSArray<UIImage *> arrayWithArray:array];
+    if (options) {
+        CFRelease(options);
+    }
+}
+
+- (void)readStatus
+{
+    CGImageSourceStatus status = CGImageSourceGetStatus(self.isrc);
+    printf("    CGImageSourceGetStatus : %d\n", status);
+    
+    size_t count = CGImageSourceGetCount(self.isrc);
+    for (size_t index = 0; index < count; index++) {
+        CGImageSourceStatus status = CGImageSourceGetStatusAtIndex(self.isrc, index);
+        printf("    CGImageSourceGetStatusAtIndex : %d\n", status);
+    }
+}
+
+- (void)readAuxiliaryDataInfo
+{
+    //只支持JEPG、HEIF、DNG格式
+    /* CGImageSourceCopyAuxiliaryDataInfoAtIndex and CGImageDestinationAddAuxiliaryDataInfo调用时，auxiliaryImageDataType可用的参数 :
+     * 1、kCGImageAuxiliaryDataTypeDepth
+     * 2、kCGImageAuxiliaryDataTypeDisparity
+     */
+    size_t count = CGImageSourceGetCount(self.isrc);
+    for (size_t index = 0; index < count; index++) {
+        CFDictionaryRef dic = CGImageSourceCopyAuxiliaryDataInfoAtIndex(self.isrc, index, kCGImageAuxiliaryDataTypeDepth);
+        if (dic) {
+            const void *value = [self valueOfCGImageProperty:dic key:kCGImageAuxiliaryDataInfoData];
+            if (value) {
+                //CFDataRef data = (CFDataRef)value;
+            }
+            
+            value = [self valueOfCGImageProperty:dic key:kCGImageAuxiliaryDataInfoDataDescription];
+            if (value) {
+                //CFDictionaryRef info = (CFDictionaryRef)value;
+            }
+            
+            value = [self valueOfCGImageProperty:dic key:kCGImageAuxiliaryDataInfoMetadata];
+            if (value) {
+                //CGImageMetadataRef metadata = (CGImageMetadataRef)value;
+            }
+            CFRelease(dic);
+        }
+    }
+}
+
+#pragma mark - 渐进式加载大图
+
+- (void)loadBigImage
+{
+    
+}
+
+- (void)updateImage
+{
+    
 }
 
 @end
