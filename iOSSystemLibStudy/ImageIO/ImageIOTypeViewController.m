@@ -3378,6 +3378,10 @@
     if (imageCount > 0) {
         CGImageRef imageRef = CGImageSourceCreateImageAtIndex(self.incrementalImageSource, 0, NULL);
         if (imageRef) {
+            CGImageSourceStatus overallStatus = CGImageSourceGetStatus(self.incrementalImageSource);
+            CGImageSourceStatus status = CGImageSourceGetStatusAtIndex(self.incrementalImageSource, 0);
+            printf("updateImage status : %d, %d\n", overallStatus, status);
+            
             UIImage *image = [UIImage imageWithCGImage:imageRef];
             self.imageView.image = image;
             
