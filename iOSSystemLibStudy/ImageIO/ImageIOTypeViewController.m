@@ -12,6 +12,17 @@
 
 @property (nonatomic, assign) CGImageSourceRef isrc;
 
+//渐进式加载大图
+@property (nonatomic, strong) NSData *allData;
+@property (nonatomic, strong) NSMutableData *incrementalData;
+@property (nonatomic, assign) NSUInteger blockSize;
+
+@property (nonatomic, assign) CGImageSourceRef incrementalImageSource;
+
+@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) NSTimer *timer;
+
+
 @end
 
 @implementation ImageIOTypeViewController
@@ -30,10 +41,20 @@
 
 - (void)dealloc
 {
+    if (self.timer.isValid) {
+        [self.timer invalidate];
+        self.timer = nil;
+    }
+    
     if (_isrc) {
         CFRelease(_isrc);
     }
     _isrc = NULL;
+    
+    if (self.incrementalImageSource) {
+        CFRelease(self.incrementalImageSource);
+        self.incrementalImageSource = NULL;
+    }
 }
 
 - (NSString *)filePath
@@ -164,6 +185,8 @@
         [self readStatus];
         
         [self readAuxiliaryDataInfo];
+        
+        [self loadBigImage];
         
         CGImageMetadataRef metadataRef = CGImageSourceCopyMetadataAtIndex(self.isrc, 0, NULL);
         if (metadataRef) {
@@ -3279,12 +3302,88 @@
 
 - (void)loadBigImage
 {
+    NSString *filePath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"resource/ImageIO/sea.jpg"];
+    if (filePath.length == 0 || ![[NSFileManager defaultManager] fileExistsAtPath:filePath])
+        return;
     
+    NSData *allData = [NSData dataWithContentsOfFile:filePath];
+    if (!allData)
+        return;
+    
+    self.allData = allData;
+    self.incrementalData = [NSMutableData data];
+    
+    NSUInteger freshCount = 10;
+    self.blockSize = self.allData.length / freshCount;
+    if (self.blockSize == 0) {
+        self.blockSize = self.allData.length;
+    }
+    
+    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+    const void *key = (const void *)kCGImageSourceTypeIdentifierHint;
+    CFStringRef stringRef = CFStringCreateWithCString(NULL, self.type.UTF8String, kCFStringEncodingUTF8);
+    const void *value = (const void *)stringRef;
+    if (key && value) {
+        CFDictionaryAddValue(options, key, value);
+    }
+    
+    CGImageSourceRef imageSource = CGImageSourceCreateIncremental(options);
+    if (!imageSource) {
+        if (stringRef) {
+            CFRelease(stringRef);
+        }
+        if (options) {
+            CFRelease(options);
+        }
+        
+        return;
+    }
+    
+    self.incrementalImageSource = imageSource;
+    
+    if (stringRef) {
+        CFRelease(stringRef);
+    }
+    if (options) {
+        CFRelease(options);
+    }
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateImage) userInfo:nil repeats:YES];
+    
+    self.imageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+    self.imageView.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:self.imageView];
 }
 
 - (void)updateImage
 {
+    if (self.incrementalData.length == self.allData.length) {
+        if (self.timer.isValid) {
+            [self.timer invalidate];
+            self.timer = nil;
+        }
+        
+        return;
+    }
     
+    bool isFinal = (self.incrementalData.length + self.blockSize < self.allData.length) ? false : true;
+    NSUInteger appendLength = isFinal ? (self.allData.length - self.incrementalData.length) : self.blockSize;
+    NSData *appendData = [self.allData subdataWithRange:NSMakeRange(self.incrementalData.length, appendLength)];
+    
+    [self.incrementalData appendData:appendData];
+    
+    CGImageSourceUpdateData(self.incrementalImageSource, (__bridge CFDataRef)self.incrementalData, isFinal);
+    
+    size_t imageCount = CGImageSourceGetCount(self.incrementalImageSource);
+    if (imageCount > 0) {
+        CGImageRef imageRef = CGImageSourceCreateImageAtIndex(self.incrementalImageSource, 0, NULL);
+        if (imageRef) {
+            UIImage *image = [UIImage imageWithCGImage:imageRef];
+            self.imageView.image = image;
+            
+            CFRelease(imageRef);
+        }
+    }
 }
 
 @end
