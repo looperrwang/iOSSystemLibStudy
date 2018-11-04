@@ -1,14 +1,14 @@
 //
-//  ImageIOTypeViewController.m
+//  ImageInputTypeViewController.m
 //  iOSSystemLibStudy
 //
-//  Created by looperwang on 2018/10/23.
+//  Created by looperwang on 2018/11/4.
 //  Copyright © 2018 looperwang. All rights reserved.
 //
 
-#import "ImageIOTypeViewController.h"
+#import "ImageInputTypeViewController.h"
 
-@interface ImageIOTypeViewController ()
+@interface ImageInputTypeViewController ()
 
 @property (nonatomic, assign) CGImageSourceRef isrc;
 
@@ -22,14 +22,15 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) NSTimer *timer;
 
-
 @end
 
-@implementation ImageIOTypeViewController
+@implementation ImageInputTypeViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.title = self.type;
     
     [self studyCGImageSource];
 }
@@ -211,14 +212,14 @@
     CFIndex count = CFDictionaryGetCount(dic);
     if (count > 0) {
         /*
-        void **keys = calloc(count, sizeof(void *));
-        void **values = calloc(count, sizeof(void *));
-        CFDictionaryGetKeysAndValues(dic, (const void **)keys, (const void **)values);
-        
-        for (size_t index = 0; index < count; index++) {
-            const void *key = keys[index];
-            const void *value = values[index];
-        }*/
+         void **keys = calloc(count, sizeof(void *));
+         void **values = calloc(count, sizeof(void *));
+         CFDictionaryGetKeysAndValues(dic, (const void **)keys, (const void **)values);
+         
+         for (size_t index = 0; index < count; index++) {
+         const void *key = keys[index];
+         const void *value = values[index];
+         }*/
         
         //CGImageSourceCopyProperties
         const void *value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyFileSize];
@@ -317,11 +318,11 @@
         
         //CGImageSourceCopyPropertiesAtIndex
         /*
-        value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPrimaryImage];
-        if (value) {
-            CFBooleanRef booleanRef = (CFBooleanRef)value;
-            printf("    - CGImageSource Properties kCGImagePropertyPrimaryImage : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
-        }*/
+         value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyPrimaryImage];
+         if (value) {
+         CFBooleanRef booleanRef = (CFBooleanRef)value;
+         printf("    - CGImageSource Properties kCGImagePropertyPrimaryImage : %s\n", booleanRef == kCFBooleanTrue ? "true" : "false");
+         }*/
         
         value = [self valueOfCGImageProperty:dic key:(const void *)kCGImagePropertyImageCount];
         if (value) {

@@ -7,11 +7,8 @@
 //
 
 #import "ImageIOViewController.h"
-#import "ImageIOTypeViewController.h"
 
 @interface ImageIOViewController () <UITableViewDataSource, UITableViewDelegate>
-
-@property (nonatomic, strong) NSMutableArray *supportTypes;
 
 @property (nonatomic, strong) UITableView *tableView;
 
@@ -26,9 +23,6 @@
     self.title = @"ImageIO";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.supportTypes = [NSMutableArray new];
-    [self initSupportTypes];
-    
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.dataSource = self;
@@ -42,31 +36,11 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)initSupportTypes
-{
-    //ImageIO支持的所有类型
-    CFArrayRef supportTypes = CGImageSourceCopyTypeIdentifiers();
-    CFIndex count = CFArrayGetCount(supportTypes);
-    for (CFIndex index = 0; index < count; index++) {
-        const void *type = CFArrayGetValueAtIndex(supportTypes, index);
-        if (type != NULL) {
-            CFStringRef stringRef = (CFStringRef)type;
-            const char *c_str = CFStringGetCStringPtr(stringRef, kCFStringEncodingUTF8);
-            if (c_str != NULL) {
-                NSString *string = [NSString stringWithUTF8String:c_str];
-                [self.supportTypes addObject:string];
-            }
-        } else {
-            assert(0);
-        }
-    }
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.supportTypes.count;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -79,15 +53,12 @@
     }
     
     NSString *text = @"";
-    if (indexPath.row >= 0 && indexPath.row < self.supportTypes.count) {
-        text = self.supportTypes[indexPath.row];
+    if (indexPath.row == 0) {
+        text = @"ImageInput";
+    } else if (indexPath.row == 1) {
+        text = @"ImageOutput";
     }
     cell.textLabel.text = text;
-    
-    cell.textLabel.textColor = [UIColor blackColor];
-    if (![text isEqualToString:@"public.jpeg"] && ![text isEqualToString:@"public.png"] && ![text isEqualToString:@"com.compuserve.gif"]) {
-        cell.textLabel.textColor = [UIColor redColor];
-    }
     
     return cell;
 }
@@ -96,17 +67,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < 0 || indexPath.row >= self.supportTypes.count)
+    if (indexPath.row < 0 || indexPath.row >= 2)
         return;
     
-    NSString *text = @"";
-    if (indexPath.row >= 0 && indexPath.row < self.supportTypes.count) {
-        text = self.supportTypes[indexPath.row];
+    NSString *className = @"";
+    if (indexPath.row == 0) {
+        className = @"ImageInputViewController";
+    } else if (indexPath.row == 1) {
+        className = @"ImageOutputViewController";
     }
     
-    if ([text isEqualToString:@"public.jpeg"] || [text isEqualToString:@"public.png"] || [text isEqualToString:@"com.compuserve.gif"]) {
-        ImageIOTypeViewController *vc = [[ImageIOTypeViewController alloc] init];
-        vc.type = text;
+    if (className.length > 0) {
+        UIViewController *vc = [[NSClassFromString(className) alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
     }
     
