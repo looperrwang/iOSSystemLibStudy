@@ -309,10 +309,39 @@
         return;
     }
     
-    CGImageDestinationAddImageFromSource(imageDestinationRef, imageSourceRef1, 0, NULL);
-    CGImageDestinationAddImage(imageDestinationRef, imageRef2, NULL);
+    //可以指定CGImagePropertyGIFDictionary相关property，自定义gif帧间隔等参数
+    CFMutableDictionaryRef options = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+    const void *key = (const void *)kCGImagePropertyGIFDictionary;
+    CFMutableDictionaryRef value = CFDictionaryCreateMutable(NULL, 1, NULL, NULL);
+    const void *keyInteral = (const void *)kCGImagePropertyGIFDelayTime;
+    CFNumberRef numberRef = (__bridge CFNumberRef)@(2.0);
+    const void *valueInteral = (const void *)numberRef;
+    if (keyInteral && valueInteral) {
+        CFDictionaryAddValue(value, keyInteral, valueInteral);
+    }
+    if (key && value) {
+        CFDictionaryAddValue(options, key, value);
+    }
+    
+    //kCGImagePropertyPixelHeight/kCGImagePropertyPixelWidth无效
+    const void *key2 = (const void *)kCGImageDestinationImageMaxPixelSize;
+    numberRef = (__bridge CFNumberRef)@(512);
+    const void *value2 = (const void *)numberRef;
+    if (key2 && value2) {
+        CFDictionaryAddValue(options, key2, value2);
+    }
+    
+    CGImageDestinationAddImageFromSource(imageDestinationRef, imageSourceRef1, 0, options);
+    CGImageDestinationAddImage(imageDestinationRef, imageRef2, options);
     bool result = CGImageDestinationFinalize(imageDestinationRef);
     printf("    - CGImageDestination compositeJpegAndPngToGif : %s\n", result ? "success" : "fail");
+    
+    if (value) {
+        CFRelease(value);
+    }
+    if (options) {
+        CFRelease(options);
+    }
     
     CFRelease(imageRef2);
     CFRelease(imageSourceRef2);
