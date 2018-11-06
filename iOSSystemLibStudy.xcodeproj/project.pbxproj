@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F0B7B6621800584008D28D1 /* resource in Resources */ = {isa = PBXBuildFile; fileRef = 5F0B7B6521800584008D28D1 /* resource */; };
+		5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F219B3D2191653700D002F9 /* AVFoundationViewController.m */; };
 		5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F5574218EB03B00D9B9B5 /* ImageInputViewController.m */; };
 		5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F5577218EB04F00D9B9B5 /* ImageOutputViewController.m */; };
 		5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */; };
@@ -23,6 +24,9 @@
 
 /* Begin PBXFileReference section */
 		5F0B7B6521800584008D28D1 /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
+		5F219B3C2191653700D002F9 /* AVFoundationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationViewController.h; sourceTree = "<group>"; };
+		5F219B3D2191653700D002F9 /* AVFoundationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFoundationViewController.m; sourceTree = "<group>"; };
+		5F219B3F2191D38300D002F9 /* AVFoundationHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationHeader.h; sourceTree = "<group>"; };
 		5F2F5573218EB03B00D9B9B5 /* ImageInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageInputViewController.h; sourceTree = "<group>"; };
 		5F2F5574218EB03B00D9B9B5 /* ImageInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputViewController.m; sourceTree = "<group>"; };
 		5F2F5576218EB04F00D9B9B5 /* ImageOutputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputViewController.h; sourceTree = "<group>"; };
@@ -57,6 +61,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F219B3B219164AA00D002F9 /* AVFoundation */ = {
+			isa = PBXGroup;
+			children = (
+				5F219B3C2191653700D002F9 /* AVFoundationViewController.h */,
+				5F219B3D2191653700D002F9 /* AVFoundationViewController.m */,
+				5F219B3F2191D38300D002F9 /* AVFoundationHeader.h */,
+			);
+			path = AVFoundation;
+			sourceTree = "<group>";
+		};
 		5FCD5678215A8D4800E26E01 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +91,7 @@
 		5FCD5683215A8D4800E26E01 /* iOSSystemLibStudy */ = {
 			isa = PBXGroup;
 			children = (
+				5F219B3B219164AA00D002F9 /* AVFoundation */,
 				5FCD569A215DAD0500E26E01 /* ImageIO */,
 				5FCD5684215A8D4800E26E01 /* AppDelegate.h */,
 				5FCD5685215A8D4800E26E01 /* AppDelegate.m */,
@@ -184,6 +199,7 @@
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
+				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
 				5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */,
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,

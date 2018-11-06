@@ -70,7 +70,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"AssetsLibrary" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AudioToolbox" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AudioUnit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"AVFoundation" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"AVFoundation" vcName:@"AVFoundationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"AVKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"BusinessChat" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CallKit" vcName:@""]];
