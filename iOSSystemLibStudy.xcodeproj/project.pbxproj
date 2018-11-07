@@ -27,6 +27,7 @@
 		5F219B3C2191653700D002F9 /* AVFoundationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationViewController.h; sourceTree = "<group>"; };
 		5F219B3D2191653700D002F9 /* AVFoundationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFoundationViewController.m; sourceTree = "<group>"; };
 		5F219B3F2191D38300D002F9 /* AVFoundationHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationHeader.h; sourceTree = "<group>"; };
+		5F219B40219279F900D002F9 /* note.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = note.md; sourceTree = "<group>"; };
 		5F2F5573218EB03B00D9B9B5 /* ImageInputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageInputViewController.h; sourceTree = "<group>"; };
 		5F2F5574218EB03B00D9B9B5 /* ImageInputViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputViewController.m; sourceTree = "<group>"; };
 		5F2F5576218EB04F00D9B9B5 /* ImageOutputViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputViewController.h; sourceTree = "<group>"; };
@@ -35,6 +36,7 @@
 		5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputTypeViewController.m; sourceTree = "<group>"; };
 		5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputTypeViewController.h; sourceTree = "<group>"; };
 		5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageOutputTypeViewController.m; sourceTree = "<group>"; };
+		5FA79EBC219324AA002397EB /* note.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = note.md; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCD5684215A8D4800E26E01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5FCD5685215A8D4800E26E01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 				5F219B3C2191653700D002F9 /* AVFoundationViewController.h */,
 				5F219B3D2191653700D002F9 /* AVFoundationViewController.m */,
 				5F219B3F2191D38300D002F9 /* AVFoundationHeader.h */,
+				5F219B40219279F900D002F9 /* note.md */,
 			);
 			path = AVFoundation;
 			sourceTree = "<group>";
@@ -120,6 +123,7 @@
 				5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */,
 				5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */,
 				5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */,
+				5FA79EBC219324AA002397EB /* note.md */,
 			);
 			path = ImageIO;
 			sourceTree = "<group>";
