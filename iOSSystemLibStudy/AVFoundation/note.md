@@ -6,13 +6,13 @@
 
 AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框架之一。框架提供了一系列 Objective-C 的接口，使用这些接口可以从非常全面的角度处理基于时间的视听媒体数据。例如，你可以用它来检查、创建、编辑或者重新编码媒体文件。甚至可以捕获硬件的输入流，可以在实时捕捉及回放的视频流中操纵视频数据。图 I-1 描述了其在 iOS 平台上的架构。
 
-![iOS架构](../../resource/AVFoundation/Markdown/iOS架构.png)
+![iOSAVFoundation](../../resource/AVFoundation/Markdown/iOSAVFoundation.png)
 
 > Figure I-2 shows the corresponding media architecture on OS X.
 
 图 I-2 描述了 OS X 平台上媒体相关框架的架构。
 
-![OS X架构](../../resource/AVFoundation/Markdown/OSX架构.png)
+![OSXAVFoundation](../../resource/AVFoundation/Markdown/OSXAVFoundation.png)
 
 > You should typically use the highest-level abstraction available that allows you to perform the tasks you want.
 > - If you simply want to play movies, use the AVKit framework.
@@ -484,15 +484,212 @@ if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
 
 > To control the playback of assets, you use an AVPlayer object. During playback, you can use an [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) instance to manage the presentation state of an asset as a whole, and an AVPlayerItemTrack object to manage the presentation state of an individual track. To display video, you use an AVPlayerLayer object.
 
+使用 AVPlayer 对象控制assets的播放。播放期间，你可以使用 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 实例管理整个 asset 的显示状态，使用 AVPlayerItemTrack 实例管理单独 track 的显示状态。使用 AVPlayerLayer 对象去播放视频。
+
 ### Playing Assets - 播放 Assets
 
 > A player is a controller object that you use to manage playback of an asset, for example starting and stopping playback, and seeking to a particular time. You use an instance of [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) to play a single asset. You can use an [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) object to play a number of items in sequence (AVQueuePlayer is a subclass of AVPlayer). On OS X you have the option of the using the AVKit framework’s AVPlayerView class to play the content back within a view.
 >
 > A player provides you with information about the state of the playback so, if you need to, you can synchronize your user interface with the player’s state. You typically direct the output of a player to a specialized Core Animation layer (an instance of [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) or [AVSynchronizedLayer](https://developer.apple.com/documentation/avfoundation/avsynchronizedlayer)). To learn more about layers, see Core Animation Programming Guide.
 
+player 是一个用来管理 asset 播放的控制器对象，例如，开始与暂停播放，定位播放进度到特定的时间。使用 [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) 实例去播放单个 asset 。使用一个 [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) 对象按顺序播放多个 item （ AVQueuePlayer 是 AVPlayer 的子类）。在 OS X 上，你可以选择使用 AVKit framework 的 AVPlayerView 在其中播放内容。
+
+player 向你提供了关于播放状态的信息，所以，如果需要的话，可以根据 player 的状态同步更新你的用户界面。通常将 player 的输出定向到专门的 Core Animation layer （ [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) 的实例或者 [AVSynchronizedLayer](https://developer.apple.com/documentation/avfoundation/avsynchronizedlayer) 的实例）。了解有关 layers 的更多内容，可以查看 Core Animation Programming Guide 。
+
 > Multiple player layers: You can create many AVPlayerLayer objects from a single AVPlayer instance, but only the most recently created such layer will display any video content onscreen.
 
+多个 player layers：从单个 AVPlayer 实例可以创建很多 AVPlayerLayer 对象，单只有最近创建的那个 layer 才会在屏幕上显示视频内容。
+
 > Although ultimately you want to play an asset, you don’t provide assets directly to an AVPlayer object. Instead, you provide an instance of [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem). A player item manages the presentation state of an asset with which it is associated. A player item contains player item tracks—instances of [AVPlayerItemTrack](https://developer.apple.com/documentation/avfoundation/avplayeritemtrack)—that correspond to the tracks in the asset. The relationship between the various objects is shown in Figure 2-1.
+
+虽然最终你想要播放一个 asset ，但你不会直接向 AVPlayer 对象提供 assets 。相反，需要提供一个 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 实例。一个 player item 管理与其关联的 asset 的呈现状态。player item 包含 player item tracks ，其为 [AVPlayerItemTrack](https://developer.apple.com/documentation/avfoundation/avplayeritemtrack) 的实例，对应的是 asset 中的 tracks 。各个对象之间的联系描述在图 2-1 中。
+
+![playingAnAsset](../../resource/AVFoundation/Markdown/playingAnAsset.png)
+
+> This abstraction means that you can play a given asset using different players simultaneously, but rendered in different ways by each player. Figure 2-2 shows one possibility, with two different players playing the same asset, with different settings. Using the item tracks, you can, for example, disable a particular track during playback (for example, you might not want to play the sound component).
+
+这样的抽象意味着你可以使用不同的 players 同时播放给定的同一个 asset ，每个 players 以不同的方式进行渲染。图 2-2 展示了一个可能的场景，两个不同的 players 使用不同的设置播放同一个 asset 。举个例子，使用 item tracks ，你可以在播放过程中禁用某个特定的 track（比如，你可能不想播放声音）。
+
+![exportSessionWorkflow](../../resource/AVFoundation/Markdown/exportSessionWorkflow.png)
+
+> You can initialize a player item with an existing asset, or you can initialize a player item directly from a URL so that you can play a resource at a particular location (AVPlayerItem will then create and configure an asset for the resource). As with AVAsset, though, simply initializing a player item doesn’t necessarily mean it’s ready for immediate playback. You can observe (using key-value observing) an item’s [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) property to determine if and when it’s ready to play.
+
+可以使用一个现有的 asset 初始化一个 player item ，或者直接从一个 URL 初始化，这样你就可以播放位于特定位置的资源（AVPlayerItem 将会为该资源创建并且配置一个 asset ）。与 AVAsset 一样，简单地初始化一个 player item 并不意味着可以立马使用它来进行播放了。你可以观察（使用 key-value observing ） item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) 属性去决定该 item 是否以及何时准备好播放。
+
+### Handling Different Types of Asset - 处理不同类型的 Asset
+
+> The way you configure an asset for playback may depend on the sort of asset you want to play. Broadly speaking, there are two main types: file-based assets, to which you have random access (such as from a local file, the camera roll, or the Media Library), and stream-based assets (HTTP Live Streaming format).
+>
+> To load and play a file-based asset. There are several steps to playing a file-based asset:
+> 
+> - Create an asset using [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset).
+> - Create an instance of AVPlayerItem using the asset.
+> - Associate the item with an instance of AVPlayer.
+> - Wait until the item’s status property indicates that it’s ready to play (typically you use key-value observing to receive a notification when the status changes).
+>
+> This approach is illustrated in [Putting It All Together: Playing a Video File Using AVPlayerLayer](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW2).
+> 
+> To create and prepare an HTTP live stream for playback. Initialize an instance of AVPlayerItem using the URL. (You cannot directly create an AVAsset instance to represent the media in an HTTP Live Stream.)
+
+```objc
+NSURL *url = [NSURL URLWithString:@"<#Live stream URL#>];
+// You may find a test stream at <http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8>.
+self.playerItem = [AVPlayerItem playerItemWithURL:url];
+[playerItem addObserver:self forKeyPath:@"status" options:0 context:&ItemStatusContext];
+self.player = [AVPlayer playerWithPlayerItem:playerItem];
+```
+
+> When you associate the player item with a player, it starts to become ready to play. When it is ready to play, the player item creates the AVAsset and AVAssetTrack instances, which you can use to inspect the contents of the live stream.
+>
+> To get the duration of a streaming item, you can observe the [duration](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389386-duration) property on the player item. When the item becomes ready to play, this property updates to the correct value for the stream.
+>
+> Note: Using the duration property on the player item requires iOS 4.3 or later. An approach that is compatible with all versions of iOS involves observing the [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) property of the player item. When the status becomes [AVPlayerItemStatusReadyToPlay](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusreadytoplay), the duration can be fetched with the following line of code:
+
+```objc
+[[[[[playerItem tracks] objectAtIndex:0] assetTrack] asset] duration];
+```
+
+> If you simply want to play a live stream, you can take a shortcut and create a player directly using the URL use the following code:
+
+```objc
+self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
+[player addObserver:self forKeyPath:@"status" options:0 context:&PlayerStatusContext];
+```
+
+> As with assets and items, initializing the player does not mean it’s ready for playback. You should observe the player’s [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) property, which changes to [AVPlayerStatusReadyToPlay](https://developer.apple.com/documentation/avfoundation/avplayerstatus/avplayerstatusreadytoplay) when it is ready to play. You can also observe the [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) property to access the player item created for the stream.
+>
+> If you don’t know what kind of URL you have, follow these steps:
+>
+> 1. Try to initialize an AVURLAsset using the URL, then load its tracks key.
+> If the tracks load successfully, then you create a player item for the asset.
+>
+> 2. If 1 fails, create an AVPlayerItem directly from the URL.
+> Observe the player’s [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) property to determine whether it becomes playable.
+>
+> If either route succeeds, you end up with a player item that you can then associate with a player.
+
+### Playing an Item - 播放 Item
+
+> To start playback, you send a [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) message to the player.
+
+```objc
+- (IBAction)play:sender {
+    [player play];
+}
+```
+
+> In addition to simply playing, you can manage various aspects of the playback, such as the rate and the location of the playhead. You can also monitor the play state of the player; this is useful if you want to, for example, synchronize the user interface to the presentation state of the asset—see [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8).
+
+#### Changing the Playback Rate - 
+
+> You change the rate of playback by setting the player’s [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) property.
+
+```objc
+aPlayer.rate = 0.5;
+aPlayer.rate = 2.0;
+```
+
+> A value of 1.0 means “play at the natural rate of the current item”. Setting the rate to 0.0 is the same as pausing playback—you can also use [pause](https://developer.apple.com/documentation/avfoundation/avplayer/1387895-pause).
+>
+> Items that support reverse playback can use the rate property with a negative number to set the reverse playback rate. You determine the type of reverse play that is supported by using the playerItem properties [canPlayReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1385591-canplayreverse) (supports a rate value of -1.0), [canPlaySlowReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390598-canplayslowreverse) (supports rates between 0.0 and -1.0) and [canPlayFastReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390493-canplayfastreverse) (supports rate values less than -1.0).
+
+#### Seeking—Repositioning the Playhead
+
+> To move the playhead to a particular time, you generally use [seekToTime:](https://developer.apple.com/documentation/avfoundation/avplayer/1385953-seek) as follows:
+
+```objc
+CMTime fiveSecondsIn = CMTimeMake(5, 1);
+[player seekToTime:fiveSecondsIn];
+```
+
+> The seekToTime: method, however, is tuned for performance rather than precision. If you need to move the playhead precisely, instead you use [seekToTime:toleranceBefore:toleranceAfter:](https://developer.apple.com/documentation/avfoundation/avplayer/1387741-seektotime) as in the following code fragment:
+
+```objc
+CMTime fiveSecondsIn = CMTimeMake(5, 1);
+[player seekToTime:fiveSecondsIn toleranceBefore:kCMTimeZero toleranceAfter:kCMTimeZero];
+```
+
+> Using a tolerance of zero may require the framework to decode a large amount of data. You should use zero only if you are, for example, writing a sophisticated media editing application that requires precise control.
+>
+> After playback, the player’s head is set to the end of the item and further invocations of play have no effect. To position the playhead back at the beginning of the item, you can register to receive an [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) notification from the item. In the notification’s callback method, you invoke seekToTime: with the argument kCMTimeZero.
+
+```objc
+// Register with the notification center after creating the player item.
+[[NSNotificationCenter defaultCenter]
+    addObserver:self
+    selector:@selector(playerItemDidReachEnd:)
+    name:AVPlayerItemDidPlayToEndTimeNotification
+    object:<#The player item#>];
+
+- (void)playerItemDidReachEnd:(NSNotification *)notification {
+    [player seekToTime:kCMTimeZero];
+}
+```
+
+### Playing Multiple Items
+
+> You can use an [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) object to play a number of items in sequence. The AVQueuePlayer class is a subclass of AVPlayer. You initialize a queue player with an array of player items.
+
+```objc
+NSArray *items = <#An array of player items#>;
+AVQueuePlayer *queuePlayer = [[AVQueuePlayer alloc] initWithItems:items];
+```
+
+> You can then play the queue using [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play), just as you would an AVPlayer object. The queue player plays each item in turn. If you want to skip to the next item, you send the queue player an [advanceToNextItem](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1389318-advancetonextitem) message.
+>
+> You can modify the queue using [insertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1388543-insertitem), [removeItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387400-remove), and [removeAllItems](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1385788-removeallitems). When adding a new item, you should typically check whether it can be inserted into the queue, using [canInsertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387289-caninsertitem). You pass nil as the second argument to test whether the new item can be appended to the queue.
+
+```objc
+AVPlayerItem *anItem = <#Get a player item#>;
+if ([queuePlayer canInsertItem:anItem afterItem:nil]) {
+    [queuePlayer insertItem:anItem afterItem:nil];
+}
+```
+
+### Monitoring Playback
+
+> You can monitor a number of aspects of both the presentation state of a player and the player item being played. This is particularly useful for state changes that are not under your direct control. For example:
+>
+> - If the user uses multitasking to switch to a different application, a player’s [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) property will drop to 0.0.
+> - If you are playing remote media, a player item’s [loadedTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389953-loadedtimeranges) and [seekableTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386155-seekabletimeranges) properties will change as more data becomes available.
+These properties tell you what portions of the player item’s timeline are available.
+>
+> - A player’s [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) property changes as a player item is created for an HTTP live stream.
+> - A player item’s [tracks](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386361-tracks) property may change while playing an HTTP live stream.
+> This may happen if the stream offers different encodings for the content; the tracks change if the player switches to a different encoding.
+>
+> - A player or player item’s [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) property may change if playback fails for some reason.
+You can use key-value observing to monitor changes to values of these properties.
+>
+> Important: You should register for KVO change notifications and unregister from KVO change notifications on the main thread. This avoids the possibility of receiving a partial notification if a change is being made on another thread. AV Foundation invokes [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) on the main thread, even if the change operation is made on another thread.
+
+#### Responding to a Change in Status
+
+When a player or player item’s status changes, it emits a key-value observing change notification. If an object is unable to play for some reason (for example, if the media services are reset), the status changes to [AVPlayerStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayer/status/failed) or [AVPlayerItemStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusfailed) as appropriate. In this situation, the value of the object’s error property is changed to an error object that describes why the object is no longer be able to play.
+
+AV Foundation does not specify what thread that the notification is sent on. If you want to update the user interface, you must make sure that any relevant code is invoked on the main thread. This example uses [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to execute code on the main thread.
+
+```objc
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+    change:(NSDictionary *)change context:(void *)context {
+
+    if (context == ) {
+        AVPlayer *thePlayer = (AVPlayer *)object;
+        if ([thePlayer status] == AVPlayerStatusFailed) {
+            NSError *error = [ error];
+            // Respond to error: for example, display an alert sheet.
+            return;
+        }
+        // Deal with other status change if appropriate.
+    }
+    // Deal with other change notifications if appropriate.
+    [super observeValueForKeyPath:keyPath ofObject:object
+        change:change context:context];
+    return;
+}
+```
+
+
 
 
 
