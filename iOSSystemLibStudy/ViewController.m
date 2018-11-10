@@ -163,6 +163,20 @@
     [self.data addObject:[[CellData alloc] initWithText:@"WatchConnectivity" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"WatchKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"SiriKit" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"SMS and Call Reporting" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"AuthenticationServices" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Compression" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Core Services" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"DarwinNotify" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Dispatch" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"dnssd" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Objective-C Runtime" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ServiceManagement" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Network" vcName:@""]];
 }
 
 #pragma mark - UITableViewDataSource
