@@ -1,5 +1,7 @@
 # AVFoundation Programming Guide - AVFoundation 编程指引
 
+翻译自英文完整版 https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188?language=objc
+
 ## About AVFoundation - AVFoundation 概述
 
 > AVFoundation is one of several frameworks that you can use to play and create time-based audiovisual media. It provides an Objective-C interface you use to work on a detailed level with time-based audiovisual data. For example, you can use it to examine, create, edit, or reencode media files. You can also get input streams from devices and manipulate video during realtime capture and playback. Figure I-1 shows the architecture on iOS.
@@ -36,6 +38,7 @@ AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框�
 > You can also configure the audio behavior of your application using [AVAudioSession](https://developer.apple.com/documentation/avfoundation/avaudiosession); this is described in [Audio Session Programming Guide](https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40007875).
 
 AVFoundation framework 包含视频相关的 API 及音频相关的 API 。旧的音频相关的类提供了简便的方式去处理音频。
+
 - 播放音频文件，可以使用 [AVAudioPlayer](https://developer.apple.com/documentation/avfoundation/avaudioplayer) 。
 - 录制音频，可以使用 [AVAudioRecorder](https://developer.apple.com/documentation/avfoundation/avaudiorecorder) 。
 
@@ -48,70 +51,70 @@ AVFoundation framework 包含视频相关的 API 及音频相关的 API 。旧�
 AVFoundation framework 用来表示媒体的最主要的类是 [AVAsset](https://developer.apple.com/documentation/avfoundation/avasset) 。整个框架的设计很大程度上受到这种抽象表示方法的引导。理解它的结构将会有助于理解整个框架是如何工作的。一段或多段媒体数据（音频轨道与视频轨道）构成一个集合，一个 AVAsset 实例就是这样一个集合的汇总表示。AVAsset 实例将整个集合作为一个整体，提供了一些诸如名称、时长、自然呈现大小等的信息。AVAsset 独立于特定的数据格式。通过使用 AVAsset 的众多子类，根据 URL 指定的媒体数据（see [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1) ），可以创建具体的 asset 实例、创建新的结构（see [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188-CH1-SW1) ）。
 
 > Each of the individual pieces of media data in the asset is of a uniform type and called a track. In a typical simple case, one track represents the audio component, and another represents the video component; in a complex composition, however, there may be multiple overlapping tracks of audio and video. Assets may also have metadata.
+>
+> A vital concept in AV Foundation is that initializing an asset or a track does not necessarily mean that it is ready for use. It may require some time to calculate even the duration of an item (an MP3 file, for example, may not contain summary information). Rather than blocking the current thread while a value is being calculated, you ask for values and get an answer back asynchronously through a callback that you define using a block.
+>
+> Relevant Chapters: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1), [Time and Media Representations](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW1)
 
 asset 中媒体数据的每个单独的部分，被称为一个 track ，每个部分都是一个统一的类型。典型的简单情况下，其中一个 track 代表音频组件，另一个代表视频组件；然而，在复杂组合的情况下，可能存在多个重叠的音频和视频 track 。Assets 也可能有元数据。
 
-> A vital concept in AV Foundation is that initializing an asset or a track does not necessarily mean that it is ready for use. It may require some time to calculate even the duration of an item (an MP3 file, for example, may not contain summary information). Rather than blocking the current thread while a value is being calculated, you ask for values and get an answer back asynchronously through a callback that you define using a block.
-
 AV Foundation 中一个重要的概念是，初始化一个 asset 或者一个 track 通常并不意味着它已经处于可以使用的状态了。可能需要一些时间去计算某些数据，比如某个 item 的持续时间（例如，一个可能不包含摘要信息的 MP3 文件）。你应该在当前线程发起查询某个值的请求，在 block 实现的异步回调中获取所需要的数据，而不是采用阻塞当前线程的方式。
-
-> Relevant Chapters: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1), [Time and Media Representations](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW1)
 
 相关章节：[Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)，[Time and Media Representations](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW1)
 
 #### Playback - 播放
 
 > AVFoundation allows you to manage the playback of asset in sophisticated ways. To support this, it separates the presentation state of an asset from the asset itself. This allows you to, for example, play two different segments of the same asset at the same time rendered at different resolutions. The presentation state for an asset is managed by a player item object; the presentation state for each track within an asset is managed by a player item track object. Using the player item and player item tracks you can, for example, set the size at which the visual portion of the item is presented by the player, set the audio mix parameters and video composition settings to be applied during playback, or disable components of the asset during playback.
+>
+> You play player items using a player object, and direct the output of a player to the Core Animation layer. You can use a player queue to schedule playback of a collection of player items in sequence.
+>
+> Relevant Chapter: [Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW1)
 
 AVFoundation 允许用户以多种复杂的方式来管理 asset 的播放。为了支持这一点，框架将 asset 的呈现状态从 asset 自身中分离出来。举个例子，这样的设计允许用户将同一个 asset 的不同片段同时渲染在不同的分辨率下。一个 asset 的呈现状态由一个 player item object 管理；一个 asset 中各个 track 的呈现状态由一个 player item track object 管理。例如，使用 player item 与 player item tracks ，可以设置 item 呈现的可视区域的大小，可以改变播放过程中的音频混合参数以及视频合成设置，可以在播放过程中禁用需要禁用的组件。
 
-> You play player items using a player object, and direct the output of a player to the Core Animation layer. You can use a player queue to schedule playback of a collection of player items in sequence.
-
 你可以使用一个 player object 来播放多个 player items ，并且将该 player 的输出直接输出到 Core Animation layer 上面去。你可以使用一个 player queue 以串行的方式调度一系列 player items 的播放。
-
-> Relevant Chapter: [Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW1)
 
 相关章节：[Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW1)
 
 #### Reading, Writing, and Reencoding Assets - 读、写、重编码 Assets
 
 > AVFoundation allows you to create new representations of an asset in several ways. You can simply reencode an existing asset, or—in iOS 4.1 and later—you can perform operations on the contents of an asset and save the result as a new asset.
+>
+> You use an export session to reencode an existing asset into a format defined by one of a small number of commonly-used presets. If you need more control over the transformation, in iOS 4.1 and later you can use an asset reader and asset writer object in tandem to convert an asset from one representation to another. Using these objects you can, for example, choose which of the tracks you want to be represented in the output file, specify your own output format, or modify the asset during the conversion process.
+>
+> To produce a visual representation of the waveform, you use an asset reader to read the audio track of an asset.
+>
+> Relevant Chapter: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 AVFoundation 允许你以多种方式创建 asset 的新表现形式。你可以简单地重新编码已经存在的 asset ，除此之外，iOS 4.1 及以后的版本，你可以操作 asset 的内容，然后将结果保存为新的 asset 。
 
-> You use an export session to reencode an existing asset into a format defined by one of a small number of commonly-used presets. If you need more control over the transformation, in iOS 4.1 and later you can use an asset reader and asset writer object in tandem to convert an asset from one representation to another. Using these objects you can, for example, choose which of the tracks you want to be represented in the output file, specify your own output format, or modify the asset during the conversion process.
-
 可以使用 export session 将一个已经存在的 asset 重新编码为少数常用预设格式之一。如果需要针对 transformation 进行更多的控制，那么在 iOS 4.1 及更高版本中，可以使用一个 asset reader object 和一个 asset writer object 将 asset 从一种表示转换为另一种。例如，使用这些对象，你可以选择最终输出文件中包含哪些想要的 tracks ，指定自己的输出格式，或者在转换过程中修改 asset 。
 
-> To produce a visual representation of the waveform, you use an asset reader to read the audio track of an asset.
-
 如果需要生成波形的可视化表示，可以使用一个 asset reader 读取 asset 的音频 track 。
-
-> Relevant Chapter: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 相关章节：[Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 #### Thumbnails - 缩略图
 
 > To create thumbnail images of video presentations, you initialize an instance of AVAssetImageGenerator using the asset from which you want to generate thumbnails. AVAssetImageGenerator uses the default enabled video tracks to generate images.
+>
+> Relevant Chapter: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 要创建视频演示文稿的缩略图图像，使用需要生成缩略图的 asset 初始化一个 AVAssetImageGenerator 实例。AVAssetImageGenerator 使用可用的默认视频 tracks 来生成图像。
-
-> Relevant Chapter: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 相关章节：[Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)
 
 #### Editing - 编辑
 
 > AVFoundation uses compositions to create new assets from existing pieces of media (typically, one or more video and audio tracks). You use a mutable composition to add and remove tracks, and adjust their temporal orderings. You can also set the relative volumes and ramping of audio tracks; and set the opacity, and opacity ramps, of video tracks. A composition is an assemblage of pieces of media held in memory. When you export a composition using an export session, it’s collapsed to a file.
+>
+> You can also create an asset from media such as sample buffers or still images using an asset writer.
+>
+> Relevant Chapter: [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/03_Editing.html#//apple_ref/doc/uid/TP40010188-CH8-SW1)
 
 AVFoundation 使用 compositions 从现有的媒体片段（通常是一个或多个视频和音频 tracks ）创建新的 assets 。你可以使用一个可变的 composition 来添加和移除 tracks ，并调整它们的时间顺序。你也可以设置音频 tracks 的相对音量和波形，设置视频 tracks 的不透明度以及不透明变化趋势。一个 composition 是存储与内存中媒体片段的集合。当你使用 export session 导出一个 composition 时，这个 composition 将会以文件的形式存在。
 
-> You can also create an asset from media such as sample buffers or still images using an asset writer.
-
 你也可以使用 asset writer 从诸如 sample buffers 或者静态 images 之类的媒体中创建 asset 。
-
-> Relevant Chapter: [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/03_Editing.html#//apple_ref/doc/uid/TP40010188-CH8-SW1)
 
 相关章节：[Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/03_Editing.html#//apple_ref/doc/uid/TP40010188-CH8-SW1)
 
@@ -120,32 +123,32 @@ AVFoundation 使用 compositions 从现有的媒体片段（通常是一个或�
 > Recording input from cameras and microphones is managed by a capture session. A capture session coordinates the flow of data from input devices to outputs such as a movie file. You can configure multiple inputs and outputs for a single session, even when the session is running. You send messages to the session to start and stop data flow.
 >
 > In addition, you can use an instance of a preview layer to show the user what a camera is recording.
+>
+> Relevant Chapter: [Still and Video Media Capture](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/04_MediaCapture.html#//apple_ref/doc/uid/TP40010188-CH5-SW2)
 
 从相机与麦克风记录输入是由 capture session 管理的。一个 capture session 协调输入设置到输出（如，电影文件）的数据流。即使 session 正在运行，你也可以为单个 session 配置多个输入和输出。发送消息给 session 可以控制数据流的开始和结束。
 
 除此之外，可以使用 preview layer 的实例向用户展示相机正在录制的内容。
-
-> Relevant Chapter: [Still and Video Media Capture](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/04_MediaCapture.html#//apple_ref/doc/uid/TP40010188-CH5-SW2)
 
 相关章节：[Still and Video Media Capture](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/04_MediaCapture.html#//apple_ref/doc/uid/TP40010188-CH5-SW2)
 
 ### Concurrent Programming with AVFoundation - AVFoundation 并发编程
 
 > Callbacks from AVFoundation—invocations of blocks, key-value observers, and notification handlers—are not guaranteed to be made on any particular thread or queue. Instead, AVFoundation invokes these handlers on threads or queues on which it performs its internal tasks.
-
-AVFoundation 返回的回调不能保证在任何特定的线程或队列中进行，这样的回调包括 blocks 、key-value observers 以及 notification handlers 。相反，AVFoundation 在执行其内部任务的线程或者队列上进行这些回调。
-
+>
 > There are two general guidelines as far as notifications and threading:
 >
 > - UI related notifications occur on the main thread.
 > - Classes or methods that require you create and/or specify a queue will return notifications on that queue.
+>
+> Beyond those two guidelines (and there are exceptions, which are noted in the reference documentation) you should not assume that a notification will be returned on any specific thread.
+
+AVFoundation 返回的回调不能保证在任何特定的线程或队列中进行，这样的回调包括 blocks 、key-value observers 以及 notification handlers 。相反，AVFoundation 在执行其内部任务的线程或者队列上进行这些回调。
 
 就通知和线程而言，有两条一般性的准则：
 
 - UI 相关的 notifications 发生在主线程。
 - 那些需要调用方创建或者指定 queue 的类或方法，相关的 notifications 会在对应的 queue 上执行。
-
-> Beyond those two guidelines (and there are exceptions, which are noted in the reference documentation) you should not assume that a notification will be returned on any specific thread.
 
 除上面提到的两条准则之外，你不应该假设 notification 将在任何指定的线程上执行。
 
@@ -163,12 +166,13 @@ AVFoundation 返回的回调不能保证在任何特定的线程或队列中进�
 > - For playback, a basic understanding of Core Animation (see [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514) or, for basic playback, the [AVKit Framework Reference](https://developer.apple.com/documentation/avkit)) .
 
 AVFoundation 是一个高级的 Cocoa framework 。要想有效地使用它，你必须掌握下面的知识：
+
 - 对基础 Cocoa 开发工具与技术有扎实的理解
 - 掌握 blocks 的基本知识
 - 对 key-value coding 与 key-value observing 拥有基础的理解
 - 播放方面，需要对 Core Animation 具有一个基本的理解（参考 [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514) 或者 [AVKit Framework Reference](https://developer.apple.com/documentation/avkit) ）。
 
-### See Also - 参考
+### See Also - 相关材料
 
 >  There are several AVFoundation examples including two that are key to understanding and implementation Camera capture functionality:
 >
@@ -178,6 +182,7 @@ AVFoundation 是一个高级的 Cocoa framework 。要想有效地使用它，�
 > - [AVLocationPlayer: Using AVFoundation Metadata Reading APIs](https://developer.apple.com/library/archive/samplecode/AVLocationPlayer/Introduction/Intro.html#//apple_ref/doc/uid/TP40014495) demonstrates using the metadata APIs.
 
 以下是几个 AVFoundation 的示例程序，其中的两个示例非常有助于理解和实现相机捕捉这样的功能：
+
 - [AVCam-iOS: Using AVFoundation to Capture Images and Movies](https://developer.apple.com/library/archive/samplecode/AVCam/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010112) 是那些需要使用相机功能程序的规范示例代码。是一个完整的示例，文档齐全，并且涵盖了大部分主要的功能。
 - [AVCamManual: Extending AVCam to Use Manual Capture API](https://developer.apple.com/library/archive/samplecode/AVCamManual/Introduction/Intro.html#//apple_ref/doc/uid/TP40014578) 是 AVCam 的配套应用。使用手动相机控制实现相机功能。它也是一个完整的例子，文档齐全，应该被认为是创建利用手动控制的相机应用程序的典型示例。
 - [RosyWriter](https://developer.apple.com/library/archive/samplecode/RosyWriter/Introduction/Intro.html#//apple_ref/doc/uid/DTS40011110) 是一个演示实时帧处理的示例，特别是如何将滤镜应用于视频内容。这些功能点对开发人员来讲可以说是非常普遍的要求，这个示例程序涵盖了这些功能的实现。
@@ -203,15 +208,16 @@ AVURLAsset *anAsset = [[AVURLAsset alloc] initWithURL:url options:nil];
 #### Options for Initializing an Asset - 初始化 Asset 的选项
 
 > The AVURLAsset initialization methods take as their second argument an options dictionary. The only key used in the dictionary is [AVURLAssetPreferPreciseDurationAndTimingKey](https://developer.apple.com/documentation/avfoundation/avurlassetpreferprecisedurationandtimingkey). The corresponding value is a Boolean (contained in an NSValue object) that indicates whether the asset should be prepared to indicate a precise duration and provide precise random access by time.
-
-AVURLAsset 的初始化方法第二个参数是一个选项字典。该字典中唯一可以使用的 key 是 [AVURLAssetPreferPreciseDurationAndTimingKey](https://developer.apple.com/documentation/avfoundation/avurlassetpreferprecisedurationandtimingkey) 。该 key 相应的值是一个 Boolean 值（包含在 NSValue 对象中），该值指出该 asset 是否应该准备一个表明精确持续时间的值以及是否提供基于时间进行精确随机访问的能力。
-
+>
 > Getting the exact duration of an asset may require significant processing overhead. Using an approximate duration is typically a cheaper operation and sufficient for playback. Thus:
 >
 > - If you only intend to play the asset, either pass nil instead of a dictionary, or pass a dictionary that contains the AVURLAssetPreferPreciseDurationAndTimingKey key and a corresponding value of NO (contained in an NSValue object).
 > - If you want to add the asset to a composition ([AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition)), you typically need precise random access. Pass a dictionary that contains the AVURLAssetPreferPreciseDurationAndTimingKey key and a corresponding value of YES (contained in an NSValue object—recall that [NSNumber](https://developer.apple.com/library/archive/documentation/LegacyTechnologies/WebObjects/WebObjects_3.5/Reference/Frameworks/ObjC/Foundation/Classes/NSNumber/Description.html#//apple_ref/occ/cl/NSNumber) inherits from NSValue):
 
+AVURLAsset 的初始化方法第二个参数是一个选项字典。该字典中唯一可以使用的 key 是 [AVURLAssetPreferPreciseDurationAndTimingKey](https://developer.apple.com/documentation/avfoundation/avurlassetpreferprecisedurationandtimingkey) 。该 key 相应的值是一个 Boolean 值（包含在 NSValue 对象中），该值指出该 asset 是否应该准备一个表明精确持续时间的值以及是否提供基于时间进行精确随机访问的能力。
+
 获取一个 asset 的精确持续时间可能需要大量的处理开销。使用一个近似的持续时间通常是个更轻量的操作，并且近似的持续时间足以用于播放。因此：
+
 - 如果你只是打算播放这个 asset ，那么，传递 nil 或者传递包含 AVURLAssetPreferPreciseDurationAndTimingKey 键和一个相应的 NO 值（包含在 NSValue 对象中）。
 - 如果你想要将 asset 添加到 composition（ [AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition) ）中，通常你需要精确的随机访问。传递一个包含 AVURLAssetPreferPreciseDurationAndTimingKey 键值和一个相应的 YES 值（包含在一个 NSValue 对象中，回忆下继承于 NSValue 的 [NSNumber](https://developer.apple.com/library/archive/documentation/LegacyTechnologies/WebObjects/WebObjects_3.5/Reference/Frameworks/ObjC/Foundation/Classes/NSNumber/Description.html#//apple_ref/occ/cl/NSNumber) ）的字典。
 
@@ -224,7 +230,7 @@ AVURLAsset *anAssetToUseInAComposition = [[AVURLAsset alloc] initWithURL:url opt
 #### Accessing the User’s Assets - 访问用户的 Assets
 
 > To access the assets managed by the iPod library or by the Photos application, you need to get a URL of the asset you want.
-
+>
 > - To access the iPod Library, you create an [MPMediaQuery](https://developer.apple.com/documentation/mediaplayer/mpmediaquery) instance to find the item you want, then get its URL using [MPMediaItemPropertyAssetURL](https://developer.apple.com/documentation/mediaplayer/mpmediaitempropertyasseturl).
 > For more about the Media Library, see [Multimedia Programming Guide](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/MultimediaPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009767).
 >
@@ -270,10 +276,10 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 ### Preparing an Asset for Use - 准备 Asset 以供使用
 
 > Initializing an asset (or track) does not necessarily mean that all the information that you might want to retrieve for that item is immediately available. It may require some time to calculate even the duration of an item (an MP3 file, for example, may not contain summary information). Rather than blocking the current thread while a value is being calculated, you should use the [AVAsynchronousKeyValueLoading](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading)  protocol to ask for values and get an answer back later through a completion handler you define using a block. (AVAsset and AVAssetTrack conform to the AVAsynchronousKeyValueLoading protocol.)
+>
+> You test whether a value is loaded for a property using [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey). When an asset is first loaded, the value of most or all of its properties is [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown). To load a value for one or more properties, you invoke [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys). In the completion handler, you take whatever action is appropriate depending on the property’s status. You should always be prepared for loading to not complete successfully, either because it failed for some reason such as a network-based URL being inaccessible, or because the load was canceled.
 
 初始化一个 asset 并不意味着你想要获取的有关该item的所有信息是立即可用的。可能需要一些时间去计算诸如 item 持续时间（例如，一个 MP3 文件，可能并不包含摘要信息）之类的数据。你应该使用 [AVAsynchronousKeyValueLoading](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading) protocol 请求数据，之后通过使用 block 定义的 completion handler 来获取数据，而不是采用阻塞当前线程等待着数据的计算。
-
-> You test whether a value is loaded for a property using [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey). When an asset is first loaded, the value of most or all of its properties is [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown). To load a value for one or more properties, you invoke [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys). In the completion handler, you take whatever action is appropriate depending on the property’s status. You should always be prepared for loading to not complete successfully, either because it failed for some reason such as a network-based URL being inaccessible, or because the load was canceled.
 
 使用 [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey) 测试是否为某个 property 加载了某个值。当一个 asset 首次被加载时，其大部分或者全部 properties 的值均为 [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown) 。调用 [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys) 来加载一个或者多个 properties 的值。在 completion handler 中，依据 property 的状态采取适当的动作。你应该始终准备好处理加载不完全成功的情形，加载失败可能有很多原因，例如基于网络的 URL 无法访问，或者加载被取消掉。
 
@@ -357,13 +363,14 @@ if (halfWayImage != NULL) {
 > - The image
 > - The time for which you requested the image and the actual time for which the image was generated
 > - An error object that describes the reason generation failed
+>
+> In your implementation of the block, check the result constant to determine whether the image was created. In addition, ensure that you keep a strong reference to the image generator until it has finished creating the images.
 
 为了生成一系列图像，你需要向 image generator 发送 [generateCGImagesAsynchronouslyForTimes:completionHandler:](https://developer.apple.com/documentation/avfoundation/avassetimagegenerator/1388100-generatecgimagesasynchronously) 消息。第一个参数是一个元素为 [NSValue](https://developer.apple.com/library/archive/documentation/LegacyTechnologies/WebObjects/WebObjects_3.5/Reference/Frameworks/ObjC/Foundation/Classes/NSValue/Description.html#//apple_ref/occ/cl/NSValue) 的数组，其每个元素包含一个 CMTime 结构体，指定在 asset 的哪些时间点生成所需要的图像。第二个参数是一个 block ，作为每个图像生成的回调。block 参数提供了一个常量，该常量表明图像是否创建成功或者操作是否被取消，block 中参数如下：
+
 - 生成的图像
 - 请求生成图像的时间与图像实际生成的时间
 - 一个error对象描述生成失败的原因
-
-> In your implementation of the block, check the result constant to determine whether the image was created. In addition, ensure that you keep a strong reference to the image generator until it has finished creating the images.
 
 在 block 的实现中，检查回调回来的常量以确定图像是否被创建。此外，确保在完成所有图像的创建之前，对 image generator 保持一个强引用。
 
@@ -475,6 +482,7 @@ if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
 你可以向 session 发送 [cancelExport](https://developer.apple.com/documentation/avfoundation/avassetexportsession/1387794-cancelexport) 消息取消一个导出操作。
 
 如果你试图复写现有文件或者写位于应用程序沙盒之外的文件，导出操作会失败。其他可能导致失败的原因有：
+
 - 导出操作正在进行时，有来电
 - 你的应用程序正在后台并且其他应用程序开始播放
 
@@ -491,12 +499,12 @@ if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
 > A player is a controller object that you use to manage playback of an asset, for example starting and stopping playback, and seeking to a particular time. You use an instance of [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) to play a single asset. You can use an [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) object to play a number of items in sequence (AVQueuePlayer is a subclass of AVPlayer). On OS X you have the option of the using the AVKit framework’s AVPlayerView class to play the content back within a view.
 >
 > A player provides you with information about the state of the playback so, if you need to, you can synchronize your user interface with the player’s state. You typically direct the output of a player to a specialized Core Animation layer (an instance of [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) or [AVSynchronizedLayer](https://developer.apple.com/documentation/avfoundation/avsynchronizedlayer)). To learn more about layers, see Core Animation Programming Guide.
+>
+> Multiple player layers: You can create many AVPlayerLayer objects from a single AVPlayer instance, but only the most recently created such layer will display any video content onscreen.
 
 player 是一个用来管理 asset 播放的控制器对象，例如，开始与暂停播放，定位播放进度到特定的时间。使用 [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) 实例去播放单个 asset 。使用一个 [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) 对象按顺序播放多个 item （ AVQueuePlayer 是 AVPlayer 的子类）。在 OS X 上，你可以选择使用 AVKit framework 的 AVPlayerView 在其中播放内容。
 
 player 向你提供了关于播放状态的信息，所以，如果需要的话，可以根据 player 的状态同步更新你的用户界面。通常将 player 的输出定向到专门的 Core Animation layer （ [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) 的实例或者 [AVSynchronizedLayer](https://developer.apple.com/documentation/avfoundation/avsynchronizedlayer) 的实例）。了解有关 layers 的更多内容，可以查看 Core Animation Programming Guide 。
-
-> Multiple player layers: You can create many AVPlayerLayer objects from a single AVPlayer instance, but only the most recently created such layer will display any video content onscreen.
 
 多个 player layers：从单个 AVPlayer 实例可以创建很多 AVPlayerLayer 对象，单只有最近创建的那个 layer 才会在屏幕上显示视频内容。
 
@@ -531,6 +539,19 @@ player 向你提供了关于播放状态的信息，所以，如果需要的话�
 > 
 > To create and prepare an HTTP live stream for playback. Initialize an instance of AVPlayerItem using the URL. (You cannot directly create an AVAsset instance to represent the media in an HTTP Live Stream.)
 
+配置一个 asset 用于播放的方式可以能取决于你要播放的 asset 类型。广义上讲，有两种主要的类型：基于文件的 assets（例如，本地文件，相机胶卷或者媒体库），你可以随机访问；基于 stream 的 assets（ HTTP Live Streming 格式）。
+
+加载并播放基于文件的 asset ，有如下几个步骤：
+
+- 使用 [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset) 创建一个 asset
+- 使用 asset 创建一个 AVPlayerItem 实例
+- 将 AVPlayerItem 实例与 AVPlayer 的实例相关联
+- 等待直到 item 的 status 属性表明它已准备好播放（通常使用 key-value observing 来接受状态改变的通知）。
+
+该方法的说明在 [Putting It All Together: Playing a Video File Using AVPlayerLayer](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW2) 这里。
+
+为了创建并且准备一个 HTTP live stream 用来进行播放。使用 URL 初始化 AVPlayerItem 的一个实例。（你不能直接创建 AVAsset 实例来代表 HTTP Live Stream 类型的 media ）。
+
 ```objc
 NSURL *url = [NSURL URLWithString:@"<#Live stream URL#>];
 // You may find a test stream at <http://devimages.apple.com/iphone/samples/bipbop/bipbopall.m3u8>.
@@ -545,11 +566,19 @@ self.player = [AVPlayer playerWithPlayerItem:playerItem];
 >
 > Note: Using the duration property on the player item requires iOS 4.3 or later. An approach that is compatible with all versions of iOS involves observing the [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) property of the player item. When the status becomes [AVPlayerItemStatusReadyToPlay](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusreadytoplay), the duration can be fetched with the following line of code:
 
+当你将 player item 与 player 关联后，player item 开始准备好播放。当它准备好播放时，player item 将创建 AVAsset 和 AVAssetTrack 实例，你可以使用它们来检查 live stream 的内容。
+
+获取一个 streaming item 的持续时间，可以 observe 该 player item 的 [duration](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389386-duration) 属性。一旦该 item 准备就绪时，duration 属性的值会更新为该 stream 的正确值。
+
+注意：只有在 iOS 4.3 及之后的版本中才可以使用 player item 的 duration 属性。一种兼容所有 iOS 版本的方法是观察 player item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) 属性。当 status 变为 [AVPlayerItemStatusReadyToPlay](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusreadytoplay) ，就可以使用下面的代码来获取到 duration 值。
+
 ```objc
 [[[[[playerItem tracks] objectAtIndex:0] assetTrack] asset] duration];
 ```
 
 > If you simply want to play a live stream, you can take a shortcut and create a player directly using the URL use the following code:
+
+如果你想简单地播放一个 live stream ，你可以采用一种快捷方式，使用下面的代码使用 URL 直接创建一个 player 。
 
 ```objc
 self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
@@ -568,9 +597,21 @@ self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
 >
 > If either route succeeds, you end up with a player item that you can then associate with a player.
 
+与 assets 与 items 相同的是，初始化 player 并不意味着它已经准备就绪了。你应该 observe 这个 player 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 属性，当 player 准备就绪时，该属性值将会更新为 [AVPlayerStatusReadyToPlay](https://developer.apple.com/documentation/avfoundation/avplayerstatus/avplayerstatusreadytoplay) 。你也可以观察 [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) 属性去访问 stream 对应的 player item 。
+
+如果你不清楚 URL 的类型，按照下面的步骤进行：
+
+1. 试着使用 URL 初始化 AVURLAsset ，然后加载其 tracks 键。如果 tracks 加载成功，接下来为该 asset 创建一个 player item。
+
+2. 如果 1 失败的话，使用从 URL 创建一个 AVPlayerItem 对象，观察该 player 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 属性以决定其是否已经处于可以播放的状态。
+
+如果任何一条路径成功，最终将生成一个 player item ，然后你就可以将其与一个 player 联系起来。
+
 ### Playing an Item - 播放 Item
 
 > To start playback, you send a [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) message to the player.
+
+发送 [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) 消息到 player 来开始播放。
 
 ```objc
 - (IBAction)play:sender {
@@ -580,9 +621,13 @@ self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
 
 > In addition to simply playing, you can manage various aspects of the playback, such as the rate and the location of the playhead. You can also monitor the play state of the player; this is useful if you want to, for example, synchronize the user interface to the presentation state of the asset—see [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8).
 
-#### Changing the Playback Rate - 
+除了简单地进行播放，你可以管理播放的各个方面，比如，你可以管理播放的速度以及播放的开始位置。你也可以监控 player 的播放状态，这是非常有用的，例如你需要根据 asset 的状态同步更新用户界面的显示状态 - 参阅 [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8) 。
+
+#### Changing the Playback Rate - 改变播放速率
 
 > You change the rate of playback by setting the player’s [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) property.
+
+通过设置 player 的 [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) 属性来改变播放的速率。
 
 ```objc
 aPlayer.rate = 0.5;
@@ -593,9 +638,15 @@ aPlayer.rate = 2.0;
 >
 > Items that support reverse playback can use the rate property with a negative number to set the reverse playback rate. You determine the type of reverse play that is supported by using the playerItem properties [canPlayReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1385591-canplayreverse) (supports a rate value of -1.0), [canPlaySlowReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390598-canplayslowreverse) (supports rates between 0.0 and -1.0) and [canPlayFastReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390493-canplayfastreverse) (supports rate values less than -1.0).
 
-#### Seeking—Repositioning the Playhead
+1.0 表示“以当前 item 的自然速率播放”。将 rate 设置为 0.0 与暂停播放的效果是一致的，你也可以使用 [pause](https://developer.apple.com/documentation/avfoundation/avplayer/1387895-pause) 调用来达到同样的目的。
+
+对于支持倒放的 item 可以使用负的 rate 值来设置其倒放的速率。使用 playerItem 的 [canPlayReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1385591-canplayreverse)（支持 rate 值为 -1.0）、 [canPlaySlowReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390598-canplayslowreverse)（支持 rate 值介于 0.0 与 -1.0 之间）、 [canPlayFastReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390493-canplayfastreverse)（支持 rate 值小于 -1.0 ）属性确定倒放所支持的类型。
+
+#### Seeking—Repositioning the Playhead - 寻址 - 重新定位 Playhead
 
 > To move the playhead to a particular time, you generally use [seekToTime:](https://developer.apple.com/documentation/avfoundation/avplayer/1385953-seek) as follows:
+
+通常使用 [seekToTime:](https://developer.apple.com/documentation/avfoundation/avplayer/1385953-seek) 移动 playhead 倒指定的时间。
 
 ```objc
 CMTime fiveSecondsIn = CMTimeMake(5, 1);
@@ -603,6 +654,8 @@ CMTime fiveSecondsIn = CMTimeMake(5, 1);
 ```
 
 > The seekToTime: method, however, is tuned for performance rather than precision. If you need to move the playhead precisely, instead you use [seekToTime:toleranceBefore:toleranceAfter:](https://developer.apple.com/documentation/avfoundation/avplayer/1387741-seektotime) as in the following code fragment:
+
+然而，seekToTime: 方法为了性能而损失了精度。如果你需要精准地移动 playhead ，可以像下面代码片段那样使用 [seekToTime:toleranceBefore:toleranceAfter:](https://developer.apple.com/documentation/avfoundation/avplayer/1387741-seektotime) 。
 
 ```objc
 CMTime fiveSecondsIn = CMTimeMake(5, 1);
@@ -612,6 +665,10 @@ CMTime fiveSecondsIn = CMTimeMake(5, 1);
 > Using a tolerance of zero may require the framework to decode a large amount of data. You should use zero only if you are, for example, writing a sophisticated media editing application that requires precise control.
 >
 > After playback, the player’s head is set to the end of the item and further invocations of play have no effect. To position the playhead back at the beginning of the item, you can register to receive an [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) notification from the item. In the notification’s callback method, you invoke seekToTime: with the argument kCMTimeZero.
+
+tolerance 参数传递 0 framework 可能需要解码大量的数据。仅当确实需要的情况下，才应该使用 0 ，比如，编写一个需要精确控制的复杂媒体编辑应用程序时，才应该使用 0 。
+
+播放完毕之后，player 的 head 被设置为 item 的结尾，并且之后再调用 play 将没有任何效果。要想在这种情况下将 playhead 重新定位到该 item 的开始处，你可以注册并接受该 item 发出的 [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) 通知。在通知的回调方法中，传递 kCMTimeZero 参数调用 seekToTime: 。
 
 ```objc
 // Register with the notification center after creating the player item.
@@ -626,9 +683,11 @@ CMTime fiveSecondsIn = CMTimeMake(5, 1);
 }
 ```
 
-### Playing Multiple Items
+### Playing Multiple Items - 播放多个 Item
 
 > You can use an [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) object to play a number of items in sequence. The AVQueuePlayer class is a subclass of AVPlayer. You initialize a queue player with an array of player items.
+
+你可以使用 [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) 对象按序播放一系列 item 。AVQueuePlayer 是 AVPlayer 的子类。使用一个 player items 的数组初始化一个 queue player 。
 
 ```objc
 NSArray *items = <#An array of player items#>;
@@ -639,6 +698,10 @@ AVQueuePlayer *queuePlayer = [[AVQueuePlayer alloc] initWithItems:items];
 >
 > You can modify the queue using [insertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1388543-insertitem), [removeItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387400-remove), and [removeAllItems](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1385788-removeallitems). When adding a new item, you should typically check whether it can be inserted into the queue, using [canInsertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387289-caninsertitem). You pass nil as the second argument to test whether the new item can be appended to the queue.
 
+然后，你可以像使用 AVPlayer 对象一样，使用 [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) 来播放该 queue 中包含的 items 。queue player 依次播放每个 item。如果你想跳到下一个 item ，发送一个 [advanceToNextItem](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1389318-advancetonextitem) 消息给 queue player 。
+
+你可以使用 [insertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1388543-insertitem) 、[removeItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387400-remove) 、[removeAllItems](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1385788-removeallitems) 来修改 queue 。当你需要增加一个新的 item 到 queue 中时，通常应该使用 [canInsertItem:afterItem:](https://developer.apple.com/documentation/avfoundation/avqueueplayer/1387289-caninsertitem) 检查该 item 是否可以插入到对应的 queue 中。如果你传递 nil 给该调用的第二个参数，可以测试新的 item 是否可以追加到 queue 的末尾。
+
 ```objc
 AVPlayerItem *anItem = <#Get a player item#>;
 if ([queuePlayer canInsertItem:anItem afterItem:nil]) {
@@ -646,28 +709,51 @@ if ([queuePlayer canInsertItem:anItem afterItem:nil]) {
 }
 ```
 
-### Monitoring Playback
+### Monitoring Playback - 监控播放
 
 > You can monitor a number of aspects of both the presentation state of a player and the player item being played. This is particularly useful for state changes that are not under your direct control. For example:
 >
 > - If the user uses multitasking to switch to a different application, a player’s [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) property will drop to 0.0.
 > - If you are playing remote media, a player item’s [loadedTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389953-loadedtimeranges) and [seekableTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386155-seekabletimeranges) properties will change as more data becomes available.
-These properties tell you what portions of the player item’s timeline are available.
+> These properties tell you what portions of the player item’s timeline are available.
 >
 > - A player’s [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) property changes as a player item is created for an HTTP live stream.
 > - A player item’s [tracks](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386361-tracks) property may change while playing an HTTP live stream.
 > This may happen if the stream offers different encodings for the content; the tracks change if the player switches to a different encoding.
 >
 > - A player or player item’s [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) property may change if playback fails for some reason.
-You can use key-value observing to monitor changes to values of these properties.
+> You can use key-value observing to monitor changes to values of these properties.
 >
 > Important: You should register for KVO change notifications and unregister from KVO change notifications on the main thread. This avoids the possibility of receiving a partial notification if a change is being made on another thread. AV Foundation invokes [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) on the main thread, even if the change operation is made on another thread.
 
-#### Responding to a Change in Status
+你可以监控 player 呈现状态的和正在播放的 player item 的多个方面。这对于不受你直接控制的状态变更特别有用。例如：
 
-When a player or player item’s status changes, it emits a key-value observing change notification. If an object is unable to play for some reason (for example, if the media services are reset), the status changes to [AVPlayerStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayer/status/failed) or [AVPlayerItemStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusfailed) as appropriate. In this situation, the value of the object’s error property is changed to an error object that describes why the object is no longer be able to play.
+- 如果用户切换到另一个应用程序，一个 player 的 [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) 参数将会将为 0.0 。
+- 如果你正在播放远程媒体，player item 的 [loadedTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389953-loadedtimeranges) 和 [seekableTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386155-seekabletimeranges) 属性随着更多数据变得可用而发生变化。
 
-AV Foundation does not specify what thread that the notification is sent on. If you want to update the user interface, you must make sure that any relevant code is invoked on the main thread. This example uses [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to execute code on the main thread.
+这些属性告诉你 player item 的那部分 timeline 是可用的。
+
+- HTTP live stream 类型下，用于该类型下的 player item 的创建将会改变 player 的 [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) 属性。
+- 当播放一个 HTTP live stream 时，player item 的 [tracks](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386361-tracks) 属性可能发生改变。
+
+如果 stream 提供了不同编码的内容，上述的情况即有可能发生；如果 player 切换成不同的编码模式 tracks 也会改变。
+
+一个 player 或者 player item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 在播放由于某些原因失败的情况下可能发生改变。
+
+你可以使用 key-value observing 机制监控这些属性值的改变。
+
+重要：你应该在主线程注册和移除 KVO 通知。如果改变发生在子线程，这样做可以避免接受到部分通知的可能性。AVFoundation 在主线程上调用 [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) 即使改变操作发生在其他线程。
+
+
+#### Responding to a Change in Status - 响应状态的改变
+
+> When a player or player item’s status changes, it emits a key-value observing change notification. If an object is unable to play for some reason (for example, if the media services are reset), the status changes to [AVPlayerStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayer/status/failed) or [AVPlayerItemStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusfailed) as appropriate. In this situation, the value of the object’s error property is changed to an error object that describes why the object is no longer be able to play.
+>
+> AV Foundation does not specify what thread that the notification is sent on. If you want to update the user interface, you must make sure that any relevant code is invoked on the main thread. This example uses [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to execute code on the main thread.
+
+当一个 player 或者 player item 的状态改变后，它会发出一个 key-value observing 通知。如果由于某些原因（例如，如果媒体服务重置）导致不能进行播放，状态适当的改变为 [AVPlayerStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayer/status/failed) 或者 [AVPlayerItemStatusFailed](https://developer.apple.com/documentation/avfoundation/avplayeritemstatus/avplayeritemstatusfailed) 。在这种情况下，该对象的 error 属性的值将被更新以描述不能继续播放的原因。
+
+AVFoundation 没有指定发送通知所在的线程。如果你想要更新用户界面，你必须确保任何相关的调用发生在主线程。下面的例子使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 保证代码在主线程上执行。
 
 ```objc
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
@@ -689,15 +775,582 @@ AV Foundation does not specify what thread that the notification is sent on. If 
 }
 ```
 
+#### Tracking Readiness for Visual Display - 为视觉展示做追踪准备
+
+> You can observe an [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) object’s [readyForDisplay](https://developer.apple.com/documentation/avfoundation/avplayerlayer/1389748-isreadyfordisplay) property to be notified when the layer has user-visible content. In particular, you might insert the player layer into the layer tree only when there is something for the user to look at and then perform a transition from.
+
+你可以 observe 一个 [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) 对象的 [readyForDisplay](https://developer.apple.com/documentation/avfoundation/avplayerlayer/1389748-isreadyfordisplay) 属性，当该 layer 有了用户可见的内容时，这个属性会得到通知。特别是，只有在有东西给用户查看然后执行转换时，才可以插入 player layer 到 layer tree 中。
+
+#### Tracking Time - 追踪时间
+
+> To track changes in the position of the playhead in an AVPlayer object, you can use [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) or [addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver). You might do this to, for example, update your user interface with information about time elapsed or time remaining, or perform some other user interface synchronization.
+>
+> - With [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver), the block you provide is invoked at the interval you specify, if time jumps, and when playback starts or stops.
+> - With [addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver), you pass an array of CMTime structures contained in NSValue objects. The block you provide is invoked whenever any of those times is traversed.
+> 
+> Both of the methods return an opaque object that serves as an observer. You must keep a strong reference to the returned object as long as you want the time observation block to be invoked by the player. You must also balance each invocation of these methods with a corresponding call to [removeTimeObserver:](https://developer.apple.com/documentation/avfoundation/avplayer/1387552-removetimeobserver).
+>
+> With both of these methods, AV Foundation does not guarantee to invoke your block for every interval or boundary passed. AV Foundation does not invoke a block if execution of a previously invoked block has not completed. You must make sure, therefore, that the work you perform in the block does not overly tax the system.
+
+追踪 AVPlayer 对象中 playhead 位置的改变，可以使用 [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) 或者 [addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver) 。例如，你想要使用消耗的时间或者剩余的时间来更新用户界面，或者执行某些其他用户界面的同步操作，你可能都需要使用上面的两个 API 来追踪 playhead 位置的改变。
+
+[addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) 中你提供的 block ，如果播放正在进行，将按你指定的时间间隔调用，同时，播放开始或者停止的时候，block 也会被调用。
+
+[addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver)，传递一个 CMTime 结构体的数组。播放进度到达该数组指定的每个时间时，block 都将会被调用一次。
+
+这两个方法都返回一个作为观察者的不透明对象。只要你希望 player 调用 time observation block ，就必须对返回的对象保持一个强引用。对于上面两个方法的每次调用，必须存在相应的 [removeTimeObserver:](https://developer.apple.com/documentation/avfoundation/avplayer/1387552-removetimeobserver) 的调用。
+
+上面两个方法，AVFoundation 不保证每次间隔或者通过边界时都能调用你的 block 。如果前一个 block 的执行未完成的话，即使满足时间间隔或者边界条件，AVFoundation 也不会触发 block 的再次调用。因此，你必须确保在 block 中所做的处理不会让系统过载。
+
+```objc
+// Assume a property: @property (strong) id playerObserver;
+
+Float64 durationSeconds = CMTimeGetSeconds([<#An asset#> duration]);
+CMTime firstThird = CMTimeMakeWithSeconds(durationSeconds/3.0, 1);
+CMTime secondThird = CMTimeMakeWithSeconds(durationSeconds*2.0/3.0, 1);
+NSArray *times = @[[NSValue valueWithCMTime:firstThird], [NSValue valueWithCMTime:secondThird]];
+
+self.playerObserver = [<#A player#> addBoundaryTimeObserverForTimes:times queue:NULL usingBlock:^{
+
+NSString *timeDescription = (NSString *)
+    CFBridgingRelease(CMTimeCopyDescription(NULL, [self.player currentTime]));
+NSLog(@"Passed a boundary at %@", timeDescription);
+}];
+```
+
+#### Reaching the End of an Item - 到达 Item 结尾
+
+> You can register to receive an [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) notification when a player item has completed playback.
+
+你可以注册 [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) 通知，当一个 player item 完成播放的时候，可以接收到该通知。
+
+```objc
+[[NSNotificationCenter defaultCenter] addObserver:<#The observer, typically self#>
+    selector:@selector(<#The selector name#>)
+    name:AVPlayerItemDidPlayToEndTimeNotification
+    object:<#A player item#>];
+```
+
+### Putting It All Together: Playing a Video File Using AVPlayerLayer - 完整流程：使用 AVPlayerLayer 播放一个视频文件
+
+> This brief code example illustrates how you can use an [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) object to play a video file. It shows how to:
+>
+> - Configure a view to use an AVPlayerLayer layer
+> - Create an AVPlayer object
+> - Create an AVPlayerItem object for a file-based asset and use key-value observing to observe its status
+> - Respond to the item becoming ready to play by enabling a button
+> - Play the item and then restore the player’s head to the beginning
+>
+> Note: To focus on the most relevant code, this example omits several aspects of a complete application, such as memory management and unregistering as an observer (for key-value observing or for the notification center). To use AV Foundation, you are expected to have enough experience with Cocoa to be able to infer the missing pieces.
+>
+> For a conceptual introduction to playback, skip to [Playing Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW4).
+
+下面简短的代码示例说明了如何使用一个 [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) 对象播放一个视频文件：
+
+- 使用一个 AVPlayerLayer 配置 view
+- 创建一个 AVPlayer 对象
+- 对于基于文件的 asset，创建一个 AVPlayerItem 对象，并且使用 key-value observing 观察它的状态
+- 当对应的 item 播放准备就绪时，使一个 button 变为可交互状态
+- 播放该 item ，然后将该 player 的head 恢复到起始位置
+
+注意：为了着重介绍 AVFoundation 最相关的代码，这个例子遗漏了一个完整应用程序的一些方面，比如内存管理与观察者的注销（ key-value observing 或者 notification center）。你应该拥有足够的 Cocoa 相关经验可以推断出缺失的代码片段。
+
+关于 playback 概念性的介绍，跳去看
+
+#### The Player View - 播放器视图 [Playing Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW4) 。
+
+> To play the visual component of an asset, you need a view containing an [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) layer to which the output of an [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) object can be directed. You can create a simple subclass of [UIView](https://developer.apple.com/documentation/uikit/uiview) to accommodate this:
+
+你需要一个包含 [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) layer 的 view 去播放一个 asset 的可视化部分，AVPlayer 对象的输出直接渲染到该 layer 上。你可以创建 [UIView](https://developer.apple.com/documentation/uikit/uiview) 的一个简单子类来容纳 AVPlayer 的输出。
+
+```objc
+#import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
+
+@interface PlayerView : UIView
+@property (nonatomic) AVPlayer *player;
+@end
+
+@implementation PlayerView
++ (Class)layerClass {
+    return [AVPlayerLayer class];
+}
+- (AVPlayer*)player {
+    return [(AVPlayerLayer *)[self layer] player];
+}
+- (void)setPlayer:(AVPlayer *)player {
+    [(AVPlayerLayer *)[self layer] setPlayer:player];
+}
+@end
+```
+
+#### A Simple View Controller - 一个简单的 View Controller
+
+> Assume you have a simple view controller, declared as follows:
+
+假如你有一个简单的 view controller ，声明如下：
+
+```objc
+@class PlayerView;
+@interface PlayerViewController : UIViewController
+
+@property (nonatomic) AVPlayer *player;
+@property (nonatomic) AVPlayerItem *playerItem;
+@property (nonatomic, weak) IBOutlet PlayerView *playerView;
+@property (nonatomic, weak) IBOutlet UIButton *playButton;
+- (IBAction)loadAssetFromFile:sender;
+- (IBAction)play:sender;
+- (void)syncUI;
+@end
+```
+
+> The syncUI method synchronizes the button’s state with the player’s state:
+
+syncUI 方法使用 player 的状态同步更新按钮的状态。
+
+```objc
+- (void)syncUI {
+    if ((self.player.currentItem != nil) &&
+        ([self.player.currentItem status] == AVPlayerItemStatusReadyToPlay)) {
+        self.playButton.enabled = YES;
+        }
+    else {
+        self.playButton.enabled = NO;
+    }
+}
+```
+
+> You can invoke syncUI in the view controller’s [viewDidLoad](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621495-viewdidload) method to ensure a consistent user interface when the view is first displayed.
+
+你可以在 view controller 的 [viewDidLoad](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621495-viewdidload) 方法中调用 syncUI 当视图第一次展示的时候确保一致的用户界面。
+
+```objc
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self syncUI];
+}
+```
+
+> The other properties and methods are described in the remaining sections.
+
+其余的属性和方法在剩下的章节中描述。
+
+#### Creating the Asset - 创建 Asset
+
+> You create an asset from a URL using [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset). (The following example assumes your project contains a suitable video resource.)
+
+使用 [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset) 根据一个 URL 创建一个 asset。（下面的示例代码假设你的工程包含了一个合适的视频资源）
+
+```objc
+- (IBAction)loadAssetFromFile:sender {
+
+NSURL *fileURL = [[NSBundle mainBundle]
+    URLForResource:<#@"VideoFileName"#> withExtension:<#@"extension"#>];
+
+AVURLAsset *asset = [AVURLAsset URLAssetWithURL:fileURL options:nil];
+NSString *tracksKey = @"tracks";
+
+[asset loadValuesAsynchronouslyForKeys:@[tracksKey] completionHandler:
+    ^{
+        // The completion block goes here.
+    }];
+}
+```
+
+> In the completion block, you create an instance of [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) for the asset and set it as the player for the player view. As with creating the asset, simply creating the player item does not mean it’s ready to use. To determine when it’s ready to play, you can observe the item’s status property. You should configure this observing before associating the player item instance with the player itself.
+>
+> You trigger the player item’s preparation to play when you associate it with the player.
+
+回调 block 中，为这个 asset 创建一个 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 的实例，并且设置该播放器为播放器视图的 player 。就像创建 asset 一样，简单地创建 player item 并不意味着它已经可以被使用。你可以观察该 item 的 status 属性来确定其准备好播放的时间。在将 player item 与 播放器本身关联之前，你应该完成对此观察的设置。
+
+```objc
+// Define this constant for the key-value observation context.
+static const NSString *ItemStatusContext;
+
+// Completion handler block.
+dispatch_async(dispatch_get_main_queue(),
+    ^{
+        NSError *error;
+        AVKeyValueStatus status = [asset statusOfValueForKey:tracksKey error:&error];
+
+        if (status == AVKeyValueStatusLoaded) {
+            self.playerItem = [AVPlayerItem playerItemWithAsset:asset];
+            // ensure that this is done before the playerItem is associated with the player
+            [self.playerItem addObserver:self forKeyPath:@"status"
+                options:NSKeyValueObservingOptionInitial context:&ItemStatusContext];
+            [[NSNotificationCenter defaultCenter] addObserver:self
+                selector:@selector(playerItemDidReachEnd:)
+                name:AVPlayerItemDidPlayToEndTimeNotification
+                object:self.playerItem];
+            self.player = [AVPlayer playerWithPlayerItem:self.playerItem];
+            [self.playerView setPlayer:self.player];
+        }
+        else {
+            // You should deal with the error appropriately.
+            NSLog(@"The asset's tracks were not loaded:\n%@", [error localizedDescription]);
+        }
+    });
+```
+
+#### Responding to the Player Item’s Status Change - 响应 Player Item 的状态改变
+
+> When the player item’s status changes, the view controller receives a key-value observing change notification. AV Foundation does not specify what thread that the notification is sent on. If you want to update the user interface, you must make sure that any relevant code is invoked on the main thread. This example uses [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to queue a message on the main thread to synchronize the user interface.
+
+当该 player item 的状态改变之后，view controller 接收到 key-value observing 改变通知。AVFoundation 并不指定通知的进行在哪个线程。如果你希望更新用户界面的话，你必须确保任何与界面相关的代码在主线程上执行。本例子中使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 保证同步用户界面的逻辑在主线程上进行。
+
+```objc
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
+        change:(NSDictionary *)change context:(void *)context {
+
+    if (context == &ItemStatusContext) {
+        dispatch_async(dispatch_get_main_queue(),
+            ^{
+                [self syncUI];
+            });
+        return;
+    }
+    [super observeValueForKeyPath:keyPath ofObject:object
+        change:change context:context];
+    return;
+}
+```
+
+#### Playing the Item - 播放该 Item
+
+> Playing the item involves sending a [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) message to the player.
+
+向 player 发送一个 [play](https://developer.apple.com/documentation/avfoundation/avplayer/1386726-play) 消息来开始该 item 的播放。
+
+```objc
+- (IBAction)play:sender {
+    [player play];
+}
+```
+
+> The item is played only once. After playback, the player’s head is set to the end of the item, and further invocations of the play method will have no effect. To position the playhead back at the beginning of the item, you can register to receive an [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) from the item. In the notification’s callback method, invoke [seekToTime:](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390153-seektotime) with the argument [kCMTimeZero](https://developer.apple.com/documentation/coremedia/cmtime/1400875-zero).
+
+该 item 只会播放一次。一次播放完成之后，player 的 head 被设置在 item 末尾，所以后续的 play 方法的调用不会有任何效果。你可以注册  [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) 通知，然后在通知的回调中，传递 [kCMTimeZero](https://developer.apple.com/documentation/coremedia/cmtime/1400875-zero) 参数调用 [seekToTime:](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390153-seektotime) 将 playhead 重置为 item 的开始位置。
+
+```objc
+// Register with the notification center after creating the player item.
+[[NSNotificationCenter defaultCenter]
+    addObserver:self
+    selector:@selector(playerItemDidReachEnd:)
+    name:AVPlayerItemDidPlayToEndTimeNotification
+    object:[self.player currentItem]];
+
+- (void)playerItemDidReachEnd:(NSNotification *)notification {
+    [self.player seekToTime:kCMTimeZero];
+}
+```
+
+## Editing - 编辑
+
+> The AVFoundation framework provides a feature-rich set of classes to facilitate the editing of audio visual assets. At the heart of AVFoundation’s editing API are compositions. A composition is simply a collection of tracks from one or more different media assets. The [AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition) class provides an interface for inserting and removing tracks, as well as managing their temporal orderings. Figure 3-1 shows how a new composition is pieced together from a combination of existing assets to form a new asset. If all you want to do is merge multiple assets together sequentially into a single file, that is as much detail as you need. If you want to perform any custom audio or video processing on the tracks in your composition, you need to incorporate an audio mix or a video composition, respectively.
+
+![AVMutableCompositionAssemblesAssetsTogether](../../resource/AVFoundation/Markdown/AVMutableCompositionAssemblesAssetsTogether.png)
+
+> Using the [AVMutableAudioMix](https://developer.apple.com/documentation/avfoundation/avmutableaudiomix) class, you can perform custom audio processing on the audio tracks in your composition, as shown in Figure 3-2. Currently, you can specify a maximum volume or set a volume ramp for an audio track.
+
+![AVMutableAudioMixPerformsAudioMixing](../../resource/AVFoundation/Markdown/AVMutableAudioMixPerformsAudioMixing.png)
+
+> You can use the [AVMutableVideoComposition](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition) class to work directly with the video tracks in your composition for the purposes of editing, shown in Figure 3-3. With a single video composition, you can specify the desired render size and scale, as well as the frame duration, for the output video. Through a video composition’s instructions (represented by the [AVMutableVideoCompositionInstruction](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositioninstruction) class), you can modify the background color of your video and apply layer instructions. These layer instructions (represented by the [AVMutableVideoCompositionLayerInstruction](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositionlayerinstruction) class) can be used to apply transforms, transform ramps, opacity and opacity ramps to the video tracks within your composition. The video composition class also gives you the ability to introduce effects from the Core Animation framework into your video using the [animationTool](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1390395-animationtool) property.
+
+![AVMutableVideoComposition](../../resource/AVFoundation/Markdown/AVMutableVideoComposition.png)
+
+> To combine your composition with an audio mix and a video composition, you use an [AVAssetExportSession](https://developer.apple.com/documentation/avfoundation/avassetexportsession) object, as shown in Figure 3-4. You initialize the export session with your composition and then simply assign your audio mix and video composition to the [audioMix](https://developer.apple.com/documentation/avfoundation/avassetexportsession/1388155-audiomix) and [videoComposition](https://developer.apple.com/documentation/avfoundation/avassetexportsession/1389477-videocomposition) properties respectively.
+
+![UseAVAssetExportSessionToCombineMediaElementsIntoAnOutputFile](../../resource/AVFoundation/Markdown/UseAVAssetExportSessionToCombineMediaElementsIntoAnOutputFile.png)
+
+### Creating a Composition - 创建一个 Composition
+
+> To create your own composition, you use the [AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition) class. To add media data to your composition, you must add one or more composition tracks, represented by the [AVMutableCompositionTrack](https://developer.apple.com/documentation/avfoundation/avmutablecompositiontrack) class. The simplest case is creating a mutable composition with one video track and one audio track:
+
+```objc
+AVMutableComposition *mutableComposition = [AVMutableComposition composition];
+// Create the video composition track.
+AVMutableCompositionTrack *mutableCompositionVideoTrack = [mutableComposition addMutableTrackWithMediaType:AVMediaTypeVideo                             preferredTrackID:kCMPersistentTrackID_Invalid];
+// Create the audio composition track.
+AVMutableCompositionTrack *mutableCompositionAudioTrack = [mutableComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+```
+
+#### Options for Initializing a Composition Track - 初始化 Composition Track 选项
+
+> When adding new tracks to a composition, you must provide both a media type and a track ID. Although audio and video are the most commonly used media types, you can specify other media types as well, such as [AVMediaTypeSubtitle](https://developer.apple.com/documentation/avfoundation/avmediatype/1390709-subtitle) or [AVMediaTypeText](https://developer.apple.com/documentation/avfoundation/avmediatypetext).
+>
+> Every track associated with some audiovisual data has a unique identifier referred to as a track ID. If you specify [kCMPersistentTrackID_Invalid](https://developer.apple.com/documentation/coremedia/1388099-invalid_track_id_specifier/kcmpersistenttrackid_invalid) as the preferred track ID, a unique identifier is automatically generated for you and associated with the track.
+
+### Adding Audiovisual Data to a Composition - 向 Composition 中添加视听数据
+
+> Once you have a composition with one or more tracks, you can begin adding your media data to the appropriate tracks. To add media data to a composition track, you need access to the [AVAsset](https://developer.apple.com/documentation/avfoundation/avasset) object where the media data is located. You can use the mutable composition track interface to place multiple tracks with the same underlying media type together on the same track. The following example illustrates how to add two different video asset tracks in sequence to the same composition track:
+
+```objc
+// You can retrieve AVAssets from a number of places, like the camera roll for example.
+AVAsset *videoAsset = <#AVAsset with at least one video track#>;
+AVAsset *anotherVideoAsset = <#another AVAsset with at least one video track#>;
+// Get the first video track from each asset.
+AVAssetTrack *videoAssetTrack = [[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+AVAssetTrack *anotherVideoAssetTrack = [[anotherVideoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+// Add them both to the composition.
+[mutableCompositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero,videoAssetTrack.timeRange.duration) ofTrack:videoAssetTrack atTime:kCMTimeZero error:nil];
+[mutableCompositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero,anotherVideoAssetTrack.timeRange.duration) ofTrack:anotherVideoAssetTrack atTime:videoAssetTrack.timeRange.duration error:nil];
+```
+
+#### Retrieving Compatible Composition Tracks - 检索兼容的 Composition Tracks
+
+> Where possible, you should have only one composition track for each media type. This unification of compatible asset tracks leads to a minimal amount of resource usage. When presenting media data serially, you should place any media data of the same type on the same composition track. You can query a mutable composition to find out if there are any composition tracks compatible with your desired asset track:
+
+```objc
+AVMutableCompositionTrack *compatibleCompositionTrack = [mutableComposition mutableTrackCompatibleWithTrack:<#the AVAssetTrack you want to insert#>];
+    if (compatibleCompositionTrack) {
+    // Implementation continues.
+    }
+```
+
+> Note: Placing multiple video segments on the same composition track can potentially lead to dropping frames in the playback at the transitions between video segments, especially on embedded devices. Choosing the number of composition tracks for your video segments depends entirely on the design of your app and its intended platform.
 
 
 
+### Generating a Volume Ramp - 生成一个音量 Ramp
+
+> A single AVMutableAudioMix object can perform custom audio processing on all of the audio tracks in your composition individually. You create an audio mix using the [audioMix](https://developer.apple.com/documentation/avfoundation/avmutableaudiomix/1560973-audiomix) class method, and you use instances of the [AVMutableAudioMixInputParameters](https://developer.apple.com/documentation/avfoundation/avmutableaudiomixinputparameters) class to associate the audio mix with specific tracks within your composition. An audio mix can be used to vary the volume of an audio track. The following example displays how to set a volume ramp on a specific audio track to slowly fade the audio out over the duration of the composition:
+
+```objc
+AVMutableAudioMix *mutableAudioMix = [AVMutableAudioMix audioMix];
+// Create the audio mix input parameters object.
+AVMutableAudioMixInputParameters *mixParameters = [AVMutableAudioMixInputParameters         audioMixInputParametersWithTrack:mutableCompositionAudioTrack];
+// Set the volume ramp to slowly fade the audio out over the duration of the composition.
+[mixParameters setVolumeRampFromStartVolume:1.f toEndVolume:0.f timeRange:CMTimeRangeMake(kCMTimeZero, mutableComposition.duration)];
+// Attach the input parameters to the audio mix.
+mutableAudioMix.inputParameters = @[mixParameters];
+```
+
+### Performing Custom Video Processing - 执行自定义视频处理
+
+> As with an audio mix, you only need one AVMutableVideoComposition object to perform all of your custom video processing on your composition’s video tracks. Using a video composition, you can directly set the appropriate render size, scale, and frame rate for your composition’s video tracks. For a detailed example of setting appropriate values for these properties, see [Setting the Render Size and Frame Duration](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/03_Editing.html#//apple_ref/doc/uid/TP40010188-CH8-SW18).
 
 
 
+#### Changing the Composition’s Background Color - 改变 Composition 背景色
+
+> All video compositions must also have an array of [AVVideoCompositionInstruction](https://developer.apple.com/documentation/avfoundation/avvideocompositioninstruction) objects containing at least one video composition instruction. You use the [AVMutableVideoCompositionInstruction](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositioninstruction) class to create your own video composition instructions. Using video composition instructions, you can modify the composition’s background color, specify whether post processing is needed or apply layer instructions.
+>
+> The following example illustrates how to create a video composition instruction that changes the background color to red for the entire composition.
+
+```objc
+AVMutableVideoCompositionInstruction *mutableVideoCompositionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+mutableVideoCompositionInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, mutableComposition.duration);
+mutableVideoCompositionInstruction.backgroundColor = [[UIColor redColor] CGColor];
+
+```
+
+#### Applying Opacity Ramps - 应用透明 Ramps
+
+> Video composition instructions can also be used to apply video composition layer instructions. An [AVMutableVideoCompositionLayerInstruction](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositionlayerinstruction) object can apply transforms, transform ramps, opacity and opacity ramps to a certain video track within a composition. The order of the layer instructions in a video composition instruction’s [layerInstructions](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositioninstruction/1388912-layerinstructions) array determines how video frames from source tracks should be layered and composed for the duration of that composition instruction. The following code fragment shows how to set an opacity ramp to slowly fade out the first video in a composition before transitioning to the second video:
+
+```objc
+AVAsset *firstVideoAssetTrack = <#AVAssetTrack representing the first video segment played in the composition#>;
+AVAsset *secondVideoAssetTrack = <#AVAssetTrack representing the second video segment played in the composition#>;
+// Create the first video composition instruction.
+AVMutableVideoCompositionInstruction *firstVideoCompositionInstruction = [AVMutableVideoCompositionInstruction  videoCompositionInstruction];
+// Set its time range to span the duration of the first video track.
+firstVideoCompositionInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, firstVideoAssetTrack.timeRange.duration);
+// Create the layer instruction and associate it with the composition video track.
+AVMutableVideoCompositionLayerInstruction *firstVideoLayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:mutableCompositionVideoTrack];
+// Create the opacity ramp to fade out the first video track over its entire duration.
+[firstVideoLayerInstruction setOpacityRampFromStartOpacity:1.f toEndOpacity:0.f timeRange:CMTimeRangeMake(kCMTimeZero, firstVideoAssetTrack.timeRange.duration)];
+// Create the second video composition instruction so that the second video track isn't transparent.
+AVMutableVideoCompositionInstruction *secondVideoCompositionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+// Set its time range to span the duration of the second video track.
+secondVideoCompositionInstruction.timeRange = CMTimeRangeMake(firstVideoAssetTrack.timeRange.duration, CMTimeAdd(firstVideoAssetTrack.timeRange.duration, secondVideoAssetTrack.timeRange.duration));
+// Create the second layer instruction and associate it with the composition video track.
+AVMutableVideoCompositionLayerInstruction *secondVideoLayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:mutableCompositionVideoTrack];
+// Attach the first layer instruction to the first video composition instruction.
+firstVideoCompositionInstruction.layerInstructions = @[firstVideoLayerInstruction];
+// Attach the second layer instruction to the second video composition instruction.
+secondVideoCompositionInstruction.layerInstructions = @[secondVideoLayerInstruction];
+// Attach both of the video composition instructions to the video composition.
+AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
+mutableVideoComposition.instructions = @[firstVideoCompositionInstruction, secondVideoCompositionInstruction];
+```
+
+#### Incorporating Core Animation Effects - 结合 Core Animation 效果
+
+> A video composition can add the power of Core Animation to your composition through the [animationTool](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1390395-animationtool) property. Through this animation tool, you can accomplish tasks such as watermarking video and adding titles or animating overlays. Core Animation can be used in two different ways with video compositions: You can add a Core Animation layer as its own individual composition track, or you can render Core Animation effects (using a Core Animation layer) into the video frames in your composition directly. The following code displays the latter option by adding a watermark to the center of the video:
+
+```objc
+CALayer *watermarkLayer = <#CALayer representing your desired watermark image#>;
+CALayer *parentLayer = [CALayer layer];
+CALayer *videoLayer = [CALayer layer];
+parentLayer.frame = CGRectMake(0, 0, mutableVideoComposition.renderSize.width, mutableVideoComposition.renderSize.height);
+videoLayer.frame = CGRectMake(0, 0, mutableVideoComposition.renderSize.width, mutableVideoComposition.renderSize.height);
+[parentLayer addSublayer:videoLayer];
+watermarkLayer.position = CGPointMake(mutableVideoComposition.renderSize.width/2, mutableVideoComposition.renderSize.height/4);
+[parentLayer addSublayer:watermarkLayer];
+mutableVideoComposition.animationTool = [AVVideoCompositionCoreAnimationTool videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer inLayer:parentLayer];
+```
+
+### Putting It All Together: Combining Multiple Assets and Saving the Result to the Camera Roll - 总结：组合多个 Assets 并且将结果保存至 Camera Roll
+
+> This brief code example illustrates how you can combine two video asset tracks and an audio asset track to create a single video file. It shows how to:
+>
+> - Create an [AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition) object and add multiple [AVMutableCompositionTrack](https://developer.apple.com/documentation/avfoundation/avmutablecompositiontrack) objects
+> - Add time ranges of [AVAssetTrack](https://developer.apple.com/documentation/avfoundation/avassettrack) objects to compatible composition tracks
+> - Check the [preferredTransform](https://developer.apple.com/documentation/avfoundation/avassettrack/1389837-preferredtransform) property of a video asset track to determine the video’s orientation
+> - Use [AVMutableVideoCompositionLayerInstruction](https://developer.apple.com/documentation/avfoundation/avmutablevideocompositionlayerinstruction) objects to apply transforms to the video tracks within a composition
+> - Set appropriate values for the [renderSize](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1386365-rendersize) and [frameDuration](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1390059-frameduration) properties of a video composition
+> - Use a composition in conjunction with a video composition when exporting to a video file
+> - Save a video file to the Camera Roll
+>
+> Note: To focus on the most relevant code, this example omits several aspects of a complete app, such as memory management and error handling. To use AVFoundation, you are expected to have enough experience with Cocoa to infer the missing pieces.
 
 
 
+#### Creating the Composition - 创建 Composition
+
+> To piece together tracks from separate assets, you use an AVMutableComposition object. Create the composition and add one audio and one video track.
+
+```objc
+AVMutableComposition *mutableComposition = [AVMutableComposition composition];
+AVMutableCompositionTrack *videoCompositionTrack = [mutableComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
+AVMutableCompositionTrack *audioCompositionTrack = [mutableComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
+```
+
+#### Adding the Assets - 添加 Assets
+
+> An empty composition does you no good. Add the two video asset tracks and the audio asset track to the composition.
+
+```objc
+AVAssetTrack *firstVideoAssetTrack = [[firstVideoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+AVAssetTrack *secondVideoAssetTrack = [[secondVideoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
+[videoCompositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, firstVideoAssetTrack.timeRange.duration) ofTrack:firstVideoAssetTrack atTime:kCMTimeZero error:nil];
+[videoCompositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, secondVideoAssetTrack.timeRange.duration) ofTrack:secondVideoAssetTrack atTime:firstVideoAssetTrack.timeRange.duration error:nil];
+[audioCompositionTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, CMTimeAdd(firstVideoAssetTrack.timeRange.duration, secondVideoAssetTrack.timeRange.duration)) ofTrack:[[audioAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:kCMTimeZero error:nil];
+```
+
+> Note: This assumes that you have two assets that contain at least one video track each and a third asset that contains at least one audio track. The videos can be retrieved from the Camera Roll, and the audio track can be retrieved from the music library or the videos themselves.
+
+
+
+#### Checking the Video Orientations - 检查视频方向
+
+> Once you add your video and audio tracks to the composition, you need to ensure that the orientations of both video tracks are correct. By default, all video tracks are assumed to be in landscape mode. If your video track was taken in portrait mode, the video will not be oriented properly when it is exported. Likewise, if you try to combine a video shot in portrait mode with a video shot in landscape mode, the export session will fail to complete.
+
+```objc
+BOOL isFirstVideoPortrait = NO;
+CGAffineTransform firstTransform = firstVideoAssetTrack.preferredTransform;
+// Check the first video track's preferred transform to determine if it was recorded in portrait mode.
+if (firstTransform.a == 0 && firstTransform.d == 0 && (firstTransform.b == 1.0 || firstTransform.b == -1.0) && (firstTransform.c == 1.0 || firstTransform.c == -1.0)) {
+    isFirstVideoPortrait = YES;
+}
+BOOL isSecondVideoPortrait = NO;
+CGAffineTransform secondTransform = secondVideoAssetTrack.preferredTransform;
+// Check the second video track's preferred transform to determine if it was recorded in portrait mode.
+if (secondTransform.a == 0 && secondTransform.d == 0 && (secondTransform.b == 1.0 || secondTransform.b == -1.0) && (secondTransform.c == 1.0 || secondTransform.c == -1.0)) {
+    isSecondVideoPortrait = YES;
+}
+if ((isFirstVideoAssetPortrait && !isSecondVideoAssetPortrait) || (!isFirstVideoAssetPortrait && isSecondVideoAssetPortrait)) {
+    UIAlertView *incompatibleVideoOrientationAlert = [[UIAlertView alloc] initWithTitle:@"Error!" message:@"Cannot combine a video shot in portrait mode with a video shot in landscape mode." delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil];
+    [incompatibleVideoOrientationAlert show];
+    return;
+}
+```
+
+#### Applying the Video Composition Layer Instructions - 应用视频合成层指令
+
+> Once you know the video segments have compatible orientations, you can apply the necessary layer instructions to each one and add these layer instructions to the video composition.
+
+```objc
+AVMutableVideoCompositionInstruction *firstVideoCompositionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+// Set the time range of the first instruction to span the duration of the first video track.
+firstVideoCompositionInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, firstVideoAssetTrack.timeRange.duration);
+AVMutableVideoCompositionInstruction * secondVideoCompositionInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
+// Set the time range of the second instruction to span the duration of the second video track.
+secondVideoCompositionInstruction.timeRange = CMTimeRangeMake(firstVideoAssetTrack.timeRange.duration, CMTimeAdd(firstVideoAssetTrack.timeRange.duration, secondVideoAssetTrack.timeRange.duration));
+AVMutableVideoCompositionLayerInstruction *firstVideoLayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:videoCompositionTrack];
+// Set the transform of the first layer instruction to the preferred transform of the first video track.
+[firstVideoLayerInstruction setTransform:firstTransform atTime:kCMTimeZero];
+AVMutableVideoCompositionLayerInstruction *secondVideoLayerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:videoCompositionTrack];
+// Set the transform of the second layer instruction to the preferred transform of the second video track.
+[secondVideoLayerInstruction setTransform:secondTransform atTime:firstVideoAssetTrack.timeRange.duration];
+firstVideoCompositionInstruction.layerInstructions = @[firstVideoLayerInstruction];
+secondVideoCompositionInstruction.layerInstructions = @[secondVideoLayerInstruction];
+AVMutableVideoComposition *mutableVideoComposition = [AVMutableVideoComposition videoComposition];
+mutableVideoComposition.instructions = @[firstVideoCompositionInstruction, secondVideoCompositionInstruction];
+```
+
+> All [AVAssetTrack](https://developer.apple.com/documentation/avfoundation/avassettrack) objects have a [preferredTransform](https://developer.apple.com/documentation/avfoundation/avassettrack/1389837-preferredtransform) property that contains the orientation information for that asset track. This transform is applied whenever the asset track is displayed onscreen. In the previous code, the layer instruction’s transform is set to the asset track’s transform so that the video in the new composition displays properly once you adjust its render size.
+
+
+
+#### Setting the Render Size and Frame Duration - 设置渲染大小和帧周期
+
+> To complete the video orientation fix, you must adjust the [renderSize](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1386365-rendersize) property accordingly. You should also pick a suitable value for the [frameDuration](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1390059-frameduration) property, such as 1/30th of a second (or 30 frames per second). By default, the [renderScale](https://developer.apple.com/documentation/avfoundation/avmutablevideocomposition/1615787-renderscale) property is set to 1.0, which is appropriate for this composition.
+
+```objc
+CGSize naturalSizeFirst, naturalSizeSecond;
+// If the first video asset was shot in portrait mode, then so was the second one if we made it here.
+if (isFirstVideoAssetPortrait) {
+    // Invert the width and height for the video tracks to ensure that they display properly.
+    naturalSizeFirst = CGSizeMake(firstVideoAssetTrack.naturalSize.height, firstVideoAssetTrack.naturalSize.width);
+    naturalSizeSecond = CGSizeMake(secondVideoAssetTrack.naturalSize.height, secondVideoAssetTrack.naturalSize.width);
+}
+else {
+    // If the videos weren't shot in portrait mode, we can just use their natural sizes.
+    naturalSizeFirst = firstVideoAssetTrack.naturalSize;
+    naturalSizeSecond = secondVideoAssetTrack.naturalSize;
+}
+float renderWidth, renderHeight;
+// Set the renderWidth and renderHeight to the max of the two videos widths and heights.
+if (naturalSizeFirst.width > naturalSizeSecond.width) {
+    renderWidth = naturalSizeFirst.width;
+}
+else {
+    renderWidth = naturalSizeSecond.width;
+}
+if (naturalSizeFirst.height > naturalSizeSecond.height) {
+    renderHeight = naturalSizeFirst.height;
+}
+else {
+    renderHeight = naturalSizeSecond.height;
+}
+mutableVideoComposition.renderSize = CGSizeMake(renderWidth, renderHeight);
+// Set the frame duration to an appropriate value (i.e. 30 frames per second for video).
+mutableVideoComposition.frameDuration = CMTimeMake(1,30);
+```
+
+#### Exporting the Composition and Saving it to the Camera Roll - 导出 Composition 并将之保存至 Camera Roll
+
+> The final step in this process involves exporting the entire composition into a single video file and saving that video to the camera roll. You use an [AVAssetExportSession](https://developer.apple.com/documentation/avfoundation/avassetexportsession) object to create the new video file and you pass to it your desired URL for the output file. You can then use the [ALAssetsLibrary](https://developer.apple.com/documentation/assetslibrary/alassetslibrary) class to save the resulting video file to the Camera Roll.
+
+```
+// Create a static date formatter so we only have to initialize it once.
+static NSDateFormatter *kDateFormatter;
+if (!kDateFormatter) {
+    kDateFormatter = [[NSDateFormatter alloc] init];
+    kDateFormatter.dateStyle = NSDateFormatterMediumStyle;
+    kDateFormatter.timeStyle = NSDateFormatterShortStyle;
+}
+// Create the export session with the composition and set the preset to the highest quality.
+AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mutableComposition presetName:AVAssetExportPresetHighestQuality];
+// Set the desired output URL for the file created by the export process.
+exporter.outputURL = [[[[NSFileManager defaultManager] URLForDirectory:NSDocumentDirectory inDomain:NSUserDomainMask    appropriateForURL:nil create:@YES error:nil] URLByAppendingPathComponent:[kDateFormatter stringFromDate:[NSDate date]]] URLByAppendingPathExtension:CFBridgingRelease(UTTypeCopyPreferredTagWithClass((CFStringRef)AVFileTypeQuickTimeMovie, kUTTagClassFilenameExtension))];
+// Set the output file type to be a QuickTime movie.
+exporter.outputFileType = AVFileTypeQuickTimeMovie;
+exporter.shouldOptimizeForNetworkUse = YES;
+exporter.videoComposition = mutableVideoComposition;
+// Asynchronously export the composition to a video file and save this file to the camera roll once export completes.
+[exporter exportAsynchronouslyWithCompletionHandler:^{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (exporter.status == AVAssetExportSessionStatusCompleted) {
+            ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+            if ([assetsLibrary videoAtPathIsCompatibleWithSavedPhotosAlbum:exporter.outputURL]) {
+                [assetsLibrary writeVideoAtPathToSavedPhotosAlbum:exporter.outputURL completionBlock:NULL];
+            }
+        }
+    });
+}];
+```
 
 
 
