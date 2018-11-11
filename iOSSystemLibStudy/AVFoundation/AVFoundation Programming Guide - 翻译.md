@@ -6,7 +6,7 @@
 
 > AVFoundation is one of several frameworks that you can use to play and create time-based audiovisual media. It provides an Objective-C interface you use to work on a detailed level with time-based audiovisual data. For example, you can use it to examine, create, edit, or reencode media files. You can also get input streams from devices and manipulate video during realtime capture and playback. Figure I-1 shows the architecture on iOS.
 
-AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框架之一。框架提供了一系列 Objective-C 的接口，使用这些接口可以从非常全面的角度处理基于时间的视听媒体数据。例如，你可以用它来检查、创建、编辑或者重新编码媒体文件。甚至可以捕获硬件的输入流，可以在实时捕捉及回放的视频流中操纵视频数据。图 I-1 描述了其在 iOS 平台上的架构。
+AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框架之一。框架提供了一系列 Objective-C 的接口，使用这些接口可以从非常全面的角度处理基于时间的视听媒体数据。例如，你可以用它来检查、创建、编辑或者重新编码媒体文件。甚至可以捕获来自硬件设备的输入流，可以在实时捕捉及播放的视频流中操纵视频数据。图 I-1 描述了其在 iOS 平台上的架构。
 
 ![iOSAVFoundation](../../resource/AVFoundation/Markdown/iOSAVFoundation.png)
 
@@ -24,7 +24,7 @@ AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框�
 
 通常，你应该使用可用的最高级别的抽象框架来完成你想完成的任务。
 - 如果只是想简单的播放 movies ，使用 AVKit framework 。
-- iOS 平台上，如果只需录制视频，同时对格式没有格外要求的情况下，使用 UIKit framework 的 [UIImagePickerController](https://developer.apple.com/documentation/uikit/uiimagepickercontroller) 。
+- iOS 平台上，如果只是录制视频，对格式没有格外要求的情况下，使用 UIKit framework 的 [UIImagePickerController](https://developer.apple.com/documentation/uikit/uiimagepickercontroller) 。
 
 需要注意的一点是，AV Foundation 中的一些原始数据结构其实是定义在 Core Media framework 中，这其中包括时间相关的数据结构、承载及描述媒体数据的相关对象。
 
@@ -37,7 +37,7 @@ AVFoundation 是可以用来播放并且创建基于时间的视听媒体的框�
 >
 > You can also configure the audio behavior of your application using [AVAudioSession](https://developer.apple.com/documentation/avfoundation/avaudiosession); this is described in [Audio Session Programming Guide](https://developer.apple.com/library/archive/documentation/Audio/Conceptual/AudioSessionProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40007875).
 
-AVFoundation framework 包含视频相关的 API 及音频相关的 API 。旧的音频相关的类提供了简便的方式去处理音频。
+AVFoundation framework 包含视频相关的 API 及音频相关的 API 。旧的音频相关的类提供了处理音频的简便方式。
 
 - 播放音频文件，可以使用 [AVAudioPlayer](https://developer.apple.com/documentation/avfoundation/avaudioplayer) 。
 - 录制音频，可以使用 [AVAudioRecorder](https://developer.apple.com/documentation/avfoundation/avaudiorecorder) 。
@@ -48,7 +48,7 @@ AVFoundation framework 包含视频相关的 API 及音频相关的 API 。旧�
 
 > The primary class that the AV Foundation framework uses to represent media is [AVAsset](https://developer.apple.com/documentation/avfoundation/avasset). The design of the framework is largely guided by this representation. Understanding its structure will help you to understand how the framework works. An AVAsset instance is an aggregated representation of a collection of one or more pieces of media data (audio and video tracks). It provides information about the collection as a whole, such as its title, duration, natural presentation size, and so on. AVAsset is not tied to particular data format. AVAsset is the superclass of other classes used to create asset instances from media at a URL (see [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1)) and to create new compositions (see [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188-CH1-SW1)).
 
-AVFoundation framework 用来表示媒体的最主要的类是 [AVAsset](https://developer.apple.com/documentation/avfoundation/avasset) 。整个框架的设计很大程度上受到这种抽象表示方法的引导。理解它的结构将会有助于理解整个框架是如何工作的。一段或多段媒体数据（音频轨道与视频轨道）构成一个集合，一个 AVAsset 实例就是这样一个集合的汇总表示。AVAsset 实例将整个集合作为一个整体，提供了一些诸如名称、时长、自然呈现大小等的信息。AVAsset 独立于特定的数据格式。通过使用 AVAsset 的众多子类，根据 URL 指定的媒体数据（see [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1) ），可以创建具体的 asset 实例、创建新的结构（see [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188-CH1-SW1) ）。
+AVFoundation framework 用来表示媒体的最主要的类是 [AVAsset](https://developer.apple.com/documentation/avfoundation/avasset) 。整个框架的设计很大程度上受到这种抽象表示方法的引导。理解它的结构将会有助于理解整个框架是如何工作的。一段或多段媒体数据（音频轨道与视频轨道）构成一个集合，一个 AVAsset 实例就是这样一个集合的汇总表示。AVAsset 实例将整个集合作为一个整体，提供了一些诸如名称、时长、自然呈现大小等的信息。AVAsset 独立于特定的数据格式。通过使用 AVAsset 的子类，可以根据 URL 指定的媒体数据创建 asset 实例（see [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1) ），也可以创建新的 compositions（see [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40010188-CH1-SW1) ）。
 
 > Each of the individual pieces of media data in the asset is of a uniform type and called a track. In a typical simple case, one track represents the audio component, and another represents the video component; in a complex composition, however, there may be multiple overlapping tracks of audio and video. Assets may also have metadata.
 >
@@ -56,7 +56,7 @@ AVFoundation framework 用来表示媒体的最主要的类是 [AVAsset](https:/
 >
 > Relevant Chapters: [Using Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/01_UsingAssets.html#//apple_ref/doc/uid/TP40010188-CH7-SW1), [Time and Media Representations](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/06_MediaRepresentations.html#//apple_ref/doc/uid/TP40010188-CH2-SW1)
 
-asset 中媒体数据的每个单独的部分，被称为一个 track ，每个部分都是一个统一的类型。典型的简单情况下，其中一个 track 代表音频组件，另一个代表视频组件；然而，在复杂组合的情况下，可能存在多个重叠的音频和视频 track 。Assets 也可能有元数据。
+asset 中媒体数据的每个单独的部分都是一个统一的类型，称为一个 track 。典型的简单情况下，其中一个 track 代表音频组件，另一个代表视频组件；然而，在复杂组合的情况下，可能存在多个重叠的音频和视频 track 。Assets 也可能有元数据。
 
 AV Foundation 中一个重要的概念是，初始化一个 asset 或者一个 track 通常并不意味着它已经处于可以使用的状态了。可能需要一些时间去计算某些数据，比如某个 item 的持续时间（例如，一个可能不包含摘要信息的 MP3 文件）。你应该在当前线程发起查询某个值的请求，在 block 实现的异步回调中获取所需要的数据，而不是采用阻塞当前线程的方式。
 
@@ -70,9 +70,9 @@ AV Foundation 中一个重要的概念是，初始化一个 asset 或者一个 t
 >
 > Relevant Chapter: [Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW1)
 
-AVFoundation 允许用户以多种复杂的方式来管理 asset 的播放。为了支持这一点，框架将 asset 的呈现状态从 asset 自身中分离出来。举个例子，这样的设计允许用户将同一个 asset 的不同片段同时渲染在不同的分辨率下。一个 asset 的呈现状态由一个 player item object 管理；一个 asset 中各个 track 的呈现状态由一个 player item track object 管理。例如，使用 player item 与 player item tracks ，可以设置 item 呈现的可视区域的大小，可以改变播放过程中的音频混合参数以及视频合成设置，可以在播放过程中禁用需要禁用的组件。
+AVFoundation 允许用户以多种复杂的方式来管理 asset 的播放。为了支持这一点，框架将 asset 的呈现状态从 asset 自身中分离出来。举个例子，这样的设计允许用户在不同的分辨率下，同时播放同一个 asset 的不同片段。一个 asset 的呈现状态由一个 player item 对象管理；一个 asset 中各个 track 的呈现状态由一个 player item track 对象管理。使用 player item 与 player item tracks ，可以设置播放器呈现 item 的可视区域的大小，可以改变播放过程中的音频混合参数以及视频合成设置，可以在播放过程中禁用 asset 中的组件。
 
-你可以使用一个 player object 来播放多个 player items ，并且将该 player 的输出直接输出到 Core Animation layer 上面去。你可以使用一个 player queue 以串行的方式调度一系列 player items 的播放。
+你可以使用一个 player 对象来播放 player items ，并且将该 player 的输出直接输出到 Core Animation layer 上面去。你可以使用一个 player queue 以串行的方式调度一系列 player items 的播放。
 
 相关章节：[Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW1)
 
@@ -88,7 +88,7 @@ AVFoundation 允许用户以多种复杂的方式来管理 asset 的播放。为
 
 AVFoundation 允许你以多种方式创建 asset 的新表现形式。你可以简单地重新编码已经存在的 asset ，除此之外，iOS 4.1 及以后的版本，你可以操作 asset 的内容，然后将结果保存为新的 asset 。
 
-可以使用 export session 将一个已经存在的 asset 重新编码为少数常用预设格式之一。如果需要针对 transformation 进行更多的控制，那么在 iOS 4.1 及更高版本中，可以使用一个 asset reader object 和一个 asset writer object 将 asset 从一种表示转换为另一种。例如，使用这些对象，你可以选择最终输出文件中包含哪些想要的 tracks ，指定自己的输出格式，或者在转换过程中修改 asset 。
+可以使用 export session 将一个已经存在的 asset 重新编码为少数常用预设格式之一。如果需要针对 transformation 进行更多的控制，那么在 iOS 4.1 及更高版本中，可以使用一个 asset reader 对象和一个 asset writer 对象将 asset 从一种表示转换为另一种。例如，使用这些对象，你可以选择最终输出文件中包含哪些想要的 tracks ，指定自己的输出格式，或者在转换过程中修改 asset 。
 
 如果需要生成波形的可视化表示，可以使用一个 asset reader 读取 asset 的音频 track 。
 
@@ -112,7 +112,7 @@ AVFoundation 允许你以多种方式创建 asset 的新表现形式。你可以
 >
 > Relevant Chapter: [Editing](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/03_Editing.html#//apple_ref/doc/uid/TP40010188-CH8-SW1)
 
-AVFoundation 使用 compositions 从现有的媒体片段（通常是一个或多个视频和音频 tracks ）创建新的 assets 。你可以使用一个可变的 composition 来添加和移除 tracks ，并调整它们的时间顺序。你也可以设置音频 tracks 的相对音量和波形，设置视频 tracks 的不透明度以及不透明变化趋势。一个 composition 是存储与内存中媒体片段的集合。当你使用 export session 导出一个 composition 时，这个 composition 将会以文件的形式存在。
+AVFoundation 使用 compositions 从现有的媒体片段（通常是一个或多个视频和音频 tracks ）创建新的 assets 。你可以使用一个可变的 composition 来添加和移除 tracks ，并调整它们的时间顺序。你也可以设置音频 tracks 的相对音量和波形，设置视频 tracks 的不透明度以及不透明变化趋势。一个 composition 是存储于内存中媒体片段的集合。当你使用 export session 导出一个 composition 时，这个 composition 将会以文件的形式存在。
 
 你也可以使用 asset writer 从诸如 sample buffers 或者静态 images 之类的媒体中创建 asset 。
 
@@ -126,7 +126,7 @@ AVFoundation 使用 compositions 从现有的媒体片段（通常是一个或�
 >
 > Relevant Chapter: [Still and Video Media Capture](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/04_MediaCapture.html#//apple_ref/doc/uid/TP40010188-CH5-SW2)
 
-从相机与麦克风记录输入是由 capture session 管理的。一个 capture session 协调输入设置到输出（如，电影文件）的数据流。即使 session 正在运行，你也可以为单个 session 配置多个输入和输出。发送消息给 session 可以控制数据流的开始和结束。
+从相机与麦克风记录输入是由 capture session 管理的。一个 capture session 协调输入设备到输出（如，电影文件）的数据流。即使 session 正在运行，你也可以为单个 session 配置多个输入和输出。发送消息给 session 可以控制数据流的开始和结束。
 
 除此之外，可以使用 preview layer 的实例向用户展示相机正在录制的内容。
 
@@ -150,11 +150,11 @@ AVFoundation 返回的回调不能保证在任何特定的线程或队列中进�
 - UI 相关的 notifications 发生在主线程。
 - 那些需要调用方创建或者指定 queue 的类或方法，相关的 notifications 会在对应的 queue 上执行。
 
-除上面提到的两条准则之外，你不应该假设 notification 将在任何指定的线程上执行。
+除上面提到的两条准则之外（有一些例外，在参考文档中有说明），你不应该假设 notification 将在任何指定的线程上执行。
 
 > If you’re writing a multithreaded application, you can use the NSThread method [isMainThread](https://developer.apple.com/documentation/foundation/thread/1408455-ismainthread) or [[NSThread currentThread] isEqual:] to test whether the invocation thread is a thread you expect to perform your work on. You can redirect messages to appropriate threads using methods such as [performSelectorOnMainThread:withObject:waitUntilDone:](https://developer.apple.com/documentation/objectivec/nsobject/1414900-performselector) and [performSelector:onThread:withObject:waitUntilDone:modes:](https://developer.apple.com/documentation/objectivec/nsobject/1417922-perform). You could also use [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to “bounce” to your blocks on an appropriate queue, either the main queue for UI tasks or a queue you have up for concurrent operations. For more about concurrent operations, see [Concurrency Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091); for more about blocks, see [Blocks Programming Topics](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40007502). The [AVCam-iOS: Using AVFoundation to Capture Images and Movies](https://developer.apple.com/library/archive/samplecode/AVCam/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010112) sample code is considered the primary example for all AVFoundation functionality and can be consulted for examples of thread and queue usage with AVFoundation.
 
-如果你正在开发一款多线程应用，你可以使用 NSThread 的方法 [isMainThread](https://developer.apple.com/documentation/foundation/thread/1408455-ismainthread) 或者 [[NSThread currentThread] isEqual:] 判断当前的调用线程是否是你期待的线程。你可以使用诸如 [performSelectorOnMainThread:withObject:waitUntilDone:](https://developer.apple.com/documentation/objectivec/nsobject/1414900-performselector) 或者 [performSelector:onThread:withObject:waitUntilDone:modes:](https://developer.apple.com/documentation/objectivec/nsobject/1417922-perform) 类似的方法重定向消息到合适的线程。你也可以使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 调度你的 blocks 到合适的 queue ，UI 相关操作调度到 main queue ，并发操作调度到创建的并发queue 。了解 concurrent operations 的更多信息，可以查阅 [Concurrency Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091) ；了解 blocks 的更多知识，查阅 [Blocks Programming Topics](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40007502) 。[AVCam-iOS: Using AVFoundation to Capture Images and Movies](https://developer.apple.com/library/archive/samplecode/AVCam/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010112) 示例代码是使用 AVFoundation 进行功能开发最主要的例子，也可以作为 AVFoundation 并发编程的重要参考。
+如果你正在开发一款多线程应用，你可以使用 NSThread 的方法 [isMainThread](https://developer.apple.com/documentation/foundation/thread/1408455-ismainthread) 或者 [[NSThread currentThread] isEqual:] 判断当前的调用线程是否是你期待的线程。你可以使用诸如 [performSelectorOnMainThread:withObject:waitUntilDone:](https://developer.apple.com/documentation/objectivec/nsobject/1414900-performselector) 或者 [performSelector:onThread:withObject:waitUntilDone:modes:](https://developer.apple.com/documentation/objectivec/nsobject/1417922-perform) 类似的方法重定向消息到合适的线程。你也可以使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 调度你的 blocks 到合适的 queue ，UI 相关操作调度到 main queue ，并发操作调度到创建的并发 queue 。了解 concurrent operations 的更多信息，可以查阅 [Concurrency Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091) ；了解 blocks 的更多知识，查阅 [Blocks Programming Topics](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Blocks/Articles/00_Introduction.html#//apple_ref/doc/uid/TP40007502) 。[AVCam-iOS: Using AVFoundation to Capture Images and Movies](https://developer.apple.com/library/archive/samplecode/AVCam/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010112) 示例代码是使用 AVFoundation 进行功能开发最主要的例子，也可以作为 AVFoundation 并发编程的重要参考。
 
 ### Prerequisites - 预备知识
 
@@ -181,7 +181,7 @@ AVFoundation 是一个高级的 Cocoa framework 。要想有效地使用它，�
 > - [RosyWriter](https://developer.apple.com/library/archive/samplecode/RosyWriter/Introduction/Intro.html#//apple_ref/doc/uid/DTS40011110) is an example that demonstrates real time frame processing and in particular how to apply filters to video content. This is a very common developer requirement and this example covers that functionality.
 > - [AVLocationPlayer: Using AVFoundation Metadata Reading APIs](https://developer.apple.com/library/archive/samplecode/AVLocationPlayer/Introduction/Intro.html#//apple_ref/doc/uid/TP40014495) demonstrates using the metadata APIs.
 
-以下是几个 AVFoundation 的示例程序，其中的两个示例非常有助于理解和实现相机捕捉这样的功能：
+以下是几个 AVFoundation 的示例程序，其中的两个示例对理解和实现相机捕捉类似的功能非常有帮助：
 
 - [AVCam-iOS: Using AVFoundation to Capture Images and Movies](https://developer.apple.com/library/archive/samplecode/AVCam/Introduction/Intro.html#//apple_ref/doc/uid/DTS40010112) 是那些需要使用相机功能程序的规范示例代码。是一个完整的示例，文档齐全，并且涵盖了大部分主要的功能。
 - [AVCamManual: Extending AVCam to Use Manual Capture API](https://developer.apple.com/library/archive/samplecode/AVCamManual/Introduction/Intro.html#//apple_ref/doc/uid/TP40014578) 是 AVCam 的配套应用。使用手动相机控制实现相机功能。它也是一个完整的例子，文档齐全，应该被认为是创建利用手动控制的相机应用程序的典型示例。
@@ -192,7 +192,7 @@ AVFoundation 是一个高级的 Cocoa framework 。要想有效地使用它，�
 
 > Assets can come from a file or from media in the user’s iPod library or Photo library. When you create an asset object all the information that you might want to retrieve for that item is not immediately available. Once you have a movie asset, you can extract still images from it, transcode it to another format, or trim the contents.
 
-Assets 可以来自文件或者用户 iPod library/Photo library 中的媒体。当你创建一个 asset 对象后，你想要检索的所有该 item 的信息并不是立即可用的。一旦你拥有了一个 movie asset ，你可以从里面提取静态图像、将它转码成另外的格式或者修建它的内容。
+Assets 可以来自文件或者用户 iPod library/Photo library 中的媒体。当你创建一个 asset 对象后，你想要检索的所有该 item 的信息并不是立即可用的。一旦你拥有了一个 movie asset ，你可以从里面提取静态图像、将它转码成另外的格式或者修剪它的内容。
 
 ### Creating an Asset Object - 创建 Asset 对象
 
@@ -218,7 +218,7 @@ AVURLAsset 的初始化方法第二个参数是一个选项字典。该字典中
 
 获取一个 asset 的精确持续时间可能需要大量的处理开销。使用一个近似的持续时间通常是个更轻量的操作，并且近似的持续时间足以用于播放。因此：
 
-- 如果你只是打算播放这个 asset ，那么，传递 nil 或者传递包含 AVURLAssetPreferPreciseDurationAndTimingKey 键和一个相应的 NO 值（包含在 NSValue 对象中）。
+- 如果你只是打算播放这个 asset ，那么，传递 nil 或者传递包含 AVURLAssetPreferPreciseDurationAndTimingKey 键和一个相应的 NO 值（包含在 NSValue 对象中）的字典。
 - 如果你想要将 asset 添加到 composition（ [AVMutableComposition](https://developer.apple.com/documentation/avfoundation/avmutablecomposition) ）中，通常你需要精确的随机访问。传递一个包含 AVURLAssetPreferPreciseDurationAndTimingKey 键值和一个相应的 YES 值（包含在一个 NSValue 对象中，回忆下继承于 NSValue 的 [NSNumber](https://developer.apple.com/library/archive/documentation/LegacyTechnologies/WebObjects/WebObjects_3.5/Reference/Frameworks/ObjC/Foundation/Classes/NSNumber/Description.html#//apple_ref/occ/cl/NSNumber) ）的字典。
 
 ```objc
@@ -239,10 +239,10 @@ The following example shows how you can get an asset to represent the first vide
 
 要访问由 iPod library 或者 Photos application 管理的 assets 的话，你需要获取你想要访问 asset 的 URL 。
 
-- 要访问 iPod Library 的话，你需要创建 [MPMediaQuery](https://developer.apple.com/documentation/mediaplayer/mpmediaquery) 的一个示例找到你想访问的 item ，然后使用 [MPMediaItemPropertyAssetURL](https://developer.apple.com/documentation/mediaplayer/mpmediaitempropertyasseturl) 获得它的 URL 。关于 Media Library 的更多信息，查阅 [Multimedia Programming Guide](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/MultimediaPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009767) 。
+- 要访问 iPod Library 的话，你需要创建 [MPMediaQuery](https://developer.apple.com/documentation/mediaplayer/mpmediaquery) 的一个实例找到你想访问的 item ，然后使用 [MPMediaItemPropertyAssetURL](https://developer.apple.com/documentation/mediaplayer/mpmediaitempropertyasseturl) 获得它的 URL 。关于 Media Library 的更多信息，查阅 [Multimedia Programming Guide](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/MultimediaPG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40009767) 。
 - 要访问 Photos application 管理的 assets 的话，使用 [ALAssetsLibrary](https://developer.apple.com/documentation/assetslibrary/alassetslibrary) 。
 
-下面的例子展示了了如何生成一个 asset 以呈现 Saved Photos Album 中的第一个视频。
+下面的例子展示了如何生成一个 asset 以呈现 Saved Photos Album 中的第一个视频。
 
 ```objc
 ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -279,9 +279,9 @@ ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
 >
 > You test whether a value is loaded for a property using [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey). When an asset is first loaded, the value of most or all of its properties is [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown). To load a value for one or more properties, you invoke [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys). In the completion handler, you take whatever action is appropriate depending on the property’s status. You should always be prepared for loading to not complete successfully, either because it failed for some reason such as a network-based URL being inaccessible, or because the load was canceled.
 
-初始化一个 asset 并不意味着你想要获取的有关该item的所有信息是立即可用的。可能需要一些时间去计算诸如 item 持续时间（例如，一个 MP3 文件，可能并不包含摘要信息）之类的数据。你应该使用 [AVAsynchronousKeyValueLoading](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading) protocol 请求数据，之后通过使用 block 定义的 completion handler 来获取数据，而不是采用阻塞当前线程等待着数据的计算。
+初始化一个 asset（或者 track ）并不意味着你想要获取的有关该item的所有信息是立即可用的。可能需要一些时间去计算诸如 item 持续时间（例如，一个 MP3 文件，可能并不包含摘要信息）之类的数据。你应该使用 [AVAsynchronousKeyValueLoading](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading) protocol 请求数据，之后通过使用 block 定义的 completion handler 来获取数据，而不是采用阻塞当前线程等待着数据的计算（ AVAsset 和 AVAssetTrack 遵循 AVAsynchronousKeyValueLoading 协议）。
 
-使用 [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey) 测试是否为某个 property 加载了某个值。当一个 asset 首次被加载时，其大部分或者全部 properties 的值均为 [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown) 。调用 [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys) 来加载一个或者多个 properties 的值。在 completion handler 中，依据 property 的状态采取适当的动作。你应该始终准备好处理加载不完全成功的情形，加载失败可能有很多原因，例如基于网络的 URL 无法访问，或者加载被取消掉。
+使用 [statusOfValueForKey:error:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1386816-statusofvalueforkey) 测试是否某个 property 是否加载了某个值。当一个 asset 首次被加载时，其大部分或者全部 properties 的值均为 [AVKeyValueStatusUnknown](https://developer.apple.com/documentation/avfoundation/avkeyvaluestatus/avkeyvaluestatusunknown) 。调用 [loadValuesAsynchronouslyForKeys:completionHandler:](https://developer.apple.com/documentation/avfoundation/avasynchronouskeyvalueloading/1387321-loadvaluesasynchronouslyforkeys) 来加载一个或者多个 properties 的值。在 completion handler 中，依据 property 的状态采取适当的动作。你应该始终准备好处理加载不完全成功的情形，加载失败可能有很多原因，例如基于网络的 URL 无法访问，或者加载被取消掉。
 
 ```objc
 NSURL *url = <#A URL that identifies an audiovisual asset such as a movie file#>;
@@ -333,7 +333,7 @@ if ([[anAsset tracksWithMediaType:AVMediaTypeVideo] count] > 0) {
 
 > You use [copyCGImageAtTime:actualTime:error:](https://developer.apple.com/documentation/avfoundation/avassetimagegenerator/1387303-copycgimageattime) to generate a single image at a specific time. AVFoundation may not be able to produce an image at exactly the time you request, so you can pass as the second argument a pointer to a CMTime that upon return contains the time at which the image was actually generated.
 
-使用 [copyCGImageAtTime:actualTime:error:](https://developer.apple.com/documentation/avfoundation/avassetimagegenerator/1387303-copycgimageattime) 生成指定时间处的单幅图像。AVFoundation 可能无法准确地在你发起请求的时刻生成图像，所以你可以将指向 CMTime 的指针作为第二个参数传递过去，当调用返回时，这个结构体将记录图像真正生成的时间。
+使用 [copyCGImageAtTime:actualTime:error:](https://developer.apple.com/documentation/avfoundation/avassetimagegenerator/1387303-copycgimageattime) 生成指定时间处的单幅图像。AVFoundation 可能无法根据请求的时间点，精确地返回对应时间点的图像，所以你可以将指向 CMTime 的指针作为第二个参数传递过去，当调用返回时，这个结构体将记录所生成的图像所位于的真实时间。
 
 ```objc
 AVAsset *myAsset = <#An asset#>];
@@ -369,7 +369,7 @@ if (halfWayImage != NULL) {
 为了生成一系列图像，你需要向 image generator 发送 [generateCGImagesAsynchronouslyForTimes:completionHandler:](https://developer.apple.com/documentation/avfoundation/avassetimagegenerator/1388100-generatecgimagesasynchronously) 消息。第一个参数是一个元素为 [NSValue](https://developer.apple.com/library/archive/documentation/LegacyTechnologies/WebObjects/WebObjects_3.5/Reference/Frameworks/ObjC/Foundation/Classes/NSValue/Description.html#//apple_ref/occ/cl/NSValue) 的数组，其每个元素包含一个 CMTime 结构体，指定在 asset 的哪些时间点生成所需要的图像。第二个参数是一个 block ，作为每个图像生成的回调。block 参数提供了一个常量，该常量表明图像是否创建成功或者操作是否被取消，block 中参数如下：
 
 - 生成的图像
-- 请求生成图像的时间与图像实际生成的时间
+- 请求图像所在的时间与实际返回图像所在的时间
 - 一个error对象描述生成失败的原因
 
 在 block 的实现中，检查回调回来的常量以确定图像是否被创建。此外，确保在完成所有图像的创建之前，对 image generator 保持一个强引用。
@@ -492,7 +492,7 @@ if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
 
 > To control the playback of assets, you use an AVPlayer object. During playback, you can use an [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) instance to manage the presentation state of an asset as a whole, and an AVPlayerItemTrack object to manage the presentation state of an individual track. To display video, you use an AVPlayerLayer object.
 
-使用 AVPlayer 对象控制assets的播放。播放期间，你可以使用 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 实例管理整个 asset 的显示状态，使用 AVPlayerItemTrack 实例管理单独 track 的显示状态。使用 AVPlayerLayer 对象去播放视频。
+使用 AVPlayer 对象控制 assets 的播放。播放期间，你可以使用 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 实例管理整个 asset 的显示状态，使用 AVPlayerItemTrack 实例管理单独 track 的显示状态。使用 AVPlayerLayer 对象显示视频内容。
 
 ### Playing Assets - 播放 Assets
 
@@ -502,11 +502,11 @@ if ([compatiblePresets containsObject:AVAssetExportPresetLowQuality]) {
 >
 > Multiple player layers: You can create many AVPlayerLayer objects from a single AVPlayer instance, but only the most recently created such layer will display any video content onscreen.
 
-player 是一个用来管理 asset 播放的控制器对象，例如，开始与暂停播放，定位播放进度到特定的时间。使用 [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) 实例去播放单个 asset 。使用一个 [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) 对象按顺序播放多个 item （ AVQueuePlayer 是 AVPlayer 的子类）。在 OS X 上，你可以选择使用 AVKit framework 的 AVPlayerView 在其中播放内容。
+player 是一个用来管理 asset 播放的控制器对象，例如，开始与停止播放，定位播放进度到特定的时间。使用一个 [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) 实例去播放单个 asset 。使用一个 [AVQueuePlayer](https://developer.apple.com/documentation/avfoundation/avqueueplayer) 对象按顺序播放多个 item （ AVQueuePlayer 是 AVPlayer 的子类）。在 OS X 上，你可以选择使用 AVKit framework 的 AVPlayerView 呈现内容。
 
 player 向你提供了关于播放状态的信息，所以，如果需要的话，可以根据 player 的状态同步更新你的用户界面。通常将 player 的输出定向到专门的 Core Animation layer （ [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) 的实例或者 [AVSynchronizedLayer](https://developer.apple.com/documentation/avfoundation/avsynchronizedlayer) 的实例）。了解有关 layers 的更多内容，可以查看 Core Animation Programming Guide 。
 
-多个 player layers：从单个 AVPlayer 实例可以创建很多 AVPlayerLayer 对象，单只有最近创建的那个 layer 才会在屏幕上显示视频内容。
+多个 player layers：从单个 AVPlayer 实例可以创建很多 AVPlayerLayer 对象，但只有最近创建的那个 layer 才会在屏幕上显示视频内容。
 
 > Although ultimately you want to play an asset, you don’t provide assets directly to an AVPlayer object. Instead, you provide an instance of [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem). A player item manages the presentation state of an asset with which it is associated. A player item contains player item tracks—instances of [AVPlayerItemTrack](https://developer.apple.com/documentation/avfoundation/avplayeritemtrack)—that correspond to the tracks in the asset. The relationship between the various objects is shown in Figure 2-1.
 
@@ -516,13 +516,13 @@ player 向你提供了关于播放状态的信息，所以，如果需要的话�
 
 > This abstraction means that you can play a given asset using different players simultaneously, but rendered in different ways by each player. Figure 2-2 shows one possibility, with two different players playing the same asset, with different settings. Using the item tracks, you can, for example, disable a particular track during playback (for example, you might not want to play the sound component).
 
-这样的抽象意味着你可以使用不同的 players 同时播放给定的同一个 asset ，每个 players 以不同的方式进行渲染。图 2-2 展示了一个可能的场景，两个不同的 players 使用不同的设置播放同一个 asset 。举个例子，使用 item tracks ，你可以在播放过程中禁用某个特定的 track（比如，你可能不想播放声音）。
+这样的抽象意味着你可以使用不同的 players 同时播放给定的同一个 asset ，每个 players 以不同的方式进行渲染。图 2-2 展示了一个可能的场景，两个不同的 players 使用不同的设置播放同一个 asset 。使用 item tracks ，你可以在播放过程中禁用某个特定的 track（比如，你可能不想播放声音）。
 
 ![exportSessionWorkflow](../../resource/AVFoundation/Markdown/exportSessionWorkflow.png)
 
 > You can initialize a player item with an existing asset, or you can initialize a player item directly from a URL so that you can play a resource at a particular location (AVPlayerItem will then create and configure an asset for the resource). As with AVAsset, though, simply initializing a player item doesn’t necessarily mean it’s ready for immediate playback. You can observe (using key-value observing) an item’s [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) property to determine if and when it’s ready to play.
 
-可以使用一个现有的 asset 初始化一个 player item ，或者直接从一个 URL 初始化，这样你就可以播放位于特定位置的资源（AVPlayerItem 将会为该资源创建并且配置一个 asset ）。与 AVAsset 一样，简单地初始化一个 player item 并不意味着可以立马使用它来进行播放了。你可以观察（使用 key-value observing ） item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) 属性去决定该 item 是否以及何时准备好播放。
+可以使用一个现有的 asset 初始化一个 player item ，或者直接从一个 URL 初始化，这样你就可以播放位于特定位置的资源（ AVPlayerItem 将会为该资源创建并且配置一个 asset ）。与 AVAsset 一样，简单地初始化一个 player item 并不意味着可以立马使用它来进行播放了。你可以观察（使用 key-value observing ） item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389493-status) 属性去决定该 item 是否以及何时准备好播放。
 
 ### Handling Different Types of Asset - 处理不同类型的 Asset
 
@@ -539,16 +539,16 @@ player 向你提供了关于播放状态的信息，所以，如果需要的话�
 > 
 > To create and prepare an HTTP live stream for playback. Initialize an instance of AVPlayerItem using the URL. (You cannot directly create an AVAsset instance to represent the media in an HTTP Live Stream.)
 
-配置一个 asset 用于播放的方式可以能取决于你要播放的 asset 类型。广义上讲，有两种主要的类型：基于文件的 assets（例如，本地文件，相机胶卷或者媒体库），你可以随机访问；基于 stream 的 assets（ HTTP Live Streming 格式）。
+配置一个 asset 用于播放的方式可能取决于你要播放的 asset 类型。广义上讲，有两种主要的类型：基于文件的 assets（例如，本地文件，相机胶卷或者媒体库），你可以随机访问；基于 stream 的 assets（ HTTP Live Streming 格式）。
 
 加载并播放基于文件的 asset ，有如下几个步骤：
 
 - 使用 [AVURLAsset](https://developer.apple.com/documentation/avfoundation/avurlasset) 创建一个 asset
 - 使用 asset 创建一个 AVPlayerItem 实例
 - 将 AVPlayerItem 实例与 AVPlayer 的实例相关联
-- 等待直到 item 的 status 属性表明它已准备好播放（通常使用 key-value observing 来接受状态改变的通知）。
+- 等待直到 item 的 status 属性表明它已准备好播放（通常使用 key-value observing 来接收状态改变的通知）。
 
-该方法的说明在 [Putting It All Together: Playing a Video File Using AVPlayerLayer](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW2) 这里。
+该方法说明在 [Putting It All Together: Playing a Video File Using AVPlayerLayer](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW2) 这里。
 
 为了创建并且准备一个 HTTP live stream 用来进行播放。使用 URL 初始化 AVPlayerItem 的一个实例。（你不能直接创建 AVAsset 实例来代表 HTTP Live Stream 类型的 media ）。
 
@@ -578,7 +578,7 @@ self.player = [AVPlayer playerWithPlayerItem:playerItem];
 
 > If you simply want to play a live stream, you can take a shortcut and create a player directly using the URL use the following code:
 
-如果你想简单地播放一个 live stream ，你可以采用一种快捷方式，使用下面的代码使用 URL 直接创建一个 player 。
+如果你想简单地播放一个 live stream ，你可以采用一种快捷方式，参考下面的代码使用 URL 直接创建一个 player 。
 
 ```objc
 self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
@@ -603,7 +603,7 @@ self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
 
 1. 试着使用 URL 初始化 AVURLAsset ，然后加载其 tracks 键。如果 tracks 加载成功，接下来为该 asset 创建一个 player item。
 
-2. 如果 1 失败的话，使用从 URL 创建一个 AVPlayerItem 对象，观察该 player 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 属性以决定其是否已经处于可以播放的状态。
+2. 如果 1 失败的话，直接使用 URL 创建一个 AVPlayerItem 对象，观察该 player 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 属性以决定其是否已经处于可以播放的状态。
 
 如果任何一条路径成功，最终将生成一个 player item ，然后你就可以将其与一个 player 联系起来。
 
@@ -621,7 +621,7 @@ self.player = [AVPlayer playerWithURL:<#Live stream URL#>];
 
 > In addition to simply playing, you can manage various aspects of the playback, such as the rate and the location of the playhead. You can also monitor the play state of the player; this is useful if you want to, for example, synchronize the user interface to the presentation state of the asset—see [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8).
 
-除了简单地进行播放，你可以管理播放的各个方面，比如，你可以管理播放的速度以及播放的开始位置。你也可以监控 player 的播放状态，这是非常有用的，例如你需要根据 asset 的状态同步更新用户界面的显示状态 - 参阅 [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8) 。
+除了简单地进行播放，你可以管理播放的各个方面，比如，你可以管理播放的速度以及 playhead 的开始位置。你也可以监控 player 的播放状态，这是非常有用的，例如你需要根据 asset 的状态同步更新用户界面的显示状态 - 参阅 [Monitoring Playback](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW8) 。
 
 #### Changing the Playback Rate - 改变播放速率
 
@@ -640,7 +640,7 @@ aPlayer.rate = 2.0;
 
 1.0 表示“以当前 item 的自然速率播放”。将 rate 设置为 0.0 与暂停播放的效果是一致的，你也可以使用 [pause](https://developer.apple.com/documentation/avfoundation/avplayer/1387895-pause) 调用来达到同样的目的。
 
-对于支持倒放的 item 可以使用负的 rate 值来设置其倒放的速率。使用 playerItem 的 [canPlayReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1385591-canplayreverse)（支持 rate 值为 -1.0）、 [canPlaySlowReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390598-canplayslowreverse)（支持 rate 值介于 0.0 与 -1.0 之间）、 [canPlayFastReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390493-canplayfastreverse)（支持 rate 值小于 -1.0 ）属性确定倒放所支持的类型。
+对于支持倒放的 item 可以使用负的 rate 值来设置其倒放的速率。使用 playerItem 的 [canPlayReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1385591-canplayreverse)（支持 rate 值为 -1.0）、 [canPlaySlowReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390598-canplayslowreverse)（支持 rate 值介于 0.0 与 -1.0 之间）、 [canPlayFastReverse](https://developer.apple.com/documentation/avfoundation/avplayeritem/1390493-canplayfastreverse)（支持 rate 值小于 -1.0 ）属性确定所支持的倒放类型。
 
 #### Seeking—Repositioning the Playhead - 寻址 - 重新定位 Playhead
 
@@ -668,7 +668,7 @@ CMTime fiveSecondsIn = CMTimeMake(5, 1);
 
 tolerance 参数传递 0 framework 可能需要解码大量的数据。仅当确实需要的情况下，才应该使用 0 ，比如，编写一个需要精确控制的复杂媒体编辑应用程序时，才应该使用 0 。
 
-播放完毕之后，player 的 head 被设置为 item 的结尾，并且之后再调用 play 将没有任何效果。要想在这种情况下将 playhead 重新定位到该 item 的开始处，你可以注册并接受该 item 发出的 [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) 通知。在通知的回调方法中，传递 kCMTimeZero 参数调用 seekToTime: 。
+播放完毕之后，player 的 head 被设置为 item 的结尾，并且之后再调用 play 将没有任何效果。要想在这种情况下将 playhead 重新定位到该 item 的开始处，你可以注册并接收该 item 发出的 [AVPlayerItemDidPlayToEndTimeNotification](https://developer.apple.com/documentation/foundation/nsnotification/name/1386566-avplayeritemdidplaytoendtime) 通知。在通知的回调方法中，传递 kCMTimeZero 参数调用 seekToTime: 。
 
 ```objc
 // Register with the notification center after creating the player item.
@@ -726,23 +726,23 @@ if ([queuePlayer canInsertItem:anItem afterItem:nil]) {
 >
 > Important: You should register for KVO change notifications and unregister from KVO change notifications on the main thread. This avoids the possibility of receiving a partial notification if a change is being made on another thread. AV Foundation invokes [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) on the main thread, even if the change operation is made on another thread.
 
-你可以监控 player 呈现状态的和正在播放的 player item 的多个方面。这对于不受你直接控制的状态变更特别有用。例如：
+你可以监控 player 呈现状态和正在播放的 player item 的多个方面。这对于不受你直接控制的状态变更特别有用。例如：
 
 - 如果用户切换到另一个应用程序，一个 player 的 [rate](https://developer.apple.com/documentation/avfoundation/avplayer/1388846-rate) 参数将会将为 0.0 。
 - 如果你正在播放远程媒体，player item 的 [loadedTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1389953-loadedtimeranges) 和 [seekableTimeRanges](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386155-seekabletimeranges) 属性随着更多数据变得可用而发生变化。
 
-这些属性告诉你 player item 的那部分 timeline 是可用的。
+这些属性告诉你 player item 的哪些部分 timeline 是可用的。
 
 - HTTP live stream 类型下，用于该类型下的 player item 的创建将会改变 player 的 [currentItem](https://developer.apple.com/documentation/avfoundation/avplayer/1387569-currentitem) 属性。
 - 当播放一个 HTTP live stream 时，player item 的 [tracks](https://developer.apple.com/documentation/avfoundation/avplayeritem/1386361-tracks) 属性可能发生改变。
 
 如果 stream 提供了不同编码的内容，上述的情况即有可能发生；如果 player 切换成不同的编码模式 tracks 也会改变。
 
-一个 player 或者 player item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 在播放由于某些原因失败的情况下可能发生改变。
+一个 player 或者 player item 的 [status](https://developer.apple.com/documentation/avfoundation/avplayer/1388096-status) 在由于某些原因播放失败的情况下可能发生改变。
 
 你可以使用 key-value observing 机制监控这些属性值的改变。
 
-重要：你应该在主线程注册和移除 KVO 通知。如果改变发生在子线程，这样做可以避免接受到部分通知的可能性。AVFoundation 在主线程上调用 [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) 即使改变操作发生在其他线程。
+重要：你应该在主线程注册和移除 KVO 通知。如果改变发生在子线程，这样做可以避免接收到部分通知的可能性。AVFoundation 在主线程上调用 [observeValueForKeyPath:ofObject:change:context:](https://developer.apple.com/documentation/objectivec/nsobject/1416553-observevalueforkeypath) 即使改变操作发生在其他线程。
 
 
 #### Responding to a Change in Status - 响应状态的改变
@@ -792,11 +792,11 @@ AVFoundation 没有指定发送通知所在的线程。如果你想要更新用�
 >
 > With both of these methods, AV Foundation does not guarantee to invoke your block for every interval or boundary passed. AV Foundation does not invoke a block if execution of a previously invoked block has not completed. You must make sure, therefore, that the work you perform in the block does not overly tax the system.
 
-追踪 AVPlayer 对象中 playhead 位置的改变，可以使用 [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) 或者 [addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver) 。例如，你想要使用消耗的时间或者剩余的时间来更新用户界面，或者执行某些其他用户界面的同步操作，你可能都需要使用上面的两个 API 来追踪 playhead 位置的改变。
+追踪 AVPlayer 对象中 playhead 位置的改变，可以使用 [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) 或者 [addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver) 。例如，你想要根据消耗的时间或者剩余的时间来更新用户界面，或者执行某些其他用户界面的同步操作，你可能都需要使用上面的两个 API 来追踪 playhead 位置的改变。
 
 [addPeriodicTimeObserverForInterval:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1385829-addperiodictimeobserver) 中你提供的 block ，如果播放正在进行，将按你指定的时间间隔调用，同时，播放开始或者停止的时候，block 也会被调用。
 
-[addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver)，传递一个 CMTime 结构体的数组。播放进度到达该数组指定的每个时间时，block 都将会被调用一次。
+[addBoundaryTimeObserverForTimes:queue:usingBlock:](https://developer.apple.com/documentation/avfoundation/avplayer/1388027-addboundarytimeobserver)，传递一个 CMTime 结构体的数组。播放进度到达该数组指定的任一时间时，block 都将会被调用一次。
 
 这两个方法都返回一个作为观察者的不透明对象。只要你希望 player 调用 time observation block ，就必须对返回的对象保持一个强引用。对于上面两个方法的每次调用，必须存在相应的 [removeTimeObserver:](https://developer.apple.com/documentation/avfoundation/avplayer/1387552-removetimeobserver) 的调用。
 
@@ -853,15 +853,15 @@ NSLog(@"Passed a boundary at %@", timeDescription);
 - 当对应的 item 播放准备就绪时，使一个 button 变为可交互状态
 - 播放该 item ，然后将该 player 的head 恢复到起始位置
 
-注意：为了着重介绍 AVFoundation 最相关的代码，这个例子遗漏了一个完整应用程序的一些方面，比如内存管理与观察者的注销（ key-value observing 或者 notification center）。你应该拥有足够的 Cocoa 相关经验可以推断出缺失的代码片段。
+注意：为了着重介绍 AVFoundation 相关的代码，这个例子遗漏了一个完整应用程序的一些方面，比如内存管理与观察者的注销（ key-value observing 或者 notification center）。你应该拥有足够的 Cocoa 相关经验可以推断出缺失的代码片段。
 
-关于 playback 概念性的介绍，跳去看
+关于 playback 概念性的介绍，跳去看 [Playing Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW4) 。
 
-#### The Player View - 播放器视图 [Playing Assets](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/AVFoundationPG/Articles/02_Playback.html#//apple_ref/doc/uid/TP40010188-CH3-SW4) 。
+#### The Player View - 播放器视图
 
 > To play the visual component of an asset, you need a view containing an [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) layer to which the output of an [AVPlayer](https://developer.apple.com/documentation/avfoundation/avplayer) object can be directed. You can create a simple subclass of [UIView](https://developer.apple.com/documentation/uikit/uiview) to accommodate this:
 
-你需要一个包含 [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) layer 的 view 去播放一个 asset 的可视化部分，AVPlayer 对象的输出直接渲染到该 layer 上。你可以创建 [UIView](https://developer.apple.com/documentation/uikit/uiview) 的一个简单子类来容纳 AVPlayer 的输出。
+播放一个 asset 的可视化部分，你需要一个包含 [AVPlayerLayer](https://developer.apple.com/documentation/avfoundation/avplayerlayer) layer 的 view ，AVPlayer 对象的输出可以直接渲染到该 layer 上。你可以创建 [UIView](https://developer.apple.com/documentation/uikit/uiview) 的一个简单子类来容纳 AVPlayer 的输出。
 
 ```objc
 #import <UIKit/UIKit.h>
@@ -961,7 +961,9 @@ NSString *tracksKey = @"tracks";
 >
 > You trigger the player item’s preparation to play when you associate it with the player.
 
-回调 block 中，为这个 asset 创建一个 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 的实例，并且设置该播放器为播放器视图的 player 。就像创建 asset 一样，简单地创建 player item 并不意味着它已经可以被使用。你可以观察该 item 的 status 属性来确定其准备好播放的时间。在将 player item 与 播放器本身关联之前，你应该完成对此观察的设置。
+回调 block 中，为这个 asset 创建一个 [AVPlayerItem](https://developer.apple.com/documentation/avfoundation/avplayeritem) 的实例，并且设置该播放器为播放器视图的 player 。就像创建 asset 一样，简单地创建 player item 并不意味着它已经可以被使用。你可以观察该 item 的 status 属性来确定其准备好播放的时间。你应该在将 player item 与 播放器本身关联之前完成对此观察的设置。
+
+当将 player item 与 player 关联之后，就可以触发 player item 的准备工作了。
 
 ```objc
 // Define this constant for the key-value observation context.
@@ -996,7 +998,7 @@ dispatch_async(dispatch_get_main_queue(),
 
 > When the player item’s status changes, the view controller receives a key-value observing change notification. AV Foundation does not specify what thread that the notification is sent on. If you want to update the user interface, you must make sure that any relevant code is invoked on the main thread. This example uses [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) to queue a message on the main thread to synchronize the user interface.
 
-当该 player item 的状态改变之后，view controller 接收到 key-value observing 改变通知。AVFoundation 并不指定通知的进行在哪个线程。如果你希望更新用户界面的话，你必须确保任何与界面相关的代码在主线程上执行。本例子中使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 保证同步用户界面的逻辑在主线程上进行。
+当该 player item 的状态改变之后，view controller 接收到 key-value observing 改变通知。AVFoundation 并不指定通知在哪个线程上进行。如果你希望更新用户界面的话，你必须确保任何与界面相关的代码在主线程上执行。本例子中使用 [dispatch_async](https://developer.apple.com/documentation/dispatch/1453057-dispatch_async) 保证同步用户界面的逻辑在主线程上进行。
 
 ```objc
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object
