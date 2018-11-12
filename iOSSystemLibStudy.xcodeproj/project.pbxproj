@@ -24,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		5F0B7B6521800584008D28D1 /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; path = resource; sourceTree = "<group>"; };
+		5F15B7872198341A00A997D6 /* OpenGL ES Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "OpenGL ES Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F219B3C2191653700D002F9 /* AVFoundationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationViewController.h; sourceTree = "<group>"; };
 		5F219B3D2191653700D002F9 /* AVFoundationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AVFoundationViewController.m; sourceTree = "<group>"; };
 		5F219B3F2191D38300D002F9 /* AVFoundationHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AVFoundationHeader.h; sourceTree = "<group>"; };
@@ -63,6 +64,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F15B786219833DB00A997D6 /* OpenGLES */ = {
+			isa = PBXGroup;
+			children = (
+				5F15B7872198341A00A997D6 /* OpenGL ES Programming Guide - 翻译.md */,
+			);
+			path = OpenGLES;
+			sourceTree = "<group>";
+		};
 		5F219B3B219164AA00D002F9 /* AVFoundation */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +103,7 @@
 		5FCD5683215A8D4800E26E01 /* iOSSystemLibStudy */ = {
 			isa = PBXGroup;
 			children = (
+				5F15B786219833DB00A997D6 /* OpenGLES */,
 				5F219B3B219164AA00D002F9 /* AVFoundation */,
 				5FCD569A215DAD0500E26E01 /* ImageIO */,
 				5FCD5684215A8D4800E26E01 /* AppDelegate.h */,
