@@ -221,6 +221,123 @@ commandBuffer 方法创建的命令缓冲区会 ratain 执行所需要的数据�
 >
 > For an example of using enqueue with multiple threads, see [Multiple Threads, Command Buffers, and Command Encoders](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Cmd-Submiss/Cmd-Submiss.html#//apple_ref/doc/uid/TP40014221-CH3-SW6).
 
+MTLCommandBuffer 协议使用以下方法建立加入命令队列中的命令缓冲区的执行顺序。命令缓冲区在提交之前不会开始执行，一旦提交，命令缓冲区按照它们入队的顺序执行。
+
+- [enqueue](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443019-enqueue) 方法为命令队列上的命令缓冲区保留一个位置，但并不提交命令缓冲区以供执行。当该缓冲区最终提交时，将在相关命令队列中任何先前入队的命令缓冲区执行之后被执行。
+- [commit](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443003-commit) 方法会导致命令缓冲区尽快执行，但也是在同一个命令队列中的之前入队的命令缓冲区提交之后。如果先前没有将命令缓冲区入队，则 commit 会进行隐式的入队调用。
+
+有关使用多线程入队的示例，参阅 [Multiple Threads, Command Buffers, and Command Encoders](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Cmd-Submiss/Cmd-Submiss.html#//apple_ref/doc/uid/TP40014221-CH3-SW6)。
+
+#### Registering Handler Blocks for Command Buffer Execution - 为命令缓冲区的执行注册处理程序块
+
+> The [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) methods listed below monitor command execution. Scheduled and completed handlers are invoked in execution order on an undefined thread. Any code you execute in these handlers should complete quickly; if expensive or blocking work needs to be done, defer that work to another thread.
+>
+> - The [addScheduledHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442991-addscheduledhandler) method registers a block of code to be called when the command buffer is scheduled. A command buffer is considered scheduled when any dependencies between work submitted by other MTLCommandBuffer objects or other APIs in the system is satisfied. You can register multiple scheduled handlers for a command buffer.
+> - The [waitUntilScheduled](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443036-waituntilscheduled) method synchronously waits and returns after the command buffer is scheduled and all handlers registered by the addScheduledHandler: method are completed.
+> - The [addCompletedHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442997-addcompletedhandler) method registers a block of code to be called immediately after the device completes the execution of the command buffer. You can register multiple completed handlers for a command buffer.
+> - The [waitUntilCompleted](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) method synchronously waits and returns after the device has completed the execution of the command buffer and all handlers registered by the [addCompletedHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442997-addcompletedhandler) method have returned.
+> The [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) method is a special case of completed handler. This convenience method presents the contents of a displayable resource (a CAMetalDrawable object) when the command buffer is scheduled. For details about the presentDrawable: method, see [Integration with Core Animation: CAMetalLayer](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW36).
+
+下面列出的 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 方法监控命令的执行。调度和完成的处理程序在未定义的线程上按执行顺序调用。你在这些处理程序中执行的任何代码都应该快速完成；如果需要进行开销较大或者阻塞的工作，将该工作推迟到另外的线程去处理。
+
+- [addScheduledHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442991-addscheduledhandler) 方法注册一个代码块，当命令缓冲区被调度时，该代码块被执行。当满足其他 MTLCommandBuffer 对象或系统中的其他 API 提交的工作之间的任何依赖关系时，将考虑调度该命令缓冲区。你可以为一个命令缓冲区注册多个调度处理程序。
+- [waitUntilScheduled](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443036-waituntilscheduled) 方法在命令缓冲区被调度之后及通过 addScheduledHandler: 注册的所有处理程序都执行完毕之后同步返回。
+- [addCompletedHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442997-addcompletedhandler) 方法注册一个代码块，在设备完成命令缓冲区的执行之后，该代码块被立即执行。你可以为一个命令缓冲区注册多个完成处理程序。
+- [waitUntilCompleted](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443039-waituntilcompleted) 方法在设置执行完命令缓冲区及通过  [addCompletedHandler:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442997-addcompletedhandler) 注册的所有处理程序都返回之后同步返回。
+
+[presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 方法是完成处理程序的特例。这种便捷方法在调度命令缓冲区时呈现可显示资源（一个 CAMetalDrawable 对象）的内容。关于presentDrawable: 方法的详细信息，参阅 [Integration with Core Animation: CAMetalLayer](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW36)。
+
+#### Monitoring Command Buffer Execution Status - 监控命令缓冲区执行状态
+
+> The read-only [status](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443048-status) property contains a MTLCommandBufferStatus enum value listed in [Command Buffer Status Codes](https://developer.apple.com/documentation/metal/mtlcommandbufferstatus) that reflects the current scheduling stage in the lifetime of this command buffer.
+>
+> If execution finishes successfully, the value of the read-only [error](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443040-error) property is nil. If execution fails, then status is set to MTLCommandBufferStatusError, and the error property may contain a value listed in [Command Buffer Error Codes](https://developer.apple.com/documentation/metal/mtlcommandbuffererror/code) that indicates the cause of the failure.
+
+只读的 [status](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443048-status) 属性包含一个 [Command Buffer Status Codes](https://developer.apple.com/documentation/metal/mtlcommandbufferstatus) 中列出的 MTLCommandBufferStatus 枚举值，该值反映了此命令缓冲区生命周期中的当前调度阶段。
+
+如果执行成功完成，只读的 [error](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443040-error) 属性值为 nil 。如果执行失败，status 属性设置为 MTLCommandBufferStatusError ，error 属性可能包含一个[Command Buffer Error Codes](https://developer.apple.com/documentation/metal/mtlcommandbuffererror/code) 中列出的值，该值指示失败的原因。
+
+### Command Encoder - 命令编码器
+
+> A command encoder is a transient object that you use once to write commands and state into a single command buffer in a format that the GPU can execute. Many command encoder object methods append commands onto the command buffer. While a command encoder is active, it has the exclusive right to append commands for its command buffer. Once you finish encoding commands, call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method. To write further commands, create a new command encoder.
+
+命令编码器是一个瞬态对象，你可以使用该对象以 GPU 可以执行的格式将命令和状态写入单个命令缓冲区。许多命令编码器对象方法附加命令到命令缓冲区。当命令编码器处于激活状态时，它具有为其命令缓冲区附加命令的专有权。一旦完成命令的编码，调用 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法。今后再要写入命令的话，就再创建一个新的命令编码器。
+
+#### Creating a Command Encoder Object - 创建一个命令编码器对象
+
+> Because a command encoder appends commands into a specific command buffer, you create a command encoder by requesting one from the [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) object you want to use it with. Use the following MTLCommandBuffer methods to create command encoders of each type:
+>
+> - The [renderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442999-rendercommandencoderwithdescript) method creates a [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) object for graphics rendering to an attachment in a [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor).
+> - The [computeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443044-computecommandencoder) method creates a [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object for data-parallel computations.
+> - The [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) method creates a [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) object for memory operations.
+> - The [parallelRenderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443009-parallelrendercommandencoderwith) method creates a [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) object that enables several MTLRenderCommandEncoder objects to run on different threads while still rendering to an attachment that is specified in a shared [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor).
+
+由于命令编码器将命令附加到特定命令缓冲区，因此通过从指定的命令缓冲区对象申请的方式来创建一个命令编码器。使用以下 MTLCommandBuffer 的方法创建每种类型的命令编码器：
+
+- [renderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442999-rendercommandencoderwithdescript) 方法创建一个用于渲染图像到 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 中附件的 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 对象。
+- [computeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443044-computecommandencoder) 方法创建一个用于数据并行计算的 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象。
+- [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) 方法创建一个用于内存操作的 [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 对象。
+- [parallelRenderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443009-parallelrendercommandencoderwith) 方法创建一个 [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) 对象，该对象使多个 MTLRenderCommandEncoder 对象能够在不同的线程上运行，同时渲染图像到指定的共享 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 中的附件。
+
+#### Render Command Encoder - 渲染命令编码器
+
+> Graphics rendering can be described in terms of a rendering pass. A [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) object represents the rendering state and drawing commands associated with a single rendering pass. A MTLRenderCommandEncoder requires an associated [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) (described in Creating a [Render Pass Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW5)) that includes the color, depth, and stencil attachments that serve as destinations for rendering commands. The MTLRenderCommandEncoder has methods to:
+>
+> - Specify graphics resources, such as buffer and texture objects, that contain vertex, fragment, or texture image data
+> - Specify a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object that contains compiled rendering state, including vertex and fragment shaders
+> - Specify fixed-function state, including viewport, triangle fill mode, scissor rectangle, depth and stencil tests, and other values
+Draw 3D primitives
+> For detailed information about the MTLRenderCommandEncoder protocol, see [Graphics Rendering: Render Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW1).
+
+可以根据渲染过程来描述图形渲染。[MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 对象表示与单个渲染过程关联的渲染状态和绘制命令。一个 MTLRenderCommandEncoder 需要关联一个 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) ，其包含颜色、深度和模版附件，渲染命令的渲染结果即保存在该 MTLRenderPassDescriptor 对应的附件中。MTLRenderCommandEncoder 具有以下方法：
+
+- 指定图形资源，比如包含顶点、片元或者纹理图像数据的缓冲区和纹理对象
+- 指定 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象，其中包含已编译的渲染状态，包括顶点和片段着色器
+- 指定固定功能状态，包括 viewport、三角形填充模式、裁剪区域、深度和模版测试和其他绘制 3D 图元的值
+
+有关 MTLRenderCommandEncoder 协议的详细信息，参阅 [Graphics Rendering: Render Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW1)。
+
+#### Compute Command Encoder - 计算命令编码器
+
+> For data-parallel computing, the [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) protocol provides methods to encode commands in the command buffer that can specify the compute function and its arguments (for example, texture, buffer, and sampler state) and dispatch the compute function for execution. To create a compute command encoder object, use the [computeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443044-computecommandencoder) method of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer). For detailed information about the MTLComputeCommandEncoder methods and properties, see [Data-Parallel Compute Processing: Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW1).
+
+对于数据并行计算，[MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder)  协议提供了对命令缓冲区中的命令进行编码的方法，该命令缓冲区可以指定计算函数及其参数（例如，纹理、缓冲区和采样器状态）并调度计算函数以供执行。使用 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的 [computeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443044-computecommandencoder) 方法创建一个计算命令编码器对象。关于 MTLComputeCommandEncoder 方法和属性的详细信息，参阅 [Data-Parallel Compute Processing: Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW1)。
+
+#### Blit Command Encoder - Blit 命令编码器
+
+> The [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) protocol has methods that append commands for memory copy operations between buffers ([MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer)) and textures ([MTLTexture](https://developer.apple.com/documentation/metal/mtltexture)). The MTLBlitCommandEncoder protocol also provides methods to fill textures with a solid color and to generate mipmaps. To create a blit command encoder object, use the [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) method of MTLCommandBuffer. For detailed information about the MTLBlitCommandEncoder methods and properties, see [Buffer and Texture Operations: Blit Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Blit-Ctx/Blit-Ctx.html#//apple_ref/doc/uid/TP40014221-CH9-SW3).
+
+[MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 协议具有为缓冲区（ [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) ）和纹理（ [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) ）之间的内存复制操作附加命令的方法。MTLBlitCommandEncoder 协议还提供了使用纯色填充纹理及生成 mipmaps 的方法。使用 MTLCommandBuffer 的 [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) 方法去创建一个 blit 命令编码器对象。关于 MTLBlitCommandEncoder 方法和属性的详细信息，参阅 [Buffer and Texture Operations: Blit Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Blit-Ctx/Blit-Ctx.html#//apple_ref/doc/uid/TP40014221-CH9-SW3) 。
+
+#### Multiple Threads, Command Buffers, and Command Encoders - 多线程，命令缓冲区和命令编码器
+
+> Most apps use a single thread to encode the rendering commands for a single frame in a single command buffer. At the end of each frame, you commit the command buffer, which both schedules and begins command execution.
+>
+> If you want to parallelize command buffer encoding, then you can create multiple command buffers at the same time, and encode to each one with a separate thread. If you know ahead of time in what order a command buffer should execute, then the [enqueue]((https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443019-enqueue)) method of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) can declare the execution order within the command queue without needing to wait for the commands to be encoded and committed. Otherwise, when a command buffer is committed, it is assigned a place in the command queue after any previously enqueued command buffers.
+>
+> Only one CPU thread can access a command buffer at time. Multithreaded apps can use one thread per command buffer to create multiple command buffers in parallel.
+>
+> Figure 2-2 shows an example with three threads. Each thread has its own command buffer. For each thread, one command encoder at a time has access to its associated command buffer. Figure 2-2 also shows each command buffer receiving commands from different command encoders. When you finish encoding, call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method of the command encoder, and a new command encoder object can then begin encoding commands to the command buffer.
+>
+> A [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) object allows a single rendering pass to be broken up across multiple command encoders and assigned to separate threads. For more information about [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder), see [Encoding a Single Rendering Pass Using Multiple Threads](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16).
+
+大多数应用程序使用单个线程在单个命令缓冲区中为单个帧编码渲染命令。在每一帧的末尾，你提交命令缓冲区，引发命令的调度以及执行的开始。
+
+如果要并行化命令缓冲区编码，则可以同时创建多个命令缓冲区，并使用单独的线程对每个命令缓冲区进行编码。如果事先知道命令缓冲区应该以什么顺序执行，那么 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的 [enqueue]((https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443019-enqueue)) 方法可以在命令队列中声明执行顺序，而无需等待命令的编码和提交。否则，当提交命令缓冲区时，该命令缓冲区将被放置于先前入队的任何命令缓冲区之后的位置。
+
+同一时刻只允许一个 CPU 线程访问一个命令缓冲区。多线程应用程序可以使用每个命令缓冲区一个线程的方式来并行创建多个命令缓冲区。
+
+图 2-2 显示了一个包含三个线程的例子。每个线程都有自己的命令缓冲区。对于每个线程，同一时刻一个命令编码器访问其关联的命令缓冲区。图 2-2 还显示了每个命令缓冲区接收来自不同命令编码器的命令。完成编码后，调用命令编码器的 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法，然后新的命令编码器对象可以开始编码命令到命令缓冲区中。
+
+![MetalCommandBuffersWithMultipleThreads](../../resource/Metal/Markdown/MetalCommandBuffersWithMultipleThreads.png)
+
+[MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) 对象允许单个渲染过程分解到多个命令编码器之间，其中每个命令编码器分配单独的线程。关于 [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) 的更多信息，参阅 [Encoding a Single Rendering Pass Using Multiple Threads](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16) 。
+
+
+
+
+
+
 
 
 
