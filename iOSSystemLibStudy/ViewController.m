@@ -69,7 +69,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"ARKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AssetsLibrary" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AudioToolbox" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"AudioUnit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"AudioUnit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AVFoundation" vcName:@"AVFoundationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"AVKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"BusinessChat" vcName:@""]];
@@ -82,7 +82,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"CoreAudio" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreAudioKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreBluetooth" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"CoreData" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"CoreData" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreFoundation" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreGraphics" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreImage" vcName:@""]];
@@ -116,7 +116,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"ImageIO - 完成" vcName:@"ImageIOViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"Intents" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IntentsUI" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"IOKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"IOKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IOSurface" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"JavaScriptCore" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"LocalAuthentication" vcName:@""]];
@@ -153,7 +153,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"SpriteKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"StoreKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SystemConfiguration" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Twitter" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Twitter" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UIKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UserNotifications" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UserNotificationsUI" vcName:@""]];
@@ -163,7 +163,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"WatchConnectivity" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"WatchKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SiriKit" vcName:@""]];
