@@ -720,6 +720,106 @@ id <MTLFunction> myFunc = [library newFunctionWithName:@"my_func"];
 
 ### Determining Function Details at Runtime - 运行时确定函数详细信息
 
+> Because the actual contents of a [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) object are defined by a graphics shader or compute function that may be compiled before the MTLFunction object was created, its source code might not be directly available to the app. You can query the following MTLFunction properties at run time:
+>
+> - [name](https://developer.apple.com/documentation/metal/mtlfunction/1515424-name), a string with the name of the function.
+> - [functionType](https://developer.apple.com/documentation/metal/mtlfunction/1516042-functiontype), which indicates whether the function is declared as a vertex, fragment, or compute function.
+> - [vertexAttributes](https://developer.apple.com/documentation/metal/mtlfunction/1515944-vertexattributes), an array of [MTLVertexAttribute](https://developer.apple.com/documentation/metal/mtlvertexattribute) objects that describe how vertex attribute data is organized in memory and how it is mapped to vertex function arguments. For more details, see [Vertex Descriptor for Data Organization](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW44).
+
+由于 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) 对象的实际内容是由可能在创建 MTLFunction 对象之前编译的图形着色器或者计算函数定义的，因此它的源代码可能无法直接用于应用程序。你可以在运行时查询 MTLFunction 的以下属性：
+
+- [name](https://developer.apple.com/documentation/metal/mtlfunction/1515424-name) ，包含函数名称的字符串
+- [functionType](https://developer.apple.com/documentation/metal/mtlfunction/1516042-functiontype) ，指示函数是声明为顶点、片段或者计算函数
+- [vertexAttributes](https://developer.apple.com/documentation/metal/mtlfunction/1515944-vertexattributes) ，一个 [MTLVertexAttribute](https://developer.apple.com/documentation/metal/mtlvertexattribute) 对象数组，描述顶点属性数据在内存中的组织方式以及如何将其映射到顶点函数参数。更多细节，参阅 [Vertex Descriptor for Data Organization](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW44) 。
+
+> MTLFunction does not provide access to function arguments. A reflection object (either [MTLRenderPipelineReflection](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection) or [MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection), depending upon the type of command encoder) that reveals details of shader or compute function arguments can be obtained during the creation of a pipeline state. For details on creating pipeline state and reflection objects, see [Creating a Render Pipeline State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW37) or [Creating a Compute Pipeline State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW3). Avoid obtaining reflection data if it will not be used.
+>
+> A reflection object contains an array of [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) objects for each type of function supported by the command encoder. For [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder), [MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection) has one array of [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) objects in the [arguments](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection/1414909-arguments) property that correspond to the arguments of its compute function. For [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder), [MTLRenderPipelineReflection](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection) has two properties, [vertexArguments](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection/1514686-vertexarguments) and [fragmentArguments](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection/1514701-fragmentarguments), that are arrays that correspond to the vertex function arguments and fragment function arguments, respectively.
+>
+> Not all arguments of a function are present in a reflection object. A reflection object only contains arguments that have an associated resource, but not arguments declared with the [[ stage_in ]] qualifier or built-in [[ vertex_id ]] or [[ attribute_id ]] qualifier.
+>
+> Listing 4-2 shows how you can obtain a reflection object (in this example, [MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection)) and then iterate through the [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) objects in its [arguments](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection/1414909-arguments) property.
+
+MTLFunction 不提供对函数参数的访问。可以在创建管线状态期间获得揭示着色器或者计算函数参数细节的反射对象（ [MTLRenderPipelineReflection](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection) 或者 [MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection) ，具体取决于命令编码器的类型）。有关创建管线状态和反射对象的详细信息，参阅 [Creating a Render Pipeline State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW37) 或者 [Creating a Compute Pipeline State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW3) 。若不使用反射数据，避免获取它们。
+
+反射对象包含命令编码器支持的每种函数类型的 [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) 对象数组。对于 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) ，[MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection) 在 [arguments](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection/1414909-arguments) 属性中有一个 [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) 对象数组，对应于其计算函数的参数。对于 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) ，[MTLRenderPipelineReflection](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection) 有两个属性， [vertexArguments](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection/1514686-vertexarguments) 和 [fragmentArguments](https://developer.apple.com/documentation/metal/mtlrenderpipelinereflection/1514701-fragmentarguments) ，它们分别对应于顶点函数参数和片段函数参数。
+
+并不是函数所有的参数都存在于反射对象中。反射对象只包含那些有关联资源的参数，但不包含使用 [[ stage_in ]] 限定符或内置 [[ vertex_id ]] 、 [[ attribute_id ]] 限定符声明的参数。
+
+清单 4-2 显示了如何获取反射对象（在此例中为  [MTLComputePipelineReflection](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection) ），然后在其 [arguments](https://developer.apple.com/documentation/metal/mtlcomputepipelinereflection/1414909-arguments) 属性中迭代 [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) 对象。
+
+Listing 4-2  通过函数参数进行迭代
+
+```objc
+MTLComputePipelineReflection* reflection;
+id <MTLComputePipelineState> computePS = [device
+newComputePipelineStateWithFunction:func
+options:MTLPipelineOptionArgumentInfo
+reflection:&reflection error:&error];
+for (MTLArgument *arg in reflection.arguments) {
+//  process each MTLArgument
+}
+```
+
+> The [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) properties reveal the details of an argument to a shading language function.
+>
+> - The [name](https://developer.apple.com/documentation/metal/mtlargument/1462031-name) property is simply the name of the argument.
+> - [active](https://developer.apple.com/documentation/metal/mtlargument/1461891-isactive) is a Boolean that indicates whether the argument can be ignored.
+> - [index](https://developer.apple.com/documentation/metal/mtlargument/1461883-index) is a zero-based position in its corresponding argument table. For example, for [[ buffer(2) ]], index is 2.
+> - [access](https://developer.apple.com/documentation/metal/mtlargument/1462029-access) describes any access restrictions, for example, the read or write access qualifier.
+> - [type](https://developer.apple.com/documentation/metal/mtlargument/1461997-type) is indicated by the shading language qualifier, for example, [[ buffer(n) ]], [[ texture(n) ]], [[ sampler(n) ]], or [[ threadgroup(n) ]].
+
+[MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) 属性揭示着色语言函数参数的详细信息。
+
+- [name](https://developer.apple.com/documentation/metal/mtlargument/1462031-name) 属性只是参数的名字
+- [active](https://developer.apple.com/documentation/metal/mtlargument/1461891-isactive) 是一个布尔值，指示是否可以忽略该参数
+- [index](https://developer.apple.com/documentation/metal/mtlargument/1461883-index) 是其对应参数表中从零开始的位置。例如，对于 [[ buffer(2) ]] ，index 为2
+- [access](https://developer.apple.com/documentation/metal/mtlargument/1462029-access) 描述任何访问限制，例如，读写访问限定符
+- [type](https://developer.apple.com/documentation/metal/mtlargument/1461997-type) 由着色语言限定符指示，例如，[[ buffer(n) ]], [[ texture(n) ]]、[[ sampler(n) ]] 或 [[ threadgroup(n) ]] 。
+
+> [type](https://developer.apple.com/documentation/metal/mtlargument/1461997-type) determines which other [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) properties are relevant.
+>
+> - If type is [MTLArgumentTypeTexture](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypetexture), then the [textureType](https://developer.apple.com/documentation/metal/mtlargument/1461920-texturetype) property indicates the overall texture type (such as texture1d_array, texture2d_ms, and texturecube types in the shading language), and the [textureDataType](https://developer.apple.com/documentation/metal/mtlargument/1462049-texturedatatype) property indicates the component data type (such as half, float, int, or uint).
+> - If type is [MTLArgumentTypeThreadgroupMemory](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypethreadgroupmemory), the [threadgroupMemoryAlignment](https://developer.apple.com/documentation/metal/mtlargument/1462030-threadgroupmemoryalignment) and [threadgroupMemoryDataSize](https://developer.apple.com/documentation/metal/mtlargument/1461951-threadgroupmemorydatasize) properties are relevant.
+> - If type is [MTLArgumentTypeBuffer](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypebuffer), the [bufferAlignment](https://developer.apple.com/documentation/metal/mtlargument/1462007-bufferalignment), [bufferDataSize](https://developer.apple.com/documentation/metal/mtlargument/1461986-bufferdatasize), [bufferDataType](https://developer.apple.com/documentation/metal/mtlargument/1461885-bufferdatatype), and [bufferStructType](https://developer.apple.com/documentation/metal/mtlargument/1462041-bufferstructtype) properties are relevant.
+
+type 确定哪些其他 [MTLArgument](https://developer.apple.com/documentation/metal/mtlargument) 属性是相关的。
+
+- 如果 type 是 [MTLArgumentTypeTexture](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypetexture) ，则 [textureType](https://developer.apple.com/documentation/metal/mtlargument/1461920-texturetype) 属性指示整体纹理类型（例如，着色语言中的 texture1d_array、texture2d_ms 和 texturecube 类型），[textureDataType](https://developer.apple.com/documentation/metal/mtlargument/1462049-texturedatatype) 指示组件数据类型（例如half、float、int 或 uint）。
+- 如果 type 是 [MTLArgumentTypeThreadgroupMemory](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypethreadgroupmemory) ，[threadgroupMemoryAlignment](https://developer.apple.com/documentation/metal/mtlargument/1462030-threadgroupmemoryalignment) 和 [threadgroupMemoryDataSize](https://developer.apple.com/documentation/metal/mtlargument/1461951-threadgroupmemorydatasize) 属性是相关的。
+- 如果 type 是 [MTLArgumentTypeBuffer](https://developer.apple.com/documentation/metal/mtlargumenttype/mtlargumenttypebuffer) ，[bufferAlignment](https://developer.apple.com/documentation/metal/mtlargument/1462007-bufferalignment), [bufferDataSize](https://developer.apple.com/documentation/metal/mtlargument/1461986-bufferdatasize)、[bufferDataType](https://developer.apple.com/documentation/metal/mtlargument/1461885-bufferdatatype) 和 [bufferStructType](https://developer.apple.com/documentation/metal/mtlargument/1462041-bufferstructtype) 属性是相关的。
+
+> If the buffer argument is a struct (that is, bufferDataType is [MTLDataTypeStruct](https://developer.apple.com/documentation/metal/mtldatatype/mtldatatypestruct)), the bufferStructType property contains a [MTLStructType](https://developer.apple.com/documentation/metal/mtlstructtype) that represents the struct, and bufferDataSize contains the size of the struct, in bytes. If the buffer argument is an array (or pointer to an array), then bufferDataType indicates the data type of an element, and bufferDataSize contains the size of one array element, in bytes.
+>
+> Listing 4-3 drills down in a [MTLStructType](https://developer.apple.com/documentation/metal/mtlstructtype) object to examine the details of struct members, each represented by a [MTLStructMember](https://developer.apple.com/documentation/metal/mtlstructmember) object. A struct member may be a simple type, an array, or a nested struct. If the member is a nested struct, then call the [structType](https://developer.apple.com/documentation/metal/mtlstructmember/1462011-structtype) method of MTLStructMember to obtain a MTLStructType object that represents the struct and then recursively drill down to analyze it. If the member is an array, use the [arrayType](https://developer.apple.com/documentation/metal/mtlstructmember/1461887-arraytype) method of MTLStructMember to obtain a [MTLArrayType](https://developer.apple.com/documentation/metal/mtlarraytype) that represents it. Then examine its [elementType](https://developer.apple.com/documentation/metal/mtlarraytype/1462012-elementtype) property of MTLArrayType. If elementType is [MTLDataTypeStruct](https://developer.apple.com/documentation/metal/mtldatatype/mtldatatypestruct), call the [elementStructType](https://developer.apple.com/documentation/metal/mtlarraytype/1461901-elementstructtype) method to obtain the struct and continue to drill down into its members. If elementType is [MTLDataTypeArray](https://developer.apple.com/documentation/metal/mtldatatype/array), call the [elementArrayType](https://developer.apple.com/documentation/metal/mtlarraytype/1461963-elementarraytype) method to obtain the subarray and analyze it further.
+
+如果 buffer 参数是一个结构体（即，bufferDataType 是  [MTLDataTypeStruct](https://developer.apple.com/documentation/metal/mtldatatype/mtldatatypestruct) ），则 bufferStructType 属性包含一个表示该结构体的 [MTLStructType](https://developer.apple.com/documentation/metal/mtlstructtype) ，并且 bufferDataSize 包含结构体的大小（以字节为单位）。如果 buffer 参数是一个数组（或指向数组的指针），则 bufferDataType 指示元素的数据类型，bufferDataSize 包含一个数组元素的大小（以字节为单位）。
+
+清单 4-3 深入研究 [MTLStructType](https://developer.apple.com/documentation/metal/mtlstructtype) 对象，以检查结构体成员的详细信息，每个结构体成员由一个 [MTLStructMember](https://developer.apple.com/documentation/metal/mtlstructmember) 对象表示。一个结构体成员可能是简单类型、数组或者嵌套结构。如果成员是嵌套结构，则调用 MTLStructMember 的 [structType](https://developer.apple.com/documentation/metal/mtlstructmember/1462011-structtype) 方法获取表示结构的 MTLStructType 对象，然后递归地进行深入分析。如果成员是数组，使用 MTLStructMember 的 [arrayType](https://developer.apple.com/documentation/metal/mtlstructmember/1461887-arraytype) 方法获取表示它的 [MTLArrayType](https://developer.apple.com/documentation/metal/mtlarraytype) 。然后检查 MTLArrayType 的 [elementType](https://developer.apple.com/documentation/metal/mtlarraytype/1462012-elementtype) 属性。如果 elementType 为 [MTLDataTypeStruct](https://developer.apple.com/documentation/metal/mtldatatype/mtldatatypestruct) ，则调用 [elementStructType](https://developer.apple.com/documentation/metal/mtlarraytype/1461901-elementstructtype) 方法以获取结构并继续深入查看其成员。如果 elementType 是 [MTLDataTypeArray](https://developer.apple.com/documentation/metal/mtldatatype/array) ，则调用 [elementArrayType](https://developer.apple.com/documentation/metal/mtlarraytype/1461963-elementarraytype) 方法以获取子数组并进一步分析它。
+
+Listing 4-3  处理结构体参数
+```objc
+MTLStructType *structObj = [arg.bufferStructType];
+for (MTLStructMember *member in structObj.members) {
+    //  process each MTLStructMember
+    if (member.dataType == MTLDataTypeStruct) {
+        MTLStructType *nestedStruct = member.structType;
+        // recursively drill down into the nested struct
+    }
+    else if (member.dataType == MTLDataTypeArray) {
+        MTLStructType *memberArray = member.arrayType;
+        // examine the elementType and drill down, if necessary
+    }
+    else {
+        // member is neither struct nor array
+        // analyze it; no need to drill down further
+    }
+}
+```
+
+## Graphics Rendering: Render Command Encoder - 图形渲染：渲染命令编码器
+
+
 
 
 
