@@ -819,6 +819,23 @@ for (MTLStructMember *member in structObj.members) {
 
 ## Graphics Rendering: Render Command Encoder - 图形渲染：渲染命令编码器
 
+> This chapter describes how to create and work with [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) and [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) objects, which are used to encode graphics rendering commands into a command buffer. MTLRenderCommandEncoder commands describe a graphics rendering pipeline, as seen in Figure 5-1.
+
+> Figure 5-1  Metal Graphics Rendering Pipeline
+
+本章介绍如何创建和使用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 和 [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) 对象，用于将图形渲染命令编码到命令缓冲区中。MTLRenderCommandEncoder 命令描述图形渲染管线，如图 5-1 所示。
+
+图 5-1 Metal 图形渲染管线
+
+![MetalGraphicsRenderingPipeline.png](../../resource/Metal/Markdown/MetalGraphicsRenderingPipeline.png)
+
+> A MTLRenderCommandEncoder object represents a single rendering command encoder. A MTLParallelRenderCommandEncoder object enables a single rendering pass to be broken into a number of separate MTLRenderCommandEncoder objects, each of which may be assigned to a different thread. The commands from the different render command encoders are then chained together and executed in a consistent, predictable order, as described in [Multiple Threads for a Rendering Pass](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16).
+
+MTLRenderCommandEncoder 对象表示单个渲染命令编码器。MTLParallelRenderCommandEncoder 对象允许将单个渲染过程分解为多个单独的 MTLRenderCommandEncoder 对象，每个对象可以分配给不同的线程。然后将来自不同渲染命令编码器的命令链接在一起并以一致、可预测的顺序执行，如  [Multiple Threads for a Rendering Pass](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16) 中描述的那样。
+
+### Creating and Using a Render Command Encoder - 创建并使用渲染命令编码器
+
+
 
 
 
