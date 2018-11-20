@@ -865,9 +865,35 @@ MTLRenderCommandEncoder 对象表示单个渲染命令编码器。MTLParallelRen
 
 每个单独的 attachment ，包括纹理将要写入的 attachment ，都有一个 attachment 描述符表示。对于一个 attachment 描述符，必须适当地选择相关纹理的像素格式以存储颜色、深度或者模版数据。对于颜色 attachment 描述符 [MTLRenderPassColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpasscolorattachmentdescriptor) ，使用颜色可渲染像素格式。对于深度 attachment 描述符 [MTLRenderPassDepthAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdepthattachmentdescriptor) ，使用深度可渲染像素格式，如 [MTLPixelFormatDepth32Float](https://developer.apple.com/documentation/metal/mtlpixelformat/depth32float) 。对于模版 attachment 描述符 [MTLRenderPassStencilAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassstencilattachmentdescriptor) ，使用模版可渲染像素格式，如 [MTLPixelFormatStencil8](https://developer.apple.com/documentation/metal/mtlpixelformat/mtlpixelformatstencil8) 。
 
-纹理每个像素确切的内存占用量并不总是与 Metal 框架代码中纹理的像素格式大小相匹配，因为设备添加了填充用于对齐或其他目的。有关每种像素格式实际使用的内存量以及 attachment 大小及数量上的限制，见e [Metal Feature Set Tables](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/MetalFeatureSetTables/MetalFeatureSetTables.html#//apple_ref/doc/uid/TP40014221-CH13-SW1) 章节。
+纹理每个像素确切的内存占用量并不总是与 Metal 框架代码中纹理的像素格式大小相匹配，因为设备添加了填充用于对齐或其他目的。有关每种像素格式实际使用的内存量以及 attachment 大小及数量上的限制，见 [Metal Feature Set Tables](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/MetalFeatureSetTables/MetalFeatureSetTables.html#//apple_ref/doc/uid/TP40014221-CH13-SW1) 章节。
 
+##### Load and Store Actions - 加载和存储操作
 
+> The [loadAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437905-loadaction) and [storeAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437956-storeaction) properties of an attachment descriptor specify an action that is performed at either the start or end of a rendering pass. (For MTLParallelRenderCommandEncoder, the load and store actions occur at the boundaries of the overall command, not for each of its MTLRenderCommandEncoder objects. For details, see [Multiple Threads for a Rendering Pass](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16).)
+>
+>Possible [loadAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437905-loadaction) values include:
+>
+> - [MTLLoadActionClear](https://developer.apple.com/documentation/metal/mtlloadaction/clear), which writes the same value to every pixel in the specified attachment descriptor. For more detail about this action, see [Specifying the Clear Load Action](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW7).
+> - [MTLLoadActionLoad](https://developer.apple.com/documentation/metal/mtlloadaction/load), which preserves the existing contents of the texture.
+> - [MTLLoadActionDontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare), which allows each pixel in the attachment to take on any value at the start of the rendering pass.
+
+attachment 描述符的 [loadAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437905-loadaction) 和 [storeAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437956-storeaction) 属性指定在渲染通道的开始或者结束时执行的操作。（对于 MTLParallelRenderCommandEncoder ，加载和存储操作发生在整个命令的边界，而不是每个 MTLRenderCommandEncoder 对象。有关详细信息，见 [Multiple Threads for a Rendering Pass](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW16) ）。
+
+[loadAction](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437905-loadaction) 可能的值包括：
+
+- [MTLLoadActionClear](https://developer.apple.com/documentation/metal/mtlloadaction/clear) ，它将相同的值写入指定 attachment 描述符中的每个像素。有关此操作更多的详细信息，见 [Specifying the Clear Load Action](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW7) 。
+- [MTLLoadActionLoad](https://developer.apple.com/documentation/metal/mtlloadaction/load) ，保留纹理的现有内容。
+- [MTLLoadActionDontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare) ，允许 attachment 中的每个像素在渲染通道开始时采用任何值。
+
+> If your application will render all pixels of the attachment for a given frame, use the default load action MTLLoadActionDontCare. The MTLLoadActionDontCare action allows the GPU to avoid loading the existing contents of the texture, ensuring the best performance. Otherwise, you can use the MTLLoadActionClear action to clear the previous contents of the attachment, or the MTLLoadActionLoad action to preserve them. The MTLLoadActionClear action also avoids loading the existing texture contents, but it incurs the cost of filling the destination with a solid color.
+>
+> Possible storeAction values include:
+
+> - MTLStoreActionStore, which saves the final results of the rendering pass into the attachment.
+> - MTLStoreActionMultisampleResolve, which resolves the multisample data from the render target into single sample values, stores them in the texture specified by the attachment property resolveTexture, and leaves the contents of the attachment undefined. For details, see Example: Creating a Render Pass Descriptor for Multisampled Rendering.
+> - MTLStoreActionDontCare, which leaves the attachment in an undefined state after the rendering pass is complete. This may improve performance as it enables the implementation to avoid any work necessary to preserve the rendering results.
+
+> For color attachments, the MTLStoreActionStore action is the default store action, because applications almost always preserve the final color values in the attachment at the end of rendering pass. For depth and stencil attachments, MTLStoreActionDontCare is the default store action, because those attachments typically do not need to be preserved after the rendering pass is complete.
 
 
 
