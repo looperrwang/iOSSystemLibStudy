@@ -921,6 +921,178 @@ attachment 描述符的 [loadAction](https://developer.apple.com/documentation/m
 
 ##### Example: Creating a Render Pass Descriptor with Load and Store Actions - 示例：使用加载和存储操作创建渲染通道描述符
 
+> Listing 5-1 creates a simple render pass descriptor with color and depth attachments. First, two texture objects are created, one with a color-renderable pixel format and the other with a depth pixel format. Next the [renderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437979-renderpassdescriptor) convenience method of [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) creates a default render pass descriptor. Then the color and depth attachments are accessed through the properties of MTLRenderPassDescriptor. The textures and actions are set in colorAttachments[0], which represents the first color attachment (at index 0 in the array), and the depth attachment.
+
+> Listing 5-1  Creating a Render Pass Descriptor with Color and Depth Attachments
+
+清单 5-1 创建了一个带有颜色和深度 attachment 的简单渲染过程描述符。首先，创建了两个纹理对象，一个具有颜色可渲染像素格式，另一个具有深度像素格式。接下来， [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 的 [renderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437979-renderpassdescriptor) 便捷方法创建了一个默认渲染通道描述符。然后通过 MTLRenderPassDescriptor 的属性访问颜色和深度 attachment 。针对 colorAttachments[0] 和深度 attachment ，分别设置了对应的纹理和操作，colorAttachments[0] 表示第一个颜色 attachment （位于数组中的 0 号位置）。
+
+Listing 5-1  创建一个带有颜色和深度 attachments 的渲染通道描述符
+
+```objc
+MTLTextureDescriptor *colorTexDesc = [MTLTextureDescriptor
+    texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+    width:IMAGE_WIDTH height:IMAGE_HEIGHT mipmapped:NO];
+id <MTLTexture> colorTex = [device newTextureWithDescriptor:colorTexDesc];
+
+MTLTextureDescriptor *depthTexDesc = [MTLTextureDescriptor
+    texture2DDescriptorWithPixelFormat:MTLPixelFormatDepth32Float
+    width:IMAGE_WIDTH height:IMAGE_HEIGHT mipmapped:NO];
+id <MTLTexture> depthTex = [device newTextureWithDescriptor:depthTexDesc];
+
+MTLRenderPassDescriptor *renderPassDesc = [MTLRenderPassDescriptor renderPassDescriptor];
+renderPassDesc.colorAttachments[0].texture = colorTex;
+renderPassDesc.colorAttachments[0].loadAction = MTLLoadActionClear;
+renderPassDesc.colorAttachments[0].storeAction = MTLStoreActionStore;
+renderPassDesc.colorAttachments[0].clearColor = MTLClearColorMake(0.0,1.0,0.0,1.0);
+
+renderPassDesc.depthAttachment.texture = depthTex;
+renderPassDesc.depthAttachment.loadAction = MTLLoadActionClear;
+renderPassDesc.depthAttachment.storeAction = MTLStoreActionStore;
+renderPassDesc.depthAttachment.clearDepth = 1.0;
+```
+
+##### Example: Creating a Render Pass Descriptor for Multisampled Rendering - 示例：为多重采样渲染创建渲染通道描述符
+
+> To use the [MTLStoreActionMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve) action, you must set the [texture](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437958-texture) property to a multisample-type texture, and the [resolveTexture](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437926-resolvetexture) property will contain the result of the multisample resolve operation. (If texture does not support multisampling, then the result of a multisample resolve action is undefined.) The [resolveLevel](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437918-resolvelevel), [resolveSlice](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437966-resolveslice), and [resolveDepthPlane](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437960-resolvedepthplane) properties may also be used for the multisample resolve operation to specify the mipmap level, cube slice, and depth plane of the multisample texture, respectively. In most cases, the default values for resolveLevel, resolveSlice, and resolveDepthPlane are usable. In Listing 5-2, an attachment is initially created and then its loadAction, storeAction, texture, and resolveTexture properties are set to support multisample resolve.
+>
+> Listing 5-2  Setting Properties for an Attachment with Multisample Resolve
+
+要使用 [MTLStoreActionMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve) 操作，必须将 [texture](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437958-texture) 属性设置为多重采样类型纹理， [resolveTexture](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437926-resolvetexture) 属性将会包含多重采样解析操作的结果。（如果纹理不支持多重采样，多重采样解析操作的结果是为定义的）。[resolveLevel](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437918-resolvelevel), [resolveSlice](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437966-resolveslice), 和 [resolveDepthPlane](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor/1437960-resolvedepthplane) 属性也可用于多重采样解析操作，分别制定 mipmap 级别、立方体切片和深度平面。大多数情况下，resolveLevel 、resolveSlice 和 resolveDepthPlane 默认值都是可用的。在清单 5-2 中，创建了一个 attachment ，然后设置它的 loadAction 、storeAction 、texture 和 resolveTexture 属性以支持多重采样解析。
+
+清单 5-2  使用多重采样解析设置 attachment 的属性
+
+```objc
+MTLTextureDescriptor *colorTexDesc = [MTLTextureDescriptor
+    texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+    width:IMAGE_WIDTH height:IMAGE_HEIGHT mipmapped:NO];
+id <MTLTexture> colorTex = [device newTextureWithDescriptor:colorTexDesc];
+
+MTLTextureDescriptor *msaaTexDesc = [MTLTextureDescriptor
+    texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
+    width:IMAGE_WIDTH height:IMAGE_HEIGHT mipmapped:NO];
+msaaTexDesc.textureType = MTLTextureType2DMultisample;
+msaaTexDesc.sampleCount = sampleCount;  //  must be > 1
+id <MTLTexture> msaaTex = [device newTextureWithDescriptor:msaaTexDesc];
+
+MTLRenderPassDescriptor *renderPassDesc = [MTLRenderPassDescriptor renderPassDescriptor];
+renderPassDesc.colorAttachments[0].texture = msaaTex;
+renderPassDesc.colorAttachments[0].resolveTexture = colorTex;
+renderPassDesc.colorAttachments[0].loadAction = MTLLoadActionClear;
+renderPassDesc.colorAttachments[0].storeAction = MTLStoreActionMultisampleResolve;
+renderPassDesc.colorAttachments[0].clearColor = MTLClearColorMake(0.0,1.0,0.0,1.0);
+```
+
+##### Using the Render Pass Descriptor to Create a Render Command Encoder - 使用渲染通道描述符创建渲染命令编码器
+
+> After you create a render pass descriptor and specify its properties, use the [renderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442999-rendercommandencoderwithdescript) method of a [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) object to create a render command encoder, as shown in Listing 5-3.
+>
+> Listing 5-3  Creating a Render Command Encoder with the Render Pass Descriptor
+
+创建渲染过程描述符并制定其属性之后，使用 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 对象的 [renderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442999-rendercommandencoderwithdescript) 方法创建渲染命令编码器，如清单 5-3 所示。
+
+清单 5-3 使用渲染通道描述符创建渲染命令编码器
+
+```objc
+id <MTLRenderCommandEncoder> renderCE = [commandBuffer
+    renderCommandEncoderWithDescriptor:renderPassDesc];
+```
+
+### Displaying Rendered Content with Core Animation - 使用核心动画显示渲染内容
+
+> Core Animation defines the [CAMetalLayer](https://developer.apple.com/documentation/quartzcore/cametallayer) class, which is designed for the specialized behavior of a layer-backed view whose content is rendered using Metal. A CAMetalLayer object represents information about the geometry of the content (position and size), its visual attributes (background color, border, and shadow), and the resources used by Metal to present the content in a color attachment. It also encapsulates the timing of content presentation so that the content can be displayed as soon as it is available or at a specified time. For more information about Core Animation, see the [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514).
+>
+> Core Animation also defines the [CAMetalDrawable](https://developer.apple.com/documentation/quartzcore/cametaldrawable) protocol for objects that are displayable resources. The CAMetalDrawable protocol extends MTLDrawable and provides an object that conforms to the [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) protocol, so it can be used as a destination for rendering commands. To render into a CAMetalLayer object, you should get a new CAMetalDrawable object for each rendering pass, get the MTLTexture object that it provides, and use that texture to create the color attachment. Unlike color attachments, creation and destruction of a depth or stencil attachment are costly. If you need either depth or stencil attachments, create them once and then reuse them each time a frame is rendered.
+>
+> Typically, you use the [layerClass](https://developer.apple.com/documentation/uikit/uiview/1622626-layerclass) method to designate CAMetalLayer as the backing layer type for your own custom UIView subclass, as shown in Listing 5-4. Otherwise, you can create a CAMetalLayer with its init method and include the layer in an existing view.
+>
+> Listing 5-4  Using CAMetalLayer as the backing layer for a UIView subclass
+
+Core Animation 定义了 [CAMetalLayer](https://developer.apple.com/documentation/quartzcore/cametallayer) 类，该类专为使用 Metal 渲染内容的图层支持视图的特殊行为而设计。CAMetalLayer 对象表示有关内容几何（位置和大小）、可见属性（背景颜色、边框和阴影）的信息，以及 Metal 用于在颜色 attachment 显示内容使用的资源。它还封装了内容呈现的时间控制，以便内容可以在可用时或者指定的时间呈现出来。关于 Core Animation 的更多信息，参见 [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514) 。
+
+Core Animation 还为可显示资源的对象定义了 [CAMetalDrawable](https://developer.apple.com/documentation/quartzcore/cametaldrawable) 协议。CAMetalDrawable 协议扩展了 MTLDrawable 协议并提供了一个遵循 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 协议的对象，所以它可以用作渲染命令的目的地。要渲染到 CAMetalLayer 对象中，你应该为每个渲染过程获取一个新的 CAMetalDrawable 对象，进而获取它提供的 MTLTexture 对象并且使用该纹理创建颜色 attachment 。与颜色 attachment 不同，创建并销毁深度或模版 attachment 的代价是昂贵的。如果你需要深度或者模版 attachment ，创建一次，然后在每次渲染帧时重复使用它们。
+
+通常，对于自定义的 UIView 子类，使用 [layerClass](https://developer.apple.com/documentation/uikit/uiview/1622626-layerclass) 方法指定 CAMetalLayer 作为对应的图层类型，如清单 5-4 中所述。否则，你可以使用 init 方法创建 CAMetalLayer ，并将该图层包含在已存在的视图中。
+
+清单 5-4 使用 CAMetalLayer 作为 UIView 子类背后的图层
+
+```objc
++ (id) layerClass {
+    return [CAMetalLayer class];
+}
+```
+
+> To display content rendered by Metal in the layer, you must obtain a displayable resource (a [CAMetalDrawable](https://developer.apple.com/documentation/quartzcore/cametaldrawable) object) from the CAMetalLayer object and then render to the texture in this resource by attaching it to a [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) object. To do this, you first set properties of the CAMetalLayer object that describe the drawable resources it provides, then call its [nextDrawable](https://developer.apple.com/documentation/quartzcore/cametallayer/1478172-nextdrawable) method each time you begin rendering a new frame. If the CAMetalLayer properties are not set, the nextDrawable method call fails. The following CAMetalLayer properties describe the drawable object:
+>
+> - The [device](https://developer.apple.com/documentation/quartzcore/cametallayer/1478163-device) property declares the [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) object that the resource is created from.
+> - The [pixelFormat](https://developer.apple.com/documentation/quartzcore/cametallayer/1478155-pixelformat) property declares the pixel format of the texture. The supported values are [MTLPixelFormatBGRA8Unorm](https://developer.apple.com/documentation/metal/mtlpixelformat/bgra8unorm) (the default) and [MTLPixelFormatBGRA8Unorm_sRGB](https://developer.apple.com/documentation/metal/mtlpixelformat/bgra8unorm_srgb).
+> - The [drawableSize](https://developer.apple.com/documentation/quartzcore/cametallayer/1478174-drawablesize) property declares the dimensions of the texture in device pixels. To ensure that your app renders content at the precise dimensions of the display (without requiring an additional sampling stage on some devices), take the target screen’s [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) or [nativeBounds](https://developer.apple.com/documentation/uikit/uiscreen/1617810-nativebounds) property into account when calculating the desired size for your layer.
+> - The [framebufferOnly](https://developer.apple.com/documentation/quartzcore/cametallayer/1478168-framebufferonly) property declares whether the texture can be used only as an attachment (YES) or whether it can also be used for texture sampling and pixel read/write operations (NO). If YES, the layer object can optimize the texture for display. For most apps, the recommended value is YES.
+> - The [presentsWithTransaction](https://developer.apple.com/documentation/quartzcore/cametallayer/1478157-presentswithtransaction) property declares whether changes to the layer's rendered resource are updated with standard Core Animation transaction mechanisms (YES) or are updated asynchronously to normal layer updates (NO, the default value).
+
+在 layer 上显示 Metal 渲染的内容，你必须从 CAMetalLayer 对象获取可渲染的资源，然后通过将该资源附加到 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 对象上来达到渲染至其纹理中的目的。为此，首先设置 CAMetalLayer 对象的描述其提供的可绘制资源的属性，然后在每次开始渲染新的一帧时调用其  [nextDrawable](https://developer.apple.com/documentation/quartzcore/cametallayer/1478172-nextdrawable) 方法。如果 CAMetalLayer 属性未设置，nextDrawable 方法将调用失败。以下 CAMetalLayer 属性描述了可绘制对象：
+
+- [device](https://developer.apple.com/documentation/quartzcore/cametallayer/1478163-device) 属性声明了 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 对象，资源创建于此。
+- [pixelFormat](https://developer.apple.com/documentation/quartzcore/cametallayer/1478155-pixelformat) 属性声明纹理的像素格式。支持的值有 [MTLPixelFormatBGRA8Unorm](https://developer.apple.com/documentation/metal/mtlpixelformat/bgra8unorm)（默认值）和 [MTLPixelFormatBGRA8Unorm_sRGB](https://developer.apple.com/documentation/metal/mtlpixelformat/bgra8unorm_srgb)。
+- [drawableSize](https://developer.apple.com/documentation/quartzcore/cametallayer/1478174-drawablesize) 属性声明了纹理的尺寸，以设备像素为单位。要确保你的应用程序以屏幕的精确尺寸渲染内容（在某些设备上无需额外的采样阶段），在计算图层所需要的大小时，考虑目标屏幕的 [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) 或 [nativeBounds](https://developer.apple.com/documentation/uikit/uiscreen/1617810-nativebounds) 属性。
+-  [framebufferOnly](https://developer.apple.com/documentation/quartzcore/cametallayer/1478168-framebufferonly) 属性声明纹理是否只是用作 attachment（YES），还是也可用以纹理采样和像素读写操作（NO）。若为 YES ，图层对象可以优化纹理以供显示。对于大多数应用程序，建议值为 YES 。
+- [presentsWithTransaction](https://developer.apple.com/documentation/quartzcore/cametallayer/1478157-presentswithtransaction) 属性声明对于图层渲染资源的更改，是使用标准 Core Animation 事务机制更新（YES）还是异步更新到常规视图更新（ NO , 默认值）。
+
+> If the nextDrawable method succeeds, it returns a CAMetalDrawable object with the following read-only properties:
+>
+> - The [texture](https://developer.apple.com/documentation/quartzcore/cametaldrawable/1478159-texture) property holds the texture object. You use this as an attachment when creating your rendering pipeline ([MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) object).
+> - The [layer](https://developer.apple.com/documentation/quartzcore/cametaldrawable/1478165-layer) property points to the CAMetalLayer object that responsible for displaying the drawable.
+
+如果 nextDrawable 方法成功，其返回一个带有以下只读属性的 CAMetalDrawable 对象：
+
+-  [texture](https://developer.apple.com/documentation/quartzcore/cametaldrawable/1478159-texture) 属性保存纹理对象。在创建渲染管线（ [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) 对象）时使用它作为 attachment 。
+- [layer](https://developer.apple.com/documentation/quartzcore/cametaldrawable/1478165-layer) 属性指向负责显示 drawable 的 CAMetalLayer 对象。
+
+> Important: There are only a small set of drawable resources, so a long frame rendering time could temporarily exhaust those resources and cause a nextDrawable method call to block its CPU thread until the method is completed. To avoid expensive CPU stalls, perform all per-frame operations that do not need a drawable resource before calling the nextDrawable method of a CAMetalLayer object.
+>
+> - To display the contents of a drawable object after rendering is complete, you must submit it to Core Animation by calling the drawable object’s [present](https://developer.apple.com/documentation/metal/mtldrawable/1470284-present) method. To synchronize presentation of a drawable with completion of the command buffer responsible for its rendering, you can call either the [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) or [presentDrawable:atTime:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442989-present) convenience method on a [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) object. These methods use the scheduled handler (see [Registering Handler Blocks for Command Buffer Execution](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Cmd-Submiss/Cmd-Submiss.html#//apple_ref/doc/uid/TP40014221-CH3-SW20)) to call the drawable’s present method, which covers most scenarios. The presentDrawable:atTime: method provides further control over when the drawable is presented.
+
+重要：只有一小部分可绘制资源，因此长帧渲染时间可能暂时耗尽这些资源并导致 nextDrawable 方法调用阻塞其 CPU 线程，知道方法完成。为了避免昂贵的 CPU 停顿，在调用 CAMetalLayer 对象的 nextDrawable 方法之前，执行所有不需要可绘制资源的每帧操作。
+
+要在渲染完成之后显示可绘制对象的内容，必须通过调用可绘制对象的 [present](https://developer.apple.com/documentation/metal/mtldrawable/1470284-present) 方法将其提交给 Core Animation 。要使 drawable 的显示和用于渲染的命令缓冲区的完成之间同步，你可以调用 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 对象的 [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 或 [presentDrawable:atTime:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442989-present) 便捷方法。这些方法使用调度处理程序（见  [Registering Handler Blocks for Command Buffer Execution](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Cmd-Submiss/Cmd-Submiss.html#//apple_ref/doc/uid/TP40014221-CH3-SW20) ）来调用 drawable 的 present 方法，可以覆盖大多数场景。presentDrawable:atTime: 方法提供了何时呈现 drawble 的进一步控制。
+
+### Creating a Render Pipeline State - 创建渲染管线状态
+
+> To use a [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) object to encode rendering commands, you must first specify a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object to define the graphics state for any draw calls. A render pipeline state object is a long-lived persistent object that can be created outside of a render command encoder, cached in advance, and reused across several render command encoders. When describing the same set of graphics state, reusing a previously created render pipeline state object may avoid expensive operations that re-evaluate and translate the specified state to GPU commands.
+> 
+> A render pipeline state is an immutable object. To create a render pipeline state, you first create and configure a mutable [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) object that describes the attributes of a render pipeline state. Then, you use the descriptor to create a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object.
+
+要使用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 对象对渲染命令进行编码，你必须首先指定一个 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象以定义用于任何绘制调用的图形状态。渲染管线状态对象是一个长期存在的持久对象，可以在渲染命令编码器之外创建，预先缓存，并在多个渲染命令编码器之间重用。当描述相同的图形状态集时，重用先前创建的渲染管线状态对象可以避免重新评估并将指定状态转换为 GPU 命令的昂贵操作。
+
+渲染管线状态是不可变对象。要创建渲染管线状态，首先要创建并配置一个可变 [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) 对象，该对象描述渲染管线状态的属性。 然后，使用描述符创建 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象。
+
+#### Creating and Configuring a Render Pipeline Descriptor - 创建并配置渲染管线描述符
+
+> To create a render pipeline state, first create a [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) object, which has properties that describe the graphics rendering pipeline state you want to use during the rendering pass, as depicted in Figure 5-2. The [colorAttachments](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514712-colorattachments) property of the new MTLRenderPipelineDescriptor object contains an array of [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) objects, and each descriptor represents a color attachment state that specifies the blend operations and factors for that attachment, as detailed in [Configuring Blending in a Render Pipeline Attachment Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW22). The attachment descriptor also specifies the pixel format of the attachment, which must match the pixel format for the texture of the render pipeline descriptor with the corresponding attachment index, or an error occurs.
+
+要创建渲染管线状态，首先创建一个 [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) 对象，该对象具有描述在渲染过程中要使用的图形渲染管线状态的属性。如图 5-2 所示。新 MTLRenderPipelineDescriptor 对象的 [colorAttachments](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514712-colorattachments) 属性包含一个[MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) 对象的数组，每个描述符表示一个颜色附件状态，指定该附件的混合操作和因子，详见  [Configuring Blending in a Render Pipeline Attachment Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW22) 。附件描述符也指定了附件的像素格式，该格式必须与相应 attachment 索引的渲染管线描述符纹理的像素格式相匹配，否则的话会产生错误。
+
+Figure 5-2  从描述符创建渲染管线状态
+
+![CreatingRenderPipelineStateFromDescriptor](../../resource/Metal/Markdown/CreatingRenderPipelineStateFromDescriptor.png)
+
+> In addition to configuring the color attachments, set these properties for the MTLRenderPipelineDescriptor object:
+>
+> - Set the depthAttachmentPixelFormat property to match the pixel format for the texture of depthAttachment in MTLRenderPassDescriptor.
+> - Set the stencilAttachmentPixelFormat property to match the pixel format for the texture of stencilAttachment in MTLRenderPassDescriptor.
+> - To specify the vertex or fragment shader in the render pipeline state, set the vertexFunction or fragmentFunction property, respectively. Setting fragmentFunction to nil disables the rasterization of pixels into the specified color attachment, which is typically used for depth-only rendering or for outputting data into a buffer object from the vertex shader.
+> - If the vertex shader has an argument with per-vertex input attributes, set the vertexDescriptor property to describe the organization of the vertex data in that argument, as described in Vertex Descriptor for Data Organization.
+> - The default value of YES for the rasterizationEnabled property is sufficient for most typical rendering tasks. To use only the vertex stage of the graphics pipeline (for example, to gather data transformed in a vertex shader), set this property to NO.
+> - If the attachment supports multisampling (that is, the attachment is a MTLTextureType2DMultisample type texture), then multiple samples can be created per pixel. To determine how fragments combine to provide pixel coverage, use the following MTLRenderPipelineDescriptor properties.
+The sampleCount property determines the number of samples for each pixel. When MTLRenderCommandEncoder is created, the sampleCount for the textures for all attachments must match this sampleCount property. If the attachment cannot support multisampling, then sampleCount is 1, which is also the default value.
+If alphaToCoverageEnabled is set to YES, then the alpha channel fragment output for colorAttachments[0] is read and used to determine a coverage mask.
+If alphaToOneEnabled is set to YES, then alpha channel fragment values for colorAttachments[0] are forced to 1.0, which is the largest representable value. (Other attachments are unaffected.)
+
+
+
+
+
+
 
 
 
