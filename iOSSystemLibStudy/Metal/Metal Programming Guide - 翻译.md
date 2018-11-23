@@ -1088,9 +1088,95 @@ Figure 5-2  从描述符创建渲染管线状态
 >   - If [alphaToCoverageEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514624-alphatocoverageenabled) is set to YES, then the alpha channel fragment output for colorAttachments[0] is read and used to determine a coverage mask.
 >   - If [alphaToOneEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514697-isalphatooneenabled) is set to YES, then alpha channel fragment values for colorAttachments[0] are forced to 1.0, which is the largest representable value. (Other attachments are unaffected.)
 
-除了配置颜色附件外，还要为 MTLRenderPipelineDescriptor 对象设置如下属性：
+除了配置颜色附件外，还要为  [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) 对象设置如下属性：
 
-- 设置 depthAttachmentPixelFormat 属性以匹配 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 中 [depthAttachment](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437973-depthattachment) 的纹理的像素格式。
+- 设置  [depthAttachmentPixelFormat](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514608-depthattachmentpixelformat) 属性以匹配 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 中 [depthAttachment](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437973-depthattachment) 的纹理的像素格式。
+- 设置 [stencilAttachmentPixelFormat](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514650-stencilattachmentpixelformat) 属性以匹配 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 中 [stencilAttachment](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437950-stencilattachment) 的纹理的像素格式。
+- 要指定渲染管线状态的顶点或片段着色器，分别设置 [vertexFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514679-vertexfunction) 或 [fragmentFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514600-fragmentfunction) 属性。设置 fragmentFunction 为 nil 禁用像素光栅化到指定的颜色 attachment ，这通常应用于仅有深度渲染或者将顶点着色器的输出数据写入缓冲区对象中。
+- 如果顶点着色器具有每个顶点输入属性的参数，设置 [vertexDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514681-vertexdescriptor) 属性用来描述该参数中顶点数据的组织形式，如 [Vertex Descriptor for Data Organization](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW44) 中所述。
+- 对于大多数典型的渲染任务，[rasterizationEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514708-rasterizationenabled) 属性的默认值 YES 足以应对。如果只使用图形管线的顶点阶段（例如，要收集在顶点着色器中转换之后的数据），设置该属性为 NO 。
+- 如果 attachment 支持多重采样（也就是说，attachment 是一个 [MTLTextureType2DMultisample](https://developer.apple.com/documentation/metal/mtltexturetype/mtltexturetype2dmultisample) 类型的纹理），则可以为每个像素创建多个样本。要确定片段如何组合以提供像素覆盖，使用下面的 MTLRenderPipelineDescriptor 属性。
+   -  [sampleCount](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514699-samplecount) 属性决定每个像素的样本数。创建 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 时，所有 attachment 的纹理的 [sampleCount](https://developer.apple.com/documentation/metal/mtltexture/1515443-samplecount) 必须与该 sampleCount 属性匹配。如果 attachment 不支持多重采样，则 sampleCount 为 1 ，这也是默认值。
+   - 若 [alphaToCoverageEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514624-alphatocoverageenabled) 设置为 YES ，则读取 colorAttachments[0] 片段着色器输出的alpha 通道并用于确定 coverage 掩码。
+   - 若 [alphaToOneEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514697-isalphatooneenabled) 设置为 YES ，则强制设置 colorAttachments[0] 的 alpha 通道片段值为 1.0 ，这是最大的可表示值。（其他 attachments 不受影响。）
+   
+#### Creating a Render Pipeline State from a Descriptor - 从描述符创建渲染管线状态
+
+> After creating a render pipeline descriptor and specifying its properties, use it to create the [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object. Because creating a render pipeline state can require an expensive evaluation of graphics state and a possible compilation of the specified graphics shaders, you can use either a blocking or an asynchronous method to schedule such work in a way that best fits the design of your app.
+>
+> - To synchronously create the render pipeline state object, call either the [newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) or [newRenderPipelineStateWithDescriptor:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433361-newrenderpipelinestatewithdescri) method of a [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) object. These methods block the current thread while Metal evaluates the descriptor’s graphics state information and compiles shader code to create the pipeline state object.
+> - To asynchronously create the render pipeline state object, call either the [newRenderPipelineStateWithDescriptor:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433363-makerenderpipelinestate) or [newRenderPipelineStateWithDescriptor:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433365-makerenderpipelinestate) method of a [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) object. These methods return immediately—Metal asynchronously evaluates the descriptor’s graphics state information and compiles shader code to create the pipeline state object, then calls your completion handler to provide the new MTLRenderPipelineState object.
+>
+> When you create a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object you can also choose to create reflection data that reveals details of the pipeline’s shader function and its arguments. The [newRenderPipelineStateWithDescriptor:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433361-newrenderpipelinestatewithdescri) and [newRenderPipelineStateWithDescriptor:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433365-makerenderpipelinestate) methods provide this data. Avoid obtaining reflection data if it will not be used. For more information on how to analyze reflection data, see [Determining Function Details at Runtime](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW6).
+>
+> After you create a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object, call the [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) method of MTLRenderCommandEncoder to associate the render pipeline state with the command encoder for use in rendering.
+>
+> Listing 5-5 demonstrates the creation of a render pipeline state object called pipeline.
+
+创建渲染管线描述符并指定其属性之后，使用它来创建 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象。因为创建渲染管线状态可能需要对图形状态进行昂贵的评估以及对指定的图形着色器进行编译，你可以使用阻塞或者异步方法以最适合你的应用程序设计的方式安排此类工作。
+
+- 要同步创建渲染管线状态对象，调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 对象的 [newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) 或 [newRenderPipelineStateWithDescriptor:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433361-newrenderpipelinestatewithdescri) 方法。这些方法阻塞当前线程，Metal 评估描述符的图形状态信息并编译着色器代码以创建管线状态对象。
+- 要异步创建渲染管线状态对象，调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 对象的 [newRenderPipelineStateWithDescriptor:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433363-makerenderpipelinestate) 或 [newRenderPipelineStateWithDescriptor:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433365-makerenderpipelinestate) 方法。这些方法立马返回 - Metal 异步地评估描述符的图形状态信息并编译着色器代码以创建管线状态对象，然后调用完成处理程序以提供新的 MTLRenderPipelineState 对象。
+
+当你创建 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象时，你也可以选择创建反射数据，以显示管线着色函数和其参数的详细信息。[newRenderPipelineStateWithDescriptor:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433361-newrenderpipelinestatewithdescri) 和 [newRenderPipelineStateWithDescriptor:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433365-makerenderpipelinestate) 方法提供此数据。如果不使用反射数据，请避免获取反射数据。关于如何分析反射数据的更多信息，参见 [Determining Function Details at Runtime](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW6) 。
+
+创建 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象之后，调用 MTLRenderCommandEncoder 的 [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) 方法将渲染管线状态和命令编码器关联以用于渲染。
+
+清单 5-5 演示了如何创建一个名为 pipeline 的渲染管线状态对象
+
+```objc
+MTLRenderPipelineDescriptor *renderPipelineDesc =
+    [[MTLRenderPipelineDescriptor alloc] init];
+        renderPipelineDesc.vertexFunction = vertFunc;
+        renderPipelineDesc.fragmentFunction = fragFunc;
+        renderPipelineDesc.colorAttachments[0].pixelFormat = MTLPixelFormatRGBA8Unorm;
+
+// Create MTLRenderPipelineState from MTLRenderPipelineDescriptor
+NSError *errors = nil;
+id <MTLRenderPipelineState> pipeline = [device
+    newRenderPipelineStateWithDescriptor:renderPipelineDesc error:&errors];
+assert(pipeline && !errors);
+
+// Set the pipeline state for MTLRenderCommandEncoder
+[renderCE setRenderPipelineState:pipeline];
+```
+
+> The variables vertFunc and fragFunc are shader functions that are specified as properties of the render pipeline state descriptor called renderPipelineDesc. Calling the [newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) method of the [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) object synchronously uses the pipeline state descriptor to create the render pipeline state object. Calling the [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) method of MTLRenderCommandEncoder specifies the MTLRenderPipelineState object to use with the render command encoder.
+>
+> Note: Because a MTLRenderPipelineState object is expensive to create, you should reuse it whenever you want to use the same graphics state.
+
+变量 vertFunc 和 fragFunc 是着色器函数，它们被指定为 renderPipelineDesc 渲染管线状态描述符的属性。调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 的 [newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) 方法同步地使用管线状态描述符来创建渲染管线状态对象。调用 MTLRenderCommandEncoder 的 [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) 方法指定要与渲染命令编码器一起使用的 MTLRenderPipelineState 对象。
+
+注意：因为 MTLRenderPipelineState 对象创建成本很高，所以只要你想使用相同的图形状态，就应该重用它。
+
+#### Configuring Blending in a Render Pipeline Attachment Descriptor - 配置渲染管线附件描述符中的 Blending
+
+> Blending uses a highly configurable blend operation to mix the output returned by the fragment function (source) with pixel values in the attachment (destination). Blend operations determine how the source and destination values are combined with blend factors.
+>
+> To configure blending for a color attachment, set the following [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) properties:
+>
+> - To enable blending, set [blendingEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514642-isblendingenabled) to YES. Blending is disabled, by default.
+> - [writeMask](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514619-writemask) identifies which color channels are blended. The default value MTLColorWriteMaskAll allows all color channels to be blended.
+> - [rgbBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514659-rgbblendoperation) and [alphaBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514666-alphablendoperation) separately assign the blend operations for the RGB and Alpha fragment data with a MTLBlendOperation value. The default value for both properties is [MTLBlendOperationAdd](https://developer.apple.com/documentation/metal/mtlblendoperation/add).
+> - [sourceRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514615-sourcergbblendfactor), [sourceAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514660-sourcealphablendfactor), [destinationRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514626-destinationrgbblendfactor), and [destinationAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514657-destinationalphablendfactor) assign the source and destination blend factors.
+
+Blending 使用高度可配置的混合操作来将片段函数（源）返回的输出与附件（目标）中的像素值混合。混合操作决定源和目标值如何使用混合因子结合起来。
+
+要配置颜色附件的混合，设置以下 [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) 属性：
+
+- 要启用混合，设置 [blendingEnabled](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514642-isblendingenabled) 为 YES ，默认为关闭混合。
+- [writeMask](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514619-writemask) 标识哪些颜色通道进行混合。默认值 MTLColorWriteMaskAll 允许所有颜色通道进行混合。
+- [rgbBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514659-rgbblendoperation) 和 [alphaBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514666-alphablendoperation) 分别使用 MTLBlendOperation 值为 RGB 和 Alpha 片段数据指定混合操作。这两个属性默认值都为 [MTLBlendOperationAdd](https://developer.apple.com/documentation/metal/mtlblendoperation/add) 。
+- [sourceRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514615-sourcergbblendfactor), [sourceAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514660-sourcealphablendfactor), [destinationRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514626-destinationrgbblendfactor), 和 [destinationAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514657-destinationalphablendfactor) 指定源和目标的混合因子。
+
+
+
+
+
+
+
+
+
 
 
 
