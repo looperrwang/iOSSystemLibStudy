@@ -1169,11 +1169,485 @@ Blending 使用高度可配置的混合操作来将片段函数（源）返回�
 - [rgbBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514659-rgbblendoperation) 和 [alphaBlendOperation](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514666-alphablendoperation) 分别使用 MTLBlendOperation 值为 RGB 和 Alpha 片段数据指定混合操作。这两个属性默认值都为 [MTLBlendOperationAdd](https://developer.apple.com/documentation/metal/mtlblendoperation/add) 。
 - [sourceRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514615-sourcergbblendfactor), [sourceAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514660-sourcealphablendfactor), [destinationRGBBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514626-destinationrgbblendfactor), 和 [destinationAlphaBlendFactor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor/1514657-destinationalphablendfactor) 指定源和目标的混合因子。
 
+##### Understanding Blending Factors and Operations - 理解混合因子和操作
+
+> Four blend factors refer to a constant blend color value: MTLBlendFactorBlendColor, MTLBlendFactorOneMinusBlendColor, MTLBlendFactorBlendAlpha, and MTLBlendFactorOneMinusBlendAlpha. Call the [setBlendColorRed:green:blue:alpha:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515592-setblendcolorred) method of MTLRenderCommandEncoder to specify the constant color and alpha values used with these blend factors, as described in [Fixed-Function State Operations](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW38).
+>
+> Some blend operations combine the fragment values by multiplying the source values by a source [MTLBlendFactor](https://developer.apple.com/documentation/metal/mtlblendfactor) value (abbreviated SBF), multiplying the destination values by a destination blend factor (DBF), and combining the results using the arithmetic indicated by the [MTLBlendOperation](https://developer.apple.com/documentation/metal/mtlblendoperation) value. (If the blend operation is either MTLBlendOperationMin or MTLBlendOperationMax, the SBF and DBF blend factors are ignored.) For example, MTLBlendOperationAdd for both rgbBlendOperation and alphaBlendOperation properties defines the following additive blend operation for RGB and Alpha values:
+>
+> - RGB = (Source.rgb * sourceRGBBlendFactor) + (Dest.rgb * destinationRGBBlendFactor)
+> - Alpha = (Source.a * sourceAlphaBlendFactor) + (Dest.a * destinationAlphaBlendFactor)
+>
+> In the default blend behavior, the source completely overwrites the destination. This behavior is equivalent to setting both the sourceRGBBlendFactor and sourceAlphaBlendFactor to MTLBlendFactorOne, and the destinationRGBBlendFactor and destinationAlphaBlendFactor to MTLBlendFactorZero. This behavior is expressed mathematically as:
+>
+> - RGB = (Source.rgb * 1.0) + (Dest.rgb * 0.0)
+> - A = (Source.a * 1.0) + (Dest.a * 0.0)
+>
+> - Another commonly used blend operation, where the source alpha defines how much of the destination color remains, can be expressed mathematically as:
+>
+> - RGB = (Source.rgb * 1.0) + (Dest.rgb * (1 - Source.a))
+> - A = (Source.a * 1.0) + (Dest.a * (1 - Source.a))
+
+四个混合因子指的是常量混合颜色值：MTLBlendFactorBlendColor, MTLBlendFactorOneMinusBlendColor, MTLBlendFactorBlendAlpha 和 MTLBlendFactorOneMinusBlendAlpha 。调用 MTLRenderCommandEncoder 的 [setBlendColorRed:green:blue:alpha:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515592-setblendcolorred) 方法指定与这些混合因子一起使用的常量颜色和 alphe 值。如 [Fixed-Function State Operations](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW38) 中所述。
+
+某些混合操作通过将源值乘以 [MTLBlendFactor](https://developer.apple.com/documentation/metal/mtlblendfactor) 值 (缩写 SBF) ，将目标值乘以目标混合因子（DBF），然后使用 [MTLBlendOperation](https://developer.apple.com/documentation/metal/mtlblendoperation) 值指示的算法组合结果来组合片段值（如果混合操作是 MTLBlendOperationMin 或 MTLBlendOperationMax ，则忽略 SBF 和 DBF 混合因子）。例如，rgbBlendOperation 和 alphaBlendOperation 属性的 MTLBlendOperationAdd 为 RGB 和 Alpha 值定义以下混合操作：
+
+- RGB = (Source.rgb * sourceRGBBlendFactor) + (Dest.rgb * destinationRGBBlendFactor)
+- Alpha = (Source.a * sourceAlphaBlendFactor) + (Dest.a * destinationAlphaBlendFactor)
+
+在默认的混合行为中，源完全覆盖目标。此行为相当于将 sourceRGBBlendFactor 和 sourceAlphaBlendFactor 都设置为 MTLBlendFactorOne ，将 destinationRGBBlendFactor 和 destinationAlphaBlendFactor 都设置为 MTLBlendFactorZero ，此行为在数学上表示为：
+
+- RGB = (Source.rgb * 1.0) + (Dest.rgb * 0.0)
+- A = (Source.a * 1.0) + (Dest.a * 0.0)
+
+另一种常用的混合操作，其中源 alpha 定义保留多少目标颜色，可以用数学方式表示为：
+
+- RGB = (Source.rgb * 1.0) + (Dest.rgb * (1 - Source.a))
+- A = (Source.a * 1.0) + (Dest.a * (1 - Source.a))
+
+##### Using a Custom Blending Configuration - 使用自定义的混合配制
+
+> Listing 5-6 shows code for a custom blending configuration, using the blend operation MTLBlendOperationAdd, the source blend factor MTLBlendFactorOne, and the destination blend factor MTLBlendFactorOneMinusSourceAlpha. colorAttachments[0] is a [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) object with properties that specify the blending configuration.
+>
+> Listing 5-6  Specifying a Custom Blending Configuration
+
+清单 5-6 为自定义混合配制的代码，使用 MTLBlendOperationAdd 混合操作，源混合因子 MTLBlendFactorOne ，目标混合因子 MTLBlendFactorOneMinusSourceAlpha 。colorAttachments[0] 是具有指定混合配制属性的 [MTLRenderPipelineColorAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinecolorattachmentdescriptor) 对象。
+
+清单 5-6 指定自定义混合配制
+
+```objc
+MTLRenderPipelineDescriptor *renderPipelineDesc = 
+    [[MTLRenderPipelineDescriptor alloc] init];
+renderPipelineDesc.colorAttachments[0].blendingEnabled = YES; 
+renderPipelineDesc.colorAttachments[0].rgbBlendOperation = MTLBlendOperationAdd;
+renderPipelineDesc.colorAttachments[0].alphaBlendOperation = MTLBlendOperationAdd;
+renderPipelineDesc.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactorOne;
+renderPipelineDesc.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactorOne;
+renderPipelineDesc.colorAttachments[0].destinationRGBBlendFactor = 
+MTLBlendFactorOneMinusSourceAlpha;
+renderPipelineDesc.colorAttachments[0].destinationAlphaBlendFactor = 
+MTLBlendFactorOneMinusSourceAlpha;
+
+NSError *errors = nil;
+id <MTLRenderPipelineState> pipeline = [device 
+    newRenderPipelineStateWithDescriptor:renderPipelineDesc error:&errors];
+```
+
+### Specifying Resources for a Render Command Encoder - 为渲染命令编码器指定资源
+
+> The [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) methods discussed in this section specify resources that are used as arguments for the vertex and fragment shader functions, which are specified by the vertexFunction and fragmentFunction properties in a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) object. These methods assign a shader resource (buffers, textures, and samplers) to the corresponding argument table index (atIndex) in the render command encoder, as shown in Figure 5-3.
+
+本节中讨论的 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 方法指定用作顶点和片段着色器函数参数的资源，顶点和片段着色器函数在 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 对象的 vertexFunction 和 fragmentFunction 属性中指定。这些方法将着色器资源（缓冲区，纹理和采样器）分配给渲染命令编码器中对应的参数表索引（atIndex），如图 5-3 所示。
+
+Figure 5-3  渲染命令编码器参数表
+
+![ArgumentTablesForTheRenderCommandEncoder](../../resource/Metal/Markdown/ArgumentTablesForTheRenderCommandEncoder.png)
+
+> The following setVertex* methods assign one or more resources to corresponding arguments of a vertex shader function.
+>
+> - [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer)
+> - [setVertexBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515987-setvertexbuffers)
+> - [setVertexTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515842-setvertextexture)
+> - [setVertexTextures:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516109-setvertextextures)
+> - [setVertexSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515537-setvertexsamplerstate)
+> - [setVertexSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515864-setvertexsamplerstate)
+> - [setVertexSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515400-setvertexsamplerstates)
+> - [setVertexSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516322-setvertexsamplerstates)
+>
+> These setFragment* methods similarly assign one or more resources to corresponding arguments of a fragment shader function.
+>
+> - [setFragmentBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515470-setfragmentbuffer)
+> - [setFragmentBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515724-setfragmentbuffers)
+> - [setFragmentTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515390-setfragmenttexture)
+> - [setFragmentTextures:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515878-setfragmenttextures)
+> - [setFragmentSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515577-setfragmentsamplerstate)
+> - [setFragmentSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515485-setfragmentsamplerstate)
+> - [setFragmentSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515970-setfragmentsamplerstates)
+> - [setFragmentSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515463-setfragmentsamplerstates)
+
+以下 setVertex* 方法将一个或多个资源分配给顶点着色器函数的相应参数。
+
+- [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer)
+- [setVertexBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515987-setvertexbuffers)
+- [setVertexTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515842-setvertextexture)
+- [setVertexTextures:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516109-setvertextextures)
+- [setVertexSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515537-setvertexsamplerstate)
+- [setVertexSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515864-setvertexsamplerstate)
+- [setVertexSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515400-setvertexsamplerstates)
+- [setVertexSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516322-setvertexsamplerstates)
+
+以下 setFragment* 方法类似地将一个或多个资源分配给片段着色器函数的相应参数。
+
+- [setFragmentBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515470-setfragmentbuffer)
+- [setFragmentBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515724-setfragmentbuffers)
+- [setFragmentTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515390-setfragmenttexture)
+- [setFragmentTextures:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515878-setfragmenttextures)
+- [setFragmentSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515577-setfragmentsamplerstate)
+- [setFragmentSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515485-setfragmentsamplerstate)
+- [setFragmentSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515970-setfragmentsamplerstates)
+- [setFragmentSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515463-setfragmentsamplerstates)
+
+> There are a maximum of 31 entries in the buffer argument table, 31 entries in the texture argument table, and 16 entries in the sampler state argument table.
+>
+> The attribute qualifiers that specify resource locations in the Metal shading language source code must match the argument table indices in the Metal framework methods. In Listing 5-7, two buffers (posBuf and texCoordBuf) with indices 0 and 1, respectively, are defined for the vertex shader.
+
+缓冲区参数表中最多有 31 个条目，纹理参数表最多有 31 个条目，采样器状态参数表中最多有 16 个条目。
+
+Metal 着色语言源代码中指定资源位置的属性限定符必须与 Metal 框架方法中参数表的索引匹配。清单 5-7 中，为顶点着色器定义了两个索引分别为 0 和 1 的缓冲区（ posBuf 和 texCoordBuf ）。
+
+Listing 5-7  Metal 框架：为顶点函数指定资源
+
+```objc
+[renderEnc setVertexBuffer:posBuf offset:0 atIndex:0];
+[renderEnc setVertexBuffer:texCoordBuf offset:0 atIndex:1]
+```
+
+> In Listing 5-8, the function signature has corresponding arguments with the attribute qualifiers buffer(0) and buffer(1).
+>
+> Listing 5-8  Metal Shading Language: Vertex Function Arguments Match the Framework Argument Table Indices
 
 
+清单 5-8 中，函数签名具有属性限定符 buffer(0) 和 buffer(1) 的相关参数。
+
+清单 5-8 Metal 着色语言：顶点函数参数匹配框架参数表索引
+
+```objc
+vertex VertexOutput metal_vert(float4 *posData [[ buffer(0) ]],
+    float2 *texCoordData [[ buffer(1) ]])
+```
+
+> Similarly, in Listing 5-9, a buffer, a texture, and a sampler (fragmentColorBuf, shadeTex, and sampler, respectively), all with index 0, are defined for the fragment shader.
+>
+> Listing 5-9  Metal Framework: Specifying Resources for a Fragment Function
+
+类似的，清单 5-9 中，为片段着色器定义了索引均为 0 的缓冲区、纹理和采样器（ fragmentColorBuf、shadeTex 和 sampler）。
+
+清单 5-9 Metal 框架：为片段着色器指定资源
+
+```objc
+[renderEnc setFragmentBuffer:fragmentColorBuf offset:0 atIndex:0];
+[renderEnc setFragmentTexture:shadeTex atIndex:0];
+[renderEnc setFragmentSamplerState:sampler atIndex:0];
+```
+
+> In Listing 5-10, the function signature has corresponding arguments with the attribute qualifiers buffer(0), texture(0), and sampler(0), respectively.
+>
+> Listing 5-10  Metal Shading Language: Fragment Function Arguments Match the Framework Argument Table Indices
+
+清单 5-10 中，函数签名分别具有带有属性限定符 buffer(0) 、texture(0) 和 sampler(0) 的对应参数。
+
+清单 5-10 Metal 着色语言：片段函数参数匹配框架参数表索引
+
+```objc
+fragment float4 metal_frag(VertexOutput in [[stage_in]],
+float4 *fragColorData [[ buffer(0) ]],
+texture2d<float> shadeTexValues [[ texture(0) ]],
+sampler samplerValues [[ sampler(0) ]] )
+```
+
+#### Vertex Descriptor for Data Organization - 顶点描述符描述数据组织
+
+> In Metal framework code, there can be one [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) for every pipeline state that describes the organization of data input to the vertex shader function and shares resource location information between the shading language and framework code.
+>
+> In Metal shading language code, per-vertex inputs (such as scalars or vectors of integer or floating-point values) can be organized in one struct, which can be passed in one argument that is declared with the [[ stage_in ]] attribute qualifier, as seen in the VertexInput struct for the example vertex function vertexMath in Listing 5-11. Each field of the per-vertex input struct has the [[ attribute(index) ]] qualifier, which specifies the index in the vertex attribute argument table.
+>
+> Listing 5-11  Metal Shading Language: Vertex Function Inputs with Attribute Indices
+
+在 Metal 框架代码中，每个管道状态可以有一个 [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) ，用于描述输入到顶点着色器函数的数据的组织形式，并在着色语言和框架代码之间共享资源位置信息。
+
+在 Metal 着色语言代码中，每个顶点输入（例如标量或整数向量或浮点数向量）可以组织在一个结构体中，该结构可以传递到带有 [[ stage_in ]] 属性限定符声明的一个参数中，如清单 5-11 中示例顶点函数 vertexMath 的 VertexInput 结构。顶点输入结构体的每个字段都有 [[ attribute(index) ]] 限定符，指定顶点属性参数表中的索引。
+
+清单 5-11 Metal 着色语言：带属性索引顶点函数输入
+
+```objc
+struct VertexInput {
+    float2    position [[ attribute(0) ]];
+    float4    color    [[ attribute(1) ]];
+    float2    uv1      [[ attribute(2) ]];
+    float2    uv2      [[ attribute(3) ]];
+};
+
+struct VertexOutput {
+    float4 pos [[ position ]];
+    float4 color;
+};
+
+vertex VertexOutput vertexMath(VertexInput in [[ stage_in ]])
+{
+    VertexOutput out;
+    out.pos = float4(in.position.x, in.position.y, 0.0, 1.0);
+
+    float sum1 = in.uv1.x + in.uv2.x;
+    float sum2 = in.uv1.y + in.uv2.y;
+    out.color = in.color + float4(sum1, sum2, 0.0f, 0.0f);
+    return out;
+}
+```
+> To refer to the shader function input using the [[ stage_in ]] qualifier, describe a [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) object and then set it as the [vertexDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514681-vertexdescriptor) property of [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate). MTLVertexDescriptor has two properties: [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) and [layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts).
+>
+> The [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) property of MTLVertexDescriptor is a [MTLVertexAttributeDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptorarray) object that defines how each vertex attribute is organized in a buffer that is mapped to a vertex function argument. The attributes property can support access to multiple attributes (such as vertex coordinates, surface normals, and texture coordinates) that are interleaved within the same buffer. The order of the members in the shading language code does not have to be preserved in the buffer in the framework code. Each vertex attribute descriptor in the array has the following properties that provide a vertex shader function information to locate and load the argument data:
+>
+> - [bufferIndex](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515502-bufferindex), which is an index to the buffer argument table that specifies which MTLBuffer is accessed. The buffer argument table is discussed in [Specifying Resources for a Render Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW10).
+> - [format](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1516081-format), which specifies how the data should be interpreted in the framework code. If the data type is not an exact type match, it may be converted or expanded. For example, if the shading language type is half4 and the framework format is [MTLVertexFormatFloat2](https://developer.apple.com/documentation/metal/mtlvertexformat/float2), then when the data is used as an argument to the vertex function, it may be converted from float to half and expanded from two to four elements (with 0.0, 1.0 in the last two elements).
+> - [offset](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515785-offset), which specifies where the data can be found from the start of a vertex.
+>
+> Figure 5-4 illustrates a [MTLVertexAttributeDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptorarray) in Metal framework code that implements an interleaved buffer that corresponds to the input to the vertex function vertexMath in the shading language code in [Listing 5-11](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW41).
+
+Figure 5-4  Buffer Organization with Vertex Attribute Descriptors
+
+要引用使用 [[ stage_in ]] 限定符的着色函数输入，需要描述一个 [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) 对象，然后把它设置为 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 的[vertexDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514681-vertexdescriptor) 属性。MTLVertexDescriptor 有两个属性： [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) 和 [layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts) 。
+
+MTLVertexDescriptor 的 [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) 属性是一个 [MTLVertexAttributeDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptorarray) 对象，定义了映射到顶点函数参数的缓冲区中的顶点属性是如何组织的。attributes 属性支持访问在同一缓冲区中交错的多个属性（例如顶点坐标、表面法线和纹理坐标）。着色语言代码中成员的顺序不必与框架代码缓冲区中顺序一致。数组中的每个顶点属性描述符都具有以下属性，这些属性提供顶点着色器函数信息以定位和加载参数数据。
+
+- [bufferIndex](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515502-bufferindex) ，缓冲区参数表中的索引，用于指定访问哪个 MTLBuffer 。缓冲区参数表在 [Specifying Resources for a Render Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW10) 中讨论。
+- [format](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1516081-format) ，指定如何在框架代码中解释数据。如果数据类型不是精确类型匹配，数据会被转换或扩展。例如，如果着色语言类型为 half4同时框架格式是 [MTLVertexFormatFloat2](https://developer.apple.com/documentation/metal/mtlvertexformat/float2) ，那么当数据用作顶点函数的参数时，它可能从浮点数转换为 half ，也可能从两个元素扩展为四个元素（最后两个元素填充 0.0 和 1.0）。
+- [offset](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515785-offset) 指定从顶点的开头可以找到数据的位置。
+
+图 5-4 说明了 Metal 框架代码中的 [MTLVertexAttributeDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptorarray) ，实现了一个交错缓冲区，该缓冲区对应于清单 5-11 中着色语言代码中顶点函数 vertexMath 的输入。
+
+图 5-4 具有顶点属性描述符的缓冲区组织
+
+![BufferOrganizationWithVertexAttributeDescriptors](../../resource/Metal/Markdown/BufferOrganizationWithVertexAttributeDescriptors.png)
+
+> Listing 5-12 shows the Metal framework code that corresponds to the interleaved buffer shown in Figure 5-4.
+>
+> Listing 5-12  Metal Framework: Using a Vertex Descriptor to Access Interleaved Data
+
+清单 5-12 显示了图 5-4 中所示的交错缓冲区相对应的 Metal 框架代码。
+
+清单 5-12 Metal 框架：使用顶点描述符访问交错数据
+
+```objc
+id <MTLFunction> vertexFunc = [library newFunctionWithName:@"vertexMath"];            
+MTLRenderPipelineDescriptor* pipelineDesc =      
+ [[MTLRenderPipelineDescriptor alloc] init];
+MTLVertexDescriptor* vertexDesc = [[MTLVertexDescriptor alloc] init];
+
+vertexDesc.attributes[0].format = MTLVertexFormatFloat2;
+vertexDesc.attributes[0].bufferIndex = 0;
+vertexDesc.attributes[0].offset = 0;
+vertexDesc.attributes[1].format = MTLVertexFormatFloat4;
+vertexDesc.attributes[1].bufferIndex = 0;
+vertexDesc.attributes[1].offset = 2 * sizeof(float);  // 8 bytes
+vertexDesc.attributes[2].format = MTLVertexFormatFloat2;
+vertexDesc.attributes[2].bufferIndex = 0;
+vertexDesc.attributes[2].offset = 8 * sizeof(float);  // 32 bytes
+vertexDesc.attributes[3].format = MTLVertexFormatFloat2;
+vertexDesc.attributes[3].bufferIndex = 0;
+vertexDesc.attributes[3].offset = 6 * sizeof(float);  // 24 bytes
+vertexDesc.layouts[0].stride = 10 * sizeof(float);    // 40 bytes
+vertexDesc.layouts[0].stepFunction = MTLVertexStepFunctionPerVertex;
+
+pipelineDesc.vertexDescriptor = vertexDesc;
+pipelineDesc.vertexFunction = vertFunc;
+```
+
+> Each [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) object in the [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) array of the [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) object corresponds to the indexed struct member in VertexInput in the shader function. attributes[1].bufferIndex = 0 specifies the use of the buffer at index 0 in the argument table. (In this example, each [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) has the same [bufferIndex](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515502-bufferindex), so each refers to the same vertex buffer at index 0 in the argument table.) The [offset](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515785-offset) values specify the location of data within the vertex, so attributes[1].offset = 2 * sizeof(float) locates the start of the corresponding data 8 bytes from the start of the buffer. The [format](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1516081-format) values are chosen to match the data type in the shader function, so attributes[1].format = MTLVertexFormatFloat4 specifies the use of four floating-point values.
+>
+> The [layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts) property of MTLVertexDescriptor is a [MTLVertexBufferLayoutDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptorarray). For each [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) in [layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts), the properties specify how vertex and attribute data are fetched from the corresponding [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) in the argument table when Metal draws primitives. (For more on drawing primitives, see [Drawing Geometric Primitives](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW39).) The [stepFunction](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1515341-stepfunction) property of MTLVertexBufferLayoutDescriptor determines whether to fetch attribute data for every vertex, for some number of instances, or just once. If stepFunction is set to fetch attribute data for some number of instances, then the [stepRate](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1516148-steprate) property of MTLVertexBufferLayoutDescriptor determines how many instances. The [stride](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1515441-stride) property specifies the distance between the data of two vertices, in bytes.
+>
+> Figure 5-5 depicts the [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) that corresponds to the code in [Listing 5-12](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW43). layouts[0] specifies how vertex data is fetched from corresponding index 0 in the buffer argument table. layouts[0].stride specifies a distance of 40 bytes between the data of two vertices. The value of layouts[0].stepFunction, [MTLVertexStepFunctionPerVertex](https://developer.apple.com/documentation/metal/mtlvertexstepfunction/pervertex), specifies that attribute data is fetched for every vertex when drawing. If the value of stepFunction is [MTLVertexStepFunctionPerInstance](https://developer.apple.com/documentation/metal/mtlvertexstepfunction/perinstance), the stepRate property determines how often attribute data is fetched. For example, if stepRate is 1, data is fetched for every instance; if stepRate is 2, for every two instances, and so on.
+>
+> Figure 5-5  Buffer Organization with Vertex Buffer Layout Descriptors
+
+ [MTLVertexDescriptor](https://developer.apple.com/documentation/metal/mtlvertexdescriptor) 对象的 [attributes](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515921-attributes) 数组中的每个 [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) 对象对应于着色器函数中 VertexInput 中的索引结构成员。attributes[1].bufferIndex = 0 指定使用参数表中索引 0 的缓冲区（此例中，每个 [MTLVertexAttributeDescriptor](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor) 具有相同的 bufferIndex ，因此每个引用参数表中索引 0 处相同的缓冲区）。[offset](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1515785-offset) 指定顶点内数据的位置，因此 attributes[1].offset = 2 * sizeof(float) 定位相关数据的起始为缓冲区起始处 8 个字节。[format](https://developer.apple.com/documentation/metal/mtlvertexattributedescriptor/1516081-format) 值与着色器函数中的数据类型相匹配，因此 attributes[1].format = MTLVertexFormatFloat4 指定使用 4 个浮点值。
+ 
+ MTLVertexDescriptor 的 [layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts) 属性是 [MTLVertexBufferLayoutDescriptorArray](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptorarray) 。[layouts](https://developer.apple.com/documentation/metal/mtlvertexdescriptor/1515480-layouts) 中的每个 [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) ，属性指定当 Metal 绘制图元时如何从参数表中的相应 [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) 中获取顶点和属性数据。（关于绘制图元的更多信息，参见  [Drawing Geometric Primitives](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW39) ）。MTLVertexBufferLayoutDescriptor 的 [stepFunction](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1515341-stepfunction) 属性确定是否为每个顶点、某些实例获取属性数据，还是仅获取一次。如果 stepFunction 设置为获取某些实例的属性数据，MTLVertexBufferLayoutDescriptor 的 [stepRate](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1516148-steprate) 属性确定实例数量。[stride](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor/1515441-stride) 属性指定两个顶点数据之间的距离（以字节为单位）。
+ 
+ 图 5-5 描述了 [MTLVertexBufferLayoutDescriptor](https://developer.apple.com/documentation/metal/mtlvertexbufferlayoutdescriptor) ，对应于 [Listing 5-12](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW43) 中的代码。layouts[0] 指定如何从缓冲区参数表中的相应索引 0 获取顶点数据。layouts[0].stride 指定两个顶点数据之间的距离为 40 个字节。layouts[0].stepFunction 的值，[MTLVertexStepFunctionPerVertex](https://developer.apple.com/documentation/metal/mtlvertexstepfunction/pervertex) ，指定在绘制时为每个顶点数据提取属性数据。若 stepFunction 的值为 [MTLVertexStepFunctionPerInstance](https://developer.apple.com/documentation/metal/mtlvertexstepfunction/perinstance) ，则 stepRate 属性决定获取属性数据的频率。例如，若 stepRate 为 1 ，则为每个实例提取数据；若 stepRate 为 2 ，则每两个实例，以此类推。
+
+图 5-5 具有顶点缓冲区布局描述符的缓冲区组织
+
+![BufferOrganizationWithVertexBufferLayoutDescriptors](../../resource/Metal/Markdown/BufferOrganizationWithVertexBufferLayoutDescriptors.png)
+
+### Performing Fixed-Function Render Command Encoder Operations - 执行固定功能渲染命令编码器操作
+
+> Use these [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) methods to set fixed-function graphics state values:
+>
+> - [setViewport:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515527-setviewport) specifies the region, in screen coordinates, which is the destination for the projection of the virtual 3D world. The viewport is 3D, so it includes depth values; for details, see [Working with Viewport and Pixel Coordinate Systems](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW34).
+> - [setTriangleFillMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516029-settrianglefillmode) determines whether to rasterize triangle and triangle strip primitives with lines ([MTLTriangleFillModeLines](https://developer.apple.com/documentation/metal/mtltrianglefillmode/lines)) or as filled triangles ([MTLTriangleFillModeFill](https://developer.apple.com/documentation/metal/mtltrianglefillmode/fill)). The default value is MTLTriangleFillModeFill.
+> - [setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) and [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) are used together to determine if and how culling is applied. You can use culling for hidden surface removal on some geometric models, such as an orientable sphere rendered with filled triangles. (A surface is orientable if its primitives are consistently drawn in either clockwise or counterclockwise order.)
+   > - The value of [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) indicates whether a front-facing primitive has its vertices drawn in clockwise ([MTLWindingClockwise](https://developer.apple.com/documentation/metal/mtlwinding/mtlwindingclockwise)) or counterclockwise ([MTLWindingCounterClockwise](https://developer.apple.com/documentation/metal/mtlwinding/mtlwindingcounterclockwise)) order. The default value is MTLWindingClockwise.
+   > - The value of [setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) determines whether to perform culling ([MTLCullModeNone](https://developer.apple.com/documentation/metal/mtlcullmode/mtlcullmodenone), if culling disabled) or which type of primitive to cull ([MTLCullModeFront](https://developer.apple.com/documentation/metal/mtlcullmode/front) or [MTLCullModeBack](https://developer.apple.com/documentation/metal/mtlcullmode/mtlcullmodeback)).
+   
+使用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的这些方法设置固定功能图形状态值：
+
+- [setViewport:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515527-setviewport) 指定屏幕坐标系的一个区域，该区域是虚拟 3D 世界投影的目的地。viewPort 是 3D 的，所以它包含深度值，更多细节，见 [Working with Viewport and Pixel Coordinate Systems](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW34) 。
+- [setTriangleFillMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516029-settrianglefillmode) 确定是否使用直线（[MTLTriangleFillModeLines](https://developer.apple.com/documentation/metal/mtltrianglefillmode/lines)）或者填充三角形（[MTLTriangleFillModeFill](https://developer.apple.com/documentation/metal/mtltrianglefillmode/fill)）光栅化三角形和三角形条带图元。默认值为 MTLTriangleFillModeFill 。
+- [setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) 和 [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) 组合使用来决定是否以及如何应用剔除。你可以在某些几何模型上使用剔除隐藏要去除的面，例如，使用实心三角形渲染的可定向球体。（如果其图元始终以顺时针或逆时针顺序绘制，则其表面是可定向的）。
+   - [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) 值指示正面图元是以顺时针（ [MTLWindingClockwise](https://developer.apple.com/documentation/metal/mtlwinding/mtlwindingclockwise) ）还是逆时针（ ([MTLWindingCounterClockwise](https://developer.apple.com/documentation/metal/mtlwinding/mtlwindingcounterclockwise))）的顺序绘制顶点。默认值为 MTLWindingClockwise 。
+   - [setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) 值决定是否执行剔除（如果禁用剔除，值为 [MTLCullModeNone](https://developer.apple.com/documentation/metal/mtlcullmode/mtlcullmodenone) ）或者要剔除哪种类型的图元（[MTLCullModeFront](https://developer.apple.com/documentation/metal/mtlcullmode/front) 或 [MTLCullModeBack](https://developer.apple.com/documentation/metal/mtlcullmode/mtlcullmodeback)）。
+
+> Use the following [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) methods to encode fixed-function state change commands:
+>
+> - [setScissorRect:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515583-setscissorrect) specifies a 2D scissor rectangle. Fragments that lie outside the specified scissor rectangle are discarded.
+> - [setDepthStencilState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516119-setdepthstencilstate) sets the depth and stencil test state as described in [Depth and Stencil States](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW9).
+> - [setStencilReferenceValue:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515697-setstencilreferencevalue) specifies the stencil reference value.
+> - [setDepthBias:slopeScale:clamp:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516269-setdepthbias) specifies an adjustment for comparing shadow maps to the depth values output from fragment shaders.
+> - [setVisibilityResultMode:offset:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515556-setvisibilityresultmode) determines whether to monitor if any samples pass the depth and stencil tests. If set to [MTLVisibilityResultModeBoolean](https://developer.apple.com/documentation/metal/mtlvisibilityresultmode/boolean), then if any samples pass the depth and stencil tests, a non-zero value is written to a buffer specified by the [visibilityResultBuffer](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437942-visibilityresultbuffer) property of [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor), as described in [Creating a Render Pass Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW5).
+>
+>   You can use this mode to perform occlusion testing. If you draw a bounding box and no samples pass, then you may conclude that any objects within that bounding box are occluded and thus do not require rendering.
+>
+> - [setBlendColorRed:green:blue:alpha:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515592-setblendcolorred) specifies the constant blend color and alpha values, as detailed in [Configuring Blending in a Render Pipeline Attachment Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW22).
 
 
+使用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的以下方法编码固定功能状态更改命令：
 
+- [setScissorRect:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515583-setscissorrect) 指定 2D 裁剪矩形区域。位于指定区域外的片段将被丢弃。
+- [setDepthStencilState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516119-setdepthstencilstate) 设置深度和模版测试状态，如 [Depth and Stencil States](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW9) 中所述。
+- [setStencilReferenceValue:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515697-setstencilreferencevalue) 指定模版参考值。
+- [setDepthBias:slopeScale:clamp:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516269-setdepthbias) 指定用于将深度贴图与片段着色器输出的深度值进行比较的调整。
+- [setVisibilityResultMode:offset:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515556-setvisibilityresultmode) 决定是否监控样本深度测试和模版测试的结果。如果设置为 [MTLVisibilityResultModeBoolean](https://developer.apple.com/documentation/metal/mtlvisibilityresultmode/boolean) ，则如果任何样本通过深度和模版测试，非零值则会写入由 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 的 [visibilityResultBuffer](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor/1437942-visibilityresultbuffer) 属性指定的缓冲区中，如 [Creating a Render Pass Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW5) 中所述。
+
+你可以使用此模式进行遮挡测试。如果绘制边界框并且没有样本通过，则可以得出结论，该边界框内的任何物体都被遮挡，因此不需要渲染。
+
+- [setBlendColorRed:green:blue:alpha:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515592-setblendcolorred) 指定混合颜色和 alpha 常量值，如 [Configuring Blending in a Render Pipeline Attachment Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW22) 中所述。
+
+#### Working with Viewport and Pixel Coordinate Systems - 使用 Viewport 和像素坐标系
+
+> Metal defines its Normalized Device Coordinate (NDC) system as a 2x2x1 cube with its center at (0, 0, 0.5). The left and bottom for x and y, respectively, of the NDC system are specified as -1. The right and top for x and y, respectively, of the NDC system are specified as +1.
+>
+> The viewport specifies the transformation from NDC to the window coordinates. The Metal viewport is a 3D transformation specified by the [setViewport:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515527-setviewport) method of [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder). The origin of the window coordinates is in the upper-left corner.
+>
+> In Metal, pixel centers are offset by (0.5, 0.5). For example, the pixel at the origin has its center at (0.5, 0.5); the center of the adjacent pixel to its right is (1.5, 0.5). This is also true for textures.
+
+Metal 将其标准设备坐标系（ NDC ）定义为中心位于 (0, 0, 0.5) 的 2x2x1 立方体。NDC 系统的 x 和 y 的左侧和底部分别指定为 -1 。x 和 y 的右侧和顶部分别指定为 +1 。
+
+viewport 指定从 NDC 到窗口坐标系的转换。Metal 的 viewport 是由 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的 [setViewport:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515527-setviewport) 方法指定的一个 3D 转换。窗口坐标系的原点位于左上角。
+
+Metal 中像素中心偏移 (0.5, 0.5) 。例如，原点处的像素的中心位于 (0.5, 0.5) ；右边相邻像素的中心s为 (1.5, 0.5) 。纹理也是如此。
+
+#### Performing Depth and Stencil Operations - 执行深度和模版操作
+
+> The depth and stencil operations are fragment operations that you specify as follows:
+>
+> - Specify a custom [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) object that contains settings for the depth/stencil state. Creating a custom MTLDepthStencilDescriptor object may require creating one or two [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) objects that are applicable to front-facing primitives and back-facing primitives.
+> - Create a [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) object by calling the [newDepthStencilStateWithDescriptor:](https://developer.apple.com/documentation/metal/mtldevice/1433412-makedepthstencilstate) method of MTLDevice with a depth/stencil state descriptor.
+> - To set the depth/stencil state, call the [setDepthStencilState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516119-setdepthstencilstate) method of MTLRenderCommandEncoder with the [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate).
+> - If the stencil test is in use, call [setStencilReferenceValue:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515697-setstencilreferencevalue) to specify the stencil reference value.
+
+深度和模版操作是像下面这样指定的片段操作：
+
+- 指定一个自定义的 [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) 对象，包含深度/模版状态设置。创建一个自定义 MTLDepthStencilDescriptor 对象可能需要创建一个或者两个适用于 front-facing 图元和 back-facing 图源的 [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) 。
+- 使用深度/模版状态描述符调用 MTLDevice 的 [newDepthStencilStateWithDescriptor:](https://developer.apple.com/documentation/metal/mtldevice/1433412-makedepthstencilstate) 方法创建一个 [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) 对象。
+- 要设置深度/模版状态的话，使用 [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) 调用 MTLRenderCommandEncoder 的 [setDepthStencilState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516119-setdepthstencilstate) 方法。
+- 如果模版测试正在使用，调用 [setStencilReferenceValue:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515697-setstencilreferencevalue) 指定模版参考值。
+
+> If the depth test is enabled, the render pipeline state must include a depth attachment to support writing the depth value. To perform the stencil test, the render pipeline state must include a stencil attachment. To configure attachments, see [Creating and Configuring a Render Pipeline Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW40).
+>
+> If you will be changing the depth/stencil state regularly, then you may want to reuse the state descriptor object, modifying its property values as needed to create more state objects.
+>
+> Note: To sample from a depth-format texture within a shader function, implement the sampling operation within the shader without using MTLSamplerState.
+
+如果启用了深度测试，渲染管线状态必须包含一个深度附件以支持写入深度值。要执行模版测试，渲染管线状态必须包含一个模版附件。配制 attachments ，参见 [Creating and Configuring a Render Pipeline Descriptor](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW40) 。
+
+如果要定期更改深度/模版状态，你可能需要重用状态描述符对象，按需更改其属性值以创建更多状态对象。
+
+注意：要在着色器函数中从深度格式纹理中进行采样，则在着色器中实现采样操作，不要使用 MTLSamplerState 。
+
+> Use the properties of a [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) object as follows to set the depth and stencil state:
+>
+> - To enable writing the depth value to the depth attachment, set [depthWriteEnabled](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462501-isdepthwriteenabled) to YES.
+> - [depthCompareFunction](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462463-depthcomparefunction) specifies how the depth test is performed. If a fragment’s depth value fails the depth test, the fragment is discarded. For example, the commonly used MTLCompareFunctionLess function causes fragment values that are further away from the viewer than the (previously written) pixel depth value to fail the depth test; that is, the fragment is considered occluded by the earlier depth value.
+> - The [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) and [backFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462507-backfacestencil) properties each specify a separate [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) object for front- and back-facing primitives. To use the same stencil state for both front- and back-facing primitives, you can assign the same [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) to both [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) and [backFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462507-backfacestencil) properties. To explicitly disable the stencil test for one or both faces, set the corresponding property to nil, the default value.
+>
+> Explicit disabling of a stencil state is not necessary. Metal determines whether to enable a stencil test based on whether the stencil descriptor is configured for a valid stencil operation.
+>
+> [Listing 5-13](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW8) shows an example of creation and use of a [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) object for the creation of a [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) object, which is then used with a render command encoder. In this example, the stencil state for the front-facing primitives is accessed from the [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) property of the depth/stencil state descriptor. The stencil test is explicitly disabled for the back-facing primitives.
+>
+> Listing 5-13  Creating and Using a Depth/Stencil Descriptor
+
+使用 [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) 对象的属性，如下所示设置深度和模版状态：
+
+- 设置 [depthWriteEnabled](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462501-isdepthwriteenabled) 为 YES 启用深度值写入深度附件。
+- [depthCompareFunction](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462463-depthcomparefunction) 指定深度测试的执行方式。若一个片段的深度值未通过深度测试，则丢弃该片段。例如，常用的 MTLCompareFunctionLess 函数会导致比之前写入的像素深度值更原理观察者的片段值深度测试失败；也就是说，该片段被之前的深度值遮挡。
+- [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) 和 [backFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462507-backfacestencil) 属性为 front- 和 back-facing 图元分别指定了 [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) 对象。要对 front- 和 back-facing 图元使用相同的模版状态，可以为 [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) 和 [backFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462507-backfacestencil) 指定同一个 [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) 。要显示地禁用一个或两个面的模版测试，将相应的属性值设为 nil （默认值）。
+
+不必显示禁用模版状态。Metal 基于模版描述符是否配置有效的模版操作来决定是否启用模版测试。
+
+[Listing 5-13](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW8) 显示了创建和使用 [MTLDepthStencilDescriptor](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor) 以创建 [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) 对象的示例，该对象随后与渲染命令编码器一起使用。该例中，通过深度/模版状态描述符 [frontFaceStencil](https://developer.apple.com/documentation/metal/mtldepthstencildescriptor/1462476-frontfacestencil) 属性访问 front-facing 图元的模版状态。显示地禁用了 back-facing 的模版测试。
+
+清单 5-13 创建并使用深度/模版描述符
+
+```objc
+MTLDepthStencilDescriptor *dsDesc = [[MTLDepthStencilDescriptor alloc] init];
+if (dsDesc == nil)
+    exit(1);   //  if the descriptor could not be allocated
+dsDesc.depthCompareFunction = MTLCompareFunctionLess;
+dsDesc.depthWriteEnabled = YES;
+
+dsDesc.frontFaceStencil.stencilCompareFunction = MTLCompareFunctionEqual;
+dsDesc.frontFaceStencil.stencilFailureOperation = MTLStencilOperationKeep;
+dsDesc.frontFaceStencil.depthFailureOperation = MTLStencilOperationIncrementClamp;
+dsDesc.frontFaceStencil.depthStencilPassOperation =
+MTLStencilOperationIncrementClamp;
+dsDesc.frontFaceStencil.readMask = 0x1;
+dsDesc.frontFaceStencil.writeMask = 0x1;
+dsDesc.backFaceStencil = nil;
+id <MTLDepthStencilState> dsState = [device
+    newDepthStencilStateWithDescriptor:dsDesc];
+
+[renderEnc setDepthStencilState:dsState];
+[renderEnc setStencilReferenceValue:0xFF];
+```
+
+> The following properties define a stencil test in the [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor):
+>
+> - [readMask](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462465-readmask) is a bitmask; the GPU computes the bitwise AND of this mask with both the stencil reference value and the stored stencil value. The stencil test is a comparison between the resulting masked reference value and the masked stored value.
+> - [writeMask](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462496-writemask) is a bitmask that restricts which stencil values are written to the stencil attachment by the stencil operations.
+> - [stencilCompareFunction](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462455-stencilcomparefunction) specifies how the stencil test is performed for fragments. In Listing 5-13, the stencil comparison function is [MTLCompareFunctionEqual](https://developer.apple.com/documentation/metal/mtlcomparefunction/equal), so the stencil test passes if the masked reference value is equal to masked stencil value already stored at the location of a fragment.
+> - [stencilFailureOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462471-stencilfailureoperation), [depthFailureOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462500-depthfailureoperation), and [depthStencilPassOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462486-depthstencilpassoperation) specify what to do to a stencil value stored in the stencil attachment for three different test outcomes: if the stencil test fails, if the stencil test passes and the depth test fails, or if both stencil and depth tests succeed, respectively. In the preceding example, the stencil value is unchanged ([MTLStencilOperationKeep](https://developer.apple.com/documentation/metal/mtlstenciloperation/keep)) if the stencil test fails, but it is incremented if the stencil test passes, unless the stencil value is already the maximum possible ([MTLStencilOperationIncrementClamp](https://developer.apple.com/documentation/metal/mtlstenciloperation/incrementclamp)).
+
+以下 [MTLStencilDescriptor](https://developer.apple.com/documentation/metal/mtlstencildescriptor) 中的属性实现对模版测试的定义：
+
+- [readMask](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462465-readmask) 是一个位掩码；GPU 将模版参考值或存储的模版值与该掩码进行按位 AND 计算。模版测试是在掩码之后的参考值和掩码之后的存储值之间进行比较的
+- [writeMask](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462496-writemask) 位掩码限制模版操作可以将哪些模版值写入模版附件中。
+- [stencilCompareFunction](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462455-stencilcomparefunction) 指定片段模版测试如何进行。清单 5-13 中，模版比较函数是 [MTLCompareFunctionEqual](https://developer.apple.com/documentation/metal/mtlcomparefunction/equal) ，所以如果掩码之后的参考值与当前片段处存储的模版值掩码之后的值相等的话，则模版测试通过。
+- [stencilFailureOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462471-stencilfailureoperation), [depthFailureOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462500-depthfailureoperation), 和 [depthStencilPassOperation](https://developer.apple.com/documentation/metal/mtlstencildescriptor/1462486-depthstencilpassoperation) 指定三种不同测试结果发生的情况下，如何操作已经存储于模版附件中的模版值：如果模版测试失败；如果模版测试通过同时深度测试失败；模版和深度测试均通过。在前面的示例中，如果模版测试失败，则模版值不变（ [MTLStencilOperationKeep](https://developer.apple.com/documentation/metal/mtlstenciloperation/keep) ），但是如果模版测试通过，则模版值会增加，除非模版值已经是最大可能值（[MTLStencilOperationIncrementClamp](https://developer.apple.com/documentation/metal/mtlstenciloperation/incrementclamp)）。
+
+### Drawing Geometric Primitives - 绘制几何图元
+
+> After you have established the pipeline state and fixed-function state, you can call the following [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) methods to draw the geometric primitives. These draw methods reference resources (such as buffers that contain vertex coordinates, texture coordinates, surface normals, and other data) to execute the pipeline with the shader functions and other state you have previously established with MTLRenderCommandEncoder.
+>
+> - [drawPrimitives:vertexStart:vertexCount:instanceCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515327-drawprimitives) renders a number of instances (instanceCount) of primitives using vertex data in contiguous array elements, starting with the first vertex at the array element at the index vertexStart and ending at the array element at the index vertexStart + vertexCount - 1.
+> - [drawPrimitives:vertexStart:vertexCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516326-drawprimitives) is the same as the previous method with an instanceCount of 1.
+> - [drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515699-drawindexedprimitives) renders a number of instances (instanceCount) of primitives using an index list specified in the MTLBuffer object indexBuffer. indexCount determines the number of indices. The index list starts at the index that is indexBufferOffset byte offset within the data in indexBuffer. indexBufferOffset must be a multiple of the size of an index, which is determined by indexType.
+> - [drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515542-drawindexedprimitives) is similar to the previous method with an instanceCount of 1.
+
+建立管线状态和固定功能状态之后，就可以调用以下 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的方法来绘制几何图元。这些绘制方法引用资源（例如包含顶点坐标、纹理坐标、表面法线以及其他数据的缓冲区）来执行具有着色器函数以及先前使用 MTLRenderCommandEncoder 建立的其他状态的管线。
+
+- [drawPrimitives:vertexStart:vertexCount:instanceCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515327-drawprimitives) 使用连续数组元素中的顶点数据渲染图元的多个实例（ instanceCount ），从索引 vertexStart 指定的第一个顶点到索引 vertexStart + vertexCount - 1 指定的最后一个顶点。
+- [drawPrimitives:vertexStart:vertexCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516326-drawprimitives) 与 instanceCount 为 1 的前一个方法相同。
+- [drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515699-drawindexedprimitives) 使用 MTLBuffer 对象 indexBuffer 中指定的索引列表渲染多个图元实例（ intanceCount ）。indexCount 决定索引数量。indexBuffer 中数据的 indexBufferOffset 字节偏移处的索引为索引表的开始。indexBufferOffset 必须为一个索引大小的整数倍，每个索引的大小由 indexType 决定。
+- [drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515542-drawindexedprimitives) 当 instanceCount 为 1 时，与前个方法类似。
+
+> For every primitive rendering method listed above, the first input value determines the primitive type with one of the MTLPrimitiveType values. The other input values determine which vertices are used to assemble the primitives. For all these methods, the instanceStart input value determines the first instance to draw, and instanceCount input value determines how many instances to draw.
+>
+> As previously discussed, [setTriangleFillMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516029-settrianglefillmode) determines whether the triangles are rendered as filled or wireframe, and the [setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) and [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) settings determine whether the GPU culls triangles during rendering. For more information, see [Fixed-Function State Operations](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW38)).
+>
+> When rendering a point primitive, the shader language code for the vertex function must provide the [[ point_size ]] attribute, or the point size is undefined.
+>
+> When rendering a triangle primitive with flat shading, the attributes of the first vertex (also known as the provoking vertex) are used for the whole triangle. The shader language code for the vertex function must provide the [[ flat ]] interpolation qualifier.
+>
+> For details on all Metal shading language attributes and qualifiers, see Metal Shading Language Guide.
+
+对于上面列出的每个图元渲染方法，第一个输入值决定决定了图元的类型，MTLPrimitiveType 就是其中之一。其他输入值决定哪些顶点用来组装图元。对于所有这些方法，instanceStart 输入值决定要绘制的第一个实例，instanceCount 输入值决定有多少实例需要绘制。
+
+如之前讨论的那样，[setTriangleFillMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516029-settrianglefillmode) 决定三角形是被渲染成实心还是线框，[setCullMode:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515975-setcullmode) 和 [setFrontFacingWinding:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515499-setfrontfacingwinding) 设置决定渲染过程中 GPU 是否剔除三角形。关于更多信息，见 [Fixed-Function State Operations](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW38)) 。
+
+当渲染一个点图元时，顶点函数的着色器语言代码必须提供 [[ point_size ]] 属性，否则点大小是未定义的。
+
+当渲染具有平面着色的三角形图元时，第一个顶点（也称为激发顶点）的属性用于整个三角形。顶点函数着色器语言代码必须提供 [[ flat ]] 插值限定符。
+
+关于所有 Metal 着色语言属性和限定符的细节，见 Metal Shading Language Guide 。
+
+### Ending a Rendering Pass - 结束渲染过程
+
+> To terminate a rendering pass, call [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) on the render command encoder. After ending the previous command encoder, you can create a new command encoder of any type to encode additional commands into the command buffer.
+
+要终止渲染过程的话，在渲染命令编码器上调用l [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 。结束之前的命令编码器之后，可以创建任意类型新命令编码器，以降其他命令编码至命令缓冲区。
+
+### Code Example: Drawing a Triangle - 代码实例：绘制三角形
 
 
 
