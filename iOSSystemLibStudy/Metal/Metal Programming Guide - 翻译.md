@@ -1827,7 +1827,393 @@ id <MTLRenderCommandEncoder> rCE3 = [parallelRCE renderCommandEncoder];
 
 要执行数据并行计算，遵循以下主要步骤：
 
-1. 
+1. 使用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 方法创建包含 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) 对象已编译代码的计算状态（ [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) ）对象，如 [Creating a Compute State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW3) 中所述。MTLFunction 对象表示使用 Metal 着色语言编写的计算函数，如 [Functions and Libraries](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW1) 中所述。
+2. 如 [Specifying a Compute State and Resources for a Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW30) 中所示，指定计算命令编码器使用的 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象。
+3. 指定可能包含要由计算状态处理和返回数据的资源和相关对象（[MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer)，[MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 和可能的 [MTLSamplerState](https://developer.apple.com/documentation/metal/mtlsamplerstate)），如 [Specifying a Compute State and Resources for a Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW30) 所述。还需要设置它们的参数表索引，以便 Metal 框架代码可以定位到着色器代码中的相应资源。在任何给定时刻，[MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 可以与多个资源对象相关联。
+4. 按照 [Executing a Compute Command](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW2) 中的说明，调度执行计算函数指定的次数。
+
+### Creating a Compute Pipeline State - 创建计算管线状态
+
+> A [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) object represents data-parallel code that can be executed by a [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object. The [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object encodes commands that set arguments and execute the compute function. Because creating a compute pipeline state can require an expensive compilation of Metal shading language code, you can use either a blocking or an asynchronous method to schedule such work in a way that best fits the design of your app.
+>
+> - To synchronously create the compute pipeline state object, call either the [newComputePipelineStateWithFunction:error:](https://developer.apple.com/documentation/metal/mtldevice/1433395-newcomputepipelinestatewithfunct) or [newComputePipelineStateWithFunction:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433419-makecomputepipelinestate) method of [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice). These methods block the current thread while Metal compiles shader code to create the pipeline state object.
+> - To asynchronously create the compute pipeline state object, call either the [newComputePipelineStateWithFunction:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433427-makecomputepipelinestate) or [newComputePipelineStateWithFunction:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433410-makecomputepipelinestate) method of [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice). These methods return immediately—Metal asynchronously compiles shader code to create the pipeline state object, then calls your completion handler to provide the new [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object.
+>
+> When you create a [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object you can also choose to create reflection data that reveals details of the compute function and its arguments. The [newComputePipelineStateWithFunction:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433419-makecomputepipelinestate) and [newComputePipelineStateWithFunction:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433410-makecomputepipelinestate) methods provide this data. Avoid obtaining reflection data if it will not be used. For more information on how to analyze reflection data, see [Determining Function Details at Runtime](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW6).
+
+[MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) 对象表示可以被 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 执行的数据并行代码。[MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象对用于设置参数及执行计算功能的命令进行编码。因为创建计算管线状态需要昂贵的 Metal 着色语言代码编译代价，因此你可以使用阻塞或异步方式以最适合应用程序设计的方式安排此类工作。
+
+- 要同步地创建计算管线状态对象，调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 的 [newComputePipelineStateWithFunction:error:](https://developer.apple.com/documentation/metal/mtldevice/1433395-newcomputepipelinestatewithfunct) 或 [newComputePipelineStateWithFunction:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433419-makecomputepipelinestate) 方法。这些方法阻塞当前线程当 Metal 编译着色器代码来创建管线状态对象时。
+- 要异步地创建计算管线状态对象，调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 的 [newComputePipelineStateWithFunction:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433427-makecomputepipelinestate) 或 [newComputePipelineStateWithFunction:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433410-makecomputepipelinestate) 方法。这些函数立即返回 - Metal 异步编译着色器代码以创建管线状态对象，然后调用完成处理程序提供新的 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象。
+
+创建 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象时，还可以选择创建显示计算函数及其参数详细信息的反射数据。[newComputePipelineStateWithFunction:options:reflection:error:](https://developer.apple.com/documentation/metal/mtldevice/1433419-makecomputepipelinestate) 和 [newComputePipelineStateWithFunction:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433410-makecomputepipelinestate) 方法提供该数据。如果不使用反射数据，那么避免获取它。有关如何分析反射数据的更多信息，参见 [Determining Function Details at Runtime](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW6) 。
+
+### Specifying a Compute State and Resources for a Compute Command Encoder - 为计算命令编码器指定计算状态和资源
+
+> The [setComputePipelineState:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443140-setcomputepipelinestate) method of a [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object specifies the state, including a compiled compute shader function, to use for a data-parallel compute pass. At any given moment, a compute command encoder can be associated to only one compute function.
+>
+> The following [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) methods specify a resource (that is, a buffer, texture, sampler state, or threadgroup memory) that is used as an argument to the compute function represented by the [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object.
+>
+> - [setBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443126-setbuffer)
+> - [setBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443134-setbuffers)
+> - [setTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443130-settexture)
+> - [setTextures:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443148-settextures)
+> - [setSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443144-setsamplerstate)
+> - [setSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443153-setsamplerstate)
+> - [setSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443155-setsamplerstates)
+> - [setSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443128-setsamplerstates)
+> - [setThreadgroupMemoryLength:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443142-setthreadgroupmemorylength)
+>
+> Each method assigns one or more resources to the corresponding argument(s), as illustrated in Figure 6-1.
+>
+> Figure 6-1  Argument Tables for the Compute Command Encoder
+
+[MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象的 [setComputePipelineState:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443140-setcomputepipelinestate) 方法指定用于数据并行计算过程的状态，包括已编译的计算着色器函数。在任何给定时刻，一个计算命令编码器只能与一个计算函数相关联。
+
+以下 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 方法指定指定资源（即缓冲器、纹理、采样器状态或线程组内存），这些资源用作 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象表示的计算函数的参数。
+
+- [setBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443126-setbuffer)
+- [setBuffers:offsets:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443134-setbuffers)
+- [setTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443130-settexture)
+- [setTextures:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443148-settextures)
+- [setSamplerState:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443144-setsamplerstate)
+- [setSamplerState:lodMinClamp:lodMaxClamp:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443153-setsamplerstate)
+- [setSamplerStates:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443155-setsamplerstates)
+- [setSamplerStates:lodMinClamps:lodMaxClamps:withRange:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443128-setsamplerstates)
+- [setThreadgroupMemoryLength:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443142-setthreadgroupmemorylength)
+
+每个方法将一个或更多的资源分配给相应的参数，如图 6-1 所示。
+
+图 6-1 计算命令编码器的参数表
+
+![ArgumentTablesForTheComputeCommandEncoder](../resource/Metal/Markdown/ArgumentTablesForTheComputeCommandEncoder.png)
+
+> The limits for the maximum number of entries in a buffer, texture, or sampler state argument table are listed in the [Implementation Limits](https://developer.apple.com/metal/limits/) table.
+>
+> The limits for the maximum total threadgroup memory allocation is also listed in the [Implementation Limits](https://developer.apple.com/metal/limits/) table.
+
+[Implementation Limits](https://developer.apple.com/metal/limits/) 表中列出了缓冲区、纹理或采样器状态参数表中最大条目数的限制。
+
+[Implementation Limits](https://developer.apple.com/metal/limits/) 表中还列出了最大总线程组内存分配的限制。
+
+### Executing a Compute Command - 执行计算命令
+
+> To encode a command to execute a compute function, call the [dispatchThreadgroups:threadsPerThreadgroup:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443138-dispatchthreadgroups) method of [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) and specify the threadgroup dimensions and the number of threadgroups. You can query the [threadExecutionWidth](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414911-threadexecutionwidth) and [maxTotalThreadsPerThreadgroup](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414927-maxtotalthreadsperthreadgroup) properties of [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) to optimize the execution of the compute function on this device.
+>
+> The total number of threads in a threadgroup is the product of the components of threadsPerThreadgroup: threadsPerThreadgroup.width * threadsPerThreadgroup.height * threadsPerThreadgroup.depth. The [maxTotalThreadsPerThreadgroup](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414927-maxtotalthreadsperthreadgroup) property specifies the maximum number of threads that can be in a single threadgroup to execute this compute function on the device.
+>
+> Compute commands are executed in the order in which they are encoded into the command buffer. A compute command finishes execution when all threadgroups associated with the command finish execution and all results are written to memory. Because of this sequencing, the results of a compute command are available to any commands encoded after it in the command buffer.
+>
+> To end encoding commands for a compute command encoder, call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method of [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder). After ending the previous command encoder, you can create a new command encoder of any type to encode additional commands into the command buffer.
+
+要编码执行计算函数的命令，调用 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 的 [dispatchThreadgroups:threadsPerThreadgroup:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443138-dispatchthreadgroups) 方法，并指定线程组维度和线程组数。你可以查询 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 的 [threadExecutionWidth](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414911-threadexecutionwidth) 和 [maxTotalThreadsPerThreadgroup](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414927-maxtotalthreadsperthreadgroup) 属性优化设备上计算函数的执行。
+
+线程组中的线程总数是 threadsPerThreadgroup: 各个组件的积：threadsPerThreadgroup.width * threadsPerThreadgroup.height * threadsPerThreadgroup.depth 。[maxTotalThreadsPerThreadgroup](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate/1414927-maxtotalthreadsperthreadgroup) 属性指定设备上用于执行该计算函数的单个线程组中的最大线程数。
+
+计算命令按照它们编码进命令缓冲区的顺序执行。当与命令关联的所有线程组执行完成并且所有结果都写入内存时，计算命令才算执行完成。由于这种排序，计算命令的结果对于命令缓冲区中位于该命令之后的任何已编码命令都是可用的。
+
+要结束计算命令编码器的编码命令，调用 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 的 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法。结束前一个命令编码器之后，你可以创建任何类型的新的命令编码器来将其他命令编码到命令缓冲区中。
+
+### Code Example: Executing Data-Parallel Functions - 代码示例：执行数据并行函数
+
+> [Listing 6-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW6) shows an example that creates and uses a [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object to perform the parallel computations of an image transformation on specified data. (This example does not show how the device, library, command queue, and resource objects are created and initialized.) The example creates a command buffer and then uses it to create the [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object. Next a [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) object is created that represents the entry point filter_main loaded from the [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) object, shown in [Listing 6-2](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW5). Then the function object is used to create a [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object called filterState.
+>
+> The compute function performs an image transformation and filtering operation on the image inputImage with the results returned in outputImage. First the [setTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443130-settexture) and [setBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443126-setbuffer) methods assign texture and buffer objects to indices in the specified argument tables. paramsBuffer specifies values used to perform the image transformation, and inputTableData specifies filter weights. The compute function is executed as a 2D threadgroup of size 16 x 16 pixels in each dimension. The [dispatchThreadgroups:threadsPerThreadgroup:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443138-dispatchthreadgroups) method enqueues the command to dispatch the threads executing the compute function, and the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method terminates the [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder). Finally, the [commit](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443003-commit) method of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) causes the commands to be executed as soon as possible.
+>
+> Listing 6-1  Specifying and Running a Function in a Compute State
+
+[Listing 6-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW6) 显示了一个示例，创建并使用一个 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象执行对指定数据的图像转换的并行计算。（该示例未展示如何创建并初始化 device、library、command queue 和 resource objects）。该示例创建一个命令缓冲区，然后使用它创建 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象。接下来，创建一个 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) 对象来表示从 [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) 对象中加载的入口点 filter_main ，如清单 [Listing 6-2](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW5) 所示。然后使用函数对象创建一个名称为 filterState 的 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象。
+
+计算函数针对 inputImage 图像执行图像变换和过滤操作，并在 outputImage 中返回结果。首先 [setTexture:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443130-settexture) 和 [setBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443126-setbuffer) 方法将纹理和缓冲区对象分配给指定参数表中的索引。paramsBuffer 指定用于执行图像转换的值，inputTableData 指定过滤器权重。计算函数作为每个维度中尺寸为 16 x 16 像素的 2D 线程组执行。[dispatchThreadgroups:threadsPerThreadgroup:](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder/1443138-dispatchthreadgroups)  方法将命令排入队列以分派执行计算函数的线程，[endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法终止 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 。最后，[MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的 [commit](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443003-commit) 方法触发命令尽快执行。
+
+清单 6-1 在计算状态中指定并允许函数
+
+```objc
+id <MTLDevice> device;
+id <MTLLibrary> library;
+id <MTLCommandQueue> commandQueue;
+
+id <MTLTexture> inputImage;
+id <MTLTexture> outputImage;
+id <MTLTexture> inputTableData;
+id <MTLBuffer> paramsBuffer;
+
+// ... Create and initialize device, library, queue, resources
+
+// Obtain a new command buffer
+id <MTLCommandBuffer> commandBuffer = [commandQueue commandBuffer];
+
+// Create a compute command encoder
+id <MTLComputeCommandEncoder> computeCE = [commandBuffer computeCommandEncoder];
+
+NSError *errors;
+id <MTLFunction> func = [library newFunctionWithName:@"filter_main"];
+id <MTLComputePipelineState> filterState
+    = [device newComputePipelineStateWithFunction:func error:&errors];
+[computeCE setComputePipelineState:filterState];
+[computeCE setTexture:inputImage atIndex:0];
+[computeCE setTexture:outputImage atIndex:1];
+[computeCE setTexture:inputTableData atIndex:2];
+[computeCE setBuffer:paramsBuffer offset:0 atIndex:0];
+
+MTLSize threadsPerGroup = {16, 16, 1};
+MTLSize numThreadgroups = {inputImage.width/threadsPerGroup.width,
+inputImage.height/threadsPerGroup.height, 1};
+
+[computeCE dispatchThreadgroups:numThreadgroups
+    threadsPerThreadgroup:threadsPerGroup];
+[computeCE endEncoding];
+
+// Commit the command buffer
+[commandBuffer commit];
+```
+
+> Listing 6-2 shows the corresponding shader code for the preceding example. (The functions read_and_transform and filter_table are placeholders for user-defined code).
+>
+> Listing 6-2  Shading Language Compute Function Declaration
+
+清单 6-2 显示了前面示例的相应着色器代码。（ read_and_transform 函数和 filter_table 是用户定义的代码的占位符）。
+
+清单 6-2 着色语言计算函数声明
+
+```objc
+kernel void filter_main(
+    texture2d<float,access::read>   inputImage   [[ texture(0) ]],
+    texture2d<float,access::write>  outputImage  [[ texture(1) ]],
+    uint2 gid                                    [[ thread_position_in_grid ]],
+    texture2d<float,access::sample> table        [[ texture(2) ]],
+    constant Parameters* params                  [[ buffer(0) ]]
+)
+{
+    float2 p0          = static_cast<float2>(gid);
+    float3x3 transform = params->transform;
+    float4   dims      = params->dims;
+
+    float4 v0 = read_and_transform(inputImage, p0, transform);
+    float4 v1 = filter_table(v0,table, dims);
+
+    outputImage.write(v1,gid);
+}
+```
+
+## Buffer and Texture Operations: Blit Command Encoder - 缓冲区和纹理操作 - Blit 命令编码器
+
+> [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) provides methods for copying data between resources (buffers and textures). Data copying operations may be necessary for image processing and texture effects, such as blurring or reflections. They may be used to access image data that is rendered off-screen.
+>
+> To perform data copying operations, first create a [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) object by calling the [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) method of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer). Then call the [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) methods described below to encode commands onto the command buffer.
+
+[MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 提供了在资源（缓冲区和纹理）之间复制数据的方法。数据复制操作对于图像处理和纹理效果（例如模糊或反射）可能是必需的。可以使用它们访问离屏渲染的图像数据。
+
+要执行数据拷贝操作，首先通过调用 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的 [blitCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443001-blitcommandencoder) 方法创建一个 [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 对象。然后调用下面描述的 [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 方法将命令编码到命令缓冲区。
+
+### Copying Data in GPU Memory Between Resource Objects - 在资源对象之间拷贝 GPU 内存中的数据
+
+> The following [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) methods copy image data between resource objects: between two buffer objects, between two texture objects, and between a buffer and a texture.
+
+以下 [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 方法在资源对象之间拷贝图像数据：两个缓冲区对象之间、两个纹理对象之间以及缓冲区和纹理之间。
+
+#### Copying Data Between Two Buffers - 两个缓冲区之间拷贝数据
+
+> The method [copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copy) copies data between two buffers: from the source buffer into the destination buffer toBuffer. If the source and destination are the same buffer, and the range being copied overlaps, the results are undefined.
+
+方法 [copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400767-copy) 在两个缓冲区之间拷贝数据：从源缓冲区到 toBuffer 目标缓冲区。若源和目标为相同的缓冲区，并且复制范围重叠的话，则结果是未定义的。
+
+#### Copying Data from a Buffer to a Texture - 从缓冲区拷贝数据到纹理
+> The method [copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400752-copy) copies image data from a source buffer into the destination texture toTexture.
+
+方法 [copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400752-copy) 将图像数据从源缓冲区复制到目标纹理 toTexture 。
+
+#### Copying Data Between Two Textures - 在两个纹理之间复制数据
+
+> The method [copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400754-copyfromtexture) copies a region of image data between two textures: from a single cube slice and mipmap level of the source texture to the destination texture toTexture.
+
+方法 [copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400754-copyfromtexture) 两个纹理之间复制图像数据某个区域：从源纹理的单个立方体切片和 mipmap 级别到目标纹理 toTexture 。
+
+#### Copying Data from a Texture to a Buffer - 从纹理拷贝数据到缓冲区
+
+> The method [copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400773-copy) copies a region of image data from a single cube slice and mipmap level of a source texture into the destination buffer toBuffer.
+
+方法 copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage: 将源纹理的单个立方体切片和 mipmap 级别的图像数据的一个区域拷贝到目标缓冲区 toBuffer 。
+
+### Generating Mipmaps - 生成 Mipmaps
+
+> The [generateMipmapsForTexture:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400748-generatemipmapsfortexture) method of [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) automatically generate mipmaps for the given texture, starting from the base level texture image. generateMipmapsForTexture: creates scaled images for all mipmap levels up to the maximum level.
+>
+> For details on how the number of mipmaps and the size of each mipmap are determined, see [Slices](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Mem-Obj/Mem-Obj.html#//apple_ref/doc/uid/TP40014221-CH4-SW6).
+
+[MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 的 [generateMipmapsForTexture:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400748-generatemipmapsfortexture) 方法从基础级纹理图像开始自动为给定纹理生成 mipmaps 。generateMipmapsForTexture: 为不超过最大级的所有 mipmap 级创建缩放图像。
+
+有关如何确定 mipmaps 数量和每个 mipmap 大小的详细信息，见 [Slices](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Mem-Obj/Mem-Obj.html#//apple_ref/doc/uid/TP40014221-CH4-SW6) 。
+
+### Filling the Contents of a Buffer - 填充缓冲区内容
+
+> The [fillBuffer:range:value:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400761-fillbuffer) method of [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) stores the 8-bit constant value in every byte over the specified range of the given buffer.
+
+[MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder) 的 [fillBuffer:range:value:](https://developer.apple.com/documentation/metal/mtlblitcommandencoder/1400761-fillbuffer) 方法在给定缓冲区的指定范围内，填充 8 位常量值到每个字节中。
+
+### Ending Encoding for the Blit Command Encoder - 结束 Blit 命令编码器编码
+
+> To end encoding commands for a blit command encoder, call [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding). After ending the previous command encoder, you can create a new command encoder of any type to encode additional commands into the command buffer.
+
+要结束一个 blit 命令编码器的编码，调用 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 。结束之前的命令编码器之后，你可以创建任意类型的新命令编码器将其他命令编码到命令缓冲区中。
+
+## Metal Tools - Metal 工具
+
+> This chapter lists the tools available to help you customize and improve your development workflow.
+
+本章列出了可以帮助你自定义和改进开发工作流程的工具。
+
+### Creating Libraries During the App Build Process - App 构建过程中创建库
+
+> Compiling shader language source files and building a library (.metallib file) during the app build process achieves better app performance than compiling shader source code at runtime. You can build a library within Xcode or by using command line utilities.
+
+在应用程序构建过程中编译着色器语言源文件并构建库（.metallib 文件）可以比在运行时编译着色器源代码获取更好的应用程序性能。你可以使用 Xcode 或者命令行工具构建库。
+
+#### Using Xcode to Build a Library - 使用 Xcode 构建库
+
+> Any shader source files that are in your project are automatically used to generate the default library, which you can access from Metal framework code with the [newDefaultLibrary](https://developer.apple.com/documentation/metal/mtldevice/1433380-newdefaultlibrary) method of [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice).
+
+项目中的任何着色器源文件都会自动用于生成默认库，你可以使用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 的 [newDefaultLibrary](https://developer.apple.com/documentation/metal/mtldevice/1433380-newdefaultlibrary) 在 Metal 框架代码中访问该库。
+
+#### Using Command Line Utilities to Build a Library - 使用命令行工具构建库
+
+> [Figure 8-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW6) shows the command line utilities that form the compiler toolchain for Metal shader source code. When you include .metal files in your project, Xcode invokes these tools to build a library file that you can access in your app at run time.
+>
+> To compile shader source into a library without using Xcode:
+>
+> 1. Use the metal tool to compile each .metal file into a single .air file, which stores an intermediate representation (IR) of shader language code.
+> 2. Optionally, use the metal-ar tool to archive several .air files together into a single .metalar file. (metal-ar is similar to the Unix ar.)
+> 3. Use the metallib tool to build a Metal .metallib library file from IR .air files or from archive .metalar files.
+>
+> Figure 8-1  Building a Library File with Command Line Utilities
+
+[Figure 8-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW6) 显示了构成 Metal 着色器源代码编译器工具链的命令行工具。当你的项目中包含 .metal 文件时，Xcode 调用这些工具来构建一个可以在应用程序运行期间访问的库文件。
+
+要在不使用 Xcode 的情况下将着色器源码编译到库中：
+
+1. 使用 metal 工具将每个 .metal 文件编译为单个 .air 文件，该文件存储着着色器语言代码的中间表示（IR）。
+2. 可选地，使用 metal-ar 工具将多个 .air 文件一起存档到单个 .metalar 文件中（metal-ar 类似于 Unix ar ）。
+3. 使用 metallib 工具从 IR .air 文件或存档 .metalar 文件构建 Metal .metallib 库文件。
+
+图 8-1 使用命令行工具构建库文件
+
+![BuildingLibraryFileWithCommandLineUtilities](../resource/Metal/Markdown/BuildingLibraryFileWithCommandLineUtilities.png)
+
+> [Listing 8-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW4) shows the minimum number of commands needed for compiling and building a .metal file into a .metallib file.
+>
+> Listing 8-1  Building a Library File with Command Line Utilities
+
+[Listing 8-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW4) 显示了编译并构建一个 .metal 文件到 .metallib 文件所需要的最少命令数。
+
+清单 8-1 使用命令行工具构建一个库文件
+
+```objc
+xcrun -sdk macosx metal MyLibrary.metal -o MyLibrary.air
+xcrun -sdk macosx metallib MyLibrary.air -o MyLibrary.metallib
+```
+
+> To access the resulting library in framework code, call the [newLibraryWithFile:error:](https://developer.apple.com/documentation/metal/mtldevice/1433416-newlibrarywithfile) method, as shown in [Listing 8-2](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW5).
+>
+> Listing 8-2  Accessing a Library File within Your App
+
+如 [Listing 8-2](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW5) 中所示，调用 [newLibraryWithFile:error:](https://developer.apple.com/documentation/metal/mtldevice/1433416-newlibrarywithfile) 方法在框架代码中访问最终生成的库。
+
+清单 8-2 应用程序中访问库文件
+
+```objc
+NSError *libraryError = NULL;
+NSString *libraryFile = [[NSBundle mainBundle] pathForResource:@"MyLibrary"         ofType:@"metallib"];
+id <MTLLibrary> myLibrary = [_device newLibraryWithFile:libraryFile     error:&libraryError];
+if (!myLibrary) {
+    NSLog(@"Library error: %@", libraryError);
+}
+```
+
+### Xcode Scheme Settings and Performance - Xcode 模式设置及性能
+
+> When a Metal app is running from Xcode, the default scheme settings reduce performance. Xcode detects whether the Metal API is used in the source code and automatically enables the GPU Frame Capture and Metal API Validation settings, as seen in Figure 8-2. When GPU Frame Capture is enabled, the debug layer is activated. When Metal API Validation is enabled, each call is validated, which affects performance further. For both settings, CPU performance is more affected than GPU performance. Unless you disable these settings, app performance may noticeably improve when the app is run outside of Xcode.
+>
+> Figure 8-2  Xcode Scheme Editor Settings for a Metal App
+
+当一个 Metal 应用程序从 Xcode 中运行起来的时候，默认模式设置会降低性能。Xcode 检测源代码中是否使用了 Metal API ，并启动启用  GPU Frame Capture 和 Metal API Validation 设置，如图 8-2 所示。GPU Frame Capture 启用时，将激活调试层。Metal API Validation 启用时，每个调用都将被验证，这会进一步影响性能。对于这两项设置，CPU 性能比 GPU 性能更受影响。除非你禁用这些设置，否则当应用程序运行于 Xcode 之外时，应用程序性能可能会显著提升。
+
+图 8-2 Metal App 的 Xcode Scheme Editor 设置
+
+![XcodeSchemeEditorSettingsForMetalApp](../resource/Metal/Markdown/XcodeSchemeEditorSettingsForMetalApp.png)
+
+### Debugging - 调试
+
+> Use the tips in the following sections to gain more useful diagnostic information when debugging and profiling your Metal app.
+>
+> Note: Debugging is enabled only if your Xcode project’s Deployment Target is set to the latest SDK.
+
+在调试和分析 Metal 应用程序时，使用以下各节中的 tips 获取更多有用的诊断信息。
+
+注意：仅当 Xcode 项目的部署目标设置为最新的 SDK 时，才能使用 Debugging 。
+
+#### File Extension for Metal Shading Language Source Files - Metal 着色语言源文件的文件扩展名
+
+> For Metal shading language source code file names, you must use the .metal file name extension to ensure that the development tools (Xcode and the GPU frame debugger) recognize the source files when debugging or profiling.
+
+对于 Metal 着色语言源代码文件名，必需使用 .metal 文件扩展名以确保开发工具（ Xcode 和 GPU 帧调试器）在调试或分析时识别源文件。
+
+#### Performing Frame Capture with Xcode - 使用 Xcode 执行帧捕捉
+
+> To perform frame capture in Xcode, enable debug and call the [insertDebugCaptureBoundary](https://developer.apple.com/documentation/metal/mtlcommandqueue/1508692-insertdebugcaptureboundary) method of [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue) to inform Xcode. The [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) and [presentDrawable:atTime:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442989-present) methods of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) similarly inform Xcode about frame capture, so call [insertDebugCaptureBoundary](https://developer.apple.com/documentation/metal/mtlcommandqueue/1508692-insertdebugcaptureboundary) only if those methods are not present. Refer to [Debugging Metal and OpenGL ES](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/debugging_with_xcode/chapters/special_debugging_workflows.html#//apple_ref/doc/uid/TP40015022-CH9-SW24) for further information.
+
+要在 Xcode 中执行帧捕获，需要启用调试并且调用 [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue) 的 [insertDebugCaptureBoundary](https://developer.apple.com/documentation/metal/mtlcommandqueue/1508692-insertdebugcaptureboundary) 方法以通知 Xcode 。[MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer)  的  [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 和 [presentDrawable:atTime:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1442989-present) 方法以类似的方式通知 Xcode ，所以只有在这些方法不存在时才调用 [insertDebugCaptureBoundary](https://developer.apple.com/documentation/metal/mtlcommandqueue/1508692-insertdebugcaptureboundary) 。有关详细信息，参考 [Debugging Metal and OpenGL ES](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/debugging_with_xcode/chapters/special_debugging_workflows.html#//apple_ref/doc/uid/TP40015022-CH9-SW24) 。
+
+#### The Label Property - Label 属性
+
+> Many Metal framework objects—such as command buffers, pipeline states, and resources—support a [label](https://developer.apple.com/documentation/metal/mtlresource/1515814-label) property. You can use this property to assign a name for each object that is meaningful in the context of your application’s design. These labels appear in the Xcode Frame Capture debugging interface, allowing you to more easily identify objects.
+>
+> Similarly, the [insertDebugSignpost:](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458034-insertdebugsignpost), [pushDebugGroup:](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458041-pushdebuggroup), and [popDebugGroup](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458040-popdebuggroup) methods allow you to insert debug strings into a command buffer and to push or pop string labels used to identify groups of encoded commands.
+
+很多 Metal 框架对象 - 比如命令缓冲区、管道状态和资源 - 都支持 [label](https://developer.apple.com/documentation/metal/mtlresource/1515814-label) 属性。你可以使用该属性为每个对象指定一个符合应用程序设计上下文的有意义的名称。这些标签出现在 Xcode Frame Capture 调试界面中，使你更容易地标识对象。
+
+类似的，[insertDebugSignpost:](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458034-insertdebugsignpost)，[pushDebugGroup:](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458041-pushdebuggroup) 和 [popDebugGroup](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458040-popdebuggroup) 方法允许你将调试字符串插入命令缓冲区中并 push 或 pop 用于标识已编码命令组的字符串标签。
+
+#### Metal System Trace - Metal 系统跟踪
+
+> To profile an app in Instruments, run the Metal System Trace tool. Refer to [Metal System Trace Profiling Template](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/ProfilingTemplates.html#//apple_ref/doc/uid/TP40004652-CH19-SW13) for further information.
+
+要在 Instruments 中分析应用程序，需要运行 Metal System Trace 工具。有关详细信息，参考 [Metal System Trace Profiling Template](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/InstrumentsUserGuide/ProfilingTemplates.html#//apple_ref/doc/uid/TP40004652-CH19-SW13) 。
+
+## Metal Feature Set Tables - Metal 功能集表
+
+> A Metal feature set describes the feature availability, implementation limits, and pixel format capabilities of a particular Metal device. Each feature set corresponds to a specific GPU and OS, as listed in the [MTLFeatureSet](https://developer.apple.com/documentation/metal/mtlfeatureset) reference. For further information, see the following tables:
+>
+> - [Feature Availability](https://developer.apple.com/metal/availability/)
+> - [Implementation Limits](https://developer.apple.com/metal/limits/)
+> - [Pixel Format Capabilities](https://developer.apple.com/metal/capabilities/)
+
+Metal 功能集描述特定 Metal 设备的功能可用性、实现限制和像素格式能力。每个功能集对应于特定的 GPU 和 OS ，如 [MTLFeatureSet](https://developer.apple.com/documentation/metal/mtlfeatureset) 参考中所列。有关详细信息，参阅下表：
+
+- [Feature Availability](https://developer.apple.com/metal/availability/)
+- [Implementation Limits](https://developer.apple.com/metal/limits/)
+- [Pixel Format Capabilities](https://developer.apple.com/metal/capabilities/)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
