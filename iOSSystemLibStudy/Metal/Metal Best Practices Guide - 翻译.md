@@ -66,13 +66,37 @@ Metal 框架提供了协议管理应用程序整个生命周期内持久对象�
 
 #### Build Your Pipelines Once and Reuse Them Often - 一次构建管线并经常重用它们
 
+> Building a programmable pipeline involves an expensive evaluation of GPU state. You should build [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) and [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) objects only once, then reuse them for every new render or compute command encoder you create. Do not build new pipelines for new command encoders. For an overview of building multiple pipelines asynchronously, see the [Pipelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/Pipelines.html#//apple_ref/doc/uid/TP40016642-CH25-SW2) best practices.
+>
+> NOTE - In addition to render and compute pipelines, you may optionally create [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) and [MTLSamplerState](https://developer.apple.com/documentation/metal/mtlsamplerstate) objects that encapsulate depth, stencil, and sampler state. These objects are less expensive but should also be created only once and reused often.
 
+构建可编程管线涉及对 GPU 状态的昂贵评估。你应该只构建一次 [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 和 [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) 对象，然后为每一个新创建的渲染或计算命令编码器重用它们。不要为新的命令编码器构建新的管线。有关异步构建多个管线的概述，见 [Pipelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/Pipelines.html#//apple_ref/doc/uid/TP40016642-CH25-SW2) 最佳实践。
 
+注意 - 除了渲染和计算管线之外，你还可以选择性地创建 [MTLDepthStencilState](https://developer.apple.com/documentation/metal/mtldepthstencilstate) 和 [MTLSamplerState](https://developer.apple.com/documentation/metal/mtlsamplerstate) 对象，这些对象封装了深度，模板和采样器状态。这些对象的创建成本相对来说小很多，但也应仅创建一次并经常重复使用它们。
 
+#### Allocate Resource Storage Up Front - 预先分配资源存储
 
+> Resource data may be static or dynamic and accessed at various stages throughout the lifetime of your app. However, the [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) and [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) objects that allocate memory for this data should be created as early as possible. After these objects are created, the resource properties and storage allocation are immutable, but the data itself is not; you can update the data whenever necessary.
+>
+> Reuse [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) and [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) objects as much as possible, particularly for static data. Avoid creating new resources during a render or compute loop, even for dynamic data. For further information about buffers and textures, see the [Resource Management](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/PersistentObjects.html#//apple_ref/doc/uid/TP40016642-CH3-SW1) and [Triple Buffering](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/TripleBuffering.html#//apple_ref/doc/uid/TP40016642-CH5-SW1) best practices.
 
+资源数据可能是静态的或动态的，同时也可能在应用整个程序生命周期的各个阶段被访问。然而，应尽早创建为资源数据分配内存的 [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) 和 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 对象。创建这些对象后，资源属性和存储分配是不可变的，但数据本身可以改变；你可以在必要时更新数据。
+
+尽可能重用 [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) 和 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 对象，尤其是静态数据。避免在渲染或计算循环期间创建新的资源，即使是动态数据。关于缓冲区和纹理的更多信息，见 [Resource Management](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/PersistentObjects.html#//apple_ref/doc/uid/TP40016642-CH3-SW1) 和 [Triple Buffering](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/TripleBuffering.html#//apple_ref/doc/uid/TP40016642-CH5-SW1) 最佳实践。
 
 ### Resource Options - 资源选项
+
+> Best Practice: Set appropriate resource storage modes and texture usage options.
+>
+> Your Metal resources must be configured appropriately to take advantage of fast memory access and driver performance optimizations. Resource storage modes allow you to define the storage location and access permissions for your [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) and [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) objects. Texture usage options allow you to explicitly declare how you intend to use your [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) objects.
+
+最佳实践：设置适当的资源存储模式和纹理使用选项
+
+必须适当地配置你的 Metal 资源，以利用快速内存访问和驱动程序性能优化。资源存储模式允许你定义 [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) 和 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 对象的存储位置和访问权限。纹理使用选项允许你显示声明打算如何使用 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) 对象。
+
+
+
+
 
 
 
