@@ -2193,6 +2193,14 @@ Metal 功能集描述特定 Metal 设备的功能可用性、实现限制和像�
 - [Implementation Limits](https://developer.apple.com/metal/limits/)
 - [Pixel Format Capabilities](https://developer.apple.com/metal/capabilities/)
 
+## What's New in iOS 9 and OS X 10.11 - iOS 9 与 OS X 10.11 新特性
+
+## What’s New in iOS 10, tvOS 10, and macOS 10.12 - iOS 10, tvOS 10 与 macOS 10.12 新特性
+
+## Tessellation - 曲面细分
+
+## Resource Heaps - 资源堆
+
 
 
 
