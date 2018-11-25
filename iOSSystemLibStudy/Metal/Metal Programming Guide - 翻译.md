@@ -1649,6 +1649,185 @@ id <MTLDepthStencilState> dsState = [device
 
 ### Code Example: Drawing a Triangle - 代码实例：绘制三角形
 
+> The following steps, illustrated in [Listing 5-14](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Render-Ctx/Render-Ctx.html#//apple_ref/doc/uid/TP40014221-CH7-SW3), describe a basic procedure for rendering a triangle.
+>
+> 1. Create a [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue) and use it to create a [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer).
+> 2. Create a [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) that specifies a collection of attachments that serve as the destination for encoded rendering commands in the command buffer.
+   > In this example, only the first color attachment is set up and used. (The variable currentTexture is assumed to contain a [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) that is used for a color attachment.) Then the [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) is used to create a new [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder).
+>
+> 3. Create two [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) objects, posBuf and colBuf, and call [newBufferWithBytes:length:options:](https://developer.apple.com/documentation/metal/mtldevice/1433429-newbufferwithbytes) to copy vertex coordinate and vertex color data, posData and colData, respectively, into the buffer storage.
+> 4. Call the [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) method of [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) twice to specify the coordinates and colors.
+   > The atIndex input value of the [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) method corresponds to the attribute buffer(atIndex) in the source code of the vertex function.
+>
+> 5. Create a [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) and establish the vertex and fragment functions in the pipeline descriptor:
+   > - Create a [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) with source code from progSrc, which is assumed to be a string that contains Metal shader source code.
+   > - Then call the [newFunctionWithName:](https://developer.apple.com/documentation/metal/mtllibrary/1515524-newfunctionwithname) method of [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) to create the [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) vertFunc that represents the function called hello_vertex and to create the [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) fragFunc that represents the function called hello_fragment.
+   > - Finally, set the [vertexFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514679-vertexfunction) and [fragmentFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514600-fragmentfunction) properties of the [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) with these MTLFunction objects.
+> 6. Create a [MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) from the [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) by calling [newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) or a similar method of [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice). Then the [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) method of [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) uses the created pipeline state for rendering.
+> 7. Call the [drawPrimitives:vertexStart:vertexCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516326-drawprimitives) method of [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) to append commands to perform the rendering of a filled triangle (type [MTLPrimitiveTypeTriangle](https://developer.apple.com/documentation/metal/mtlprimitivetype/triangle)).
+> 8. Call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method to end encoding for this rendering pass. And call the [commit](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443003-commit) method of [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) to execute the commands on the device.
+>
+> Listing 5-14  Metal Code for Drawing a Triangle
+
+清单 5-14 所示的以下步骤描述了渲染三角形的基本过程。
+
+1. 创建一个 [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue) 并使用它来创建一个 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 对象。
+2. 创建一个 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) ，指定一组附件，这些附件用作命令缓冲区中已编码渲染命令的渲染目的地。
+   本例中，仅设置并使用了第一个颜色附件（假设变量 currentTexture 包含用于颜色附件的 [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture) ），然后使用 [MTLRenderPassDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassdescriptor) 创建新的 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 。
+
+3. 创建两个 [MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer) 对象，posBuf 和 colBuf ，并调用 [newBufferWithBytes:length:options:](https://developer.apple.com/documentation/metal/mtldevice/1433429-newbufferwithbytes) 分别将顶点坐标数据 posData 和顶点颜色数据 colData 复制到缓冲区存储中。
+4. 调用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的 [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) 方法两次以指定坐标和颜色。
+    [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) 方法 atIndex 输入值对应于顶点函数源代码中属性缓冲区（ atIndex ）。
+5. 创建一个 [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) ，并建立顶点和片段函数：
+   - 使用 progSrc 中的源代码创建 [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary)，假设 progSrc 为包含 Metal 着色器源代码的字符串。
+   - 调用 [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) 的 [newFunctionWithName:](https://developer.apple.com/documentation/metal/mtllibrary/1515524-newfunctionwithname) 方法创建 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) vertFunc ，它表示名为 hello_vertex 的函数，并创建 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) fragFunc ，它表示名为 hello_fragment 的函数。
+   - 最后，使用这些 MTLFunction 对象设置 [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) 的 [vertexFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514679-vertexfunction) 和 [fragmentFunction](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor/1514600-fragmentfunction) 属性。
+6. 通过调用 [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) 的[newRenderPipelineStateWithDescriptor:error:](https://developer.apple.com/documentation/metal/mtldevice/1433369-makerenderpipelinestate) 或相似的方法根据 [MTLRenderPipelineDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpipelinedescriptor) 创建一个[MTLRenderPipelineState](https://developer.apple.com/documentation/metal/mtlrenderpipelinestate) 。然后 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的 [setRenderPipelineState:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515811-setrenderpipelinestate) 方法使用创建的管线状态进行渲染。
+7. 调用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的 [drawPrimitives:vertexStart:vertexCount:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1516326-drawprimitives) 方法来附加命令以执行实心三角形的渲染（ (类型 [MTLPrimitiveTypeTriangle](https://developer.apple.com/documentation/metal/mtlprimitivetype/triangle))）。
+8. 调用 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 结束该渲染过程的编码。然后调用 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的 [commit](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443003-commit) 方法在设备上执行命令。
+
+清单 5-14 绘制三角形 Metal 代码
+
+```objc
+id <MTLDevice> device = MTLCreateSystemDefaultDevice();
+
+id <MTLCommandQueue> commandQueue = [device newCommandQueue];
+id <MTLCommandBuffer> commandBuffer = [commandQueue commandBuffer];
+
+MTLRenderPassDescriptor *renderPassDesc
+    = [MTLRenderPassDescriptor renderPassDescriptor];
+renderPassDesc.colorAttachments[0].texture = currentTexture;
+renderPassDesc.colorAttachments[0].loadAction = MTLLoadActionClear;
+renderPassDesc.colorAttachments[0].clearColor = MTLClearColorMake(0.0,1.0,1.0,1.0);
+id <MTLRenderCommandEncoder> renderEncoder =
+    [commandBuffer renderCommandEncoderWithDescriptor:renderPassDesc];
+
+static const float posData[] = {
+    0.0f, 0.33f, 0.0f, 1.f,
+    -0.33f, -0.33f, 0.0f, 1.f,
+    0.33f, -0.33f, 0.0f, 1.f,
+};
+static const float colData[] = {
+    1.f, 0.f, 0.f, 1.f,
+    0.f, 1.f, 0.f, 1.f,
+    0.f, 0.f, 1.f, 1.f,
+};
+id <MTLBuffer> posBuf = [device newBufferWithBytes:posData
+    length:sizeof(posData) options:nil];
+id <MTLBuffer> colBuf = [device newBufferWithBytes:colorData
+    length:sizeof(colData) options:nil];
+[renderEncoder setVertexBuffer:posBuf offset:0 atIndex:0];
+[renderEncoder setVertexBuffer:colBuf offset:0 atIndex:1];
+
+NSError *errors;
+id <MTLLibrary> library = [device newLibraryWithSource:progSrc options:nil
+    error:&errors];
+id <MTLFunction> vertFunc = [library newFunctionWithName:@"hello_vertex"];
+id <MTLFunction> fragFunc = [library newFunctionWithName:@"hello_fragment"];
+MTLRenderPipelineDescriptor *renderPipelineDesc
+    = [[MTLRenderPipelineDescriptor alloc] init];
+renderPipelineDesc.vertexFunction = vertFunc;
+renderPipelineDesc.fragmentFunction = fragFunc;
+renderPipelineDesc.colorAttachments[0].pixelFormat = currentTexture.pixelFormat;
+id <MTLRenderPipelineState> pipeline = [device
+    newRenderPipelineStateWithDescriptor:renderPipelineDesc error:&errors];
+[renderEncoder setRenderPipelineState:pipeline];
+[renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle
+    vertexStart:0 vertexCount:3];
+[renderEncoder endEncoding];
+[commandBuffer commit];
+```
+
+> In Listing 5-14, a [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) object represents the shader function called hello_vertex. The [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) method of [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) is used to specify the vertex resources (in this case, two buffer objects) that are passed as arguments into hello_vertex. The atIndex input value of the [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) method corresponds to the attribute buffer(atIndex) in the source code of the vertex function, as shown in Listing 5-15.
+>
+> Listing 5-15  Corresponding Shader Function Declaration
+
+清单 5-14 中，一个 [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) 对象表示名为 hello_vertex 的着色函数。[MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder) 的 [setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) 方法用来指定作为参数传递给 hello_vertex 的顶点资源（本例中为两个缓冲区对象）。[setVertexBuffer:offset:atIndex:](https://developer.apple.com/documentation/metal/mtlrendercommandencoder/1515829-setvertexbuffer) 方法的 atIndex 输入值对应顶点函数源码中的属性缓冲区（ atIndex ），如清单 5-15 所示。
+
+清单 5-15 相应的着色函数声明
+
+```objc
+vertex VertexOutput hello_vertex(
+    const global float4 *pos_data [[ buffer(0) ]],
+    const global float4 *color_data [[ buffer(1) ]])
+{
+    ...
+}
+```
+
+### Encoding a Single Rendering Pass Using Multiple Threads - 使用多线程编码单个渲染过程
+
+> In some cases, your app’s performance can be limited by the single-CPU workload of encoding commands for a single rendering pass. However, attempting to circumvent this bottleneck by separating the workload into multiple rendering passes encoded on multiple CPU threads can also adversely impact performance, because each rendering pass requires its own intermediate attachment store and load actions to preserve the render target contents.
+>
+> Instead, use a [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) object, which manages multiple subordinate MTLRenderCommandEncoder objects that share the same command buffer and render pass descriptor. The parallel render command encoder ensures that the attachment load and store actions occur only at the start and end of the entire rendering pass, not at the start and end of each subordinate render command encoder’s set of commands. With this architecture, you can assign each MTLRenderCommandEncoder object to its own thread in parallel in a safe and highly performant manner.
+>
+> To create a parallel render command encoder, use the [parallelRenderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443009-parallelrendercommandencoderwith) method of a MTLCommandBuffer object. To create subordinate render command encoders, call the renderCommandEncoder method of the MTLParallelRenderCommandEncoder object once for each CPU thread from which you want to perform command encoding. All subordinate command encoders created from the same parallel render command encoder encode commands to the same command buffer. Commands are encoded to a command buffer in the order in which the render command encoders are created. To end encoding for a specific render command encoder, call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method of MTLRenderCommandEncoder. After you have ended encoding on all render command encoders created by the parallel render command encoder, call the [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) method of MTLParallelRenderCommandEncoder to end the rendering pass.
+>
+> Listing 5-16 shows the MTLParallelRenderCommandEncoder creating three MTLRenderCommandEncoder objects: rCE1, rCE2, and rCE3.
+>
+> Listing 5-16  A Parallel Rendering Encoder with Three Render Command Encoders
+
+在某些情况下，对于单个渲染过程使用单个 CPU 来编码命令可能会限制应用程序的性能。然而，尝试将单 CPU 的工作负载分成多 CPU 线程进行编码的多个渲染通道来绕过此瓶颈的方案同样会对性能产生负面影响，因为每个渲染通道都需要其自己的内部附件存储和加载操作来保留渲染目标内容。
+
+取而代之的是，使用 [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) 对象，该对象管理共享相同命令缓冲区和渲染命令描述符的多个从属 MTLRenderCommandEncoder 对象。并行渲染命令编码器确保附件加载和存储操作仅在整个渲染过程的开始和结束时发生，而不是在每个从属渲染命令编码命令集的开始和结束时发生。使用此架构，你可以以安全且高性能的方式并行地将每个 MTLRenderCommandEncoder 对象分配给其自己的线程。
+
+要创建并行渲染命令编码器，使用 MTLCommandBuffer 对象的 [parallelRenderCommandEncoderWithDescriptor:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443009-parallelrendercommandencoderwith) 方法。要创建从属渲染命令编码器，为要执行命令编码的每个 CPU 线程调用一次 MTLParallelRenderCommandEncoder 对象的 renderCommandEncoder 方法。从同一并行渲染命令编码器创建的所有从属命令编码器将命令编码到同一命令缓冲区。命令按照创建渲染命令编码器的顺序编码到命令缓冲区。要结束特定渲染命令编码器的编码，调用 MTLRenderCommandEncoder 的 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法。在并行渲染命令编码器创建的所有渲染命令编码器结束编码后，调用 MTLParallelRenderCommandEncoder 的 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 方法结束整个渲染过程。
+
+清单 5-16 显示了MTLParallelRenderCommandEncoder 创建三个 MTLRenderCommandEncoder 对象：rCE1、rCE2 和 rCE3
+
+清单 5-16 带有三个渲染命令编码器的并行渲染编码器
+
+```objc
+MTLRenderPassDescriptor *renderPassDesc 
+    = [MTLRenderPassDescriptor renderPassDescriptor];
+renderPassDesc.colorAttachments[0].texture = currentTexture;
+renderPassDesc.colorAttachments[0].loadAction = MTLLoadActionClear;
+renderPassDesc.colorAttachments[0].clearColor = MTLClearColorMake(0.0,0.0,0.0,1.0);
+
+id <MTLParallelRenderCommandEncoder> parallelRCE = [commandBuffer 
+    parallelRenderCommandEncoderWithDescriptor:renderPassDesc];
+id <MTLRenderCommandEncoder> rCE1 = [parallelRCE renderCommandEncoder];
+id <MTLRenderCommandEncoder> rCE2 = [parallelRCE renderCommandEncoder];
+id <MTLRenderCommandEncoder> rCE3 = [parallelRCE renderCommandEncoder];
+
+//  not shown: rCE1, rCE2, and rCE3 call methods to encode graphics commands
+//
+//  rCE1 commands are processed first, because it was created first
+//  even though rCE2 and rCE3 end earlier than rCE1
+[rCE2 endEncoding];
+[rCE3 endEncoding];
+[rCE1 endEncoding];
+
+//  all MTLRenderCommandEncoders must end before MTLParallelRenderCommandEncoder
+[parallelRCE endEncoding];
+```
+
+> The order in which the command encoders call [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) is not relevant to the order in which commands are encoded and appended to the [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer). For [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder), the [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) always contains commands in the order that the subordinate render command encoders were created, as seen in Figure 5-6.
+>
+> Figure 5-6  Ordering of Render Command Encoders in a Parallel Rendering Pass
+
+命令编码器调用 [endEncoding](https://developer.apple.com/documentation/metal/mtlcommandencoder/1458038-endencoding) 的顺序与命令被编码并附加到 [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 的顺序无关。对于 [MTLParallelRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlparallelrendercommandencoder) ，[MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer) 始终按照创建从属渲染命令编码器的顺序包含命令，如图 5-6 所示。
+
+图 5-6 并行渲染过程中渲染命令编码器的顺序
+
+![OrderingOfRenderCommandEncodersInParallelRenderingPass](../resource/Metal/Markdown/OrderingOfRenderCommandEncodersInParallelRenderingPass.png)
+
+## Data-Parallel Compute Processing: Compute Command Encoder - 数据并行计算处理：计算命令编码器
+
+> This chapter explains how to create and use a [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) object to encode data-parallel compute processing state and commands and submit them for execution on a device.
+>
+> To perform a data-parallel computation, follow these main steps:
+>
+> 1. Use a [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice) method to create a compute state ([MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate)) that contains compiled code from a [MTLFunction](https://developer.apple.com/documentation/metal/mtlfunction) object, as discussed in [Creating a Compute State](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW3). The MTLFunction object represents a compute function written with the Metal shading language, as described in [Functions and Libraries](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Prog-Func/Prog-Func.html#//apple_ref/doc/uid/TP40014221-CH5-SW1).
+> 2. Specify the [MTLComputePipelineState](https://developer.apple.com/documentation/metal/mtlcomputepipelinestate) object to be used by the compute command encoder, as discussed in [Specifying a Compute State and Resources for a Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW30).
+> 3. Specify resources and related objects ([MTLBuffer](https://developer.apple.com/documentation/metal/mtlbuffer), [MTLTexture](https://developer.apple.com/documentation/metal/mtltexture), and possibly [MTLSamplerState](https://developer.apple.com/documentation/metal/mtlsamplerstate)) that may contain the data to be processed and returned by the compute state, as discussed in [Specifying a Compute State and Resources for a Compute Command Encoder](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW30). Also set their argument table indices, so that Metal framework code can locate a corresponding resource in the shader code. At any given moment, the [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) can be associated to a number of resource objects.
+> 4. Dispatch the compute function a specified number of times, as explained in [Executing a Compute Command](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Compute-Ctx/Compute-Ctx.html#//apple_ref/doc/uid/TP40014221-CH6-SW2).
+
+本章介绍如何创建并使用 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder) 对象来编码数据并行计算处理状态及命令，并提交它们以便在设备上执行。
+
+要执行数据并行计算，遵循以下主要步骤：
+
+1. 
 
 
 
