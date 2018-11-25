@@ -1810,7 +1810,7 @@ id <MTLRenderCommandEncoder> rCE3 = [parallelRCE renderCommandEncoder];
 
 图 5-6 并行渲染过程中渲染命令编码器的顺序
 
-![OrderingOfRenderCommandEncodersInParallelRenderingPass](../resource/Metal/Markdown/OrderingOfRenderCommandEncodersInParallelRenderingPass.png)
+![OrderingOfRenderCommandEncodersInParallelRenderingPass](../../resource/Metal/Markdown/OrderingOfRenderCommandEncodersInParallelRenderingPass.png)
 
 ## Data-Parallel Compute Processing: Compute Command Encoder - 数据并行计算处理：计算命令编码器
 
@@ -1886,7 +1886,7 @@ id <MTLRenderCommandEncoder> rCE3 = [parallelRCE renderCommandEncoder];
 
 图 6-1 计算命令编码器的参数表
 
-![ArgumentTablesForTheComputeCommandEncoder](../resource/Metal/Markdown/ArgumentTablesForTheComputeCommandEncoder.png)
+![ArgumentTablesForTheComputeCommandEncoder](../../resource/Metal/Markdown/ArgumentTablesForTheComputeCommandEncoder.png)
 
 > The limits for the maximum number of entries in a buffer, texture, or sampler state argument table are listed in the [Implementation Limits](https://developer.apple.com/metal/limits/) table.
 >
@@ -2097,7 +2097,7 @@ kernel void filter_main(
 
 图 8-1 使用命令行工具构建库文件
 
-![BuildingLibraryFileWithCommandLineUtilities](../resource/Metal/Markdown/BuildingLibraryFileWithCommandLineUtilities.png)
+![BuildingLibraryFileWithCommandLineUtilities](../../resource/Metal/Markdown/BuildingLibraryFileWithCommandLineUtilities.png)
 
 > [Listing 8-1](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW4) shows the minimum number of commands needed for compiling and building a .metal file into a .metallib file.
 >
@@ -2139,7 +2139,7 @@ if (!myLibrary) {
 
 图 8-2 Metal App 的 Xcode Scheme Editor 设置
 
-![XcodeSchemeEditorSettingsForMetalApp](../resource/Metal/Markdown/XcodeSchemeEditorSettingsForMetalApp.png)
+![XcodeSchemeEditorSettingsForMetalApp](../../resource/Metal/Markdown/XcodeSchemeEditorSettingsForMetalApp.png)
 
 ### Debugging - 调试
 
