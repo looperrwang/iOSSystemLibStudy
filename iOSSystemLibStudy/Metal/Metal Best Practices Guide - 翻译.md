@@ -554,16 +554,27 @@ Drawables 是由 Core Animation 框架创建并维护的昂贵系统资源。它
 
 最佳实践：以目标显示的精确像素大小渲染 drawables
 
+drawables 的像素大小应该始终与目标显示的精确像素大小相匹配。这对于避免渲染到离屏像素或产生额外的采样阶段至关重要。
 
+[UIScreen](https://developer.apple.com/documentation/uikit/uiscreen) 类提供了两个定义物理屏幕原生大小和比例因子的属性：[nativeBounds](https://developer.apple.com/documentation/uikit/uiscreen/1617810-nativebounds) 和 [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) 。查询 [nativeBounds](https://developer.apple.com/documentation/uikit/uiscreen/1617810-nativebounds) 属性以确定屏幕的本机边界举行矩形，以像素为单位。查询 [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) 属性以确定用于将点转换为像素的本地比例因子。
 
+重要：
 
+- iOS 和 tvOS 中，大多数绘制计算以点而不是像素来衡量大小。你的 Metal 应用程序应该始终以像素为单位测量大小，并完全避免使用点。要了解关于这两个单位之间差异的更多信息，见 [Points Versus Pixels](https://developer.apple.com/library/archive/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/GraphicsDrawingOverview/GraphicsDrawingOverview.html#//apple_ref/doc/uid/TP40010156-CH14-SW7) 。
 
+#### Use a MetalKit View to Support Native Screen Scale - 使用 MetalKit 视图支持本机屏幕比例
 
+> The MTKView class automatically supports native screen scale. By default, the size of the view’s current drawable is always guaranteed to match the size of the view itself.
+>
+> NOTE
+>
+> - If you create your own [UIView](https://developer.apple.com/documentation/uikit/uiview) subclass that is backed by a [CAMetalLayer](https://developer.apple.com/documentation/quartzcore/cametallayer) object, you must first set the view’s [contentScaleFactor](https://developer.apple.com/documentation/uikit/uiview/1622657-contentscalefactor) property to match the screen’s [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) property. Next, make sure you adjust the size of your render targets whenever your view’s size changes. Finally, adjust the layer’s [drawableSize](https://developer.apple.com/documentation/quartzcore/cametallayer/1478174-drawablesize) property to match the native screen scale. For an example of how to match the native screen scale, see the MetalBasic3D sample.
 
+MTKView 类自动支持本机屏幕比例。默认情况下，视图当前 drawable 的大小始终保证与视图本身的大小相匹配。
 
+注意：
 
-
-
+- 如果创建自己的由 [CAMetalLayer](https://developer.apple.com/documentation/quartzcore/cametallayer) 对象支持的 [UIView](https://developer.apple.com/documentation/uikit/uiview) 子类，你必须首先设置视图的 [contentScaleFactor](https://developer.apple.com/documentation/uikit/uiview/1622657-contentscalefactor) 以匹配屏幕的 [nativeScale](https://developer.apple.com/documentation/uikit/uiscreen/1617825-nativescale) 属性。接下来，确保在视图大小发生变化时调整渲染目标的大小。最后，调整 layer 的 [drawableSize](https://developer.apple.com/documentation/quartzcore/cametallayer/1478174-drawablesize) 以匹配本机屏幕因子。有关如何匹配本机屏幕比例的例子，见 MetalBasic3D 。
 
 ### Frame Rate (iOS and tvOS) - 帧率（ iOS 与 tvOS ）
 
