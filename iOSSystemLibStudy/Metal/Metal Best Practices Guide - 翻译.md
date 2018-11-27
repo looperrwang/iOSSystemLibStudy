@@ -578,36 +578,305 @@ MTKView 类自动支持本机屏幕比例。默认情况下，视图当前 drawa
 
 ### Frame Rate (iOS and tvOS) - 帧率（ iOS 与 tvOS ）
 
+> Best Practice: Present your drawables at a consistent and stable frame rate.
+>
+> Most apps target a frame rate of 60 FPS, equivalent to 16.67 ms per frame. However, apps that are consistently unable to complete a frame’s work within this time should target a lower frame rate to avoid jitter.
+>
+> IMPORTANT
+>
+> - The minimum acceptable frame rate for real-time gaming is 30 FPS. Lower frame rates are considered a poor user experience and should be avoided. If your app cannot maintain a minimum acceptable frame rate of 30 FPS, you should consider further optimizations or decreased workloads (spending less than 33.33 ms per frame).
 
+最佳实践：以一致且稳定的帧率呈现你的 drawables
 
+大多数应用程序的目标帧率为 60 FPS ，相当于每帧 16.67 ms 。但是，在此时间内始终无法完成一帧工作的应用应该以较低的帧率为目标以避免抖动。
 
+重要：
 
+- 对于实时游戏来说最低可接受的帧率为 30 FPS 。再低的帧率被认为是糟糕的用户体验，应该避免。如果你的应用程序无法保持 30 FPS 的最低可接受帧率，则应考虑进一步的优化或减少工作负载（每帧花费少于 33.33 ms ）。
 
+#### Querying and Adjusting the Frame Rate - 查询并调整帧率
+
+> The maximum frame rate of iOS and tvOS devices can be queried through the [maximumFramesPerSecond](https://developer.apple.com/reference/uikit/uiscreen/2806814-maximumframespersecond) property. For iOS devices, this value is usually 60 FPS; for tvOS devices, this value can vary based on the hardware capabilities of an attached screen or the user-selected resolution on Apple TV.
+>
+> Using an [MTKView](https://developer.apple.com/documentation/metalkit/mtkview) object is the recommended way to adjust your app’s frame rate. By default, the view renders at 60 FPS; to target a different frame rate, set the view’s [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) property to your desired value.
+>
+> NOTE
+>
+> - A MetalKit view always rounds the value of [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) to the nearest factor of the device’s [maximumFramesPerSecond](https://developer.apple.com/reference/uikit/uiscreen/2806814-maximumframespersecond) value. If your app cannot maintain its maximum target frame rate (e.g. 60 FPS), then set this property to a lower-factor frame rate (e.g. 30 FPS). Setting the value of [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) to a non-factor frame rate may produce unexpected results.
+>
+> - Maintaining a target frame rate requires your app to completely update, encode, schedule, and execute a frame’s work during the allowed render interval time (e.g. less than 16.67ms per frame to maintain a 60 FPS frame rate).
+
+iOS 和 tvOS 设备的最大帧率可以通过 [maximumFramesPerSecond](https://developer.apple.com/reference/uikit/uiscreen/2806814-maximumframespersecond) 属性查询得到。对于 iOS 设备，该值通常为 60 FPS ；对于 tvOS 设备，该值可能会因附加屏幕的硬件功能或 Apple TV 上用户选择的分辨率而异。
+
+使用 [MTKView](https://developer.apple.com/documentation/metalkit/mtkview) 对象是调整应用程序帧率的推荐方式。默认情况下，视图以 60 FPS 渲染；设置该视图的 [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) 为你所需的值来以不同的帧率渲染。
+
+注意：
+
+- MetalKit 视图始终将 [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) 的值舍入到设备 [maximumFramesPerSecond](https://developer.apple.com/reference/uikit/uiscreen/2806814-maximumframespersecond) 值的最接近的因子。如果你的应用无法保持最大目标帧率（例如，60 FPS ），则将此属性设置为较低的帧率（如，30 FPS ）。将 [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) 设置为 non-factor 帧率可能产生意外结果。
+
+- 维持目标帧率要求你的应用在允许的渲染间隔时间内完成帧工作的更新、编码、调度和执行（如，每帧少于 16.67 ms 以维持 60 FPS 帧率）。
+
+#### Adjust the Drawable Presentation Time - 调整 Drawable 显示时间
+
+> The [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) method registers a drawable presentation to occur as soon as possible, which is usually at the next display refresh interval after the drawable has been rendered or written to. If your app can maintain its maximum target frame rate, as set via the [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) property, then simply calling the [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) method is enough to maintain a consistent and stable frame rate.
+>
+> If your app targets a lower-factor frame rate, the display refresh rate (e.g. 60 FPS) may fire more frequently than your app’s render loop (e.g. 30 FPS). This means that the [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) method could present a drawable earlier than expected if a frame is rendered before the next display refresh interval (e.g. 16.67 ms intervals).
+>
+> The [presentDrawable:afterMinimumDuration:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/2806849-present) method allows you to specify a minimum display time for each drawable, meaning that drawable presentations occur only after the previous drawable has spent enough time on the display. This lets you synchronize your drawable’s presentation time with your app’s render loop. The relationship between the [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) and [presentDrawable:afterMinimumDuration:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/2806849-present) API is shown in Listing 8-1
+>
+> Listing 8-1Presenting drawables after a minimum display time
+
+[presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 方法注册一个 drawable 的显示，该显示会尽快发生，通常是在绘制或写入 drawable 之后的下一个显示刷新间隔发生。如果你的应用保持其最大目标帧率（通过 [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) 属性设置的值），那么只需调用 [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 即可保持一致且稳定的帧率。
+
+如果你的应用以较低帧率为目标，显示刷新率（如，60 FPS ）可能会比应用的渲染循环（如，30 FPS ）更频繁地触发。这意味着如果在下一个显示刷新间隔（如 16.67 ms 间隔 ）之前渲染帧， [presentDrawable:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443029-present) 方法可以比预期更早地呈现 drawable 。
+
+[presentDrawable:afterMinimumDuration:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/2806849-present) 方法允许你为每个 drawable 指定一个最小显示时间，这意味着只有在前一个 drawable 显示了如果长时间之后，当前 drawable 的呈现才会发生。这使你可以将 drawable 的呈现时间与应用的渲染循环同步。API [preferredFramesPerSecond](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1648421-preferredframespersecond) 和 [presentDrawable:afterMinimumDuration:](https://developer.apple.com/documentation/metal/mtlcommandbuffer/2806849-present) 之间的关系如清单 8-1 所示。
+
+清单 8-1 最小显示时间之后呈现 drawables
+
+```objc
+view.preferredFramesPerSecond = 30;
+/* ... */
+[commandBuffer presentDrawable:view.currentDrawable afterMinimumDuration:1.0/view.preferredFramesPerSecond];
+```
 
 ## Command Generation - 命令的生成
 
-
-
-
-
-
 ### Load and Store Actions - 加载和存储操作
 
+> Best Practice: Set appropriate load and store actions for your render targets.
+>
+> Actions performed on your Metal render targets must be configured appropriately to avoid costly and unnecessary rendering work at the start (load action) or end (store action) of a rendering pass.
 
+最佳实践：为渲染目标设置适当的加载和存储操作
 
+必须正确配置应用于 Metal 渲染目标上执行的操作，以避免在渲染过程的开始（加载操作）或结束（存储操作）时进行昂贵且不必要的渲染工作。
 
+#### Choose an Appropriate Load Action - 选择适当的加载操作
+
+> Use the following guidelines to determine the appropriate load action for a particular render target. These guidelines are also summarized in [Table 9-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/LoadandStoreActions.html#//apple_ref/doc/uid/TP40016642-CH20-SW2).
+>
+> - If all the render target pixels are rendered to, choose the [DontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare) action. There are no costs associated with this action, and texture data is always interpreted as undefined.
+>
+> - If the previous contents of the render target do not need to be preserved and only some of its pixels are rendered to, choose the [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear) action. This action incurs the cost of writing a clear value to each pixel.
+>
+> - If the previous contents of the render target need to be preserved and only some of its pixels are rendered to, choose the [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load) action. This action incurs the cost of loading the previous contents.
+>
+> Table 9-1Choosing a render target load action
+
+使用以下准则确定特定渲染目标适合的加载操作。表 [Table 9-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/LoadandStoreActions.html#//apple_ref/doc/uid/TP40016642-CH20-SW2) 还总结了这些准则。
+
+- 如果渲染会更新渲染目标的所有像素，选择 [DontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare) 操作。此项操作没有相关成本，纹理数据始终被解释为未定义的。
+- 如果不需要保留渲染目标之前的内容并且仅渲染其某些像素，选择 [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear) 操作。该操作会产生为每个像素写入 clear 值的成本。
+- 如果需要保留渲染目标之前的内容并且仅渲染其某些像素，选择 [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load) 操作。该操作会产生加载先前内容的成本
+
+表 9-1 选择渲染目标加载操作
+
+Previous contents preserved | Pixels rendered to | Load action
+:------------: | :-------------: | :------------:
+N/A  | All | [Dontcare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare)
+NO | Some | [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear)
+YES | Some | [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load)
+
+#### Choose an Appropriate Store Action - 选择适当的存储操作
+
+> Use the following guidelines to determine the appropriate store action for a particular render target.
+>
+> - If the contents of the render target do not need to be preserved, choose the [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) action. There are no costs associated with this action, and texture data is always interpreted as undefined. This is a common case for depth and stencil render targets.
+>
+> - If the contents of the render target need to be preserved, choose the Store action. This is always the case for drawables and other displayable render targets.
+>
+> - If the render target is a multisample texture, refer to Table 9-2.
+>
+> Table 9-2Choosing a render target store action for a multisample texture
+
+使用以下准则确定特定渲染目标适合的存储操作。
+
+- 如果不需要保留渲染目标的内容，选择 [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) 操作。该操作没有相关成本，纹理数据始终被解释为未定义的。这是深度和模版渲染目标的常见情况。
+
+- 如果需要保留渲染目标的内容，选择 Store 操作。对于 drawables 和其他可显示的渲染目标，情况总是如此。
+
+- 如果渲染目标是多重采样纹理，参考表 9-2 。
+
+表 9-2 为多重采样纹理选择渲染目标存储操作
+
+Multisampled contents preserved | Resolve texture specified | Resolved contents preserved | Store action
+:------------: | :-------------: | :------------: | :------------:
+Yes  | Yes | Yes | [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve)
+No | Yes  | Yes | [MultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve)
+Yes | No | N/A | [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store)
+No | No | N/A | [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare)
+
+> NOTE
+>
+> - If you need to perform a store-and-resolve operation, always use the [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve) action with a single render command encoder. Some feature sets do not support the [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve) action; instead, a store-and-resolve operation is performed with two render command encoders by using the [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) and [MultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve) actions.
+>
+> In some cases, the store action of a particular render target may not be known up front. To defer this decision, set the temporary [unknown](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionunknown) value when you create a [MTLRenderPassAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor) object. You must specify a known store action before you finish encoding your rendering pass, otherwise an error occurs. Setting the [unknown](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionunknown) value may avoid potential costs incurred by setting the [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) store action prematurely.
+
+注意：
+
+- 如果需要执行 store-and-resolve 操作，请始终将 [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve) 与单个渲染命令编码器一起使用。一些功能集不支持 [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve) 操作；相反，通过使用 [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) 和 [MultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve) 操作，使用两个渲染命令编码器执行 store-and-resolve 操作。
+
+在某些情况下，特定渲染目标的存储操作可能不会预先知道。要推迟此决定，请在创建 [MTLRenderPassAttachmentDescriptor](https://developer.apple.com/documentation/metal/mtlrenderpassattachmentdescriptor) 对象时设置临时的 [unknown](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionunknown) 值。在完成渲染过程的编码之前，必须指定一个已知的存储操作，否则会发生错误。设置 [unknown](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionunknown) 值可以避免因过早设置 [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) 操作而产生的潜在成本。
+
+#### Evaluate Actions Between Rendering Passes - 评估渲染过程之间的操作
+
+> Render targets used across multiple rendering passes should be evaluated closely for optimal combinations of store and load actions between rendering passes. Table 9-3 lists these combinations.
+>
+> Table 9-3Store and load actions between rendering passes
+
+应该仔细评估在多个渲染过程使用的渲染目标，以获得渲染过程之间的存储和加载操作的最佳组合。表 9-3 列出了这些组合。
+
+表 9-3 渲染过程间的存储和加载操作
+
+First rendering pass store action | Second rendering pass load action
+:------------: | :-------------:
+[DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare)  | One of the following actions:[DontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare) [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear)
+One of the following actions:[Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) [MultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/mtlstoreactionmultisampleresolve) [storeAndMultisampleResolve](https://developer.apple.com/documentation/metal/mtlstoreaction/storeandmultisampleresolve) | [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load)
 
 ### Render Command Encoders (iOS and tvOS) - 渲染命令编码器（ iOS 与 tvOS ）
 
+> Best Practice: Merge render command encoders when possible.
+>
+> Eliminating unnecessary render command encoders reduces memory bandwidth and increases performance. You can achieve these goals by merging render command encoders into a single rendering pass, when possible. To determine whether two render command encoders are merge-compatible or not, you must carefully evaluate their render targets, load and store actions, relationships, and dependencies. The simplest criteria for two merge-compatible render command encoders, RCE1 and RCE2, are as follows:
+>
+> - RCE1 and RCE2 are created in the same frame.
+>
+> - RCE1 and RCE2 are created from the same command buffer.
+>
+> - RCE1 is created before RCE2.
+>
+> - RCE2 shares the same render targets as RCE1.
+>
+> - RCE2 does not sample from any render targets in RCE1.
+>
+> - RCE1’s render target store actions are either [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) or [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare), and RCE2’s render target load actions are either [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load) or [DontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare).
+>
+> - No other render command encoders have been created between RCE1 and RCE2.
+>
+> If these criteria are met, RCE1 and RCE2 can be merged into a single render command encoder, RCEM, as shown in Figure 10-1.
+>
+> Figure 10-1A simple render command encoder merge
 
+最佳实践：尽可能合并渲染命令编码器
 
+消除不必要的渲染命令编码器可减少内存带宽并提高性能。可能的话，你可以通过将渲染命令编码器合并到单个渲染过程中来实现这些目标。要确定两个渲染命令编码器是否合并兼容，你必须仔细评估它们的渲染目标、加载和存储操作、关系及依赖关系。两个合并兼容的渲染命令编码器 RCE1 和 RCE2 最简单的标准如下：
 
+- RCE1 和 RCE2 在同一帧中创建
 
+- RCE1 和 RCE2 是从同一个命令缓冲区创建的
 
+- RCE1 在 RCE2 之前创建
 
+- RCE2 与 RCE1 共享相同的渲染目标
 
+- RCE2 不从 RCE1 中的任何渲染目标采样
+
+- RCE1 渲染目标的存储操作为 [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) 或 [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) ，并且 RCE2 渲染目标的加载操作为 [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load) 或 [DontCare](https://developer.apple.com/documentation/metal/mtlloadaction/dontcare) 。
+
+- 在 RCE1 与 RCE2 之间没有创建其他渲染命令编码器
+
+如果满足这些条件，RCE1 和 RCE2 可以合并为单个渲染命令编码器 RCEM ，如图 10-1 中所示。
+
+图 10-1 简单的渲染命令编码器合并
+
+![SimpleRenderCommandEncoderMerge](../../resource/Metal/Markdown/SimpleRenderCommandEncoderMerge.png)
+
+> Additionally, if RCE1 can merge with a render command encoder created before it (RCE0) and RCE2 can merge with a render command encoder created after it (RCE3), then RCE0, RCE1, RCE2, and RCE3 can all be merged.
+>
+> The following sections provide guidelines for evaluating merge compatibility between render command encoders, assuming all other criteria are met.
+>
+> NOTE
+>
+> - The details of your rendering passes are specific to your app; therefore, this guide cannot provide specific advice for how to merge a particular set of render command encoders. Render command encoders are merged manually; there is no Metal API that automatically performs a merger for you. Most mergers are accomplished by coalescing draw calls, vertex or fragment functions, or render targets. Some mergers may even be accomplished with programmable blending, as shown in the [MetalDeferredLighting](https://developer.apple.com/library/archive/samplecode/MetalDeferredLighting/Introduction/Intro.html#//apple_ref/doc/uid/TP40014630) sample.
+>
+> - The number of render targets in a merged command encoder may not exceed the limits documented in [Metal Feature Sets](https://developer.apple.com/metal/feature-sets/).
+
+另外，如果 RCE1 可以与在其之前创建的渲染命令编码器（ RCE0 ）合并，并且 RCE2 可以与在其之后创建的渲染命令编码器（ RCE3 ）合并，则 RCE0，RCE1，RCE2 和 RCE3 都可以合并。
+
+假设满足其他所有条件，以下部分提供了评估渲染命令编码器之间合并兼容性的指南。
+
+注意：
+
+- 渲染通道的细节特定于具体的应用；因此，本指南无法提供有关如何合并特定渲染命令编码器集的具体建议。渲染命令编码器的合并是手工进行；没有 Metal API 自动为你执行合并。大多数合并是通过合并绘制调用，顶点和片段函数或者渲染目标来完成的。有些合并甚至可以通过可编程混合来完成，如 [MetalDeferredLighting](https://developer.apple.com/library/archive/samplecode/MetalDeferredLighting/Introduction/Intro.html#//apple_ref/doc/uid/TP40014630) 示例中所示。
+
+- 合并之后的命令编码器中的渲染目标数量不得超过 [Metal Feature Sets](https://developer.apple.com/metal/feature-sets/) 中记录的限制。
+
+#### Evaluate Rendering Pass Order - 评估渲染过程顺序
+
+> Some apps may begin encoding into a render command encoder (RCE1) and prematurely end the initial rendering pass if they require additional dynamic data to proceed. The dynamic data is then generated in a separate rendering pass with a second render command encoder (RCE2). The initial rendering pass then continues with a third render command encoder (RCE3). Figure 10-2 shows this inefficient order, including the separated render command encoders.
+>
+> Figure 10-2An inefficient order of rendering passes
+
+一些应用可能一开始将一些命令编码到渲染命令编码器（ RCE1 ），如果需要其他动态数据以继续，则会过早地结束初始渲染通道。然后在具有第二个渲染命令编码器（ RCE2 ）的单独渲染通道中生成动态数据。初始渲染过程继续使用第三个渲染命令编码器（ RCE3 ）。图 10-2 显示了这种低效的顺序，包含分离的渲染命令编码器。
+
+图 10-2 渲染过程的低效顺序
+
+![AnInefficientOrderOfRenderingPasses](../../resource/Metal/Markdown/AnInefficientOrderOfRenderingPasses.png)
+
+> If RCE2 does not depend on RCE1, then RCE2 doesn’t need to be encoded after RCE1. Encoding RCE2 first allows RCE1 and RCE3 to be merged into RCEM because they represent the same rendering pass, and their dynamic data dependencies are guaranteed to be available at the start of the rendering pass. Figure 10-3 shows this improved order, including the merged render command encoders.
+>
+> Figure 10-3An improved order of rendering passes
+
+如果 RCE2 不依赖于 RCE1 ，则 RCE2 不需要在 RCE1 之后编码。首先编码 RCE2 允许 RCE1 和 RCE3 合并为 RCEM ，因为它们表示相同的渲染过程，并且可以保证在渲染过程开始时动态数据依赖的东西处于可用状态。图 10-3 显示这种改进的顺序，包括合并的渲染命令编码器。
+
+图 10-3 改进的渲染过程顺序
+
+![AnImprovedOrderOfRenderingPasses](../../resource/Metal/Markdown/AnImprovedOrderOfRenderingPasses.png)
+
+#### Evaluate Sampling Dependencies - 评估采样依赖性
+
+> Render command encoders cannot be merged if there are any sampling dependencies between them. For render command encoders that share the same render targets, these dependencies may be introduced by additional render command encoders in between them, as shown in Figure 10-4.
+>
+> Figure 10-4Sampling dependencies between render command encoders
+
+如果它们之间存在任何采样依赖关系，则无法合并渲染命令编码器。对于共享相同渲染目标的渲染命令编码器，可以通过它们之间的其他渲染命令编码器引入这些依赖关系，如图 10-4 所示。
+
+图 10-4 渲染命令编码器之间的采样依赖
+
+![SamplingDependenciesBetweenRenderCommandEncoders](../../resource/Metal/Markdown/SamplingDependenciesBetweenRenderCommandEncoders.png)
+
+> RCE1 and RCE3 share the same render targets, RT1, RT2, and RT3. Furthermore, the actions between RCE1 and RCE3 indicate a continuation of a rendering pass. However, these render command encoders cannot be merged due to the sampling dependencies introduced by RCE2. RCE2 renders to a separate render target, RT4, which is sampled by RCE3. Additionally, RCE2 samples RT3 after it is rendered by RCE1. These sampling dependencies define a strict rendering pass order that prevents merging these render command encoders.
+
+RCE1 与 RCE3 共享相同的渲染目标 - RT1，RT2，RT3 。此外，RCE1 与 RCE3 之间的动作表示渲染通道的连续。然而，这些渲染命令编码由于 RCE2 引入的采样依赖性而无法合并。RCE2 渲染到单独的渲染目标 RT4 ，RT4 被 RCE3 采样。此外，RCE2 在 RCE1 渲染 RT3 之后对其进行采样。这些采样依赖项定义了严格的渲染通道顺序，从而阻止了对这些渲染命令编码器的合并。
+
+#### Evaluate Actions Between Rendering Passes - 评估渲染通道间的操作
+
+> The store and load actions between render command encoder render targets are not as important as other criteria, but there are a few notable cases where additional consideration is due. Use the following guidelines to further understand merge compatibility between render command encoders RCE1 and RCE2, based on their shared render targets:
+>
+> - If the store action in RCE1 is [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) and the load action in RCE2 is [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load), the render target is merge-compatible and is typically continuing a rendering pass.
+>
+> - If the store action in RCE1 is [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) and the load action in RCE2 is [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare), the render target is merge-compatible and is typically being used as an intermediary resource.
+>
+> - If the load action in RCE2 is [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear), the render target is merge-compatible if a primitive clear operation can be performed in the merged render command encoder by first rendering clear values into a display-aligned quad.
+>
+> NOTE
+>
+> - For advice on choosing appropriate load and store actions for a particular render target, see the [Load and Store Actions](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/LoadandStoreActions.html#//apple_ref/doc/uid/TP40016642-CH20-SW1) best practices.
+
+渲染命令编码器渲染目标之间的存储和加载操作并不像其他标准那样重要，但有一些值得注意的额外考虑因素。使用以下准则可以进一步了解渲染命令编码器 RCE1 和 RCE2 之间基于共享渲染目标的合并兼容性：
+
+- 如果 RCE1 中的存储操作是 [Store](https://developer.apple.com/documentation/metal/mtlstoreaction/store) 并且 RCE2 中的加载操作是 [Load](https://developer.apple.com/documentation/metal/mtlloadaction/load) ，则渲染目标是合并兼容的，并且通常为可以延续的渲染通道。
+
+- 如果 RCE1 中的存储操作是 [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) 并且 RCE2 中的加载操作是 [DontCare](https://developer.apple.com/documentation/metal/mtlstoreaction/dontcare) ，渲染目标是合并兼容的，并且该渲染目标通常用作中间资源。
+
+- 如果 RCE2 的加载操作是 [Clear](https://developer.apple.com/documentation/metal/mtlloadaction/clear) ，如果可以在合并的渲染命令编码器中执行图元清除操作，即首先将清除值渲染到 display-aligned 四边形中，那么渲染目标是合并兼容的。
+
+注意：
+
+- 有关为特定渲染目标选择适当加载和存储操作的建议，见 [Load and Store Actions](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/LoadandStoreActions.html#//apple_ref/doc/uid/TP40016642-CH20-SW1) 最佳实践。
 
 ### Command Buffers - 命令缓冲区
+
+> Best Practice: Submit the fewest possible command buffers per frame without underutilizing the GPU.
+>
+> Command buffers are the unit of work submission in Metal; they are created by the CPU and executed by the GPU. This relationship allows you to balance CPU and GPU work by adjusting the number of command buffers submitted per frame.
+>
+> Most Metal apps keep their CPU work one or two frames ahead of their GPU work by implementing triple buffering. This means that there is usually sufficient CPU work queued up to keep the GPU busy by submitting only one or two command buffers per frame (preferably one). However, if the CPU work does not keep far enough ahead of the GPU work, the GPU will starve. More frequent command buffer submissions may keep the GPU busy but may also introduce CPU stalls caused by CPU-GPU synchronization. Managing this tradeoff effectively is the key to improved performance and can be facilitated with the Metal System Trace profiling template in Instruments.
+>
+> NOTE
+>
+> For a complete overview of triple buffering, see the [Triple Buffering](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/MTLBestPracticesGuide/TripleBuffering.html#//apple_ref/doc/uid/TP40016642-CH5-SW1) best practices.
 
 
 
@@ -622,52 +891,93 @@ MTKView 类自动支持本机屏幕比例。默认情况下，视图当前 drawa
 
 ## Compilation - 汇编
 
-
-
-
-
 ### Functions and Libraries - 函数和库
 
+> Best Practice: Compile your functions and build your library at build time.
+>
+> Compiling Metal shading language source code is one of the most expensive stages in the lifetime of a Metal app. Metal minimizes this cost by allowing you to compile graphics and compute functions at build time, then load them as a library at runtime.
 
+最佳实践：在构建时编译你的函数并构建库
 
+编译 Metal 着色语言源代码是 Metal 应用程序生命周期中最昂贵的阶段之一。Metal 允许你在构建时编译图形和计算函数，然后在运行时将它们作为库加载，从而最大限度地降低了这一成本。
 
+#### Build Your Library at Build Time - 在构建时构建你的库
 
+> When you build your app, Xcode automatically compiles your .metal source files and builds them into a single default library. To obtain the resulting [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) object, call the [newDefaultLibrary](https://developer.apple.com/documentation/metal/mtldevice/1433380-newdefaultlibrary) method once during your initial Metal setup.
+>
+> NOTE:
+>
+> - If your app has a custom build pipeline, you may prefer to use Metal’s command line utilities to build your library. For further information, see [Using Command Line Utilities to Build a Library](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW10) in the [Metal Programming Guide](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014221).
+>
+> Building your library at runtime incurs a significant performance cost. Do so only if your graphics and compute functions are created dynamically at runtime. In all other situations, always build your library at build time.
+>
+>IMPORTANT:
+>
+> - The #include directive is not supported at runtime for user files.
 
+在构建应用程序时，Xcode 自动编译你的 .metal 源文件并将它们构建到单个默认库中。要获取生成的 [MTLLibrary](https://developer.apple.com/documentation/metal/mtllibrary) ，初始化 Metal 设置期间调用 [newDefaultLibrary](https://developer.apple.com/documentation/metal/mtldevice/1433380-newdefaultlibrary) 方法一次。
 
+注意：
+
+- 如果你的应用具有自定义构建管道，你可能更喜欢使用 Metal 的命令行工具来构建库。有关进一步信息，参阅 [Metal Programming Guide](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40014221) 中的 [Using Command Line Utilities to Build a Library](https://developer.apple.com/library/archive/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/Dev-Technique/Dev-Technique.html#//apple_ref/doc/uid/TP40014221-CH8-SW10) 章节。
+
+运行时构建库会引入显著的性能成本。仅当你的图形和计算函数是在运行时动态创建的情况下才这么做。其他所有情况下，始终在构建时构建你的库。
+
+重要：
+
+- 用户文件在运行时不支持 #include 指令。
+
+#### Group Your Functions into a Single Library - 将功能组合到单个库中
+
+> Using Xcode to build a single default library is the fastest and most efficient build option. If you must use Metal’s command line utilities or runtime methods to build your library, coalesce your Metal shading language source code and group all your functions into a single library. Avoid creating multiple libraries, if possible.
+
+使用 Xcode 构建单个默认库是最快且最有效的构建选项。如果必须使用 Metal 命令行实用程序或运行时方法来构建库，请合并 Metal 着色语言源代码并将所有函数组合到单个库中。如果可能，避免创建多个库。
 
 ### Pipelines - 管线
 
+> Best Practice: Build your render and compute pipelines asynchronously.
+>
+> Having multiple render or compute pipelines allows your app to use different state configurations for specific tasks. Building these pipelines asynchronously maximizes performance and parallelism. Build all known pipelines up front and avoid lazy loading. Listing 14-1 shows how to build multiple render pipelines asynchronously.
+>
+> Listing 14-1Building multiple render pipelines asynchronously
 
+最佳实践：异步构建渲染和计算管线
 
+拥有多个渲染或计算管线允许你的应用程序针对特定任务使用不同的状态配置。异步地构建这些管线可以最大限度地提高性能和并行性。预先构建所有已知的管线，避免延迟加载。清单 14-1 显示了如何异步地构建多个渲染管线。
 
+清单 14-1 异步地构建多个渲染管线
 
+```objc
+const uint32_t pipelineCount;
+dispatch_queue_t dispatch_queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
+// Dispatch the render pipeline build
+__block NSMutableArray<id<MTLRenderPipelineState>> *pipelineStates = [[NSMutableArray alloc] initWithCapacity:pipelineCount];
 
+dispatch_group_t pipelineGroup = dispatch_group_create();
+for(uint32_t pipelineIndex = 0; pipelineIndex < pipelineCount; pipelineIndex++)
+{
+    id <MTLFunction> vertexFunction = [_defaultLibrary newFunctionWithName:vertexFunctionNames[pipelineIndex]];
+    id <MTLFunction> fragmentFunction = [_defaultLibrary newFunctionWithName:fragmentFunctionNames[pipelineIndex]];
 
+    MTLRenderPipelineDescriptor* pipelineDescriptor = [MTLRenderPipelineDescriptor new];
+    pipelineDescriptor.vertexFunction = vertexFunction;
+    pipelineDescriptor.fragmentFunction = fragmentFunction;
+    /* Configure additional descriptor properties */
 
+    dispatch_group_enter(pipelineGroup);
+    [_device newRenderPipelineStateWithDescriptor:pipelineDescriptor completionHandler: ^(id <MTLRenderPipelineState> newRenderPipeline, NSError *error )
+    {
+        // Add error handling if newRenderPipeline is nil
+        pipelineStates[pipelineIndex] = newRenderPipeline;
+        dispatch_group_leave(pipelineGroup);
+    }];
+}
 
+/* Do more work */
 
+// Wait for build to complete
+dispatch_group_wait(pipelineGroup, DISPATCH_TIME_FOREVER);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Use the render pipelines */
+```

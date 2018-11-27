@@ -109,7 +109,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"GLKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"GSS" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HealthKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"HealthKit" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"HealthKitUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HomeKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"iAd" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IdentityLookup" vcName:@""]];
