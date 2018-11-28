@@ -924,7 +924,7 @@ RCE1 与 RCE3 共享相同的渲染目标 - RT1，RT2，RT3 。此外，RCE1 与
 
 图 12-1 没有间接缓冲的情况下发出调用
 
-![]()
+![IssuingCallWithoutAnIndirectBuffer](../../resource/Metal/Markdown/IssuingCallWithoutAnIndirectBuffer.png)
 
 > With an indirect buffer, the CPU doesn’t need to wait for any values and can immediately issue a draw call that references an indirect buffer. After the CPU completes all of its work, the GPU can then generate the arguments, write them to the indirect buffer in one pass, and execute the call associated with them in another pass. This improved sequence is shown in Figure 12-2.
 >
@@ -934,7 +934,7 @@ RCE1 与 RCE3 共享相同的渲染目标 - RT1，RT2，RT3 。此外，RCE1 与
 
 图 12-2 使用间接缓冲区进行调用
 
-![]()
+![IssuingCallWithAnIndirectBuffer](../../resource/Metal/Markdown/IssuingCallWithAnIndirectBuffer.png)
 
 > An indirect buffer eliminates unnecessary data transfers between the CPU and the GPU, which results in reduced processor idle time. Use an indirect buffer if the CPU doesn’t need to access the dynamic arguments of a draw or dispatch call.
 
