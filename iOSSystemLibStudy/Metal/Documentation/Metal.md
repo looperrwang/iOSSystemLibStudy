@@ -39,7 +39,7 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 > [Getting the Default GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Getting%20the%20Default%20GPU.md)
 > Select the system's default GPU device on which to run your Metal code.
 >
-> [MTLDevice]
+> [MTLDevice](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/MTLDevice.md)
 > A GPU that you use to draw graphics or do parallel computation.
 >
 > [Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
@@ -50,7 +50,7 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 [Getting the Default GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Getting%20the%20Default%20GPU.md)
     选择运行 Metal 代码的系统默认 GPU 设备。
 
-[MTLDevice]
+[MTLDevice](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/MTLDevice.md)
     用于绘制图形或执行并行计算的 GPU。
 
 [Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
