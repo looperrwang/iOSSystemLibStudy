@@ -36,7 +36,7 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 
 > Access GPU device(s) at runtime, which form the basis of Metal development.
 >
-> [Getting the Default GPU](Getting the Default GPU.md)
+> [Getting the Default GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Getting%20the%20Default%20GPU.md)
 > Select the system's default GPU device on which to run your Metal code.
 >
 > [MTLDevice]
