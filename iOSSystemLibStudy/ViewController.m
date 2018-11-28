@@ -120,7 +120,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"IOSurface" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"JavaScriptCore" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"LocalAuthentication" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"MapKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"MapKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MediaAccessibility" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MediaPlayer" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MediaToolbox" vcName:@""]];
@@ -160,9 +160,9 @@
     [self.data addObject:[[CellData alloc] initWithText:@"VideoSubscriberAccount" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"VideoToolbox" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Vision" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"WatchConnectivity" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"WatchKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"WatchConnectivity" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"WatchKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];

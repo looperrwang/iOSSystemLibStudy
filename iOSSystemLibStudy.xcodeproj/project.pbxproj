@@ -14,6 +14,8 @@
 		5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */; };
 		5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */; };
 		5F48E51521AAB77B00318179 /* Metal Best Practices Guide - 翻译.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */; };
+		5F48E67F21AE6EF800318179 /* Metal.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E67E21AE6EF800318179 /* Metal.md */; };
+		5F48E68821AED7EC00318179 /* Getting the Default GPU.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E68721AED7EC00318179 /* Getting the Default GPU.md */; };
 		5F5B1570219FBB83004EE6BF /* Metal Programming Guide - 翻译.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
@@ -40,6 +42,8 @@
 		5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputTypeViewController.h; sourceTree = "<group>"; };
 		5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageOutputTypeViewController.m; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
+		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
+		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,9 +91,19 @@
 			path = AVFoundation;
 			sourceTree = "<group>";
 		};
+		5F48E67D21AE65AE00318179 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				5F48E67E21AE6EF800318179 /* Metal.md */,
+				5F48E68721AED7EC00318179 /* Getting the Default GPU.md */,
+			);
+			path = Documentation;
+			sourceTree = "<group>";
+		};
 		5F5B156E219FB5D2004EE6BF /* Metal */ = {
 			isa = PBXGroup;
 			children = (
+				5F48E67D21AE65AE00318179 /* Documentation */,
 				5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */,
 				5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */,
 			);
@@ -211,8 +225,10 @@
 			files = (
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5F5B1570219FBB83004EE6BF /* Metal Programming Guide - 翻译.md in Resources */,
+				5F48E67F21AE6EF800318179 /* Metal.md in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
+				5F48E68821AED7EC00318179 /* Getting the Default GPU.md in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
 				5F48E51521AAB77B00318179 /* Metal Best Practices Guide - 翻译.md in Resources */,
 			);
