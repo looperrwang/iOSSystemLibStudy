@@ -44,6 +44,7 @@
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
+		5F48E68921AEDC6900318179 /* MTLDevice.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = MTLDevice.md; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +97,7 @@
 			children = (
 				5F48E67E21AE6EF800318179 /* Metal.md */,
 				5F48E68721AED7EC00318179 /* Getting the Default GPU.md */,
+				5F48E68921AEDC6900318179 /* MTLDevice.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";

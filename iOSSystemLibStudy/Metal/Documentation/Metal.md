@@ -42,18 +42,18 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 > [MTLDevice]
 > A GPU that you use to draw graphics or do parallel computation.
 >
-> [Choosing GPUs on Mac]
+> [Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
 > Select one or more GPUs on which to run your Metal code by considering GPU capabilities, power, or performance characteristics.
 
 在运行时访问 GPU 设备，这是 Metal 开发的基础。
 
-[Getting the Default GPU]
+[Getting the Default GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Getting%20the%20Default%20GPU.md)
     选择运行 Metal 代码的系统默认 GPU 设备。
 
 [MTLDevice]
     用于绘制图形或执行并行计算的 GPU。
 
-[Choosing GPUs on Mac]
+[Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
     通过考虑 GPU 能力，功率或性能特征，选择一个或多个 GPU 来运行 Metal 代码。
 
 
