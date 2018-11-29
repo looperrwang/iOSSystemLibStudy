@@ -1,5 +1,7 @@
 #  Framework - Metal
 
+原文地址 https://developer.apple.com/documentation/metal?language=objc
+
 > Render advanced 3D graphics and perform data-parallel computations using graphics processors.
 
 使用图形处理器渲染高级 3D 图形并执行数据并行计算。

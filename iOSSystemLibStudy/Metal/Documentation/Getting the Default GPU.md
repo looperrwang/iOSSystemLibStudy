@@ -1,5 +1,7 @@
 #  Getting the Default GPU - 获取默认 GPU
 
+原文地址 https://developer.apple.com/documentation/metal/getting_the_default_gpu?language=objc
+
 > Select the system's default GPU device on which to run your Metal code.
 
 选择系统默认 GPU 设备来运行你的 Metal 代码。
