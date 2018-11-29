@@ -4,11 +4,15 @@
 
 > Learn about A11 features, including raster order groups, tile shaders, and imageblocks.
 
+了解 A11 功能，包括光栅顺序组，平铺着色器和图像块。
+
 ## Overview
 
 > GPU family 4 delineates the new features and performance enhancements enabled by the A11 chip and its Apple-designed graphics processing unit (GPU) architecture.
 >
 > The GPUs in iOS and tvOS devices implement a rendering technique called tile-based deferred rendering (TBDR) to optimize performance and power efficiency. In a traditional immediate-mode (IM) renderer, when a triangle is submitted to the GPU for processing, it's immediately rendered to device memory. The triangles are processed by the rasterization and fragment function stages even if they're occluded by other primitives submitted to the GPU later.
+
+GPU 系列 4 描述了 A11 芯片及其 Apple 设计的图形处理器（ GPU ）架构所支持的新功能和性能增强。
 
 ## Tile-Based Deferred Rendering
 
@@ -20,6 +24,12 @@
 >
 > On A7- through A10-based devices, Metal doesn't explicitly describe this tile-based architecture; instead, you use it to provide hints to the underlying implementation. For example, load and store actions control which data is loaded into local memory and which data is written out to device memory. Similarly, memoryless buffers specify per-pixel intermediate data used only during the render pass; in practice, this data is stored in a tile in the GPU’s fast local memory.
 
+TBDR 对 IM 架构进行了一些重大更改，在提交完所有图元后处理场景。屏幕被拆分为单独处理的图块。所有与图块相交的几何图形被同时处理，并且被遮挡的片段在光栅化和片段着色阶段之前被丢弃。tile 被渲染到 GPU 上的快速本地存储中，并且仅在渲染完成后才将其写入设备存储器。
+
+TBDR 允许顶点和片段阶段异步运行 - 相对于 IM 提供显著的性能改进。在运行渲染过程的片段阶段时，硬件并行执行未来渲染过程的顶点阶段。顶点阶段通常大量使用固定功能硬件，而片段阶段则使用数学和带宽。完全重叠它们允许设备同时使用 GPU 上的所有硬件模块。
+
+在基于 A7 到 A10 的设备上，Metal 没有明确描述这种基于图块的架构；相反，你使用它来提供底层实现的提示。例如，加载和存储操作控制将哪些数据加载到本地存储器以及将哪些数据写入设备存储器。类似地，无记忆缓冲区指定仅在渲染过程期间使用的每像素中间数据；实际上，这些数据存储在 GPU 的快速本地存储器中的 tile 中。
+
 ## Metal 2 on the A11 GPU
 
 > The Apple-designed GPU in the A11 delivers several features that significantly enhance TBDR. These features are provided via additional Metal 2 APIs and allow your apps and games to realize new levels of performance and capability.
@@ -29,6 +39,13 @@
 > Broadly speaking, these features offer greater control over memory layout and access for data stored in the tile, and provide finer-grained synchronization to keep more work on the GPU. The end result is that you can perform a wider variety of calculations in a single rendering pass than you could previously, keeping the calculations in fast local memory.
 >
 > Metal 2 on A11 also simplifies the implementation of techniques such as subsurface scattering, order-independent transparency, and tile-based lighting algorithms.
+
+A11 中 Apple 设计的 GPU 提供了几项可显著增强 TBDR 的功能。 这些功能通过其他 Metal 2 API 提供，使你的应用和游戏能够实现更高水平的性能和功能。
+
+这些功能包括图像块，图块着色，光栅顺序组和图像块样本覆盖控制。 A11 GPU 上的 Metal 2 还可以提高碎片丢弃性能。
+
+从广义上讲，这些功能可以更好地控制内存布局和存储在 tile 中的数据，并提供更细粒度的同步，以便在 GPU 上保持更多工作。 最终结果是，你可以在单个渲染过程中执行比以前更多种类的计算，将计算保持在快速本地内存中。
+
 
 ## Topics
 
