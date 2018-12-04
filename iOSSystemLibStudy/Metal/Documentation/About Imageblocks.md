@@ -40,3 +40,8 @@ imageblock 是具有宽度，高度和像素深度的 2D 数据结构。imageblo
 >
 > Within a fragment shader, the current fragment only has access to the imageblock data associated with that fragment’s position in the tile. In a compute function, a thread can access all of the imageblock data. When using rendering with attachments, load and store actions continue as the means by which slices of data are read into and written from tile memory. However, if you’re using explicit imageblocks, you use compute functions to explicitly read from and write to device memory. Writes can often be performed as block transfers, taking advantage of memory hardware.
 
+Imageblocks 可用于内核和片段函数，并在绘图和调度期间与 tile 的生命周期一致。Imageblock 持久性意味着你可以在单个渲染过程中混合渲染和计算操作，同时访问相同的本地内存。通过在 tile 中保留多个操作，你可以创建保留在本地 GPU 内存中的复杂算法。
+
+你现有的代码会自动创建与渲染附件格式匹配的 imageblocks 。但是，你也可以在着色器中完全定义自己的 imageblocks 。你定义的 Imageblocks 可能比渲染附件创建的复杂得多；例如，它们可以包含其他通道，数组和嵌套结构。此外，你定义的 imageblocks 可以在计算的不同阶段重复用于不同的目的。
+
+在片段着色器中，当前片段仅可访问与该片段在 tile 中的位置相关联的 imageblock 数据。在计算函数中，线程可以访问所有 imageblock 数据。使用带附件的渲染时，加载和存储操作继续作为从 tile 内存读取和写入数据片段的手段。 但是，如果你使用显式的 imageblocks ，则使用计算函数显式读取和写入设备内存。写入通常可以作为块传输执行，利用内存硬件。
