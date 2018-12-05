@@ -82,6 +82,28 @@ commandQueue = device.makeCommandQueue()
 >
 > Figure 3 The active pipeline on the GPU containing your custom shader code that processes commands.
 
+管道对象告诉 Metal 如何处理命令。管道对象封装了使用 Metal 着色语言编写的函数。以下是管道适合你的 Metal 工作流程的方式：
+
+- 你编写处理数据的 Metal Shader 函数。
+
+- 创建包含着色器的管道对象。
+
+- 当准备好使用它时，启用管道。
+
+- 进行绘制，计算或 blit 调用。
+
+Metal 不会立即执行绘制，计算或 blit 调用；相反，你使用编码器对象将封装了这些调用的命令插入到命令缓冲区中。提交命令缓冲区后，Metal 将其发送到 GPU 并使用处于激活状态的管道对象处理其命令。
+>
+>图 3 GPU 上的已激活管道，包含处理命令的自定义着色器代码。
+
+![TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands](../../resource/Metal/Markdown/TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands.png)
+
+## Issue Commands to the GPU
+
+
+
+
+
 
 
 
