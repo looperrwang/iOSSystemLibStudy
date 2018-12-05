@@ -38,10 +38,10 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 
 > Access GPU device(s) at runtime, which form the basis of Metal development.
 >
-> [Getting the Default GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Getting%20the%20Default%20GPU.md)
+> [Getting the Default GPU](https://developer.apple.com/documentation/metal/getting_the_default_gpu)
 > Select the system's default GPU device on which to run your Metal code.
 >
-> protocol [MTLDevice](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/MTLDevice.md)
+> protocol [MTLDevice](https://developer.apple.com/documentation/metal/mtldevice)
 > A GPU that you use to draw graphics or do parallel computation.
 >
 > [Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
@@ -58,12 +58,32 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 [Choosing GPUs on Mac](https://developer.apple.com/documentation/metal/choosing_gpus_on_mac?language=objc)
     通过考虑 GPU 能力，功率或性能特征，选择一个或多个 GPU 来运行 Metal 代码。
 
-
-
-
-
-
 ### Command Setup - 命令设置
+
+> Set up infrastructure to execute your custom code on the GPU.
+>
+> [Setting Up a Command Structure](https://developer.apple.com/documentation/metal/setting_up_a_command_structure)
+> Discover how Metal executes commands on a GPU.
+>
+> [Devices and Commands](https://developer.apple.com/documentation/metal/devices_and_commands)
+> Demonstrates how to access and interact with the GPU.
+>
+> [Labeling Metal Objects and Commands](https://developer.apple.com/documentation/metal/labeling_metal_objects_and_commands)
+> Assign meaningful labels to your Metal objects and commands so you can easily identify them in the call list of a captured frame.
+>
+> protocol [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue)
+> A queue that organizes the order in which command buffers are executed by the GPU.
+>
+> protocol [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer)
+> A container that stores encoded commands that are committed to and executed by the GPU.
+>
+> protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandencoder)
+> An encoder that writes GPU commands into a command buffer.
+>
+> [Advanced Command Setup](https://developer.apple.com/documentation/metal/advanced_command_setup)
+> Organize your commands for maximum concurrency and minimal dependencies.
+
+设置基础架构以在 GPU 上执行自定义代码。
 
 ### Graphics - 图形
 

@@ -21,6 +21,7 @@
 		5F48E6D221AFB79600318179 /* About Tile Shading.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D121AFB79600318179 /* About Tile Shading.md */; };
 		5F48E6D421AFB7A900318179 /* About Raster Order Groups.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */; };
 		5F48E6D621AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */; };
+		5F4DF96B21B80B6A00DC9FCD /* Setting Up a Command Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */; };
 		5F5B1570219FBB83004EE6BF /* Metal Programming Guide - 翻译.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
@@ -55,6 +56,7 @@
 		5F48E6D121AFB79600318179 /* About Tile Shading.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Tile Shading.md"; sourceTree = "<group>"; };
 		5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Raster Order Groups.md"; sourceTree = "<group>"; };
 		5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Enhanced MSAA and Imageblock Sample Coverage Control.md"; sourceTree = "<group>"; };
+		5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Setting Up a Command Structure.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +115,7 @@
 				5F48E6D121AFB79600318179 /* About Tile Shading.md */,
 				5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */,
 				5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */,
+				5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				5F48E68821AED7EC00318179 /* Getting the Default GPU.md in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
 				5F48E51521AAB77B00318179 /* Metal Best Practices Guide - 翻译.md in Resources */,
+				5F4DF96B21B80B6A00DC9FCD /* Setting Up a Command Structure.md in Resources */,
 				5F48E6D021AFB78600318179 /* About Imageblocks.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

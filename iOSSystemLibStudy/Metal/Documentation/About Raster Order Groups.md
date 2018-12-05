@@ -22,7 +22,7 @@ Metal 2 引入了栅格顺序组，可以从片段着色器中进行有序内存
 
 图 1 以绘制调用顺序混合两个三角形
 
-![BlendingOfTwoTrianglesInDrawCallOrder](../resource/Metal/Markdown/BlendingOfTwoTrianglesInDrawCallOrder.png)
+![BlendingOfTwoTrianglesInDrawCallOrder](../../resource/Metal/Markdown/BlendingOfTwoTrianglesInDrawCallOrder.png)
 
 > A custom blend function in your fragment shader may need to read the results of the rear triangle’s fragment shader before applying that function based on the front triangle’s fragment. Because of concurrency, this read–modify–write sequence can create a race condition. Figure 2 shows thread 2 attempting to simultaneously read the same memory that thread 1 is writing.
 >
@@ -32,7 +32,7 @@ Metal 2 引入了栅格顺序组，可以从片段着色器中进行有序内存
 
 图 2 试图同时读写相同的内存
 
-![AttemptingToSimultaneouslyReadAndWriteTheSameMemory](../resource/Metal/Markdown/AttemptingToSimultaneouslyReadAndWriteTheSameMemory.png)
+![AttemptingToSimultaneouslyReadAndWriteTheSameMemory](../../resource/Metal/Markdown/AttemptingToSimultaneouslyReadAndWriteTheSameMemory.png)
 
 ## Raster Order Groups for Overcoming Access Conflict - 用于克服访问冲突的光栅顺序组
 
@@ -48,10 +48,48 @@ Figure 3 Synchronized threads serially reading and writing the same memory
 
 图 3 同步线程串行读取和写入相同的内存
 
-![SynchronizedThreadsSeriallyReadingAndWritingTheSameMemory](../resource/Metal/Markdown/SynchronizedThreadsSeriallyReadingAndWritingTheSameMemory.png)
+![SynchronizedThreadsSeriallyReadingAndWritingTheSameMemory](../../resource/Metal/Markdown/SynchronizedThreadsSeriallyReadingAndWritingTheSameMemory.png)
 
 ## Extended Raster Order Groups with Metal 2 on A11
 
+> Metal 2 on A11 extends raster order groups with additional capabilities. First, it allows synchronization of individual channels of an imageblock and threadgroup memory. Second, it allows for the creation of multiple order groups, giving you finer-grained synchronization and minimizing how often your threads wait for access.
+>
+> An example of where the additional capabilities of raster order groups on the A11 graphics processing unit (GPU) improve performance is deferred shading. Traditionally, deferred shading requires two phases. The first phase fills a G-buffer and produces multiple textures. The second phase consumes those textures and calculates the shading results to render the light volumes, as shown in Figure 4.
+>
+> Figure 4 Deferred shading implemented in two phases
 
+A11 上的 Metal 2 为栅格顺序组扩展了附加功能。首先，它允许同步 imageblock 的各个通道及线程组内存。其次，它允许创建多个顺序组，为你提供更细粒度的同步，并最大限度地减少线程等待访问的频率。
 
+A11 图形处理单元（ GPU ）上的光栅顺序组的附加功能提升性能的典型示例为延迟着色。传统上，延迟着色需要两个阶段。第一阶段填充 G 缓冲区并生成多个纹理。第二阶段消耗这些纹理并计算着色结果以渲染光量，如图 4 所示。
 
+图 4 分两个阶段实现的延迟着色
+
+![DeferredShadingImplementedInTwoPhases](../../resource/Metal/Markdown/DeferredShadingImplementedInTwoPhases.png)
+
+> Because the intermediate textures are written to and read from device memory, deferred shading is bandwidth intensive. The A11 GPU is able to leverage multiple order groups to coalesce both render phases into one, eliminating the need for the intermediate textures. Furthermore, it can keep the G-buffer in tile-sized chunks that remain in local imageblock memory.
+>
+> To demonstrate how the A11 GPU’s multiple order groups can improve the performance of deferred shading, Figure 5 shows how a traditional GPU schedules threads for the lighting phase. The thread responsible for the second light must wait for access from prior threads to complete before it can begin. This wait forces the execution of these two threads to run serially, even if the accesses don’t conflict with each other.
+>
+> Figure 5 Scheduling threads for a deferred shading lighting phase
+
+因为中间纹理被写入设备内存并从设备内存读取，所以延迟着色是带宽密集的。A11 GPU 能够利用多个顺序组将两个渲染阶段合并为一个，从而消除了对中间纹理的需求。此外，G 缓冲区被保持在本地 imageblock 内存的 tile 大小的块中。
+
+为了演示 A11 GPU 的多个顺序组如何提高延迟着色的性能，图 5 显示了传统 GPU 如何为照明阶段调度线程。负责第二个灯的线程在开始其工作之前必须等待先前线程访问完成。即使访问不相互冲突，此等待也会强制这两个线程以串行方式执行。
+
+图 5 为延迟着色照明阶段调度线程
+
+![SchedulingThreadsForADeferredShadingLightingpPhase](../../resource/Metal/Markdown/SchedulingThreadsForADeferredShadingLightingpPhase.png)
+
+> Figure 6 shows how multiple order groups allow you to run the nonconflicting reads concurrently, with the two threads synchronizing at the end of execution to accumulate the lights. You achieve this by declaring the three G-buffer fields—albedo, normal, and depth—to be in the first group, and the accumulated lighting result to be in the second group. The A11 GPU is able to order the two groups separately, and outstanding writes into the second group don’t require reads in the first group to wait.
+>
+> Figure 6 Scheduling threads with raster order groups
+
+图 6 显示了多个顺序组如何允许你同时运行非冲突读取，两个线程在执行结束时进行同步以累积灯光。你可以通过将三个 G 缓冲区字段（ 反照率，法线和深度 ）声明为第一组，并将累积的光照结果设置为第二组来实现此目的。A11 GPU 能够分别对两组进行排序，第一组的读取操作不需要等待第二组的写入操作。
+
+图 6 使用栅格顺序组调度线程
+
+![SchedulingThreadsWithRasterOrderGroups](../../resource/Metal/Markdown/SchedulingThreadsWithRasterOrderGroups.png)
+
+> With multiple order groups, more threads are eligible to run concurrently, allowing for more parallelism and improved performance.
+
+使用多个顺序组，更多线程可以同时运行，从而实现更多并行性及更高的性能。

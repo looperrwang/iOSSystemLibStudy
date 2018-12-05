@@ -40,31 +40,31 @@ Learn how to develop Metal apps for specific types of macOS devices.
 
 了解如何为特定类型的 macOS 设备开发 Metal 应用程序。
 
-[MTLCreateSystemDefaultDevice]()
+[MTLCreateSystemDefaultDevice](https://developer.apple.com/documentation/metal/1433401-mtlcreatesystemdefaultdevice?language=objc)
 
 Returns a reference to the preferred system default Metal device.
 
 返回对首选系统默认 Metal 设备的引用。
 
-[MTLCopyAllDevices]()
+[MTLCopyAllDevices](https://developer.apple.com/documentation/metal/1433367-mtlcopyalldevices?language=objc)
 
 Returns an array of references to all Metal devices in the system.
 
 返回对系统中所有 Metal 设备的引用数组。
 
-[MTLCopyAllDevicesWithObserver]()
+[MTLCopyAllDevicesWithObserver](https://developer.apple.com/documentation/metal/2869731-mtlcopyalldeviceswithobserver?language=objc)
 
 Returns an array of the available Metal devices and registers a notification observer for them.
 
 返回可用 Metal 设备的数组，并为它们注册通知观察器。
 
-[MTLRemoveDeviceObserver]()
+[MTLRemoveDeviceObserver](https://developer.apple.com/documentation/metal/2869724-mtlremovedeviceobserver?language=objc)
 
 Removes a registered observer of device notifications.
 
 移除已注册的设备通知观察者。
 
-[CGDirectDisplayCopyCurrentMetalDevice]()
+[CGDirectDisplayCopyCurrentMetalDevice](https://developer.apple.com/documentation/coregraphics/1493900-cgdirectdisplaycopycurrentmetald?language=objc)
 
 Returns a reference to the Metal device currently driving a given display.
 
@@ -72,13 +72,133 @@ Returns a reference to the Metal device currently driving a given display.
 
 ### Querying Properties - 查询属性
 
+[headless](https://developer.apple.com/documentation/metal/mtldevice/1433377-headless?language=objc)
+
+A Boolean value that indicates whether a device is configured as headless.
+
+指示设备是否配置为 headless 的布尔值。
+
+[lowPower](https://developer.apple.com/documentation/metal/mtldevice/1433409-lowpower?language=objc)
+
+A Boolean value that indicates whether a device is low-power.
+
+一个布尔值，指示设备是否为低功耗。
+
+[removable](https://developer.apple.com/documentation/metal/mtldevice/2889851-removable?language=objc)
+
+A Boolean value that determines whether or not a GPU is removable.
+
+一个布尔值，用于确定 GPU 是否可移动。
+
+[registryID](https://developer.apple.com/documentation/metal/mtldevice/2915737-registryid?language=objc)
+
+The registry ID value for the device.
+
+设备的注册表 ID 值。
+
+[name](https://developer.apple.com/documentation/metal/mtldevice/1433359-name?language=objc)
+
+The name of the device.
+
+设备名称。
+
 ### Querying Features - 查询功能
+
+[MTLFeatureSet](https://developer.apple.com/documentation/metal/mtlfeatureset?language=objc)
+
+The device feature sets that define specific platform, hardware, and software configurations.
+
+设备功能集定义特定的平台，硬件和软件配置。
+
+[supportsFeatureSet:](https://developer.apple.com/documentation/metal/mtldevice/1433418-supportsfeatureset?language=objc)
+
+Returns a Boolean value that indicates whether a device supports a particular feature set.
+
+返回一个布尔值，指示设备是否支持特定功能集。
 
 ### Creating a Command Queue - 创建命令队列
 
+[newCommandQueue](https://developer.apple.com/documentation/metal/mtldevice/1433388-newcommandqueue?language=objc)
+
+Creates and return a command submission queue.
+
+创建并返回命令提交队列。
+
+[newCommandQueueWithMaxCommandBufferCount:](https://developer.apple.com/documentation/metal/mtldevice/1433433-newcommandqueuewithmaxcommandbuf?language=objc)
+
+Creates and returns a command submission queue with a maximum number of uncompleted command buffers.
+
+创建并返回具有最大未完成命令缓冲区数的命令提交队列。
+
 ### Synchronizing Commands - 同步命令
 
+[newEvent](https://developer.apple.com/documentation/metal/mtldevice/2966565-newevent?language=objc)
+
+Creates a new, nonshareable event for this specific device.
+
+为此特定设备创建一个新的，不可共享的事件。
+
+[newSharedEvent](https://developer.apple.com/documentation/metal/mtldevice/2966569-newsharedevent?language=objc)
+
+Creates a new, shareable event for multiple devices, processors, and processes.
+
+为多个设备，处理器和进程创建新的可共享事件。
+
+[newSharedEventWithHandle:](https://developer.apple.com/documentation/metal/mtldevice/2981024-newsharedeventwithhandle?language=objc)
+
+Creates a new, shareable event from a shareable event handle.
+
+从可共享事件句柄创建新的可共享事件。
+
+[newFence](https://developer.apple.com/documentation/metal/mtldevice/1649923-newfence?language=objc)
+
+Creates a new fence.
+
+创建一个新的围栏。
+
 ### Acquiring Shader Functions - 获取着色器函数
+
+[newDefaultLibrary](https://developer.apple.com/documentation/metal/mtldevice/1433380-newdefaultlibrary?language=objc)
+
+Creates a new library that contains the functions stored in the app’s default Metal library.
+
+创建一个新库，其中包含存储在应用程序默认 Metal 库中的函数。
+
+[newDefaultLibraryWithBundle:error:](https://developer.apple.com/documentation/metal/mtldevice/2177054-newdefaultlibrarywithbundle?language=objc)
+
+Creates a new library that contains the functions stored in the specified bundle.
+
+创建一个包含存储在指定包中函数的新库。
+
+[newLibraryWithFile:error:](https://developer.apple.com/documentation/metal/mtldevice/1433416-newlibrarywithfile?language=objc)
+
+Creates a new library that contains the functions stored in the specified Metal library.
+
+创建一个新库，其中包含存储在指定 Metal 库中的函数。
+
+[newLibraryWithURL:error:](https://developer.apple.com/documentation/metal/mtldevice/2877432-newlibrarywithurl?language=objc)
+
+Creates a new library that contains the functions from a Metal library file at a specified URL.
+
+创建一个新库，其中包含指定 URL 处的 Metal 库文件中的函数。
+
+[newLibraryWithData:error:](https://developer.apple.com/documentation/metal/mtldevice/1433391-newlibrarywithdata?language=objc)
+
+Creates a new library that contains the functions stored in the specified binary data object.
+
+创建一个新库，其中包含存储在指定二进制数据对象中的函数。
+
+[newLibraryWithSource:options:completionHandler:](https://developer.apple.com/documentation/metal/mtldevice/1433351-newlibrarywithsource?language=objc)
+
+Asynchronously creates a new library by compiling the functions stored in the specified source string.
+
+通过编译存储在指定源字符串中的函数来异步创建新库。
+
+[newLibraryWithSource:options:error:](https://developer.apple.com/documentation/metal/mtldevice/1433431-newlibrarywithsource?language=objc)
+
+Synchronously creates a new library that contains the functions stored in the specified source string.
+
+同步创建一个新库，其中包含存储在指定源字符串中的函数。
 
 ### Creating a Render Pipeline - 创建渲染管线
 
