@@ -12,7 +12,7 @@
 
 图 1 通过设备内存进行渲染和计算过程通信
 
-![RenderAndComputePassesCommunicatingThroughDeviceMemory](../../resource/Metal/Markdown/RenderAndComputePassesCommunicatingThroughDeviceMemory.png)
+![RenderAndComputePassesCommunicatingThroughDeviceMemory](../../../resource/Metal/Markdown/RenderAndComputePassesCommunicatingThroughDeviceMemory.png)
 
 > Tile shaders are compute or fragment functions that execute as part of a render pass, allowing for midrender compute with persistent memory between rendering phases. Figure 2 shows that the tile memory that tile shaders work within remains in the on-chip memory of the graphics processing unit (GPU). As a result, you avoid having to store intermediate results out to device memory. Tile memory from one phase is available to any subsequent fragment phases.
 >
@@ -22,4 +22,4 @@ tile 着色器是计算或片段函数，它们作为渲染过程的一部分执
 
 图 2 通过 tile 内存进行渲染和计算过程通信
 
-![RenderAndComputePassesCommunicatingThroughTileMemory](../../resource/Metal/Markdown/RenderAndComputePassesCommunicatingThroughTileMemory.png)
+![RenderAndComputePassesCommunicatingThroughTileMemory](../../../resource/Metal/Markdown/RenderAndComputePassesCommunicatingThroughTileMemory.png)

@@ -14,7 +14,7 @@
 
 图 1 每个像素单个样本的抗锯齿
 
-![AntialiasingUsingaSingleSamplePerPixel](../../resource/Metal/Markdown/AntialiasingUsingaSingleSamplePerPixel.png)
+![AntialiasingUsingaSingleSamplePerPixel](../../../resource/Metal/Markdown/AntialiasingUsingaSingleSamplePerPixel.png)
 
 > Figure 2 shows the same triangle rendered using 4x MSAA; that is, each pixel has four sampling positions. The graphics processing unit (GPU) averages the colors of each sample within the pixel to determine a final color. This process results in a smoother appearance and reduces the jagged edges.
 >
@@ -24,7 +24,7 @@
 
 图 2 每个像素使用四个样本进行抗锯齿处理
 
-![AntialiasingUsingFourSamplesPerixel](../../resource/Metal/Markdown/AntialiasingUsingFourSamplesPerixel.png)
+![AntialiasingUsingFourSamplesPerixel](../../../resource/Metal/Markdown/AntialiasingUsingFourSamplesPerixel.png)
 
 > Apple’s A-Series GPUs have an efficient MSAA implementation. The hardware tracks whether each pixel contains a primitive edge so that your blending executes per sample only when necessary. If all samples in a pixel are covered by a single primitive, the GPU blends only once for the entire pixel.
 
@@ -40,7 +40,7 @@ A11 上的 Metal 2 跟踪每个像素的唯一样本（或颜色）的数量，�
 
 图 3 一个包含三个唯一样本的像素
 
-![OnePixelThatContainsThreeUniqueSamples](../../resource/Metal/Markdown/OnePixelThatContainsThreeUniqueSamples.png)
+![OnePixelThatContainsThreeUniqueSamples](../../../resource/Metal/Markdown/OnePixelThatContainsThreeUniqueSamples.png)
 
 > Metal 2 on A11 can reduce the number of unique colors in a pixel. In Figure 4, an additional opaque triangle is rendered on top of the earlier primitives. Because all of the samples are covered by the new triangle and can be represented by a single color, the A11 GPU merges the three colors into one.
 
@@ -50,7 +50,7 @@ A11 上的 Metal 2 可以减少像素中唯一颜色的数量。在图 4 中，�
 
 图 4 包含一个唯一样本的像素
 
-![OnePixelThatContainsOneUniqueSample](../../resource/Metal/Markdown/OnePixelThatContainsOneUniqueSample.png)
+![OnePixelThatContainsOneUniqueSample](../../../resource/Metal/Markdown/OnePixelThatContainsOneUniqueSample.png)
 
 > Additionally, you can access and modify sample coverage data in tile shaders to implement custom resolve algorithms. For example, given a complex scene containing separate render phases for opaque and translucent geometry, you can add a tile shader to resolve the sample data for the opaque geometry before blending the translucent geometry. With Metal 2 on A11, this tile shader works on data in local memory and can be part of the opaque geometry phase, as shown in Figure 5.
 
@@ -60,4 +60,4 @@ Figure 5 Using a tile shader to implement a custom resolve algorithm
 
 图 5 使用 tile 着色器实现自定义解析算法
 
-![UsingATileShaderToImplementACustomResolveAlgorithm](../../resource/Metal/Markdown/UsingATileShaderToImplementACustomResolveAlgorithm.png)
+![UsingATileShaderToImplementACustomResolveAlgorithm](../../../resource/Metal/Markdown/UsingATileShaderToImplementACustomResolveAlgorithm.png)

@@ -118,7 +118,7 @@ id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
 
 4. GPU 执行命令并渲染结果到 drawable
 
-![relationshipBetweenMetal’sCommandObjects](../../resource/Metal/Markdown/relationshipBetweenMetal’sCommandObjects.png)
+![relationshipBetweenMetal’sCommandObjects](../../../resource/Metal/Markdown/relationshipBetweenMetal’sCommandObjects.png)
 
 ## Prepare a Frame
 

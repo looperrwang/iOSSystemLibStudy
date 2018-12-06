@@ -30,7 +30,7 @@
 
 图 1 使用 Metal 时的客户端 - 服务器使用模式。
 
-![Client-serverUsagePatternWhenUsingMetal](../../resource/Metal/Markdown/Client-serverUsagePatternWhenUsingMetal.png)
+![Client-serverUsagePatternWhenUsingMetal](../../../resource/Metal/Markdown/Client-serverUsagePatternWhenUsingMetal.png)
 
 > To send commands to a GPU, you add them to a command buffer using a command encoder object. You add the command buffer to a command queue and then commit the command buffer when you're ready for Metal to execute the command buffer's commands. The order that you place commands in command buffers, enqueue and commit command buffers, is important because it effects the perceived order in which Metal promises to execute your commands.
 >
@@ -64,7 +64,7 @@ commandQueue = device.makeCommandQueue()
 
 图 2 应用程序的命令队列。
 
-![YourApp'sCommandQueue](../../resource/Metal/Markdown/YourApp'sCommandQueue.png)
+![YourApp'sCommandQueue](../../../resource/Metal/Markdown/YourApp'sCommandQueue.png)
 
 ### Make One or More Pipeline Objects
 
@@ -96,7 +96,7 @@ Metal 不会立即执行绘制，计算或 blit 调用；相反，你使用编�
 >
 >图 3 GPU 上的已激活管道，包含处理命令的自定义着色器代码。
 
-![TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands](../../resource/Metal/Markdown/TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands.png)
+![TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands](../../../resource/Metal/Markdown/TheActivePipelineOnTheGPUContainingYourCustomShaderCodeThatProcessesCommands.png)
 
 ## Issue Commands to the GPU
 
@@ -149,7 +149,7 @@ objc
 
 图 4 命令缓冲区与其包含的命令的关系。
 
-![ACommandBuffer'sRelationshipToTheCommandsItContains](../../resource/Metal/Markdown/ACommandBuffer'sRelationshipToTheCommandsItContains.png)
+![ACommandBuffer'sRelationshipToTheCommandsItContains](../../../resource/Metal/Markdown/ACommandBuffer'sRelationshipToTheCommandsItContains.png)
 
 ### Add Commands to the Command Buffer
 
@@ -161,7 +161,7 @@ objc
 
 图 5 命令编码器将命令插入命令缓冲区作为绘制结果。
 
-![CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw](../../resource/Metal/Markdown/CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw.png)
+![CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw](../../../resource/Metal/Markdown/CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw.png)
 
 > You encode actual commands with concrete subclasses of [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandencoder?language=objc), depending on your task:
 >

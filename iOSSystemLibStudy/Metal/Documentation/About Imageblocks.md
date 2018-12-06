@@ -20,7 +20,7 @@ Imageblocks 是存储在本地存储器中的结构化图像数据的 titles ，
 >
 >图1 A11 GPU架构
 
-![TheA11GPUArchitecture](../../resource/Metal/Markdown/TheA11GPUArchitecture.png)
+![TheA11GPUArchitecture](../../../resource/Metal/Markdown/TheA11GPUArchitecture.png)
 
 ## Imageblock Structure
 
@@ -32,7 +32,7 @@ imageblock 是具有宽度，高度和像素深度的 2D 数据结构。imageblo
 
 图 2 由三个图像切片组成的图像块
 
-![AnImageblockComposedOfThreeImageSlices](../../resource/Metal/Markdown/AnImageblockComposedOfThreeImageSlices.png)
+![AnImageblockComposedOfThreeImageSlices](../../../resource/Metal/Markdown/AnImageblockComposedOfThreeImageSlices.png)
 
 > Imageblocks are available to both kernel and fragment functions and persist for the lifetime of a tile, across draws and dispatches. Imageblock persistence means that you can mix render and compute operations in a single rendering pass, with both accessing the same local memory. By keeping multiple operations within a tile, you can create sophisticated algorithms that remain in local GPU memory.
 >

@@ -79,4 +79,4 @@ renderEncoder.label = @"My Render Encoder";
 
 下图显示了执行 GPU 捕获后调试组在 Xcode 的调试导航器中的显示方式。
 
-![debugGroupsAppear](../../resource/Metal/Markdown/debugGroupsAppear.png)
+![debugGroupsAppear](../../../resource/Metal/Markdown/debugGroupsAppear.png)
