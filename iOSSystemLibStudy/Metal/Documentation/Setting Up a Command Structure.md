@@ -100,18 +100,107 @@ Metal 不会立即执行绘制，计算或 blit 调用；相反，你使用编�
 
 ## Issue Commands to the GPU
 
+> With your command queue and pipeline(s) set up, it's time for you to issue commands to the GPU. Here's the process you follow:
+>
+> 1. Create a command buffer.
+>
+> 2. Fill the buffer with commands.
+>
+> 3. Commit the command buffer to the GPU.
+>
+> If you're performing animation as part of a rendering loop, you do this for every frame of the animation. You also follow this process to execute one-off image processing, or machine learning tasks.
+>
+> The following subsections walk you through these steps in detail.
 
+设置命令队列和管道后，就可以向 GPU 发出命令了。这是应该遵循的流程：
 
+1. 创建命令缓冲区。
 
+2. 使用命令填充缓冲区。
 
+3. 将命令缓冲区提交给 GPU 。
 
+如果你将动画作为渲染循环的一部分来执行，则可以对动画的每一帧执行此操作。你还可以按照此过程执行一次性图像处理或机器学习任务。
 
+以下小节将详细介绍这些步骤。
 
+### Create a Command Buffer
 
+> Create a command buffer by calling commandBuffer on the command queue:
+>
+> Listing 2 Creating a command buffer.
 
+通过在命令队列上调用 commandBuffer 来创建命令缓冲区：
 
+清单 2 创建命令缓冲区。
 
+```objc
+guard let commandBuffer = commandQueue.makeCommandBuffer() else { 
+    return 
+}
+objc
+```
 
+> For single-threaded apps, you create a single command buffer. shows the relationship between commands and their command buffer:
+>
+> Figure 4 A command buffer's relationship to the commands it contains.
 
+对于单线程应用程序，创建单个命令缓冲区。下图显示了命令与其命令缓冲区之间的关系：
 
+图 4 命令缓冲区与其包含的命令的关系。
 
+![ACommandBuffer'sRelationshipToTheCommandsItContains](../../resource/Metal/Markdown/ACommandBuffer'sRelationshipToTheCommandsItContains.png)
+
+### Add Commands to the Command Buffer
+
+> When you call task-specific functions on an encoder object–like draws, compute or blit operations–the encoder places commands corresponding to those calls in the command buffer. The encoder encodes the commands to include everything the GPU needs to process the task at runtime. shows the workflow:
+>
+> Figure 5 Command encoder inserting commands into a command buffer as the result of a draw.
+
+当你在编码器对象（如绘制，计算或 blit 操作）上调用特定于任务的函数时，编码器会将与这些调用相对应的命令放到命令缓冲区中。编码器对命令进行编码以包括 GPU 在运行时处理任务所需的所有内容。显示工作流程：
+
+图 5 命令编码器将命令插入命令缓冲区作为绘制结果。
+
+![CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw](../../resource/Metal/Markdown/CommandEncoderInsertingCommandsIntoAcommandBufferAsTheResultOfaDraw.png)
+
+> You encode actual commands with concrete subclasses of [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandencoder?language=objc), depending on your task:
+>
+> - Use [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder?language=objc) to issue render commands.
+>
+> - Use [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder?language=objc) to issue parallel computation commands.
+>
+> - Use [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder?language=objc) to issue resource management commands.
+>
+> See [Hello Triangle](https://developer.apple.com/documentation/metal/hello_triangle?language=objc) for a complete rendering example. See Hello Compute for a complete parallel processing example.
+
+使用 [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandencoder?language=objc) 的具体子类编码实际命令，具体取决于你的任务：
+
+使用 [MTLRenderCommandEncoder](https://developer.apple.com/documentation/metal/mtlrendercommandencoder?language=objc) 发出渲染命令。
+
+使用 [MTLComputeCommandEncoder](https://developer.apple.com/documentation/metal/mtlcomputecommandencoder?language=objc) 发出并行计算命令。
+
+使用 [MTLBlitCommandEncoder](https://developer.apple.com/documentation/metal/mtlblitcommandencoder?language=objc) 发出资源管理命令。
+
+有关完整的渲染示例，请参阅 [Hello Triangle](https://developer.apple.com/documentation/metal/hello_triangle?language=objc) 。 有关完整的并行处理示例，请参阅 Hello Compute 。
+
+### Commit a Command Buffer
+
+> To enable your commands to run, you commit the command buffer to the GPU:
+
+提交命令缓冲区到 GPU 以使命令能够运行：
+
+```objc
+commandBuffer.commit()
+```
+
+> Committing a command buffer doesn't run its commands immediately. Instead, Metal schedules the buffer's commands to run only after you commit prior command buffers that are waiting in the queue. If you haven't explicitly enqueued a command buffer, Metal does that for you once you commit the buffer.
+> 
+> You don't reuse a buffer after it's committed, but you can opt into notification of its scheduling, completion, or query its [status](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443048-status?language=objc).
+>
+> The promise upheld by Metal is that the perceived order in which commands are executed is the same as the way you ordered them. While Metal might reorder some of your commands before processing them, this normally only occurs when there's a performance gain and no other perceivable impact.
+
+提交命令缓冲区不会立即运行其命令。相反，只有在队列中等待的先前命令缓冲区提交之后，Metal 才会调度新的缓冲区命令去运行。如果你没有明确地将命令缓冲区排入队列，则在你提交缓冲区后，Metal 会为你执行入队操作。
+
+缓冲区被提交之后，不要重用该缓冲区，但可以监听其调度、完成的通知来进行必要的操作，也可以查询其 [status](https://developer.apple.com/documentation/metal/mtlcommandbuffer/1443048-status?language=objc) 属性。
+
+Metal 坚持的承诺是，命令执行的感知顺序与你对命令排序的方式相同。虽然 Metal 可能会在处理之前重新排序某些命令，但这通常只会在可以获取性能提升且没有其他可感知的影响时发生。

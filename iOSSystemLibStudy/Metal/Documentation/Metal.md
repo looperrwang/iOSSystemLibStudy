@@ -85,6 +85,27 @@ Metal 与其他补充其能力的框架协同工作。使用 [MetalKit](https://
 
 设置基础架构以在 GPU 上执行自定义代码。
 
+[Setting Up a Command Structure](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Setting%20Up%20a%20Command%20Structure.md)
+了解 Metal 如何在 GPU 上执行命令。
+
+[Devices and Commands](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Devices%20and%20Commands.md)
+演示如何访问 GPU 并与 GPU 交互。
+
+[Labeling Metal Objects and Commands](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Labeling%20Metal%20Objects%20and%20Commands.md)
+为 Metal 对象和命令分配有意义的标签，以便你可以在捕获的帧的调用列表中轻松识别它们。
+
+protocol [MTLCommandQueue](https://developer.apple.com/documentation/metal/mtlcommandqueue)
+一个队列，用于组织 GPU 执行命令缓冲区的顺序。
+
+protocol [MTLCommandBuffer](https://developer.apple.com/documentation/metal/mtlcommandbuffer)
+一个容器，用于存储提交给 GPU 并由 GPU 执行的已编码命令。
+
+protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtlcommandencoder)
+将 GPU 命令写入命令缓冲区的编码器。
+
+[Advanced Command Setup](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Advanced%20Command%20Setup.md)
+组织命令以获得最大的并发性和最小的依赖性。
+
 ### Graphics - 图形
 
 ### Parallel Computation - 并行计算

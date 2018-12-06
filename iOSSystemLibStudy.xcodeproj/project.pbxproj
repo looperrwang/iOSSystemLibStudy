@@ -13,16 +13,15 @@
 		5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F5577218EB04F00D9B9B5 /* ImageOutputViewController.m */; };
 		5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */; };
 		5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */; };
-		5F48E51521AAB77B00318179 /* Metal Best Practices Guide - 翻译.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */; };
-		5F48E67F21AE6EF800318179 /* Metal.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E67E21AE6EF800318179 /* Metal.md */; };
-		5F48E68821AED7EC00318179 /* Getting the Default GPU.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E68721AED7EC00318179 /* Getting the Default GPU.md */; };
-		5F48E6CE21AFB38300318179 /* About GPU Family 4.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6CD21AFB38300318179 /* About GPU Family 4.md */; };
-		5F48E6D021AFB78600318179 /* About Imageblocks.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6CF21AFB78600318179 /* About Imageblocks.md */; };
-		5F48E6D221AFB79600318179 /* About Tile Shading.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D121AFB79600318179 /* About Tile Shading.md */; };
-		5F48E6D421AFB7A900318179 /* About Raster Order Groups.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */; };
-		5F48E6D621AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */; };
-		5F4DF96B21B80B6A00DC9FCD /* Setting Up a Command Structure.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */; };
-		5F5B1570219FBB83004EE6BF /* Metal Programming Guide - 翻译.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */; };
+		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
+		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
+		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
+		5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97921B9428500DC9FCD /* DevicesAndCommandsViewController.m */; };
+		5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DF97C21B944A400DC9FCD /* DevicesAndCommands.storyboard */; };
+		5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF99021B9620500DC9FCD /* CPUGPUSynchronizationRenderer.m */; };
+		5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF99121B9620500DC9FCD /* CPUGPUSynchronizationShaders.metal */; };
+		5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF99521B9620C00DC9FCD /* CPUGPUSynchronizationViewController.m */; };
+		5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DF99E21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
 		5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568A215A8D4800E26E01 /* Main.storyboard */; };
@@ -57,6 +56,27 @@
 		5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Raster Order Groups.md"; sourceTree = "<group>"; };
 		5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Enhanced MSAA and Imageblock Sample Coverage Control.md"; sourceTree = "<group>"; };
 		5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Setting Up a Command Structure.md"; sourceTree = "<group>"; };
+		5F4DF96C21B8C8AE00DC9FCD /* Devices and Commands.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Devices and Commands.md"; sourceTree = "<group>"; };
+		5F4DF96D21B93B5700DC9FCD /* Labeling Metal Objects and Commands.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Labeling Metal Objects and Commands.md"; sourceTree = "<group>"; };
+		5F4DF96E21B93DA600DC9FCD /* MetalViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MetalViewController.h; sourceTree = "<group>"; };
+		5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MetalViewController.m; sourceTree = "<group>"; };
+		5F4DF97121B93F4C00DC9FCD /* CellData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CellData.h; sourceTree = "<group>"; };
+		5F4DF97221B93F4C00DC9FCD /* CellData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CellData.m; sourceTree = "<group>"; };
+		5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicesAndCommandsRenderer.m; sourceTree = "<group>"; };
+		5F4DF97721B9426600DC9FCD /* DevicesAndCommandsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicesAndCommandsRenderer.h; sourceTree = "<group>"; };
+		5F4DF97921B9428500DC9FCD /* DevicesAndCommandsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DevicesAndCommandsViewController.m; sourceTree = "<group>"; };
+		5F4DF97A21B9428500DC9FCD /* DevicesAndCommandsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DevicesAndCommandsViewController.h; sourceTree = "<group>"; };
+		5F4DF97C21B944A400DC9FCD /* DevicesAndCommands.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DevicesAndCommands.storyboard; sourceTree = "<group>"; };
+		5F4DF97F21B9457800DC9FCD /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		5F4DF98121B9542900DC9FCD /* Advanced Command Setup.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Advanced Command Setup.md"; sourceTree = "<group>"; };
+		5F4DF98221B955C800DC9FCD /* CPU and GPU Synchronization.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "CPU and GPU Synchronization.md"; sourceTree = "<group>"; };
+		5F4DF98F21B9620400DC9FCD /* CPUGPUSynchronizationShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUGPUSynchronizationShaderTypes.h; sourceTree = "<group>"; };
+		5F4DF99021B9620500DC9FCD /* CPUGPUSynchronizationRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUGPUSynchronizationRenderer.m; sourceTree = "<group>"; };
+		5F4DF99121B9620500DC9FCD /* CPUGPUSynchronizationShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = CPUGPUSynchronizationShaders.metal; sourceTree = "<group>"; };
+		5F4DF99221B9620600DC9FCD /* CPUGPUSynchronizationRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUGPUSynchronizationRenderer.h; sourceTree = "<group>"; };
+		5F4DF99521B9620C00DC9FCD /* CPUGPUSynchronizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUGPUSynchronizationViewController.m; sourceTree = "<group>"; };
+		5F4DF99621B9620D00DC9FCD /* CPUGPUSynchronizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUGPUSynchronizationViewController.h; sourceTree = "<group>"; };
+		5F4DF99E21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "CPU-GPUSynchronization.storyboard"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +127,7 @@
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
+				5F4DF97421B9410000DC9FCD /* Sample */,
 				5F48E67E21AE6EF800318179 /* Metal.md */,
 				5F48E68721AED7EC00318179 /* Getting the Default GPU.md */,
 				5F48E68921AEDC6900318179 /* MTLDevice.md */,
@@ -116,8 +137,55 @@
 				5F48E6D321AFB7A900318179 /* About Raster Order Groups.md */,
 				5F48E6D521AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md */,
 				5F4DF96A21B80B6A00DC9FCD /* Setting Up a Command Structure.md */,
+				5F4DF96C21B8C8AE00DC9FCD /* Devices and Commands.md */,
+				5F4DF96D21B93B5700DC9FCD /* Labeling Metal Objects and Commands.md */,
+				5F4DF98121B9542900DC9FCD /* Advanced Command Setup.md */,
+				5F4DF98221B955C800DC9FCD /* CPU and GPU Synchronization.md */,
 			);
 			path = Documentation;
+			sourceTree = "<group>";
+		};
+		5F4DF97421B9410000DC9FCD /* Sample */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DF98321B95F8100DC9FCD /* CPU-GPUSynchronization */,
+				5F4DF97521B9421A00DC9FCD /* DevicesAndCommands */,
+			);
+			path = Sample;
+			sourceTree = "<group>";
+		};
+		5F4DF97521B9421A00DC9FCD /* DevicesAndCommands */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DF97C21B944A400DC9FCD /* DevicesAndCommands.storyboard */,
+				5F4DF97A21B9428500DC9FCD /* DevicesAndCommandsViewController.h */,
+				5F4DF97921B9428500DC9FCD /* DevicesAndCommandsViewController.m */,
+				5F4DF97721B9426600DC9FCD /* DevicesAndCommandsRenderer.h */,
+				5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */,
+			);
+			path = DevicesAndCommands;
+			sourceTree = "<group>";
+		};
+		5F4DF97E21B9457700DC9FCD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DF97F21B9457800DC9FCD /* MetalKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F4DF98321B95F8100DC9FCD /* CPU-GPUSynchronization */ = {
+			isa = PBXGroup;
+			children = (
+				5F4DF99E21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard */,
+				5F4DF99621B9620D00DC9FCD /* CPUGPUSynchronizationViewController.h */,
+				5F4DF99521B9620C00DC9FCD /* CPUGPUSynchronizationViewController.m */,
+				5F4DF99221B9620600DC9FCD /* CPUGPUSynchronizationRenderer.h */,
+				5F4DF99021B9620500DC9FCD /* CPUGPUSynchronizationRenderer.m */,
+				5F4DF99121B9620500DC9FCD /* CPUGPUSynchronizationShaders.metal */,
+				5F4DF98F21B9620400DC9FCD /* CPUGPUSynchronizationShaderTypes.h */,
+			);
+			path = "CPU-GPUSynchronization";
 			sourceTree = "<group>";
 		};
 		5F5B156E219FB5D2004EE6BF /* Metal */ = {
@@ -126,6 +194,8 @@
 				5F48E67D21AE65AE00318179 /* Documentation */,
 				5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */,
 				5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */,
+				5F4DF96E21B93DA600DC9FCD /* MetalViewController.h */,
+				5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */,
 			);
 			path = Metal;
 			sourceTree = "<group>";
@@ -136,6 +206,7 @@
 				5F0B7B6521800584008D28D1 /* resource */,
 				5FCD5683215A8D4800E26E01 /* iOSSystemLibStudy */,
 				5FCD5682215A8D4800E26E01 /* Products */,
+				5F4DF97E21B9457700DC9FCD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -163,6 +234,8 @@
 				5FCD568F215A8D4B00E26E01 /* LaunchScreen.storyboard */,
 				5FCD5692215A8D4B00E26E01 /* Info.plist */,
 				5FCD5693215A8D4B00E26E01 /* main.m */,
+				5F4DF97121B93F4C00DC9FCD /* CellData.h */,
+				5F4DF97221B93F4C00DC9FCD /* CellData.m */,
 			);
 			path = iOSSystemLibStudy;
 			sourceTree = "<group>";
@@ -244,19 +317,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
-				5F48E6D221AFB79600318179 /* About Tile Shading.md in Resources */,
-				5F5B1570219FBB83004EE6BF /* Metal Programming Guide - 翻译.md in Resources */,
-				5F48E67F21AE6EF800318179 /* Metal.md in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
-				5F48E6CE21AFB38300318179 /* About GPU Family 4.md in Resources */,
+				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
+				5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
-				5F48E6D421AFB7A900318179 /* About Raster Order Groups.md in Resources */,
-				5F48E6D621AFB7BA00318179 /* About Enhanced MSAA and Imageblock Sample Coverage Control.md in Resources */,
-				5F48E68821AED7EC00318179 /* Getting the Default GPU.md in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
-				5F48E51521AAB77B00318179 /* Metal Best Practices Guide - 翻译.md in Resources */,
-				5F4DF96B21B80B6A00DC9FCD /* Setting Up a Command Structure.md in Resources */,
-				5F48E6D021AFB78600318179 /* About Imageblocks.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,13 +333,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
+				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
+				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
+				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
+				5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */,
 				5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */,
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,
+				5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */,
+				5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */,
+				5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

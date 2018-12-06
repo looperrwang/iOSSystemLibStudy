@@ -7,31 +7,7 @@
 //
 
 #import "ViewController.h"
-
-@interface CellData : NSObject
-
-@property (nonatomic, strong) NSString *text;
-@property (nonatomic, strong) NSString *vcName;
-
-@end
-
-@implementation CellData
-
-- (instancetype)initWithText:(NSString *)text vcName:(NSString *)vcName
-{
-    if (self = [super init]) {
-        self.text = text;
-        self.vcName = vcName;
-    }
-    
-    return self;
-}
-
-@end
-
-
-
-
+#import "CellData.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -126,7 +102,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"MediaToolbox" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Messages" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MessageUI" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Metal" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Metal" vcName:@"MetalViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"MetalKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MetalPerformanceShaders" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MobileCoreServices" vcName:@""]];
