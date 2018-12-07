@@ -77,6 +77,11 @@
 		5F4DF99521B9620C00DC9FCD /* CPUGPUSynchronizationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CPUGPUSynchronizationViewController.m; sourceTree = "<group>"; };
 		5F4DF99621B9620D00DC9FCD /* CPUGPUSynchronizationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPUGPUSynchronizationViewController.h; sourceTree = "<group>"; };
 		5F4DF99E21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "CPU-GPUSynchronization.storyboard"; sourceTree = "<group>"; };
+		5F4DF9CE21BA70A000DC9FCD /* About Synchronization Events.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Synchronization Events.md"; sourceTree = "<group>"; };
+		5F4DF9CF21BA79F000DC9FCD /* Synchronizing Events Within a Single Device.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Within a Single Device.md"; sourceTree = "<group>"; };
+		5F4DF9D021BA7A0600DC9FCD /* Synchronizing Events Across Multiple Devices.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Across Multiple Devices.md"; sourceTree = "<group>"; };
+		5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Between a GPU and the CPU.md"; sourceTree = "<group>"; };
+		5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Events.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +146,11 @@
 				5F4DF96D21B93B5700DC9FCD /* Labeling Metal Objects and Commands.md */,
 				5F4DF98121B9542900DC9FCD /* Advanced Command Setup.md */,
 				5F4DF98221B955C800DC9FCD /* CPU and GPU Synchronization.md */,
+				5F4DF9CE21BA70A000DC9FCD /* About Synchronization Events.md */,
+				5F4DF9CF21BA79F000DC9FCD /* Synchronizing Events Within a Single Device.md */,
+				5F4DF9D021BA7A0600DC9FCD /* Synchronizing Events Across Multiple Devices.md */,
+				5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */,
+				5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
