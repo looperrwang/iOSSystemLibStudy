@@ -52,11 +52,11 @@ Fences 在图像过滤图中运行良好，因为图中的每个过滤器都是�
 
 ## Implement an Event Wrapper for Synchronization Routines
 
-> The sample wraps the MTLEvent API in the AAPLEventWrapper protocol accessed through an AAPLSingleDeviceEventWrapper object. This convenience wrapper encapsulates the main synchronization mechanism, and primarily manages the discrete signal value through the _signalCounter variable.
+> The sample wraps the MTLEvent API in the ImageFilteringWithHeapsAndEventsEventWrapper protocol accessed through an AAPLSingleDeviceEventWrapper object. This convenience wrapper encapsulates the main synchronization mechanism, and primarily manages the discrete signal value through the _signalCounter variable.
 >
 > Note - Because the event’s signal counter is wrapped within AAPLSingleDeviceEventWrapper, it can be used as a bridge between two or more nodes that depend on each other in an execution graph. Without this bridge, the signal counter and the MTLEvent object wouldn’t be tightly paired, and this potential mismatch could lead to synchronization errors in your code (for example, you might use a wrong MTLEvent object for a signal counter, or vice versa). The sample calls the wait: method to wait for a workload to complete execution.
 
-该示例将 MTLEvent API 包装在通过 AAPLSingleDeviceEventWrapper 对象访问的 AAPLEventWrapper 协议中。这个便捷包装器封装了主同步机制，主要通过 _signalCounter 变量管理离散信号值。
+该示例将 MTLEvent API 包装在通过 AAPLSingleDeviceEventWrapper 对象访问的 ImageFilteringWithHeapsAndEventsEventWrapper 协议中。这个便捷包装器封装了主同步机制，主要通过 _signalCounter 变量管理离散信号值。
 
 注意 - 由于事件的信号计数器包含在 AAPLSingleDeviceEventWrapper 中，因此它可以用作执行图中彼此依赖的两个或多个节点之间的桥梁。如果没有此桥接器，信号计数器和 MTLEvent 对象将不会紧密配对，并且这种潜在的不匹配可能会导致代码中出现同步错误（例如，你可能使用错误的 MTLEvent 对象作为信号计数器，反之亦然）。该示例调用 wait: 方法以等待工作负载完成执行。
 

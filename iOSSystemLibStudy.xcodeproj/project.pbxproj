@@ -13,6 +13,14 @@
 		5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F5577218EB04F00D9B9B5 /* ImageOutputViewController.m */; };
 		5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */; };
 		5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */; };
+		5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */; };
+		5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */; };
+		5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8921BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m */; };
+		5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8C21BB8E860035143E /* ImageFilteringWithHeapsAndEventsRenderer.m */; };
+		5F462C9221BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8D21BB8E860035143E /* ImageFilteringWithHeapsAndEventsFilter.m */; };
+		5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8E21BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal */; };
+		5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */; };
+		5F462C9621BB91F30035143E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5F462C9521BB91F30035143E /* Images */; };
 		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
 		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
 		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
@@ -46,6 +54,19 @@
 		5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputTypeViewController.m; sourceTree = "<group>"; };
 		5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputTypeViewController.h; sourceTree = "<group>"; };
 		5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageOutputTypeViewController.m; sourceTree = "<group>"; };
+		5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsViewController.h; sourceTree = "<group>"; };
+		5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsViewController.m; sourceTree = "<group>"; };
+		5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageFilteringWithHeapsAndEvents.storyboard; sourceTree = "<group>"; };
+		5F462C8721BB8E830035143E /* ImageFilteringWithHeapsAndEventsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsRenderer.h; sourceTree = "<group>"; };
+		5F462C8821BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsEventWrapper.h; sourceTree = "<group>"; };
+		5F462C8921BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsEventWrapper.m; sourceTree = "<group>"; };
+		5F462C8A21BB8E850035143E /* ImageFilteringWithHeapsAndEventsShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsShaderTypes.h; sourceTree = "<group>"; };
+		5F462C8B21BB8E850035143E /* ImageFilteringWithHeapsAndEventsFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsFilter.h; sourceTree = "<group>"; };
+		5F462C8C21BB8E860035143E /* ImageFilteringWithHeapsAndEventsRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsRenderer.m; sourceTree = "<group>"; };
+		5F462C8D21BB8E860035143E /* ImageFilteringWithHeapsAndEventsFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsFilter.m; sourceTree = "<group>"; };
+		5F462C8E21BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndEventsShaders.metal; sourceTree = "<group>"; };
+		5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndEventsFilter.metal; sourceTree = "<group>"; };
+		5F462C9521BB91F30035143E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -129,6 +150,26 @@
 			path = AVFoundation;
 			sourceTree = "<group>";
 		};
+		5F462C8121BB8C930035143E /* ImageFilteringWithHeapsAndEvents */ = {
+			isa = PBXGroup;
+			children = (
+				5F462C9521BB91F30035143E /* Images */,
+				5F462C8821BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.h */,
+				5F462C8921BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m */,
+				5F462C8B21BB8E850035143E /* ImageFilteringWithHeapsAndEventsFilter.h */,
+				5F462C8D21BB8E860035143E /* ImageFilteringWithHeapsAndEventsFilter.m */,
+				5F462C8721BB8E830035143E /* ImageFilteringWithHeapsAndEventsRenderer.h */,
+				5F462C8C21BB8E860035143E /* ImageFilteringWithHeapsAndEventsRenderer.m */,
+				5F462C8E21BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal */,
+				5F462C8A21BB8E850035143E /* ImageFilteringWithHeapsAndEventsShaderTypes.h */,
+				5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */,
+				5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */,
+				5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */,
+				5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */,
+			);
+			path = ImageFilteringWithHeapsAndEvents;
+			sourceTree = "<group>";
+		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,6 +199,7 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5F462C8121BB8C930035143E /* ImageFilteringWithHeapsAndEvents */,
 				5F4DF98321B95F8100DC9FCD /* CPU-GPUSynchronization */,
 				5F4DF97521B9421A00DC9FCD /* DevicesAndCommands */,
 			);
@@ -326,9 +368,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */,
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
+				5F462C9621BB91F30035143E /* Images in Resources */,
 				5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
@@ -346,17 +390,23 @@
 				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
 				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
+				5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
+				5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
+				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
+				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
 				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
 				5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */,
 				5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */,
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,
 				5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */,
+				5F462C9221BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.m in Sources */,
 				5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */,
 				5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */,
+				5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
