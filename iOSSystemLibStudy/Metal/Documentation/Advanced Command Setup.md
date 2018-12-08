@@ -39,3 +39,11 @@ Metal 为你执行基本的同步，但你可以自己完全控制同步工作�
 
 [Image Filter Graph with Heaps and Events](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Image%20Filter%20Graph%20with%20Heaps%20and%20Events.md)
 演示如何使用堆和事件来优化多级图像过滤器。
+
+### Fences
+
+> [Image Filter Graph with Heaps and Fences](https://developer.apple.com/documentation/metal/resource_objects/image_filter_graph_with_heaps_and_fences?language=objc)
+> Demonstrates how to use heaps and fences to optimize a multistage image filter.
+
+[Image Filter Graph with Heaps and Fences](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Image%20Filter%20Graph%20with%20Heaps%20and%20Fences.md)
+演示如何使用堆和栅栏来优化多级图像滤镜。

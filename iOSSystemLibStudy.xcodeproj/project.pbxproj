@@ -67,6 +67,7 @@
 		5F462C8E21BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndEventsShaders.metal; sourceTree = "<group>"; };
 		5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndEventsFilter.metal; sourceTree = "<group>"; };
 		5F462C9521BB91F30035143E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		5F462C9721BB94740035143E /* Image Filter Graph with Heaps and Fences.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Fences.md"; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 				5F4DF9D021BA7A0600DC9FCD /* Synchronizing Events Across Multiple Devices.md */,
 				5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */,
 				5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */,
+				5F462C9721BB94740035143E /* Image Filter Graph with Heaps and Fences.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
