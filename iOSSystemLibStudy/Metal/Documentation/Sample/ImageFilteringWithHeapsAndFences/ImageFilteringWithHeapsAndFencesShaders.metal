@@ -7,7 +7,7 @@ Metal shaders used for rendering
 #include <metal_stdlib>
 #include <simd/simd.h>
 
-#include "ImageFilteringWithHeapsAndEventsShaderTypes.h"
+#include "ImageFilteringWithHeapsAndFencesShaderTypes.h"
 
 using namespace metal;
 
@@ -17,7 +17,7 @@ typedef struct {
 } RasterizerData;
 
 // Vertex shader function
-vertex RasterizerData imageFilteringWithHeapsAndEventsTexturedQuadVertex(       uint         vertexID  [[ vertex_id ]],
+vertex RasterizerData imageFilteringWithHeapsAndFencesTexturedQuadVertex(       uint         vertexID  [[ vertex_id ]],
                                       device AAPLVertex * vertices  [[ buffer(AAPLVertexBufferIndexVertices) ]],
                                       constant float2   & quadScale [[ buffer(AAPLVertexBufferIndexScale) ]])
 {
@@ -35,7 +35,7 @@ vertex RasterizerData imageFilteringWithHeapsAndEventsTexturedQuadVertex(       
 }
 
 // Fragment shader function
-fragment half4 imageFilteringWithHeapsAndEventsTexturedQuadFragment(RasterizerData   in         [[ stage_in ]],
+fragment half4 imageFilteringWithHeapsAndFencesTexturedQuadFragment(RasterizerData   in         [[ stage_in ]],
                                     texture2d<half>  texture    [[ texture(AAPLFragmentTextureIndexImage) ]],
                                     constant float & mipmapBias [[ buffer(AAPLFragmentBufferIndexMipBias) ]])
 {

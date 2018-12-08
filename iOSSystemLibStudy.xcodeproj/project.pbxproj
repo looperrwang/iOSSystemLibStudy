@@ -21,6 +21,13 @@
 		5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8E21BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal */; };
 		5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */; };
 		5F462C9621BB91F30035143E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5F462C9521BB91F30035143E /* Images */; };
+		5F462CC821BC188E0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC021BC188B0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m */; };
+		5F462CC921BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC121BC188B0035143E /* ImageFilteringWithHeapsAndFencesViewController.m */; };
+		5F462CCA21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC321BC188C0035143E /* ImageFilteringWithHeapsAndFencesFilter.m */; };
+		5F462CCB21BC188E0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC421BC188D0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal */; };
+		5F462CCC21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC521BC188D0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal */; };
+		5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */; };
+		5F462CCF21BC1DE20035143E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CCE21BC1DE20035143E /* Images */; };
 		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
 		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
 		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
@@ -68,6 +75,19 @@
 		5F462C8F21BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndEventsFilter.metal; sourceTree = "<group>"; };
 		5F462C9521BB91F30035143E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		5F462C9721BB94740035143E /* Image Filter Graph with Heaps and Fences.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Fences.md"; sourceTree = "<group>"; };
+		5F462C9821BC090D0035143E /* Encoding Indirect Command Buffers on the CPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Encoding Indirect Command Buffers on the CPU.md"; sourceTree = "<group>"; };
+		5F462C9921BC09240035143E /* Encoding Indirect Command Buffers on the GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Encoding Indirect Command Buffers on the GPU.md"; sourceTree = "<group>"; };
+		5F462CBE21BC188A0035143E /* ImageFilteringWithHeapsAndFencesShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndFencesShaderTypes.h; sourceTree = "<group>"; };
+		5F462CBF21BC188A0035143E /* ImageFilteringWithHeapsAndFencesFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndFencesFilter.h; sourceTree = "<group>"; };
+		5F462CC021BC188B0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndFencesRenderer.m; sourceTree = "<group>"; };
+		5F462CC121BC188B0035143E /* ImageFilteringWithHeapsAndFencesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndFencesViewController.m; sourceTree = "<group>"; };
+		5F462CC221BC188C0035143E /* ImageFilteringWithHeapsAndFencesRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndFencesRenderer.h; sourceTree = "<group>"; };
+		5F462CC321BC188C0035143E /* ImageFilteringWithHeapsAndFencesFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndFencesFilter.m; sourceTree = "<group>"; };
+		5F462CC421BC188D0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndFencesShaders.metal; sourceTree = "<group>"; };
+		5F462CC521BC188D0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ImageFilteringWithHeapsAndFencesFilter.metal; sourceTree = "<group>"; };
+		5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageFilteringWithHeapsAndFences.storyboard; sourceTree = "<group>"; };
+		5F462CC721BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndFencesViewController.h; sourceTree = "<group>"; };
+		5F462CCE21BC1DE20035143E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -171,6 +191,38 @@
 			path = ImageFilteringWithHeapsAndEvents;
 			sourceTree = "<group>";
 		};
+		5F462C9A21BC0A4F0035143E /* BasicIndirectCommandBuffers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = BasicIndirectCommandBuffers;
+			sourceTree = "<group>";
+		};
+		5F462CA621BC0AD60035143E /* IndirectCommandBuffersWithGPUEncoding */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IndirectCommandBuffersWithGPUEncoding;
+			sourceTree = "<group>";
+		};
+		5F462CBD21BC158E0035143E /* ImageFilteringWithHeapsAndFences */ = {
+			isa = PBXGroup;
+			children = (
+				5F462CCE21BC1DE20035143E /* Images */,
+				5F462CBF21BC188A0035143E /* ImageFilteringWithHeapsAndFencesFilter.h */,
+				5F462CC321BC188C0035143E /* ImageFilteringWithHeapsAndFencesFilter.m */,
+				5F462CC221BC188C0035143E /* ImageFilteringWithHeapsAndFencesRenderer.h */,
+				5F462CC021BC188B0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m */,
+				5F462CC421BC188D0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal */,
+				5F462CBE21BC188A0035143E /* ImageFilteringWithHeapsAndFencesShaderTypes.h */,
+				5F462CC721BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.h */,
+				5F462CC121BC188B0035143E /* ImageFilteringWithHeapsAndFencesViewController.m */,
+				5F462CC521BC188D0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal */,
+				5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */,
+			);
+			path = ImageFilteringWithHeapsAndFences;
+			sourceTree = "<group>";
+		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,6 +246,8 @@
 				5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */,
 				5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */,
 				5F462C9721BB94740035143E /* Image Filter Graph with Heaps and Fences.md */,
+				5F462C9821BC090D0035143E /* Encoding Indirect Command Buffers on the CPU.md */,
+				5F462C9921BC09240035143E /* Encoding Indirect Command Buffers on the GPU.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -201,6 +255,9 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5F462CBD21BC158E0035143E /* ImageFilteringWithHeapsAndFences */,
+				5F462CA621BC0AD60035143E /* IndirectCommandBuffersWithGPUEncoding */,
+				5F462C9A21BC0A4F0035143E /* BasicIndirectCommandBuffers */,
 				5F462C8121BB8C930035143E /* ImageFilteringWithHeapsAndEvents */,
 				5F4DF98321B95F8100DC9FCD /* CPU-GPUSynchronization */,
 				5F4DF97521B9421A00DC9FCD /* DevicesAndCommands */,
@@ -370,12 +427,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F462CCF21BC1DE20035143E /* Images in Resources */,
 				5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */,
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
 				5F462C9621BB91F30035143E /* Images in Resources */,
 				5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */,
+				5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
 			);
@@ -388,14 +447,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F462CCB21BC188E0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal in Sources */,
 				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
+				5F462CC821BC188E0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m in Sources */,
 				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
+				5F462CC921BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.m in Sources */,
 				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
 				5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
 				5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */,
+				5F462CCA21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.m in Sources */,
+				5F462CCC21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,

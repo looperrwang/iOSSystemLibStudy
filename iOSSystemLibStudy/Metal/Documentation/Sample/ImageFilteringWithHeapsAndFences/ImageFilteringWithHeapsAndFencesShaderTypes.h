@@ -4,8 +4,8 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
-#ifndef ImageFilteringWithHeapsAndEventsShaderTypes_h
-#define ImageFilteringWithHeapsAndEventsShaderTypes_h
+#ifndef ImageFilteringWithHeapsAndFencesShaderTypes_h
+#define ImageFilteringWithHeapsAndFencesShaderTypes_h
 
 #include <simd/simd.h>
 
@@ -46,4 +46,4 @@ typedef struct AAPLVertex {
     vector_float2 texCoord;
 } AAPLVertex;
 
-#endif // ImageFilteringWithHeapsAndEventsShaderTypes_h
+#endif // ImageFilteringWithHeapsAndFencesShaderTypes_h

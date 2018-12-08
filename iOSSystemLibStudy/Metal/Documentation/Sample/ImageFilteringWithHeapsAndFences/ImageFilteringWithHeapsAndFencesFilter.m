@@ -4,14 +4,14 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of filter classes providing utilities for allocating and manipulating textures allocated as a heap resource.
 */
-#import "ImageFilteringWithHeapsAndEventsFilter.h"
-#import "ImageFilteringWithHeapsAndEventsShaderTypes.h"
+#import "ImageFilteringWithHeapsAndFencesFilter.h"
+#import "ImageFilteringWithHeapsAndFencesShaderTypes.h"
 
 static const NSUInteger AAPLThreadgroupWidth  = 16;
 static const NSUInteger AAPLThreadgroupHeight = 16;
 static const NSUInteger AAPLThreadgroupDepth  = 1;
 
-@implementation ImageFilteringWithHeapsAndEventsDownsampleFilter
+@implementation ImageFilteringWithHeapsAndFencesDownsampleFilter
 {
     id <MTLDevice> _device;
 }
@@ -39,7 +39,7 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
 - (nullable id <MTLTexture>) executeWithCommandBuffer:(_Nonnull id <MTLCommandBuffer>)commandBuffer
                                          inputTexture:(_Nonnull id <MTLTexture>)inTexture
                                                  heap:(_Nonnull id <MTLHeap>)heap
-                                                event:(_Nonnull id <ImageFilteringWithHeapsAndEventsEventWrapper>)event
+                                                fence:(_Nonnull id <MTLFence>)fence
 {
     MTLTextureDescriptor *textureDescriptor = [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:inTexture.pixelFormat
                                                                                                  width:inTexture.width
@@ -50,11 +50,9 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
 
     id <MTLTexture> outTexture = [heap newTextureWithDescriptor:textureDescriptor];
     assert(outTexture && "Failed to allocate on heap, did not request enough resources");
-    
-    // wait for the event
-    [event wait:commandBuffer];
-    
+
     id <MTLBlitCommandEncoder> blitCommandEncoder = [commandBuffer blitCommandEncoder];
+
     if(blitCommandEncoder)
     {
         [blitCommandEncoder copyFromTexture:inTexture
@@ -69,18 +67,17 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
 
         [blitCommandEncoder generateMipmapsForTexture:outTexture];
 
+        [blitCommandEncoder updateFence:fence];
+
         [blitCommandEncoder endEncoding];
     }
 
-    // signal job completion
-    [event signal:commandBuffer];
-    
     return outTexture;
 }
 
 @end
 
-@implementation ImageFilteringWithHeapsAndEventsGaussianBlurFilter
+@implementation ImageFilteringWithHeapsAndFencesGaussianBlurFilter
 {
     id <MTLDevice> _device;
     id <MTLComputePipelineState> _horizontalKernel;
@@ -100,7 +97,7 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
     }
 
     // Create a compute kernel function.
-    id <MTLFunction> function = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndEventsGaussianblurHorizontal"];
+    id <MTLFunction> function = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndFencesGaussianblurHorizontal"];
 
     if(!function) {
         NSLog(@"Failed creating a new function");
@@ -115,7 +112,7 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
     }
 
     // Create a compute kernel function.
-    function = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndEventsGaussianblurVertical"];
+    function = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndFencesGaussianblurVertical"];
 
     if(!function) {
         NSLog(@"Failed creating a new function");
@@ -147,7 +144,7 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
 - (nullable id <MTLTexture>) executeWithCommandBuffer:(_Nonnull id <MTLCommandBuffer>)commandBuffer
                                          inputTexture:(_Nonnull id <MTLTexture>)inTexture
                                                  heap:(_Nonnull id <MTLHeap>)heap
-                                                event:(_Nonnull id <ImageFilteringWithHeapsAndEventsEventWrapper>)event
+                                                fence:(_Nonnull id <MTLFence>)fence
 {
     MTLTextureDescriptor *textureDescriptor =
         [MTLTextureDescriptor texture2DDescriptorWithPixelFormat:MTLPixelFormatRGBA8Unorm
@@ -192,13 +189,15 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
                                          textureType:inTexture.textureType
                                               levels:NSMakeRange(mipmapLevel, 1)
                                               slices:NSMakeRange(0, 1)];
-        
-        // wait for previous filter completion
-        [event wait:commandBuffer];
 
         id <MTLComputeCommandEncoder> computeEncoder = [commandBuffer computeCommandEncoder];
+
         if(computeEncoder)
         {
+            // Wait for blit operation in AAPLDownsampleFilter AND operations from previous iterations
+            // this filter to complete before continuing
+            [computeEncoder waitForFence:fence];
+
             // Perform horizontal blur using the input texture as an input
             // and a view of the mipmap level of input texture as the output
 
@@ -236,16 +235,15 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
             [computeEncoder dispatchThreadgroups:threadgroupCount
                            threadsPerThreadgroup:threadgroupSize];
 
+            // Indicate that operations on the intermediary texture are complete
+            [computeEncoder updateFence:fence];
+
             [computeEncoder endEncoding];
         }
 
-        // signal event
-        [event signal:commandBuffer];
-        
         // Make the intermediary texture aliasable indicating that the memory can be reused
         [intermediaryTexture makeAliasable];
     }
-    
     return inTexture;
 }
 

@@ -8,7 +8,7 @@ Metal compute kernels performing filtering
 #include <metal_stdlib>
 using namespace metal;
 
-#import "ImageFilteringWithHeapsAndEventsShaderTypes.h"
+#import "ImageFilteringWithHeapsAndFencesShaderTypes.h"
 
 constant float gaussianWeights[5] { 0.06136, 0.24477, 0.38774, 0.24477, 0.06136 };
 
@@ -33,7 +33,7 @@ static void gaussianblur(texture2d<half, access::read> inTexture,
     }
 }
 
-kernel void imageFilteringWithHeapsAndEventsGaussianblurHorizontal(texture2d<half, access::read>  inTexture   [[ texture(AAPLBlurTextureIndexInput) ]],
+kernel void imageFilteringWithHeapsAndFencesGaussianblurHorizontal(texture2d<half, access::read>  inTexture   [[ texture(AAPLBlurTextureIndexInput) ]],
                                    texture2d<half,  access::write> outTexture  [[ texture(AAPLBlurTextureIndexOutput) ]],
                                    constant uint                 &lod     [[ buffer(AAPLBlurBufferIndexLOD) ]],
                                    uint2                          gid         [[ thread_position_in_grid ]])
@@ -41,7 +41,7 @@ kernel void imageFilteringWithHeapsAndEventsGaussianblurHorizontal(texture2d<hal
     gaussianblur(inTexture, outTexture, lod, int2(1, 0), gid);
 }
 
-kernel void imageFilteringWithHeapsAndEventsGaussianblurVertical(texture2d<half, access::read>  inTexture   [[ texture(AAPLBlurTextureIndexInput) ]],
+kernel void imageFilteringWithHeapsAndFencesGaussianblurVertical(texture2d<half, access::read>  inTexture   [[ texture(AAPLBlurTextureIndexInput) ]],
                                  texture2d<half, access::write> outTexture  [[ texture(AAPLBlurTextureIndexOutput) ]],
                                  constant uint                 &lod    [[ buffer(AAPLBlurBufferIndexLOD) ]],
                                  uint2                          gid         [[ thread_position_in_grid ]])

@@ -6,9 +6,9 @@ Implementation of renderer class which performs Metal setup and per frame render
 */
 
 #import <math.h>
-#import "ImageFilteringWithHeapsAndEventsShaderTypes.h"
-#import "ImageFilteringWithHeapsAndEventsRenderer.h"
-#import "ImageFilteringWithHeapsAndEventsFilter.h"
+#import "ImageFilteringWithHeapsAndFencesShaderTypes.h"
+#import "ImageFilteringWithHeapsAndFencesRenderer.h"
+#import "ImageFilteringWithHeapsAndFencesFilter.h"
 
 @import simd;
 @import MetalKit;
@@ -28,7 +28,7 @@ static const NSTimeInterval AAPLTimeoutSeconds = 7.0;
 
 static const uint32_t AAPLNumImages = 6;
 
-@implementation ImageFilteringWithHeapsAndEventsRenderer
+@implementation ImageFilteringWithHeapsAndFencesRenderer
 {
     MTKView *_view;
 
@@ -37,11 +37,8 @@ static const uint32_t AAPLNumImages = 6;
     id <MTLRenderPipelineState> _pipelineState;
 
     // Application filter classes
-    ImageFilteringWithHeapsAndEventsGaussianBlurFilter *_gaussianBlur;
-    ImageFilteringWithHeapsAndEventsDownsampleFilter   *_downsample;
-    
-    // Event, controlling sequential operations on GPU
-    id<ImageFilteringWithHeapsAndEventsEventWrapper> _event;
+    ImageFilteringWithHeapsAndFencesGaussianBlurFilter *_gaussianBlur;
+    ImageFilteringWithHeapsAndFencesDownsampleFilter   *_downsample;
 
     // Texture sampled for rendering fully filtered image
     id<MTLTexture> _displayTexture;
@@ -57,6 +54,9 @@ static const uint32_t AAPLNumImages = 6;
 
     // Heap with temporary textures used for intermediate texture results
     id<MTLHeap> _scratchHeap;
+
+    // Fence controlling access to _scratchHeap, preventing GPU race-conditions
+    id<MTLFence> _fence;
 
     // Buffer with quad geometry to render texture to display
     id<MTLBuffer> _vertexBuffer;
@@ -103,10 +103,10 @@ static const uint32_t AAPLNumImages = 6;
     id <MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
     // Load the fragment program into the library
-    id <MTLFunction> fragmentProgram = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndEventsTexturedQuadFragment"];
+    id <MTLFunction> fragmentProgram = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndFencesTexturedQuadFragment"];
 
     // Load the vertex program into the library
-    id <MTLFunction> vertexProgram = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndEventsTexturedQuadVertex"];
+    id <MTLFunction> vertexProgram = [defaultLibrary newFunctionWithName:@"imageFilteringWithHeapsAndFencesTexturedQuadVertex"];
 
     // Create a reusable pipeline state
     MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
@@ -124,13 +124,13 @@ static const uint32_t AAPLNumImages = 6;
         NSLog(@"Failed to created pipeline state, error %@", error);
     }
 
-    // Initialize our filters
-    _gaussianBlur = [[ImageFilteringWithHeapsAndEventsGaussianBlurFilter alloc] initWithDevice:_device];
-    _downsample = [[ImageFilteringWithHeapsAndEventsDownsampleFilter alloc] initWithDevice:_device];
+    // Create fence
+    _fence = [_device newFence];
 
-    // create controlling event
-    _event = [[AAPLSingleDeviceEventWrapper alloc] initWithDevice:_device];
-    
+    // Initialize our filters
+    _gaussianBlur = [[ImageFilteringWithHeapsAndFencesGaussianBlurFilter alloc] initWithDevice:_device];
+    _downsample = [[ImageFilteringWithHeapsAndFencesDownsampleFilter alloc] initWithDevice:_device];
+
     [self loadImages];
 
     [self createImageHeap];
@@ -205,11 +205,11 @@ static const uint32_t AAPLNumImages = 6;
 
     for(uint32_t i = 0; i < AAPLNumImages; i++)
     {
-        // Create descriptor using the texture's properties
-        MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndEventsRenderer newDescriptorFromTexture:_imageTextures[i]
+        // Create a descriptor using the texture's properties
+        MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndFencesRenderer newDescriptorFromTexture:_imageTextures[i]
                                                                       storageMode:heapDescriptor.storageMode];
 
-        // Determine size needed for the heap from the given descriptor
+        // Determine the size needed for the heap from the given descriptor
         MTLSizeAndAlign sizeAndAlign = [_device heapTextureSizeAndAlignWithDescriptor:descriptor];
 
         // Align the size so that more resources will fit after this texture
@@ -219,7 +219,7 @@ static const uint32_t AAPLNumImages = 6;
         heapDescriptor.size += sizeAndAlign.size;
     }
 
-    // Create heap large enough to hold all resources
+    // Create a heap large enough to hold all resources
     _imageHeap = [_device newHeapWithDescriptor:heapDescriptor];
 }
 
@@ -255,7 +255,7 @@ static const uint32_t AAPLNumImages = 6;
     for(uint32_t i = 0; i < AAPLNumImages; i++)
     {
         // Create descriptor using the texture's properties
-        MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndEventsRenderer newDescriptorFromTexture:_imageTextures[i]
+        MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndFencesRenderer newDescriptorFromTexture:_imageTextures[i]
                                                                       storageMode:_imageHeap.storageMode];
 
         // Create a texture from the heap
@@ -298,7 +298,7 @@ static const uint32_t AAPLNumImages = 6;
 {
     MTLStorageMode heapStorageMode = MTLStorageModePrivate;
 
-    MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndEventsRenderer newDescriptorFromTexture:inTexture
+    MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndFencesRenderer newDescriptorFromTexture:inTexture
                                                                   storageMode:heapStorageMode];
     descriptor.storageMode = MTLStorageModePrivate;
 
@@ -328,17 +328,16 @@ static const uint32_t AAPLNumImages = 6;
 
     id <MTLTexture> resultTexture;
 
-    // 1st filter
     resultTexture = [_downsample executeWithCommandBuffer:commandBuffer
                                              inputTexture:inTexture
                                                      heap:_scratchHeap
-                                                    event:_event];
+                                                    fence:_fence];
 
-    // 2nd filter
     resultTexture = [_gaussianBlur executeWithCommandBuffer:commandBuffer
                                                inputTexture:resultTexture
                                                        heap:_scratchHeap
-                                                      event:_event];
+                                                      fence:_fence];
+
     [commandBuffer commit];
 
     return resultTexture;
@@ -384,10 +383,7 @@ static const uint32_t AAPLNumImages = 6;
     id <MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
     commandBuffer.label = @"MyCommand";
 
-    // Wait for the filter graph to complete execution
-    [_event wait:commandBuffer];
-
-    // Obtain a render pass descriptor generated from the view's drawable textures
+    // Obtain a renderPassDescriptor generated from the view's drawable textures
     MTLRenderPassDescriptor* renderPassDescriptor = _view.currentRenderPassDescriptor;
 
     if(renderPassDescriptor != nil)
@@ -412,9 +408,17 @@ static const uint32_t AAPLNumImages = 6;
                                  length:sizeof(float)
                                 atIndex:0];
 
+        // Wait for compute to finish before executing the fragment stage (which occurs during
+        // the next draw
+        [renderEncoder waitForFence:_fence
+                       beforeStages:MTLRenderStageFragment];
+
         [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle
                           vertexStart:0
                           vertexCount:6];
+
+        [renderEncoder updateFence:_fence
+                       afterStages:MTLRenderStageFragment];
 
         [renderEncoder popDebugGroup];
 
@@ -423,10 +427,6 @@ static const uint32_t AAPLNumImages = 6;
         [commandBuffer presentDrawable:_view.currentDrawable];
     }
 
-    // Signal event for the frame completion
-    [_event signal:commandBuffer];
-    
-    // Finalize rendering for the frame
     [commandBuffer commit];
 }
 

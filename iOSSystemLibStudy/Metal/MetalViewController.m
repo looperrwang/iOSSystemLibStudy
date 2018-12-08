@@ -41,6 +41,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"DevicesAndCommands" vcName:@"DevicesAndCommandsViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"CPU-GPUSynchronization" vcName:@"CPUGPUSynchronizationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"ImageFilteringWithHeapsAndEvents" vcName:@"ImageFilteringWithHeapsAndEventsViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ImageFilteringWithHeapsAndFences" vcName:@"ImageFilteringWithHeapsAndFencesViewController"]];
 }
 
 #pragma mark - UITableViewDataSource

@@ -6,14 +6,12 @@ Filter protocol and classes which provide utilities for allocating and manipulat
  textures allocated as a heap resource.
 */
 
-#ifndef ImageFilteringWithHeapsAndEventsFilter_h
-#define ImageFilteringWithHeapsAndEventsFilter_h
-
-#import "ImageFilteringWithHeapsAndEventsEventWrapper.h"
+#ifndef ImageFilteringWithHeapsAndFencesFilter_h
+#define ImageFilteringWithHeapsAndFencesFilter_h
 
 @import Metal;
 
-@protocol ImageFilteringWithHeapsAndEventsFilter
+@protocol ImageFilteringWithHeapsAndFencesFilter
 
 - (nonnull instancetype) initWithDevice:(nonnull id <MTLDevice>)device;
 
@@ -22,19 +20,19 @@ Filter protocol and classes which provide utilities for allocating and manipulat
 - (nullable id <MTLTexture>) executeWithCommandBuffer:(_Nonnull id <MTLCommandBuffer>)commandBuffer
                                          inputTexture:(_Nonnull id <MTLTexture>)inTexture
                                                  heap:(_Nonnull id <MTLHeap>)heap
-                                                event:(_Nonnull id <ImageFilteringWithHeapsAndEventsEventWrapper>)event;
+                                                fence:(_Nonnull id <MTLFence>)fence;
 
 @end
 
 // Uses the blit encoder to take an input texture and blit it into a texture
 // that has been allocated as a heap resource and then generate full a mipmap
 // for the texture.
-@interface ImageFilteringWithHeapsAndEventsDownsampleFilter : NSObject <ImageFilteringWithHeapsAndEventsFilter>
+@interface ImageFilteringWithHeapsAndFencesDownsampleFilter : NSObject <ImageFilteringWithHeapsAndFencesFilter>
 @end
 
 // Uses a compute encoder to perform a gaussian blur filter on mipmap levels
 // [1...n] on the provided input texture.
-@interface ImageFilteringWithHeapsAndEventsGaussianBlurFilter : NSObject <ImageFilteringWithHeapsAndEventsFilter>
+@interface ImageFilteringWithHeapsAndFencesGaussianBlurFilter : NSObject <ImageFilteringWithHeapsAndFencesFilter>
 @end
 
-#endif /* ImageFilteringWithHeapsAndEventsFilter_h */
+#endif /* ImageFilteringWithHeapsAndFencesFilter_h */

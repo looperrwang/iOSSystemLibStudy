@@ -48,7 +48,7 @@
 for(uint32_t i = 0; i < AAPLNumImages; i++)
 {
 // Create a descriptor using the texture's properties
-MTLTextureDescriptor *descriptor = [AAPLRenderer newDescriptorFromTexture:_imageTextures[i]
+MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndFencesRenderer newDescriptorFromTexture:_imageTextures[i]
     storageMode:heapDescriptor.storageMode];
 
 // Determine the size needed for the heap from the given descriptor
@@ -70,7 +70,7 @@ _imageHeap = [_device newHeapWithDescriptor:heapDescriptor];
 对于 _imageTextures 中的每个纹理，该示例从堆中分配一个新纹理 heapTexture 。
 
 ```objc
-MTLTextureDescriptor *descriptor = [AAPLRenderer newDescriptorFromTexture:_imageTextures[i]
+MTLTextureDescriptor *descriptor = [ImageFilteringWithHeapsAndFencesRenderer newDescriptorFromTexture:_imageTextures[i]
 storageMode:_imageHeap.storageMode];
 
 // Create a texture from the heap

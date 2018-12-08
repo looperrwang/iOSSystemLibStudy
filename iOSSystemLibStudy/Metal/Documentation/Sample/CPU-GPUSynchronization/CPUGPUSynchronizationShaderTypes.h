@@ -5,8 +5,8 @@ Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
 
-#ifndef AAPLShaderTypes_h
-#define AAPLShaderTypes_h
+#ifndef CPUGPUSynchronizationShaderTypes_h
+#define CPUGPUSynchronizationShaderTypes_h
 
 #include <simd/simd.h>
 
@@ -31,4 +31,4 @@ typedef struct
     vector_float4 color;
 } AAPLVertex;
 
-#endif /* AAPLShaderTypes_h */
+#endif /* CPUGPUSynchronizationShaderTypes_h */

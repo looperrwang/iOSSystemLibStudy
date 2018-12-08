@@ -47,3 +47,21 @@ Metal 为你执行基本的同步，但你可以自己完全控制同步工作�
 
 [Image Filter Graph with Heaps and Fences](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Image%20Filter%20Graph%20with%20Heaps%20and%20Fences.md)
 演示如何使用堆和栅栏来优化多级图像滤镜。
+
+### Indirect Command Buffers
+
+> Recoup encoding time by reusing commands, or create a GPU-driven rendering pipeline by generating and executing commands from the GPU.
+>
+> [Encoding Indirect Command Buffers on the CPU](https://developer.apple.com/documentation/metal/advanced_command_setup/encoding_indirect_command_buffers_on_the_cpu?language=objc)
+> Reduce CPU overhead and simplify your command execution by reusing commands.
+>
+> [Encoding Indirect Command Buffers on the GPU](https://developer.apple.com/documentation/metal/advanced_command_setup/encoding_indirect_command_buffers_on_the_gpu?language=objc)
+> Maximize CPU to GPU parallelization by generating render commands on the GPU.
+
+通过重用命令来减少编码时间，或者通过从 GPU 生成并执行命令来创建 GPU 驱动的渲染管道。
+
+ [Encoding Indirect Command Buffers on the CPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Encoding%20Indirect%20Command%20Buffers%20on%20the%20CPU.md)
+通过重用命令减少 CPU 开销并简化命令执行。
+
+[Encoding Indirect Command Buffers on the GPU](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Metal/Documentation/Encoding%20Indirect%20Command%20Buffers%20on%20the%20GPU.md)
+通过在 GPU 上生成渲染命令，最大化 CPU 到 GPU 的并行化。
