@@ -28,6 +28,18 @@
 		5F462CCC21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CC521BC188D0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal */; };
 		5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */; };
 		5F462CCF21BC1DE20035143E /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CCE21BC1DE20035143E /* Images */; };
+		5F462CE321BCFC660035143E /* BasicIndirectCommandBuffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CDC21BCFC630035143E /* BasicIndirectCommandBuffersViewController.m */; };
+		5F462CE421BCFC660035143E /* BasicIndirectCommandBuffersRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CDD21BCFC630035143E /* BasicIndirectCommandBuffersRenderer.m */; };
+		5F462CE521BCFC660035143E /* BasicIndirectCommandBuffers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CE021BCFC650035143E /* BasicIndirectCommandBuffers.storyboard */; };
+		5F462CE621BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CE221BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal */; };
+		5F462CEE21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CE721BCFDDE0035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard */; };
+		5F462CEF21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CE921BCFDDF0035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m */; };
+		5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CEB21BCFDE00035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m */; };
+		5F462CF121BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CED21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal */; };
+		5F462CFB21BD40280035143E /* HelloTriangleShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CF421BD40250035143E /* HelloTriangleShaders.metal */; };
+		5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CF621BD40260035143E /* HelloTriangleRenderer.m */; };
+		5F462CFD21BD40280035143E /* HelloTriangleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CF821BD40270035143E /* HelloTriangleViewController.m */; };
+		5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CFA21BD40280035143E /* HelloTriangle.storyboard */; };
 		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
 		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
 		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
@@ -88,6 +100,29 @@
 		5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageFilteringWithHeapsAndFences.storyboard; sourceTree = "<group>"; };
 		5F462CC721BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndFencesViewController.h; sourceTree = "<group>"; };
 		5F462CCE21BC1DE20035143E /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		5F462CDC21BCFC630035143E /* BasicIndirectCommandBuffersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicIndirectCommandBuffersViewController.m; sourceTree = "<group>"; };
+		5F462CDD21BCFC630035143E /* BasicIndirectCommandBuffersRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicIndirectCommandBuffersRenderer.m; sourceTree = "<group>"; };
+		5F462CDE21BCFC640035143E /* BasicIndirectCommandBuffersRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicIndirectCommandBuffersRenderer.h; sourceTree = "<group>"; };
+		5F462CDF21BCFC640035143E /* BasicIndirectCommandBuffersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicIndirectCommandBuffersViewController.h; sourceTree = "<group>"; };
+		5F462CE021BCFC650035143E /* BasicIndirectCommandBuffers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BasicIndirectCommandBuffers.storyboard; sourceTree = "<group>"; };
+		5F462CE121BCFC650035143E /* BasicIndirectCommandBuffersShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicIndirectCommandBuffersShaderTypes.h; sourceTree = "<group>"; };
+		5F462CE221BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = BasicIndirectCommandBuffersShaders.metal; sourceTree = "<group>"; };
+		5F462CE721BCFDDE0035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IndirectCommandBuffersWithGPUEncoding.storyboard; sourceTree = "<group>"; };
+		5F462CE821BCFDDE0035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndirectCommandBuffersWithGPUEncodingRenderer.h; sourceTree = "<group>"; };
+		5F462CE921BCFDDF0035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndirectCommandBuffersWithGPUEncodingViewController.m; sourceTree = "<group>"; };
+		5F462CEA21BCFDDF0035143E /* IndirectCommandBuffersWithGPUEncodingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndirectCommandBuffersWithGPUEncodingViewController.h; sourceTree = "<group>"; };
+		5F462CEB21BCFDE00035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IndirectCommandBuffersWithGPUEncodingRenderer.m; sourceTree = "<group>"; };
+		5F462CEC21BCFDE00035143E /* IndirectCommandBuffersWithGPUEncodingShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IndirectCommandBuffersWithGPUEncodingShaderTypes.h; sourceTree = "<group>"; };
+		5F462CED21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = IndirectCommandBuffersWithGPUEncodingShaders.metal; sourceTree = "<group>"; };
+		5F462CF221BD00870035143E /* Hello Triangle.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Hello Triangle.md"; sourceTree = "<group>"; };
+		5F462CF421BD40250035143E /* HelloTriangleShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HelloTriangleShaders.metal; sourceTree = "<group>"; };
+		5F462CF521BD40250035143E /* HelloTriangleRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloTriangleRenderer.h; sourceTree = "<group>"; };
+		5F462CF621BD40260035143E /* HelloTriangleRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloTriangleRenderer.m; sourceTree = "<group>"; };
+		5F462CF721BD40260035143E /* HelloTriangleShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloTriangleShaderTypes.h; sourceTree = "<group>"; };
+		5F462CF821BD40270035143E /* HelloTriangleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloTriangleViewController.m; sourceTree = "<group>"; };
+		5F462CF921BD40270035143E /* HelloTriangleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloTriangleViewController.h; sourceTree = "<group>"; };
+		5F462CFA21BD40280035143E /* HelloTriangle.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HelloTriangle.storyboard; sourceTree = "<group>"; };
+		5F462CFF21BD41B80035143E /* Basic Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Buffers.md"; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -194,6 +229,13 @@
 		5F462C9A21BC0A4F0035143E /* BasicIndirectCommandBuffers */ = {
 			isa = PBXGroup;
 			children = (
+				5F462CDE21BCFC640035143E /* BasicIndirectCommandBuffersRenderer.h */,
+				5F462CDD21BCFC630035143E /* BasicIndirectCommandBuffersRenderer.m */,
+				5F462CE221BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal */,
+				5F462CE121BCFC650035143E /* BasicIndirectCommandBuffersShaderTypes.h */,
+				5F462CDF21BCFC640035143E /* BasicIndirectCommandBuffersViewController.h */,
+				5F462CDC21BCFC630035143E /* BasicIndirectCommandBuffersViewController.m */,
+				5F462CE021BCFC650035143E /* BasicIndirectCommandBuffers.storyboard */,
 			);
 			path = BasicIndirectCommandBuffers;
 			sourceTree = "<group>";
@@ -201,6 +243,13 @@
 		5F462CA621BC0AD60035143E /* IndirectCommandBuffersWithGPUEncoding */ = {
 			isa = PBXGroup;
 			children = (
+				5F462CE821BCFDDE0035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.h */,
+				5F462CEB21BCFDE00035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m */,
+				5F462CED21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal */,
+				5F462CEC21BCFDE00035143E /* IndirectCommandBuffersWithGPUEncodingShaderTypes.h */,
+				5F462CEA21BCFDDF0035143E /* IndirectCommandBuffersWithGPUEncodingViewController.h */,
+				5F462CE921BCFDDF0035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m */,
+				5F462CE721BCFDDE0035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard */,
 			);
 			path = IndirectCommandBuffersWithGPUEncoding;
 			sourceTree = "<group>";
@@ -221,6 +270,20 @@
 				5F462CC621BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard */,
 			);
 			path = ImageFilteringWithHeapsAndFences;
+			sourceTree = "<group>";
+		};
+		5F462CF321BD400D0035143E /* HelloTriangle */ = {
+			isa = PBXGroup;
+			children = (
+				5F462CF521BD40250035143E /* HelloTriangleRenderer.h */,
+				5F462CF621BD40260035143E /* HelloTriangleRenderer.m */,
+				5F462CF421BD40250035143E /* HelloTriangleShaders.metal */,
+				5F462CF721BD40260035143E /* HelloTriangleShaderTypes.h */,
+				5F462CF921BD40270035143E /* HelloTriangleViewController.h */,
+				5F462CF821BD40270035143E /* HelloTriangleViewController.m */,
+				5F462CFA21BD40280035143E /* HelloTriangle.storyboard */,
+			);
+			path = HelloTriangle;
 			sourceTree = "<group>";
 		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
@@ -248,6 +311,8 @@
 				5F462C9721BB94740035143E /* Image Filter Graph with Heaps and Fences.md */,
 				5F462C9821BC090D0035143E /* Encoding Indirect Command Buffers on the CPU.md */,
 				5F462C9921BC09240035143E /* Encoding Indirect Command Buffers on the GPU.md */,
+				5F462CF221BD00870035143E /* Hello Triangle.md */,
+				5F462CFF21BD41B80035143E /* Basic Buffers.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -255,6 +320,7 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5F462CF321BD400D0035143E /* HelloTriangle */,
 				5F462CBD21BC158E0035143E /* ImageFilteringWithHeapsAndFences */,
 				5F462CA621BC0AD60035143E /* IndirectCommandBuffersWithGPUEncoding */,
 				5F462C9A21BC0A4F0035143E /* BasicIndirectCommandBuffers */,
@@ -430,8 +496,11 @@
 				5F462CCF21BC1DE20035143E /* Images in Resources */,
 				5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */,
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
+				5F462CEE21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
+				5F462CE521BCFC660035143E /* BasicIndirectCommandBuffers.storyboard in Resources */,
+				5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */,
 				5F462C9621BB91F30035143E /* Images in Resources */,
 				5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */,
 				5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */,
@@ -451,6 +520,9 @@
 				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
 				5F462CC821BC188E0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m in Sources */,
 				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
+				5F462CFD21BD40280035143E /* HelloTriangleViewController.m in Sources */,
+				5F462CFB21BD40280035143E /* HelloTriangleShaders.metal in Sources */,
+				5F462CE421BCFC660035143E /* BasicIndirectCommandBuffersRenderer.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
 				5F462CC921BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.m in Sources */,
 				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
@@ -460,9 +532,12 @@
 				5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */,
 				5F462CCA21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.m in Sources */,
 				5F462CCC21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal in Sources */,
+				5F462CEF21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
+				5F462CE321BCFC660035143E /* BasicIndirectCommandBuffersViewController.m in Sources */,
+				5F462CE621BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal in Sources */,
 				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
 				5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */,
@@ -470,10 +545,13 @@
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,
 				5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */,
 				5F462C9221BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.m in Sources */,
+				5F462CF121BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal in Sources */,
 				5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */,
 				5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */,
 				5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */,
+				5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
+				5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,6 +693,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iOSSystemLibStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -631,6 +710,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = iOSSystemLibStudy/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

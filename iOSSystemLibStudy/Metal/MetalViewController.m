@@ -42,6 +42,9 @@
     [self.data addObject:[[CellData alloc] initWithText:@"CPU-GPUSynchronization" vcName:@"CPUGPUSynchronizationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"ImageFilteringWithHeapsAndEvents" vcName:@"ImageFilteringWithHeapsAndEventsViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"ImageFilteringWithHeapsAndFences" vcName:@"ImageFilteringWithHeapsAndFencesViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"BasicIndirectCommandBuffers" vcName:@"BasicIndirectCommandBuffersViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"IndirectCommandBuffersWithGPUEncoding" vcName:@"IndirectCommandBuffersWithGPUEncodingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"HelloTriangle" vcName:@"HelloTriangleViewController"]];
 }
 
 #pragma mark - UITableViewDataSource

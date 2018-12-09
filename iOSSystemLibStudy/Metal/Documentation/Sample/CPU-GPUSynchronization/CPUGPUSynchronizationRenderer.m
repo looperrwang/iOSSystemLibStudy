@@ -97,10 +97,10 @@ static const NSUInteger MaxBuffersInFlight = 3;
         id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
         // Load the vertex function into the library
-        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexShader"];
+        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"CPUGPUSynchronizationVertexShader"];
 
         // Load the fragment function into the library
-        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"fragmentShader"];
+        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"CPUGPUSynchronizationfragmentShader"];
 
         // Create a reusable pipeline state
         MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];

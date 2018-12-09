@@ -108,6 +108,22 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 ### Graphics - 图形
 
+> Render graphics by issuing draw calls, and choose a presentation object if you're drawing to the screen.
+>
+> [Hello Triangle](https://developer.apple.com/documentation/metal/hello_triangle)
+> Demonstrates how to render a simple 2D triangle.
+>
+> [Basic Buffers](https://developer.apple.com/documentation/metal/basic_buffers)
+> Demonstrates how to manage hundreds of vertices with a vertex buffer.
+
+通过发出绘制调用渲染图形，并在绘制到屏幕时选择演示对象。
+
+[Hello Triangle](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Hello%20Triangle.md)
+演示如何渲染简单的 2D 三角形。
+
+[Basic Buffers](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Basic%20Buffers.md)
+演示如何使用顶点缓冲区管理数百个顶点。
+
 ### Parallel Computation - 并行计算
 
 ### Custom Functions - 自定义函数
