@@ -115,6 +115,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 >
 > [Basic Buffers](https://developer.apple.com/documentation/metal/basic_buffers)
 > Demonstrates how to manage hundreds of vertices with a vertex buffer.
+>
+> [Basic Texturing](https://developer.apple.com/documentation/metal/basic_texturing?language=objc)
+> Demonstrates how to load image data and texture a quad.
 
 通过发出绘制调用渲染图形，并在绘制到屏幕时选择演示对象。
 
@@ -123,6 +126,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 [Basic Buffers](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Basic%20Buffers.md)
 演示如何使用顶点缓冲区管理数百个顶点。
+
+[Basic Texturing](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Basic%20Texturing.md)
+演示如何加载图像数据和纹理四边形。
 
 ### Parallel Computation - 并行计算
 

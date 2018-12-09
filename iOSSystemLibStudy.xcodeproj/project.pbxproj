@@ -73,6 +73,7 @@
 		5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputTypeViewController.m; sourceTree = "<group>"; };
 		5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputTypeViewController.h; sourceTree = "<group>"; };
 		5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageOutputTypeViewController.m; sourceTree = "<group>"; };
+		5F3F591821BD6B4700CD1226 /* Basic Texturing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Texturing.md"; sourceTree = "<group>"; };
 		5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsViewController.h; sourceTree = "<group>"; };
 		5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsViewController.m; sourceTree = "<group>"; };
 		5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageFilteringWithHeapsAndEvents.storyboard; sourceTree = "<group>"; };
@@ -313,6 +314,7 @@
 				5F462C9921BC09240035143E /* Encoding Indirect Command Buffers on the GPU.md */,
 				5F462CF221BD00870035143E /* Hello Triangle.md */,
 				5F462CFF21BD41B80035143E /* Basic Buffers.md */,
+				5F3F591821BD6B4700CD1226 /* Basic Texturing.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
