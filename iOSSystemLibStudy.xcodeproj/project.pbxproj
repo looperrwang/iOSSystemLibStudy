@@ -40,6 +40,16 @@
 		5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CF621BD40260035143E /* HelloTriangleRenderer.m */; };
 		5F462CFD21BD40280035143E /* HelloTriangleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462CF821BD40270035143E /* HelloTriangleViewController.m */; };
 		5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462CFA21BD40280035143E /* HelloTriangle.storyboard */; };
+		5F462D0821BDFD5E0035143E /* BasicBuffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D0221BDFD5B0035143E /* BasicBuffersViewController.m */; };
+		5F462D0921BDFD5E0035143E /* BasicBuffers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D0321BDFD5C0035143E /* BasicBuffers.storyboard */; };
+		5F462D0A21BDFD5E0035143E /* BasicBuffersRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D0421BDFD5C0035143E /* BasicBuffersRenderer.m */; };
+		5F462D0B21BDFD5E0035143E /* BasicBuffersShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D0521BDFD5D0035143E /* BasicBuffersShaders.metal */; };
+		5F462D1721BE34AD0035143E /* BasicTexturingRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D0E21BE34A90035143E /* BasicTexturingRenderer.m */; };
+		5F462D1821BE34AD0035143E /* BasicTexturingShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D1021BE34AA0035143E /* BasicTexturingShaders.metal */; };
+		5F462D1921BE34AD0035143E /* BasicTexturingImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D1121BE34AB0035143E /* BasicTexturingImage.m */; };
+		5F462D1A21BE34AD0035143E /* BasicTexturingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D1221BE34AB0035143E /* BasicTexturingViewController.m */; };
+		5F462D1B21BE34AD0035143E /* Image.tga in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D1421BE34AC0035143E /* Image.tga */; };
+		5F462D1C21BE34AD0035143E /* BasicTexturing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D1521BE34AD0035143E /* BasicTexturing.storyboard */; };
 		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
 		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
 		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
@@ -124,6 +134,28 @@
 		5F462CF921BD40270035143E /* HelloTriangleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloTriangleViewController.h; sourceTree = "<group>"; };
 		5F462CFA21BD40280035143E /* HelloTriangle.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = HelloTriangle.storyboard; sourceTree = "<group>"; };
 		5F462CFF21BD41B80035143E /* Basic Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Buffers.md"; sourceTree = "<group>"; };
+		5F462D0121BDFD5B0035143E /* BasicBuffersRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicBuffersRenderer.h; sourceTree = "<group>"; };
+		5F462D0221BDFD5B0035143E /* BasicBuffersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicBuffersViewController.m; sourceTree = "<group>"; };
+		5F462D0321BDFD5C0035143E /* BasicBuffers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BasicBuffers.storyboard; sourceTree = "<group>"; };
+		5F462D0421BDFD5C0035143E /* BasicBuffersRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicBuffersRenderer.m; sourceTree = "<group>"; };
+		5F462D0521BDFD5D0035143E /* BasicBuffersShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = BasicBuffersShaders.metal; sourceTree = "<group>"; };
+		5F462D0621BDFD5D0035143E /* BasicBuffersShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicBuffersShaderTypes.h; sourceTree = "<group>"; };
+		5F462D0721BDFD5E0035143E /* BasicBuffersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicBuffersViewController.h; sourceTree = "<group>"; };
+		5F462D0D21BE34A90035143E /* BasicTexturingRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTexturingRenderer.h; sourceTree = "<group>"; };
+		5F462D0E21BE34A90035143E /* BasicTexturingRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTexturingRenderer.m; sourceTree = "<group>"; };
+		5F462D0F21BE34AA0035143E /* BasicTexturingImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTexturingImage.h; sourceTree = "<group>"; };
+		5F462D1021BE34AA0035143E /* BasicTexturingShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = BasicTexturingShaders.metal; sourceTree = "<group>"; };
+		5F462D1121BE34AB0035143E /* BasicTexturingImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTexturingImage.m; sourceTree = "<group>"; };
+		5F462D1221BE34AB0035143E /* BasicTexturingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BasicTexturingViewController.m; sourceTree = "<group>"; };
+		5F462D1321BE34AC0035143E /* BasicTexturingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTexturingViewController.h; sourceTree = "<group>"; };
+		5F462D1421BE34AC0035143E /* Image.tga */ = {isa = PBXFileReference; lastKnownFileType = file; path = Image.tga; sourceTree = "<group>"; };
+		5F462D1521BE34AD0035143E /* BasicTexturing.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = BasicTexturing.storyboard; sourceTree = "<group>"; };
+		5F462D1621BE34AD0035143E /* BasicTexturingShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BasicTexturingShaderTypes.h; sourceTree = "<group>"; };
+		5F462D1D21BE37E60035143E /* Render Pass.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Render Pass.md"; sourceTree = "<group>"; };
+		5F462D3521BE85390035143E /* Using Programmable Sample Positions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Using Programmable Sample Positions.md"; sourceTree = "<group>"; };
+		5F462D3621BE8EBB0035143E /* Handling MSAA Depth with Programmable Sample Positions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Handling MSAA Depth with Programmable Sample Positions.md"; sourceTree = "<group>"; };
+		5F462D3721BE940D0035143E /* Seeing a Frame's Render Passes with the Dependency Viewer.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Seeing a Frame's Render Passes with the Dependency Viewer.md"; sourceTree = "<group>"; };
+		5F462D3821BE9E9A0035143E /* Deferred Lighting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Deferred Lighting.md"; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -287,6 +319,37 @@
 			path = HelloTriangle;
 			sourceTree = "<group>";
 		};
+		5F462D0021BDFD120035143E /* BasicBuffers */ = {
+			isa = PBXGroup;
+			children = (
+				5F462D0121BDFD5B0035143E /* BasicBuffersRenderer.h */,
+				5F462D0421BDFD5C0035143E /* BasicBuffersRenderer.m */,
+				5F462D0521BDFD5D0035143E /* BasicBuffersShaders.metal */,
+				5F462D0621BDFD5D0035143E /* BasicBuffersShaderTypes.h */,
+				5F462D0721BDFD5E0035143E /* BasicBuffersViewController.h */,
+				5F462D0221BDFD5B0035143E /* BasicBuffersViewController.m */,
+				5F462D0321BDFD5C0035143E /* BasicBuffers.storyboard */,
+			);
+			path = BasicBuffers;
+			sourceTree = "<group>";
+		};
+		5F462D0C21BE347D0035143E /* BasicTexturing */ = {
+			isa = PBXGroup;
+			children = (
+				5F462D0F21BE34AA0035143E /* BasicTexturingImage.h */,
+				5F462D1121BE34AB0035143E /* BasicTexturingImage.m */,
+				5F462D0D21BE34A90035143E /* BasicTexturingRenderer.h */,
+				5F462D0E21BE34A90035143E /* BasicTexturingRenderer.m */,
+				5F462D1021BE34AA0035143E /* BasicTexturingShaders.metal */,
+				5F462D1621BE34AD0035143E /* BasicTexturingShaderTypes.h */,
+				5F462D1321BE34AC0035143E /* BasicTexturingViewController.h */,
+				5F462D1221BE34AB0035143E /* BasicTexturingViewController.m */,
+				5F462D1421BE34AC0035143E /* Image.tga */,
+				5F462D1521BE34AD0035143E /* BasicTexturing.storyboard */,
+			);
+			path = BasicTexturing;
+			sourceTree = "<group>";
+		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -315,6 +378,11 @@
 				5F462CF221BD00870035143E /* Hello Triangle.md */,
 				5F462CFF21BD41B80035143E /* Basic Buffers.md */,
 				5F3F591821BD6B4700CD1226 /* Basic Texturing.md */,
+				5F462D1D21BE37E60035143E /* Render Pass.md */,
+				5F462D3521BE85390035143E /* Using Programmable Sample Positions.md */,
+				5F462D3621BE8EBB0035143E /* Handling MSAA Depth with Programmable Sample Positions.md */,
+				5F462D3721BE940D0035143E /* Seeing a Frame's Render Passes with the Dependency Viewer.md */,
+				5F462D3821BE9E9A0035143E /* Deferred Lighting.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -322,6 +390,8 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5F462D0C21BE347D0035143E /* BasicTexturing */,
+				5F462D0021BDFD120035143E /* BasicBuffers */,
 				5F462CF321BD400D0035143E /* HelloTriangle */,
 				5F462CBD21BC158E0035143E /* ImageFilteringWithHeapsAndFences */,
 				5F462CA621BC0AD60035143E /* IndirectCommandBuffersWithGPUEncoding */,
@@ -502,8 +572,11 @@
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
 				5F462CE521BCFC660035143E /* BasicIndirectCommandBuffers.storyboard in Resources */,
+				5F462D0921BDFD5E0035143E /* BasicBuffers.storyboard in Resources */,
 				5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */,
+				5F462D1B21BE34AD0035143E /* Image.tga in Resources */,
 				5F462C9621BB91F30035143E /* Images in Resources */,
+				5F462D1C21BE34AD0035143E /* BasicTexturing.storyboard in Resources */,
 				5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */,
 				5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
@@ -518,18 +591,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F462D0B21BDFD5E0035143E /* BasicBuffersShaders.metal in Sources */,
 				5F462CCB21BC188E0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal in Sources */,
 				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
 				5F462CC821BC188E0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m in Sources */,
 				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
 				5F462CFD21BD40280035143E /* HelloTriangleViewController.m in Sources */,
+				5F462D1A21BE34AD0035143E /* BasicTexturingViewController.m in Sources */,
 				5F462CFB21BD40280035143E /* HelloTriangleShaders.metal in Sources */,
 				5F462CE421BCFC660035143E /* BasicIndirectCommandBuffersRenderer.m in Sources */,
 				5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */,
+				5F462D0821BDFD5E0035143E /* BasicBuffersViewController.m in Sources */,
 				5F462CC921BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.m in Sources */,
 				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
 				5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
+				5F462D1721BE34AD0035143E /* BasicTexturingRenderer.m in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
 				5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */,
 				5F462CCA21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.m in Sources */,
@@ -539,6 +616,8 @@
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
 				5F462CE321BCFC660035143E /* BasicIndirectCommandBuffersViewController.m in Sources */,
+				5F462D1821BE34AD0035143E /* BasicTexturingShaders.metal in Sources */,
+				5F462D1921BE34AD0035143E /* BasicTexturingImage.m in Sources */,
 				5F462CE621BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal in Sources */,
 				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
@@ -553,6 +632,7 @@
 				5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */,
 				5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
+				5F462D0A21BDFD5E0035143E /* BasicBuffersRenderer.m in Sources */,
 				5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

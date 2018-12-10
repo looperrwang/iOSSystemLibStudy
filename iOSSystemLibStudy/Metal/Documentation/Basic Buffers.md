@@ -75,7 +75,7 @@ constant vector_uint2 *viewportSizePointer  [[ buffer(AAPLVertexInputIndexViewpo
 从根本上说，NSData 和 MTLBuffer 对象都非常相似。然而，MTLBuffer 对象是 GPU 可访问的专用容器，图形渲染管道能够从中读取顶点数据。
 
 ```objc
-NSData *vertexData = [AAPLRenderer generateVertexData];
+NSData *vertexData = [BasicBuffersRenderer generateVertexData];
 
 // Create a vertex buffer by allocating storage that can be read by the GPU
 _vertexBuffer = [_device newBufferWithLength:vertexData.length

@@ -11,27 +11,27 @@ Metal shaders used for this sample
 using namespace metal;
 
 // Include header shared between this Metal shader code and C code executing Metal API commands
-#import "HelloTriangleShaderTypes.h"
+#import "BasicBuffersShaderTypes.h"
 
 // Vertex shader outputs and fragment shader inputs
 typedef struct
 {
-    // The [[position]] attribute of this member indicates that this value is the clip space
-    // position of the vertex when this structure is returned from the vertex function
+    // The [[position]] attribute qualifier of this member indicates this value is the clip space
+    //   position of the vertex wen this structure is returned from the vertex shader
     float4 clipSpacePosition [[position]];
 
-    // Since this member does not have a special attribute, the rasterizer interpolates
-    // its value with the values of the other triangle vertices and then passes
-    // the interpolated value to the fragment shader for each fragment in the triangle
+    // Since this member does not have a special attribute qualifier, the rasterizer will
+    //   interpolate its value with values of other vertices making up the triangle and
+    //   pass that interpolated value to the fragment shader for each fragment in that triangle
     float4 color;
 
 } RasterizerData;
 
 // Vertex function
 vertex RasterizerData
-HelloTriangleVertexShader(uint vertexID [[vertex_id]],
-             constant AAPLVertex *vertices [[buffer(AAPLVertexInputIndexVertices)]],
-             constant vector_uint2 *viewportSizePointer [[buffer(AAPLVertexInputIndexViewportSize)]])
+BasicBuffersVertexShader(uint vertexID [[ vertex_id ]],
+             device AAPLVertex *vertices [[ buffer(AAPLVertexInputIndexVertices) ]],
+             constant vector_uint2 *viewportSizePointer  [[ buffer(AAPLVertexInputIndexViewportSize) ]])
 {
     RasterizerData out;
 
@@ -46,7 +46,7 @@ HelloTriangleVertexShader(uint vertexID [[vertex_id]],
     // Dereference viewportSizePointer and cast to float so we can do floating-point division
     vector_float2 viewportSize = vector_float2(*viewportSizePointer);
 
-    // The output position of every vertex shader is in clip-space (also known as normalized device
+    // The output position of every vertex shader is in clip space (also known as normalized device
     //   coordinate space, or NDC).   A value of (-1.0, -1.0) in clip-space represents the
     //   lower-left corner of the viewport whereas (1.0, 1.0) represents the upper-right corner of
     //   the viewport.
@@ -57,15 +57,15 @@ HelloTriangleVertexShader(uint vertexID [[vertex_id]],
     out.clipSpacePosition.xy = pixelSpacePosition / (viewportSize / 2.0);
 
     // Pass our input color straight to our output color.  This value will be interpolated
-    //   with the other color values of the vertices that make up the triangle to produce
-    //   the color value for each fragment in our fragment shader
+    //   with the other color values in the vertices that make up the triangle to produce
+    //   the color value for each fragment in our fragmentShader
     out.color = vertices[vertexID].color;
 
     return out;
 }
 
 // Fragment function
-fragment float4 HelloTriangleFragmentShader(RasterizerData in [[stage_in]])
+fragment float4 BasicBuffersFragmentShader(RasterizerData in [[stage_in]])
 {
     // We return the color we just set which will be written to our color attachment.
     return in.color;

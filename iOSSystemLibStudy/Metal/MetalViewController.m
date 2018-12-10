@@ -45,6 +45,8 @@
     [self.data addObject:[[CellData alloc] initWithText:@"BasicIndirectCommandBuffers" vcName:@"BasicIndirectCommandBuffersViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"IndirectCommandBuffersWithGPUEncoding" vcName:@"IndirectCommandBuffersWithGPUEncodingViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"HelloTriangle" vcName:@"HelloTriangleViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"BasicBuffers" vcName:@"BasicBuffersViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"BasicTexturing" vcName:@"BasicTexturingViewController"]];
 }
 
 #pragma mark - UITableViewDataSource

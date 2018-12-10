@@ -2,20 +2,21 @@
 See LICENSE folder for this sample’s licensing information.
 
 Abstract:
-Implementation of our platform independent renderer class, which performs Metal setup and per frame rendering
+Implementation of renderer class which performs Metal setup and per frame rendering
 */
 
 @import simd;
 @import MetalKit;
 
-#import "HelloTriangleRenderer.h"
+#import "BasicTexturingRenderer.h"
+#import "BasicTexturingImage.h"
 
 // Header shared between C code here, which executes Metal API commands, and .metal files, which
 //   uses these types as inputs to the shaders
-#import "HelloTriangleShaderTypes.h"
+#import "BasicTexturingShaderTypes.h"
 
 // Main class performing the rendering
-@implementation HelloTriangleRenderer
+@implementation BasicTexturingRenderer
 {
     // The device (aka GPU) we're using to render
     id<MTLDevice> _device;
@@ -25,6 +26,15 @@ Implementation of our platform independent renderer class, which performs Metal 
 
     // The command Queue from which we'll obtain command buffers
     id<MTLCommandQueue> _commandQueue;
+
+    // The Metal texture object
+    id<MTLTexture> _texture;
+
+    // The Metal buffer in which we store our vertex data
+    id<MTLBuffer> _vertices;
+
+    // The number of vertices in our vertex buffer
+    NSUInteger _numVertices;
 
     // The current size of our view so we can use this in our render pipeline
     vector_uint2 _viewportSize;
@@ -36,26 +46,86 @@ Implementation of our platform independent renderer class, which performs Metal 
     self = [super init];
     if(self)
     {
-        NSError *error = NULL;
-
         _device = mtkView.device;
+
+        NSURL *imageFileLocation = [[NSBundle mainBundle] URLForResource:@"Image"
+                                                           withExtension:@"tga"];
+
+        BasicTexturingImage * image = [[BasicTexturingImage alloc] initWithTGAFileAtLocation:imageFileLocation];
+
+        if(!image)
+        {
+            NSLog(@"Failed to create the image from %@", imageFileLocation.absoluteString);
+            return nil;
+        }
+
+        MTLTextureDescriptor *textureDescriptor = [[MTLTextureDescriptor alloc] init];
+
+        // Indicate that each pixel has a blue, green, red, and alpha channel, where each channel is
+        // an 8-bit unsigned normalized value (i.e. 0 maps to 0.0 and 255 maps to 1.0)
+        textureDescriptor.pixelFormat = MTLPixelFormatBGRA8Unorm;
+
+         // Set the pixel dimensions of the texture
+        textureDescriptor.width = image.width;
+        textureDescriptor.height = image.height;
+
+        // Create the texture from the device by using the descriptor
+        _texture = [_device newTextureWithDescriptor:textureDescriptor];
+
+        // Calculate the number of bytes per row of our image.
+        NSUInteger bytesPerRow = 4 * image.width;
+
+        MTLRegion region = {
+            { 0, 0, 0 },                   // MTLOrigin
+            {image.width, image.height, 1} // MTLSize
+        };
+
+        // Copy the bytes from our data object into the texture
+        [_texture replaceRegion:region
+                    mipmapLevel:0
+                      withBytes:image.data.bytes
+                    bytesPerRow:bytesPerRow];
+
+        // Set up a simple MTLBuffer with our vertices which include texture coordinates
+        static const AAPLVertex quadVertices[] =
+        {
+            // Pixel positions, Texture coordinates
+            { {  250,  -250 },  { 1.f, 0.f } },
+            { { -250,  -250 },  { 0.f, 0.f } },
+            { { -250,   250 },  { 0.f, 1.f } },
+
+            { {  250,  -250 },  { 1.f, 0.f } },
+            { { -250,   250 },  { 0.f, 1.f } },
+            { {  250,   250 },  { 1.f, 1.f } },
+        };
+
+        // Create our vertex buffer, and initialize it with our quadVertices array
+        _vertices = [_device newBufferWithBytes:quadVertices
+                                         length:sizeof(quadVertices)
+                                        options:MTLResourceStorageModeShared];
+
+        // Calculate the number of vertices by dividing the byte length by the size of each vertex
+        _numVertices = sizeof(quadVertices) / sizeof(AAPLVertex);
+
+        /// Create our render pipeline
 
         // Load all the shader files with a .metal file extension in the project
         id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
         // Load the vertex function from the library
-        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"HelloTriangleVertexShader"];
+        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexShader"];
 
         // Load the fragment function from the library
-        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"HelloTriangleFragmentShader"];
+        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"samplingShader"];
 
-        // Configure a pipeline descriptor that is used to create a pipeline state
+        // Set up a descriptor for creating a pipeline state object
         MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];
-        pipelineStateDescriptor.label = @"Simple Pipeline";
+        pipelineStateDescriptor.label = @"Texturing Pipeline";
         pipelineStateDescriptor.vertexFunction = vertexFunction;
         pipelineStateDescriptor.fragmentFunction = fragmentFunction;
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = mtkView.colorPixelFormat;
 
+        NSError *error = NULL;
         _pipelineState = [_device newRenderPipelineStateWithDescriptor:pipelineStateDescriptor
                                                                  error:&error];
         if (!_pipelineState)
@@ -65,7 +135,6 @@ Implementation of our platform independent renderer class, which performs Metal 
             //  went wrong.  (Metal API validation is enabled by default when a debug build is run
             //  from Xcode)
             NSLog(@"Failed to created pipeline state, error %@", error);
-            return nil;
         }
 
         // Create the command queue
@@ -87,13 +156,6 @@ Implementation of our platform independent renderer class, which performs Metal 
 /// Called whenever the view needs to render a frame
 - (void)drawInMTKView:(nonnull MTKView *)view
 {
-    static const AAPLVertex triangleVertices[] =
-    {
-        // 2D positions,    RGBA colors
-        { {  250,  -250 }, { 1, 0, 0, 1 } },
-        { { -250,  -250 }, { 0, 1, 0, 1 } },
-        { {    0,   250 }, { 0, 0, 1, 1 } },
-    };
 
     // Create a new command buffer for each render pass to the current drawable
     id<MTLCommandBuffer> commandBuffer = [_commandQueue commandBuffer];
@@ -114,41 +176,31 @@ Implementation of our platform independent renderer class, which performs Metal 
 
         [renderEncoder setRenderPipelineState:_pipelineState];
 
-        // We call -[MTLRenderCommandEncoder setVertexBytes:length:atIndex:] to send data from our
-        //   Application ObjC code here to our Metal 'vertexShader' function
-        // This call has 3 arguments
-        //   1) A pointer to the memory we want to pass to our shader
-        //   2) The memory size of the data we want passed down
-        //   3) An integer index which corresponds to the index of the buffer attribute qualifier
-        //      of the argument in our 'vertexShader' function
-
-        // You send a pointer to the `triangleVertices` array also and indicate its size
-        // The `AAPLVertexInputIndexVertices` enum value corresponds to the `vertexArray`
-        // argument in the `vertexShader` function because its buffer attribute also uses
-        // the `AAPLVertexInputIndexVertices` enum value for its index
-        [renderEncoder setVertexBytes:triangleVertices
-                               length:sizeof(triangleVertices)
+        [renderEncoder setVertexBuffer:_vertices
+                                offset:0
                               atIndex:AAPLVertexInputIndexVertices];
 
-        // You send a pointer to `_viewportSize` and also indicate its size
-        // The `AAPLVertexInputIndexViewportSize` enum value corresponds to the
-        // `viewportSizePointer` argument in the `vertexShader` function because its
-        //  buffer attribute also uses the `AAPLVertexInputIndexViewportSize` enum value
-        //  for its index
         [renderEncoder setVertexBytes:&_viewportSize
                                length:sizeof(_viewportSize)
                               atIndex:AAPLVertexInputIndexViewportSize];
 
-        // Draw the 3 vertices of our triangle
+        // Set the texture object.  The AAPLTextureIndexBaseColor enum value corresponds
+        ///  to the 'colorMap' argument in our 'samplingShader' function because its
+        //   texture attribute qualifier also uses AAPLTextureIndexBaseColor for its index
+        [renderEncoder setFragmentTexture:_texture
+                                  atIndex:AAPLTextureIndexBaseColor];
+
+        // Draw the vertices of our triangles
         [renderEncoder drawPrimitives:MTLPrimitiveTypeTriangle
                           vertexStart:0
-                          vertexCount:3];
+                          vertexCount:_numVertices];
 
         [renderEncoder endEncoding];
 
         // Schedule a present once the framebuffer is complete using the current drawable
         [commandBuffer presentDrawable:view.currentDrawable];
     }
+
 
     // Finalize rendering here & push the command buffer to the GPU
     [commandBuffer commit];

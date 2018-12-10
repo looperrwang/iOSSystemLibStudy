@@ -119,6 +119,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 > [Basic Texturing](https://developer.apple.com/documentation/metal/basic_texturing?language=objc)
 > Demonstrates how to load image data and texture a quad.
 
+> [Render Pass](https://developer.apple.com/documentation/metal/render_pass)
+> A collection of commands that updates a set of render targets.
+
 通过发出绘制调用渲染图形，并在绘制到屏幕时选择演示对象。
 
 [Hello Triangle](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Hello%20Triangle.md)
@@ -129,6 +132,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 [Basic Texturing](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Basic%20Texturing.md)
 演示如何加载图像数据和纹理四边形。
+
+[Render Pass](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Render%20Pass.md)
+用于更新一组渲染目标的命令集合。
 
 ### Parallel Computation - 并行计算
 
