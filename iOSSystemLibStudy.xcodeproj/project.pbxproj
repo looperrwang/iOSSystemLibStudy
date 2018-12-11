@@ -350,6 +350,13 @@
 			path = BasicTexturing;
 			sourceTree = "<group>";
 		};
+		5F462D3B21BFF4150035143E /* DeferredLighting */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = DeferredLighting;
+			sourceTree = "<group>";
+		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -390,6 +397,7 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5F462D3B21BFF4150035143E /* DeferredLighting */,
 				5F462D0C21BE347D0035143E /* BasicTexturing */,
 				5F462D0021BDFD120035143E /* BasicBuffers */,
 				5F462CF321BD400D0035143E /* HelloTriangle */,
