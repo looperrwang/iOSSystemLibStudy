@@ -1,0 +1,6 @@
+.DS_Store
+DerivedData/
+xcdebugger/
+*.xcuserstate
+*.xcscheme
+*.plist
