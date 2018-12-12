@@ -118,9 +118,12 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 >
 > [Basic Texturing](https://developer.apple.com/documentation/metal/basic_texturing?language=objc)
 > Demonstrates how to load image data and texture a quad.
-
+>
 > [Render Pass](https://developer.apple.com/documentation/metal/render_pass)
 > A collection of commands that updates a set of render targets.
+>
+> [Render Pipeline](https://developer.apple.com/documentation/metal/render_pipeline?language=objc)
+> A specification for how graphics primitives should be rendered.
 
 通过发出绘制调用渲染图形，并在绘制到屏幕时选择演示对象。
 
@@ -135,6 +138,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 [Render Pass](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Render%20Pass.md)
 用于更新一组渲染目标的命令集合。
+
+[Render Pipeline](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Render%20Pipeline.md)
+> 应该如何呈现图形基元的规范。
 
 ### Parallel Computation - 并行计算
 

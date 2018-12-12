@@ -13,6 +13,7 @@
 		5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F5577218EB04F00D9B9B5 /* ImageOutputViewController.m */; };
 		5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */; };
 		5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */; };
+		5F31CDF521C15C9100B8514B /* Meshes in Resources */ = {isa = PBXBuildFile; fileRef = 5F31CDF421C15C9000B8514B /* Meshes */; };
 		5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */; };
 		5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */; };
 		5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8921BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m */; };
@@ -50,6 +51,22 @@
 		5F462D1A21BE34AD0035143E /* BasicTexturingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D1221BE34AB0035143E /* BasicTexturingViewController.m */; };
 		5F462D1B21BE34AD0035143E /* Image.tga in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D1421BE34AC0035143E /* Image.tga */; };
 		5F462D1C21BE34AD0035143E /* BasicTexturing.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D1521BE34AD0035143E /* BasicTexturing.storyboard */; };
+		5F462D4821C0B1110035143E /* AAPLFairy.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D3E21C0B1100035143E /* AAPLFairy.metal */; };
+		5F462D4921C0B1110035143E /* AAPLPointLights.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D3F21C0B1110035143E /* AAPLPointLights.metal */; };
+		5F462D4A21C0B1110035143E /* AAPLSkybox.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D4121C0B1110035143E /* AAPLSkybox.metal */; };
+		5F462D4B21C0B1110035143E /* AAPLBufferExamination.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D4321C0B1110035143E /* AAPLBufferExamination.metal */; };
+		5F462D4C21C0B1110035143E /* AAPLShadow.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D4421C0B1110035143E /* AAPLShadow.metal */; };
+		5F462D4D21C0B1110035143E /* AAPLDirectionalLight.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D4621C0B1110035143E /* AAPLDirectionalLight.metal */; };
+		5F462D4E21C0B1110035143E /* AAPLGBuffer.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D4721C0B1110035143E /* AAPLGBuffer.metal */; };
+		5F462D5B21C0B1740035143E /* AAPLMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5421C0B1740035143E /* AAPLMesh.m */; };
+		5F462D5C21C0B1740035143E /* AAPLMathUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5521C0B1740035143E /* AAPLMathUtilities.m */; };
+		5F462D5D21C0B1740035143E /* AAPLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5621C0B1740035143E /* AAPLRenderer.m */; };
+		5F462D5E21C0B1740035143E /* AAPLRenderer_macOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5821C0B1740035143E /* AAPLRenderer_macOS.m */; };
+		5F462D5F21C0B1740035143E /* AAPLRenderer_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5921C0B1740035143E /* AAPLRenderer_iOS.m */; };
+		5F462D6021C0B1740035143E /* AAPLBufferExamination.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D5A21C0B1740035143E /* AAPLBufferExamination.m */; };
+		5F462D6521C0FC4B0035143E /* AAPLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462D6321C0FC4B0035143E /* AAPLViewController.m */; };
+		5F462D6721C0FCBA0035143E /* DeferredLighting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D6621C0FCBA0035143E /* DeferredLighting.storyboard */; };
+		5F462D6D21C0FE5C0035143E /* Catalog.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F462D6921C0FE5C0035143E /* Catalog.xcassets */; };
 		5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF96F21B93DA600DC9FCD /* MetalViewController.m */; };
 		5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97221B93F4C00DC9FCD /* CellData.m */; };
 		5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF97621B9426500DC9FCD /* DevicesAndCommandsRenderer.m */; };
@@ -83,6 +100,7 @@
 		5F2F557A218EB52F00D9B9B5 /* ImageInputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageInputTypeViewController.m; sourceTree = "<group>"; };
 		5F2F557C218EB54F00D9B9B5 /* ImageOutputTypeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageOutputTypeViewController.h; sourceTree = "<group>"; };
 		5F2F557D218EB54F00D9B9B5 /* ImageOutputTypeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageOutputTypeViewController.m; sourceTree = "<group>"; };
+		5F31CDF421C15C9000B8514B /* Meshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Meshes; sourceTree = "<group>"; };
 		5F3F591821BD6B4700CD1226 /* Basic Texturing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Texturing.md"; sourceTree = "<group>"; };
 		5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsViewController.h; sourceTree = "<group>"; };
 		5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsViewController.m; sourceTree = "<group>"; };
@@ -156,6 +174,32 @@
 		5F462D3621BE8EBB0035143E /* Handling MSAA Depth with Programmable Sample Positions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Handling MSAA Depth with Programmable Sample Positions.md"; sourceTree = "<group>"; };
 		5F462D3721BE940D0035143E /* Seeing a Frame's Render Passes with the Dependency Viewer.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Seeing a Frame's Render Passes with the Dependency Viewer.md"; sourceTree = "<group>"; };
 		5F462D3821BE9E9A0035143E /* Deferred Lighting.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Deferred Lighting.md"; sourceTree = "<group>"; };
+		5F462D3E21C0B1100035143E /* AAPLFairy.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLFairy.metal; sourceTree = "<group>"; };
+		5F462D3F21C0B1110035143E /* AAPLPointLights.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLPointLights.metal; sourceTree = "<group>"; };
+		5F462D4021C0B1110035143E /* AAPLShaderCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLShaderCommon.h; sourceTree = "<group>"; };
+		5F462D4121C0B1110035143E /* AAPLSkybox.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLSkybox.metal; sourceTree = "<group>"; };
+		5F462D4221C0B1110035143E /* AAPLConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLConfig.h; sourceTree = "<group>"; };
+		5F462D4321C0B1110035143E /* AAPLBufferExamination.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLBufferExamination.metal; sourceTree = "<group>"; };
+		5F462D4421C0B1110035143E /* AAPLShadow.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLShadow.metal; sourceTree = "<group>"; };
+		5F462D4521C0B1110035143E /* AAPLShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLShaderTypes.h; sourceTree = "<group>"; };
+		5F462D4621C0B1110035143E /* AAPLDirectionalLight.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLDirectionalLight.metal; sourceTree = "<group>"; };
+		5F462D4721C0B1110035143E /* AAPLGBuffer.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLGBuffer.metal; sourceTree = "<group>"; };
+		5F462D4F21C0B1730035143E /* AAPLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLRenderer.h; sourceTree = "<group>"; };
+		5F462D5021C0B1740035143E /* AAPLMathUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMathUtilities.h; sourceTree = "<group>"; };
+		5F462D5121C0B1740035143E /* AAPLMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMesh.h; sourceTree = "<group>"; };
+		5F462D5221C0B1740035143E /* AAPLRenderer_iOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLRenderer_iOS.h; sourceTree = "<group>"; };
+		5F462D5321C0B1740035143E /* AAPLBufferExamination.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLBufferExamination.h; sourceTree = "<group>"; };
+		5F462D5421C0B1740035143E /* AAPLMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLMesh.m; sourceTree = "<group>"; };
+		5F462D5521C0B1740035143E /* AAPLMathUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLMathUtilities.m; sourceTree = "<group>"; };
+		5F462D5621C0B1740035143E /* AAPLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLRenderer.m; sourceTree = "<group>"; };
+		5F462D5721C0B1740035143E /* AAPLRenderer_macOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLRenderer_macOS.h; sourceTree = "<group>"; };
+		5F462D5821C0B1740035143E /* AAPLRenderer_macOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLRenderer_macOS.m; sourceTree = "<group>"; };
+		5F462D5921C0B1740035143E /* AAPLRenderer_iOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLRenderer_iOS.m; sourceTree = "<group>"; };
+		5F462D5A21C0B1740035143E /* AAPLBufferExamination.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLBufferExamination.m; sourceTree = "<group>"; };
+		5F462D6321C0FC4B0035143E /* AAPLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLViewController.m; sourceTree = "<group>"; };
+		5F462D6421C0FC4B0035143E /* AAPLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLViewController.h; sourceTree = "<group>"; };
+		5F462D6621C0FCBA0035143E /* DeferredLighting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DeferredLighting.storyboard; sourceTree = "<group>"; };
+		5F462D6921C0FE5C0035143E /* Catalog.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Catalog.xcassets; sourceTree = "<group>"; };
 		5F48E51421AAB77B00318179 /* Metal Best Practices Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Best Practices Guide - 翻译.md"; sourceTree = "<group>"; };
 		5F48E67E21AE6EF800318179 /* Metal.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Metal.md; sourceTree = "<group>"; };
 		5F48E68721AED7EC00318179 /* Getting the Default GPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Getting the Default GPU.md"; sourceTree = "<group>"; };
@@ -193,6 +237,9 @@
 		5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Between a GPU and the CPU.md"; sourceTree = "<group>"; };
 		5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Events.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
+		5FA6C54521C13A0300692123 /* Render Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Render Pipeline.md"; sourceTree = "<group>"; };
+		5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Pipeline Statistics of a Draw.md"; sourceTree = "<group>"; };
+		5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Performance Metrics with GPU Counters.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCD5684215A8D4800E26E01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -353,8 +400,59 @@
 		5F462D3B21BFF4150035143E /* DeferredLighting */ = {
 			isa = PBXGroup;
 			children = (
+				5F462D6821C0FE4C0035143E /* Assets */,
+				5F462D6621C0FCBA0035143E /* DeferredLighting.storyboard */,
+				5F462D6421C0FC4B0035143E /* AAPLViewController.h */,
+				5F462D6321C0FC4B0035143E /* AAPLViewController.m */,
+				5F462D3C21C0B0F00035143E /* Renderer */,
 			);
 			path = DeferredLighting;
+			sourceTree = "<group>";
+		};
+		5F462D3C21C0B0F00035143E /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				5F462D5321C0B1740035143E /* AAPLBufferExamination.h */,
+				5F462D5A21C0B1740035143E /* AAPLBufferExamination.m */,
+				5F462D5021C0B1740035143E /* AAPLMathUtilities.h */,
+				5F462D5521C0B1740035143E /* AAPLMathUtilities.m */,
+				5F462D5121C0B1740035143E /* AAPLMesh.h */,
+				5F462D5421C0B1740035143E /* AAPLMesh.m */,
+				5F462D5221C0B1740035143E /* AAPLRenderer_iOS.h */,
+				5F462D5921C0B1740035143E /* AAPLRenderer_iOS.m */,
+				5F462D5721C0B1740035143E /* AAPLRenderer_macOS.h */,
+				5F462D5821C0B1740035143E /* AAPLRenderer_macOS.m */,
+				5F462D4F21C0B1730035143E /* AAPLRenderer.h */,
+				5F462D5621C0B1740035143E /* AAPLRenderer.m */,
+				5F462D3D21C0B0FA0035143E /* Shaders */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		5F462D3D21C0B0FA0035143E /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				5F462D4321C0B1110035143E /* AAPLBufferExamination.metal */,
+				5F462D4221C0B1110035143E /* AAPLConfig.h */,
+				5F462D4621C0B1110035143E /* AAPLDirectionalLight.metal */,
+				5F462D3E21C0B1100035143E /* AAPLFairy.metal */,
+				5F462D4721C0B1110035143E /* AAPLGBuffer.metal */,
+				5F462D3F21C0B1110035143E /* AAPLPointLights.metal */,
+				5F462D4021C0B1110035143E /* AAPLShaderCommon.h */,
+				5F462D4521C0B1110035143E /* AAPLShaderTypes.h */,
+				5F462D4421C0B1110035143E /* AAPLShadow.metal */,
+				5F462D4121C0B1110035143E /* AAPLSkybox.metal */,
+			);
+			path = Shaders;
+			sourceTree = "<group>";
+		};
+		5F462D6821C0FE4C0035143E /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				5F31CDF421C15C9000B8514B /* Meshes */,
+				5F462D6921C0FE5C0035143E /* Catalog.xcassets */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		5F48E67D21AE65AE00318179 /* Documentation */ = {
@@ -390,6 +488,9 @@
 				5F462D3621BE8EBB0035143E /* Handling MSAA Depth with Programmable Sample Positions.md */,
 				5F462D3721BE940D0035143E /* Seeing a Frame's Render Passes with the Dependency Viewer.md */,
 				5F462D3821BE9E9A0035143E /* Deferred Lighting.md */,
+				5FA6C54521C13A0300692123 /* Render Pipeline.md */,
+				5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */,
+				5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
@@ -574,11 +675,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F462CCF21BC1DE20035143E /* Images in Resources */,
+				5F462D6D21C0FE5C0035143E /* Catalog.xcassets in Resources */,
+				5F31CDF521C15C9100B8514B /* Meshes in Resources */,
 				5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */,
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5F462CEE21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
+				5F462D6721C0FCBA0035143E /* DeferredLighting.storyboard in Resources */,
 				5F462CE521BCFC660035143E /* BasicIndirectCommandBuffers.storyboard in Resources */,
 				5F462D0921BDFD5E0035143E /* BasicBuffers.storyboard in Resources */,
 				5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */,
@@ -613,33 +717,47 @@
 				5F462CC921BC188E0035143E /* ImageFilteringWithHeapsAndFencesViewController.m in Sources */,
 				5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */,
 				5F462C9421BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.metal in Sources */,
+				5F462D5F21C0B1740035143E /* AAPLRenderer_iOS.m in Sources */,
+				5F462D6021C0B1740035143E /* AAPLBufferExamination.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
 				5F462D1721BE34AD0035143E /* BasicTexturingRenderer.m in Sources */,
+				5F462D4921C0B1110035143E /* AAPLPointLights.metal in Sources */,
 				5F2F5575218EB03B00D9B9B5 /* ImageInputViewController.m in Sources */,
 				5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */,
 				5F462CCA21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.m in Sources */,
 				5F462CCC21BC188E0035143E /* ImageFilteringWithHeapsAndFencesFilter.metal in Sources */,
+				5F462D4C21C0B1110035143E /* AAPLShadow.metal in Sources */,
 				5F462CEF21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
+				5F462D4A21C0B1110035143E /* AAPLSkybox.metal in Sources */,
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
 				5F462CE321BCFC660035143E /* BasicIndirectCommandBuffersViewController.m in Sources */,
 				5F462D1821BE34AD0035143E /* BasicTexturingShaders.metal in Sources */,
 				5F462D1921BE34AD0035143E /* BasicTexturingImage.m in Sources */,
+				5F462D5E21C0B1740035143E /* AAPLRenderer_macOS.m in Sources */,
+				5F462D5C21C0B1740035143E /* AAPLMathUtilities.m in Sources */,
+				5F462D4B21C0B1110035143E /* AAPLBufferExamination.metal in Sources */,
 				5F462CE621BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal in Sources */,
 				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */,
 				5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */,
 				5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */,
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,
+				5F462D4821C0B1110035143E /* AAPLFairy.metal in Sources */,
+				5F462D5D21C0B1740035143E /* AAPLRenderer.m in Sources */,
 				5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */,
 				5F462C9221BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.m in Sources */,
 				5F462CF121BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal in Sources */,
 				5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */,
 				5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */,
 				5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */,
+				5F462D6521C0FC4B0035143E /* AAPLViewController.m in Sources */,
+				5F462D5B21C0B1740035143E /* AAPLMesh.m in Sources */,
+				5F462D4D21C0B1110035143E /* AAPLDirectionalLight.metal in Sources */,
 				5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
+				5F462D4E21C0B1110035143E /* AAPLGBuffer.metal in Sources */,
 				5F462D0A21BDFD5E0035143E /* BasicBuffersRenderer.m in Sources */,
 				5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */,
 			);
@@ -782,6 +900,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3S9S733G5A;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+					"TARGET_IOS=1",
+				);
 				INFOPLIST_FILE = iOSSystemLibStudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -799,6 +923,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3S9S733G5A;
+				GCC_PREPROCESSOR_DEFINITIONS = "TARGET_IOS=1";
 				INFOPLIST_FILE = iOSSystemLibStudy/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
