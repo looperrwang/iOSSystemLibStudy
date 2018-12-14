@@ -174,6 +174,16 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 ### Custom Functions - 自定义函数
 
+> Write your GPU code in the [Metal Shading Language](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf).
+>
+> [GPU Functions & Libraries](https://developer.apple.com/documentation/metal/gpu_functions_libraries?language=objc)
+> Load GPU functions with a library object and introspect shaders at runtime.
+
+用 [Metal Shading Language](https://developer.apple.com/metal/Metal-Shading-Language-Specification.pdf) 编写 GPU 代码。
+
+[GPU Functions & Libraries](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/GPU%20Functions%20&%20Libraries.md)
+在运行时使用库对象加载 GPU 函数并 introspect 着色器。
+
 ### Resource Management - 资源管理
 
 ### Tools - 工具

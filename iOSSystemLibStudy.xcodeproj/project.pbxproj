@@ -121,6 +121,11 @@
 		5F31CE8B21C3DE7A00B8514B /* HelloComputeShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = HelloComputeShaders.metal; sourceTree = "<group>"; };
 		5F31CE8C21C3DE7A00B8514B /* HelloComputeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloComputeViewController.h; sourceTree = "<group>"; };
 		5F31CE8D21C3DE7A00B8514B /* HelloComputeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloComputeViewController.m; sourceTree = "<group>"; };
+		5F31CE9421C3E60000B8514B /* GPU Functions & Libraries.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "GPU Functions & Libraries.md"; sourceTree = "<group>"; };
+		5F31CE9521C3F1D800B8514B /* Optimizing Performance with the Shader Profiler.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Optimizing Performance with the Shader Profiler.md"; sourceTree = "<group>"; };
+		5F31CE9621C3F1EF00B8514B /* Resolving Shader Issues with the Shader Debugger.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Resolving Shader Issues with the Shader Debugger.md"; sourceTree = "<group>"; };
+		5F31CE9721C3F20F00B8514B /* About the Metal Shading Language Filename Extension.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About the Metal Shading Language Filename Extension.md"; sourceTree = "<group>"; };
+		5F31CE9821C3F4E600B8514B /* Building a Library with Metal's Command-Line Tools.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Building a Library with Metal's Command-Line Tools.md"; sourceTree = "<group>"; };
 		5F3F591821BD6B4700CD1226 /* Basic Texturing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Texturing.md"; sourceTree = "<group>"; };
 		5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsViewController.h; sourceTree = "<group>"; };
 		5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsViewController.m; sourceTree = "<group>"; };
@@ -532,6 +537,11 @@
 				5F31CDF721C2858000B8514B /* Hello Compute.md */,
 				5F31CDF821C2859200B8514B /* About Threads and Threadgroups.md */,
 				5F31CDF921C285A100B8514B /* Calculating Threadgroup and Grid Sizes.md */,
+				5F31CE9421C3E60000B8514B /* GPU Functions & Libraries.md */,
+				5F31CE9521C3F1D800B8514B /* Optimizing Performance with the Shader Profiler.md */,
+				5F31CE9621C3F1EF00B8514B /* Resolving Shader Issues with the Shader Debugger.md */,
+				5F31CE9721C3F20F00B8514B /* About the Metal Shading Language Filename Extension.md */,
+				5F31CE9821C3F4E600B8514B /* Building a Library with Metal's Command-Line Tools.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
