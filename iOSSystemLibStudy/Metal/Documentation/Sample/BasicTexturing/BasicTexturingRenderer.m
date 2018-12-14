@@ -113,10 +113,10 @@ Implementation of renderer class which performs Metal setup and per frame render
         id<MTLLibrary> defaultLibrary = [_device newDefaultLibrary];
 
         // Load the vertex function from the library
-        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"vertexShader"];
+        id<MTLFunction> vertexFunction = [defaultLibrary newFunctionWithName:@"BasicTexturingVertexShader"];
 
         // Load the fragment function from the library
-        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"samplingShader"];
+        id<MTLFunction> fragmentFunction = [defaultLibrary newFunctionWithName:@"BasicTexturingSamplingShader"];
 
         // Set up a descriptor for creating a pipeline state object
         MTLRenderPipelineDescriptor *pipelineStateDescriptor = [[MTLRenderPipelineDescriptor alloc] init];

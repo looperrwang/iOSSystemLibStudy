@@ -94,7 +94,7 @@ G 缓冲区数据由单个渲染过程中的 GPU（而不是 CPU ）专门生成
 >
 > - Raster order group 0. AAPLLightingROG is used for the render target that contains the results of the lighting calculations.
 >
-> - Raster order group 1. AAPLGBufferROG is used for the G-buffer data in the lighting function.
+> - Raster order group 1. DeferredLightingBufferROG is used for the G-buffer data in the lighting function.
 >
 > These raster order groups allow the GPU to read the G-buffer in a fragment shader and execute the lighting calculations, before the lighting calculations from a previous instance of a fragment shader have finished writing their output data.
 
@@ -102,7 +102,7 @@ G 缓冲区数据由单个渲染过程中的 GPU（而不是 CPU ）专门生成
 
 - 光栅顺序组 0 。AAPLLightingROG 用于包含光照计算结果的渲染目标。
 
-- 光栅顺序组 1 。AAPLGBufferROG 用于照明功能中的 G 缓冲区数据。
+- 光栅顺序组 1 。DeferredLightingBufferROG 用于照明功能中的 G 缓冲区数据。
 
 这些栅格顺序组允许 GPU 在片段着色器中读取 G 缓冲区并执行光照计算，然后片段着色器的先前实例完成光照计算并写入其输出数据。
 
@@ -318,9 +318,9 @@ iOS 和 tvOS 渲染器从附加到渲染过程的渲染目标中读取 G 缓冲�
 struct GBufferData
 {
     half4 lighting        [[color(AAPLRenderTargetLighting), raster_order_group(AAPLLightingROG)]];
-    half4 albedo_specular [[color(AAPLRenderTargetAlbedo),   raster_order_group(AAPLGBufferROG)]];
-    half4 normal_shadow   [[color(AAPLRenderTargetNormal),   raster_order_group(AAPLGBufferROG)]];
-    float depth           [[color(AAPLRenderTargetDepth),    raster_order_group(AAPLGBufferROG)]];
+    half4 albedo_specular [[color(AAPLRenderTargetAlbedo),   raster_order_group(DeferredLightingBufferROG)]];
+    half4 normal_shadow   [[color(AAPLRenderTargetNormal),   raster_order_group(DeferredLightingBufferROG)]];
+    float depth           [[color(AAPLRenderTargetDepth),    raster_order_group(DeferredLightingBufferROG)]];
 };
 ```
 

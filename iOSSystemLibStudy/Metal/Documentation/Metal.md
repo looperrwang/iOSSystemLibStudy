@@ -125,6 +125,9 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 > [Render Pipeline](https://developer.apple.com/documentation/metal/render_pipeline?language=objc)
 > A specification for how graphics primitives should be rendered.
 
+> [Vertex Data](https://developer.apple.com/documentation/metal/vertex_data?language=objc)
+> Points that specify precise locations within the textures associated with graphics processing.
+
 通过发出绘制调用渲染图形，并在绘制到屏幕时选择演示对象。
 
 [Hello Triangle](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/iOSSystemLibStudy/Hello%20Triangle.md)
@@ -142,7 +145,32 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 [Render Pipeline](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Render%20Pipeline.md)
 > 应该如何呈现图形基元的规范。
 
+[Vertex Data](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Vertex%20Data.md)
+指定与图形处理相关联的纹理内精确位置的点。
+
 ### Parallel Computation - 并行计算
+
+> Process arbitrary calculations in parallel on the GPU.
+>
+> [Hello Compute](https://developer.apple.com/documentation/metal/hello_compute?language=objc)
+> Demonstrates how to perform data-parallel computations using the GPU.
+>
+> [About Threads and Threadgroups](https://developer.apple.com/documentation/metal/about_threads_and_threadgroups?language=objc)
+> Learn how Metal organizes compute-processing workloads.
+>
+> [Calculating Threadgroup and Grid Sizes](https://developer.apple.com/documentation/metal/calculating_threadgroup_and_grid_sizes?language=objc)
+> Calculate the optimum sizes for threadgroups and grids when dispatching compute-processing workloads.
+
+在 GPU 上并行处理任意计算。
+
+[Hello Compute](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Hello%20Compute.md)
+演示如何使用 GPU 执行数据并行计算。
+
+[About Threads and Threadgroups](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/About%20Threads%20and%20Threadgroups.md)
+了解 Metal 如何组织计算处理工作负载。
+
+[Calculating Threadgroup and Grid Sizes](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Calculating%20Threadgroup%20and%20Grid%20Sizes.md)
+在分派计算处理工作负载时，计算线程组和网格的最佳大小。
 
 ### Custom Functions - 自定义函数
 
