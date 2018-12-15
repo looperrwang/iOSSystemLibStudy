@@ -52,7 +52,34 @@ A11 | Eight per render pass | 512 bits per pixel
 
 Pixel format | Size in system memory (in bits) | Non-MSAA size in tile memory (in bits) | MSAA size in tile memory (in bits)
 :------------ | :------------- | :------------- | :-------------
-R8Unorm <br> R8Unorm_sRGB<br>R8Snorm<br>R8Uint<br>R8Sint | 8 | 32 | 32
+R8Unorm<br>R8Unorm_sRGB<br>R8Snorm<br>R8Uint<br>R8Sint | 8 | 32 | 32
+R16Unorm<br>R16Snorm<br>R16Uint<br>R16Sint<br>R16Float | 16 | 32 | 32
+RG8Unorm<br>RG8Unorm_sRGB<br>RG8Snorm<br>RG8Uint<br>RG8Sint | 16 | 32 | 32
+B5G6R5Unorm<br>A1BGR5Unorm<br>ABGR4Unorm<br>BGR5A1Unorm | 16 | 64 | 64
+RGBA8Unorm<br>RGBA8Unorm_sRGB<br>RGBA8Snorm<br>BGRA8Unorm<br>BGRA8Unorm_sRGB | 32 | 32 | 64
+RGB10A2Unorm<br>BGR10A2Unorm | 32 | 64 | 64
+RG11B10Float<br>RGB9E5Float | 32 | 64 | 64
+BGR10_XR<br>BGR10_XR_sRGB | 32 | 64 | 64
+
+表 3 A8, A9, 和 A10 存储大小，每像素
+
+Pixel format | Size in system memory (in bits) | Non-MSAA size in tile memory (in bits) | MSAA size in tile memory (in bits)
+:------------ | :------------- | :------------- | :-------------
+R8Unorm<br>R8Unorm_sRGB<br>R8Snorm<br>R8Uint<br>R8Sint | 8 | 32 | 32
+R16Unorm<br>R16Snorm<br>R16Uint<br>R16Sint<br>R16Float | 16 | 32 | 32
+RG8Unorm<br>RG8Unorm_sRGB<br>RG8Snorm<br>RG8Uint<br>RG8Sint | 16 | 32 | 32
+B5G6R5Unorm<br>A1BGR5Unorm<br>ABGR4Unorm<br>BGR5A1Unorm | 16 | 32 | 32
+RGBA8Unorm_sRGB<br>RGBA8Snorm<br>BGRA8Unorm_sRGB | 32 | 32 | 64
+RGB10A2Unorm<br>BGR10A2Unorm | 32 | 64 | 64
+RG11B10Float<br>RGB9E5Float | 32 | 64 | 64
+
+表 4 A11 存储大小, 每像素
+
+Pixel format | Size in system memory (in bits) | Non-MSAA size in tile memory (in bits) | MSAA size in tile memory (in bits)
+:------------ | :------------- | :------------- | :-------------
+B5G6R5Unorm<br>A1BGR5Unorm<br>ABGR4Unorm<br>BGR5A1Unorm | 16 | 64 | 64
+BGR10A2Unorm | 32 | 64 | 64
+BGR10_XR<br>BGR10_XR_sRGB | 32 | 48 | 48
 
 > Knowing the storage sizes is particularly important if you're implementing rendering techniques that use multiple color render targets. For example, you might implement a deferred lighting algorithm that uses four color render targets with different pixel formats:
 

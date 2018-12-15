@@ -266,6 +266,13 @@
 		5F71684F21C5043100DC9957 /* Setting Resource Storage Modes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Setting Resource Storage Modes.md"; sourceTree = "<group>"; };
 		5F71685021C5061200DC9957 /* Choosing a Resource Storage Mode in iOS and tvOS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Choosing a Resource Storage Mode in iOS and tvOS.md"; sourceTree = "<group>"; };
 		5F71685121C50CBE00DC9957 /* About Color-Renderable Pixel Format Sizes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Color-Renderable Pixel Format Sizes.md"; sourceTree = "<group>"; };
+		5F71685221C51B5D00DC9957 /* About Argument Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Argument Buffers.md"; sourceTree = "<group>"; };
+		5F71685321C51B6D00DC9957 /* Basic Argument Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Argument Buffers.md"; sourceTree = "<group>"; };
+		5F71685421C51B7A00DC9957 /* Argument Buffers with Arrays and Resource Heaps.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Argument Buffers with Arrays and Resource Heaps.md"; sourceTree = "<group>"; };
+		5F71685521C51B8800DC9957 /* Argument Buffers with GPU Encoding.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Argument Buffers with GPU Encoding.md"; sourceTree = "<group>"; };
+		5F71685621C51B9500DC9957 /* Dynamic Terrain with Argument Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Dynamic Terrain with Argument Buffers.md"; sourceTree = "<group>"; };
+		5F71685721C51BA200DC9957 /* Indexing Argument Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Indexing Argument Buffers.md"; sourceTree = "<group>"; };
+		5F71685821C51BB000DC9957 /* Tracking the Resource Residency of Argument Buffers.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Tracking the Resource Residency of Argument Buffers.md"; sourceTree = "<group>"; };
 		5FA6C54521C13A0300692123 /* Render Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Render Pipeline.md"; sourceTree = "<group>"; };
 		5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Pipeline Statistics of a Draw.md"; sourceTree = "<group>"; };
 		5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Performance Metrics with GPU Counters.md"; sourceTree = "<group>"; };
@@ -550,6 +557,13 @@
 				5F71684F21C5043100DC9957 /* Setting Resource Storage Modes.md */,
 				5F71685021C5061200DC9957 /* Choosing a Resource Storage Mode in iOS and tvOS.md */,
 				5F71685121C50CBE00DC9957 /* About Color-Renderable Pixel Format Sizes.md */,
+				5F71685221C51B5D00DC9957 /* About Argument Buffers.md */,
+				5F71685321C51B6D00DC9957 /* Basic Argument Buffers.md */,
+				5F71685421C51B7A00DC9957 /* Argument Buffers with Arrays and Resource Heaps.md */,
+				5F71685521C51B8800DC9957 /* Argument Buffers with GPU Encoding.md */,
+				5F71685621C51B9500DC9957 /* Dynamic Terrain with Argument Buffers.md */,
+				5F71685721C51BA200DC9957 /* Indexing Argument Buffers.md */,
+				5F71685821C51BB000DC9957 /* Tracking the Resource Residency of Argument Buffers.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";
