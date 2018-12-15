@@ -48,18 +48,18 @@
     //[self.data addObject:[[CellData alloc] initWithText:@"AudioUnit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AVFoundation" vcName:@"AVFoundationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"AVKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"BusinessChat" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"BusinessChat" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CallKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CFNetwork" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"ClassKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"ClassKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CloundKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Contacts" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"ContactsUI" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"ContactsUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreAudio" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreAudioKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreBluetooth" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"CoreData" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"CoreFoundation" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"CoreFoundation" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreGraphics" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreImage" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreLocation" vcName:@""]];
@@ -76,28 +76,28 @@
     [self.data addObject:[[CellData alloc] initWithText:@"EventKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"EventKitUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"ExternalAccessory" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"FileProvider" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"FileProviderUI" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Foundation" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"FileProvider" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"FileProviderUI" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Foundation" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"GameController" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"GameKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"GameplayKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"GLKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"GSS" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"GSS" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HealthKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HealthKitUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HomeKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"iAd" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"iAd" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IdentityLookup" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"ImageIO - 完成" vcName:@"ImageIOViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"Intents" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IntentsUI" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"IOKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"IOSurface" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"IOSurface" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"JavaScriptCore" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"LocalAuthentication" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"LocalAuthentication" vcName:@""]]; //touch id/face id
     //[self.data addObject:[[CellData alloc] initWithText:@"MapKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"MediaAccessibility" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"MediaAccessibility" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MediaPlayer" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MediaToolbox" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Messages" vcName:@""]];
@@ -109,14 +109,14 @@
     [self.data addObject:[[CellData alloc] initWithText:@"ModelIO" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"MultipeerConnectivity" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"NetworkExtension" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"NewsstandKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"NotificationCenter" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"NewsstandKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"NotificationCenter" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"OpenAL" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"OpenGLES" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"PassKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"PassKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"PDFKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Photos" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"PhotosUI" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"PhotosUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"PushKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"QuartzCore" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"QuickLook" vcName:@""]];
@@ -124,13 +124,13 @@
     [self.data addObject:[[CellData alloc] initWithText:@"SafariServices" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SceneKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Security" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Social" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Social" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Speech" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SpriteKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"StoreKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SystemConfiguration" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"Twitter" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"UIKit" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"UIKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UserNotifications" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UserNotificationsUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"VideoSubscriberAccount" vcName:@""]];
@@ -140,7 +140,7 @@
     //[self.data addObject:[[CellData alloc] initWithText:@"WatchKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SiriKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SMS and Call Reporting" vcName:@""]];
@@ -153,6 +153,8 @@
     [self.data addObject:[[CellData alloc] initWithText:@"Objective-C Runtime" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"ServiceManagement" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Network" vcName:@""]];
+    
+    printf("test %d\n", self.data.count);
 }
 
 #pragma mark - UITableViewDataSource

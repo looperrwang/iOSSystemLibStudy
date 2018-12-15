@@ -262,6 +262,10 @@
 		5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Between a GPU and the CPU.md"; sourceTree = "<group>"; };
 		5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Events.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
+		5F71684E21C5007C00DC9957 /* Resource Objects.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Resource Objects.md"; sourceTree = "<group>"; };
+		5F71684F21C5043100DC9957 /* Setting Resource Storage Modes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Setting Resource Storage Modes.md"; sourceTree = "<group>"; };
+		5F71685021C5061200DC9957 /* Choosing a Resource Storage Mode in iOS and tvOS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Choosing a Resource Storage Mode in iOS and tvOS.md"; sourceTree = "<group>"; };
+		5F71685121C50CBE00DC9957 /* About Color-Renderable Pixel Format Sizes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About Color-Renderable Pixel Format Sizes.md"; sourceTree = "<group>"; };
 		5FA6C54521C13A0300692123 /* Render Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Render Pipeline.md"; sourceTree = "<group>"; };
 		5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Pipeline Statistics of a Draw.md"; sourceTree = "<group>"; };
 		5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Performance Metrics with GPU Counters.md"; sourceTree = "<group>"; };
@@ -542,6 +546,10 @@
 				5F31CE9621C3F1EF00B8514B /* Resolving Shader Issues with the Shader Debugger.md */,
 				5F31CE9721C3F20F00B8514B /* About the Metal Shading Language Filename Extension.md */,
 				5F31CE9821C3F4E600B8514B /* Building a Library with Metal's Command-Line Tools.md */,
+				5F71684E21C5007C00DC9957 /* Resource Objects.md */,
+				5F71684F21C5043100DC9957 /* Setting Resource Storage Modes.md */,
+				5F71685021C5061200DC9957 /* Choosing a Resource Storage Mode in iOS and tvOS.md */,
+				5F71685121C50CBE00DC9957 /* About Color-Renderable Pixel Format Sizes.md */,
 			);
 			path = Documentation;
 			sourceTree = "<group>";

@@ -186,6 +186,16 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 ### Resource Management - 资源管理
 
+> Define the data that composes your app's content.
+>
+> [Resource Objects](https://developer.apple.com/documentation/metal/resource_objects?language=objc)
+> Data structures you use to manage your app's computational or graphical data.
+
+定义组成应用内容的数据。
+
+[Resource Objects](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Resource%20Objects.md)
+用于管理应用程序的计算或图形数据的数据结构。
+
 ### Tools - 工具
 
 ### Cookbook
