@@ -153,8 +153,6 @@
     [self.data addObject:[[CellData alloc] initWithText:@"Objective-C Runtime" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"ServiceManagement" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Network" vcName:@""]];
-    
-    printf("test %d\n", self.data.count);
 }
 
 #pragma mark - UITableViewDataSource

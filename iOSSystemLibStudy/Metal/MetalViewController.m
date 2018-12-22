@@ -49,6 +49,9 @@
     [self.data addObject:[[CellData alloc] initWithText:@"BasicTexturing" vcName:@"BasicTexturingViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"DeferredLighting" vcName:@"DeferredLightingViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"HelloCompute" vcName:@"HelloComputeViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"BasicArgumentBuffers" vcName:@"BasicArgumentBuffersViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ArgumentBufferArraysWithHeaps" vcName:@"ArgumentBufferArraysWithHeapsViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"DynamicTerrainWithArgumentBuffers" vcName:@"AAPLGameViewController"]];
 }
 
 #pragma mark - UITableViewDataSource

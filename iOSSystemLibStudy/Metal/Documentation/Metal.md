@@ -200,5 +200,32 @@ protocol [MTLCommandEncoder](https://developer.apple.com/documentation/metal/mtl
 
 ### Cookbook
 
+> See a collection of graphics techniques and experiment with their companion sample code.
+>
+> [Deferred Lighting](https://developer.apple.com/documentation/metal/deferred_lighting?language=objc)
+> Demonstrates how to implement a deferred lighting renderer that takes advantage of unique Metal features.
+>
+> [Reflections with Layer Selection](https://developer.apple.com/documentation/metal/reflections_with_layer_selection?language=objc)
+> Demonstrates how to use layer selection to reduce the number of render passes needed for a reflective object.
+>
+> [LOD with Function Specialization](https://developer.apple.com/documentation/metal/lod_with_function_specialization?language=objc)
+> Demonstrates how to use specialized functions to select a level of detail based on dynamic conditions.
+
+查看图形技术的集合并试验其伴随示例代码。
+
+[Deferred Lighting](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Deferred%20Lighting.md)
+演示如何实现利用独特 Metal 功能的延迟照明渲染器。
+
+[Reflections with Layer Selection](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Reflections%20with%20Layer%20Selection.md)
+演示如何使用图层选择来减少反射对象所需的渲染过程的数量。
+
+[LOD with Function Specialization](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/LOD%20with%20Function%20Specialization.md)
+演示如何使用专用函数根据动态条件选择细节级别。
+
 ### Interoperability - 互通性
 
+> [Mixing Metal and OpenGL Rendering in a View](https://developer.apple.com/documentation/metal/mixing_metal_and_opengl_rendering_in_a_view?language=objc)
+> Draw with Metal and OpenGL in the same view using an interoperable texture.
+
+[Mixing Metal and OpenGL Rendering in a View](https://github.com/looperrwang/iOSSystemLibStudy/blob/master/Mixing%20Metal%20and%20OpenGL%20Rendering%20in%20a%20View.md)
+使用可互操作的纹理在同一视图中使用 Metal 和 OpenGL 绘图。

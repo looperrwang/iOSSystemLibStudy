@@ -152,7 +152,7 @@ static const uint32_t AAPLNumImages = 6;
 
     for(uint32_t i = 0; i < AAPLNumImages; i++)
     {
-        NSString *imageString = [[NSString alloc] initWithFormat:@"Images/Image%i", i];
+        NSString *imageString = [[NSString alloc] initWithFormat:@"ImageFilteringWithHeapsAndEventsImages/Image%i", i];
 
         NSURL * imageURL = [[NSBundle mainBundle] URLForResource:imageString
                                                    withExtension:@"jpg"];

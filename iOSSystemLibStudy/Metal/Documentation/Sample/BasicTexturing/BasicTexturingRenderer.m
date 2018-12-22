@@ -48,7 +48,7 @@ Implementation of renderer class which performs Metal setup and per frame render
     {
         _device = mtkView.device;
 
-        NSURL *imageFileLocation = [[NSBundle mainBundle] URLForResource:@"Image"
+        NSURL *imageFileLocation = [[NSBundle mainBundle] URLForResource:@"BasicTexturingImage"
                                                            withExtension:@"tga"];
 
         BasicTexturingImage * image = [[BasicTexturingImage alloc] initWithTGAFileAtLocation:imageFileLocation];

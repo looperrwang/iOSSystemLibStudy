@@ -553,7 +553,7 @@ static const NSUInteger AAPLColumnLights = AAPLGroundLights  + 0.30 * AAPLNumLig
     modelIOVertexDescriptor.attributes[AAPLVertexAttributeTangent].name   = MDLVertexAttributeTangent;
     modelIOVertexDescriptor.attributes[AAPLVertexAttributeBitangent].name = MDLVertexAttributeBitangent;
 
-    NSURL *modelFileURL = [[NSBundle mainBundle] URLForResource:@"Meshes/Temple.obj" withExtension:nil];
+    NSURL *modelFileURL = [[NSBundle mainBundle] URLForResource:@"DeferredLightingMeshes/Temple.obj" withExtension:nil];
 
     if(!modelFileURL)
     {

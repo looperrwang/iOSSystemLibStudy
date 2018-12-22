@@ -98,7 +98,7 @@ Implementation of renderer class which performs Metal setup and per frame render
             NSLog(@"Failed to create render pipeline state, error %@", error);
         }
 
-        NSURL *imageFileLocation = [[NSBundle mainBundle] URLForResource:@"Image"
+        NSURL *imageFileLocation = [[NSBundle mainBundle] URLForResource:@"HelloComputeImage"
                                                            withExtension:@"tga"];
 
         HelloComputeImage * image = [[HelloComputeImage alloc] initWithTGAFileAtLocation:imageFileLocation];
