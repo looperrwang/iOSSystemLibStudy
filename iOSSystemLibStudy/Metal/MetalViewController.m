@@ -52,6 +52,8 @@
     [self.data addObject:[[CellData alloc] initWithText:@"BasicArgumentBuffers" vcName:@"BasicArgumentBuffersViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"ArgumentBufferArraysWithHeaps" vcName:@"ArgumentBufferArraysWithHeapsViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"DynamicTerrainWithArgumentBuffers" vcName:@"AAPLGameViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"LODwithFunctionSpecialization" vcName:@"LODwithFunctionSpecializationViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"OpenGLMetalInteroperability" vcName:@"OpenGLMetalInteroperabilityViewController"]];
 }
 
 #pragma mark - UITableViewDataSource

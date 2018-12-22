@@ -30,6 +30,20 @@ uint16_t AAPL_SIMD_OVERLOAD float16_from_float32(float f) {
     return f16;
 }
 
+void AAPL_SIMD_OVERLOAD seedRand(uint32_t seed) {
+    seed_lo = seed; seed_hi = ~seed;
+}
+
+int32_t AAPL_SIMD_OVERLOAD randi(void) {
+    seed_hi = (seed_hi<<16) + (seed_hi>>16);
+    seed_hi += seed_lo; seed_lo += seed_hi;
+    return seed_hi;
+}
+
+float AAPL_SIMD_OVERLOAD randf(float x) {
+    return (x * randi() / (float)0x7FFFFFFF);
+}
+
 float AAPL_SIMD_OVERLOAD  random_float(float min, float max) {
     return (((double)rand()/RAND_MAX) * (max-min)) + min;
 }
@@ -270,6 +284,13 @@ matrix_float4x4 AAPL_SIMD_OVERLOAD matrix_look_at_right_hand(float eyeX, float e
     vector_float3 up = vector_make(upX, upY, upZ);
 
     return matrix_look_at_right_hand(eye, center, up);
+}
+
+matrix_float4x4 AAPL_SIMD_OVERLOAD matrix_ortho(float left, float right, float bottom, float top, float nearZ, float farZ) {
+    return matrix_make(2 / (right - left), 0, 0, 0,
+                       0, 2 / (top - bottom), 0, 0,
+                       0, 0, 1 / (farZ - nearZ), 0,
+                       (left + right) / (left - right), (top + bottom) / (bottom - top), nearZ / (nearZ - farZ), 1);
 }
 
 matrix_float4x4 AAPL_SIMD_OVERLOAD matrix_ortho_right_hand(float left, float right, float bottom, float top, float nearZ, float farZ) {

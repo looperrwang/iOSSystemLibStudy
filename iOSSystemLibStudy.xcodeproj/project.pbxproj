@@ -92,6 +92,22 @@
 		5F7168EB21C8BFD500DC9957 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7168E421C8BFD500DC9957 /* Assets.xcassets */; };
 		5F7168EC21C8BFD500DC9957 /* ArgumentBufferArraysWithHeaps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F7168E521C8BFD500DC9957 /* ArgumentBufferArraysWithHeaps.storyboard */; };
 		5F7168ED21C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F7168E621C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsShaders.metal */; };
+		5FA221A921CE534000937444 /* LODwithFunctionSpecialization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221A821CE534000937444 /* LODwithFunctionSpecialization.storyboard */; };
+		5FA221AF21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221AE21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal */; };
+		5FA221B221CE563100937444 /* LODwithFunctionSpecializationMesh.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221B121CE563100937444 /* LODwithFunctionSpecializationMesh.m */; };
+		5FA221B521CE566800937444 /* LODwithFunctionSpecializationRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221B421CE566800937444 /* LODwithFunctionSpecializationRenderer.m */; };
+		5FA221B821CE566E00937444 /* LODwithFunctionSpecializationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221B721CE566E00937444 /* LODwithFunctionSpecializationViewController.m */; };
+		5FA221C221CE58E000937444 /* shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221BE21CE58E000937444 /* shader.vsh */; };
+		5FA221C321CE58E000937444 /* shaderTexRect.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221BF21CE58E000937444 /* shaderTexRect.fsh */; };
+		5FA221C421CE58E000937444 /* AAPLOpenGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221C021CE58E000937444 /* AAPLOpenGLRenderer.m */; };
+		5FA221C521CE58E000937444 /* shaderTex2D.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221C121CE58E000937444 /* shaderTex2D.fsh */; };
+		5FA221CB21CE58F100937444 /* AAPLShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221C721CE58F100937444 /* AAPLShaders.metal */; };
+		5FA221CC21CE58F100937444 /* AAPLMetalRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221C821CE58F100937444 /* AAPLMetalRenderer.m */; };
+		5FA221CE21CE598500937444 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221CD21CE598500937444 /* Assets */; };
+		5FA221DE21CE5A7100937444 /* AAPLMetalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221D821CE5A7000937444 /* AAPLMetalViewController.m */; };
+		5FA221DF21CE5A7100937444 /* AAPLOpenGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221DC21CE5A7100937444 /* AAPLOpenGLViewController.m */; };
+		5FA221E021CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221DD21CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m */; };
+		5FA221E221CE616E00937444 /* OpenGLMetalInteroperability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221E121CE616E00937444 /* OpenGLMetalInteroperability.storyboard */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
 		5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568A215A8D4800E26E01 /* Main.storyboard */; };
@@ -322,6 +338,33 @@
 		5F7168E621C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ArgumentBufferArraysWithHeapsShaders.metal; sourceTree = "<group>"; };
 		5F7168E721C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArgumentBufferArraysWithHeapsViewController.h; sourceTree = "<group>"; };
 		5F7168E821C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArgumentBufferArraysWithHeapsRenderer.h; sourceTree = "<group>"; };
+		5FA221A821CE534000937444 /* LODwithFunctionSpecialization.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LODwithFunctionSpecialization.storyboard; sourceTree = "<group>"; };
+		5FA221AD21CE55F300937444 /* LODwithFunctionSpecializationShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LODwithFunctionSpecializationShaderTypes.h; sourceTree = "<group>"; };
+		5FA221AE21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = LODwithFunctionSpecializationShaders.metal; sourceTree = "<group>"; };
+		5FA221B021CE563100937444 /* LODwithFunctionSpecializationMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LODwithFunctionSpecializationMesh.h; sourceTree = "<group>"; };
+		5FA221B121CE563100937444 /* LODwithFunctionSpecializationMesh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LODwithFunctionSpecializationMesh.m; sourceTree = "<group>"; };
+		5FA221B321CE566800937444 /* LODwithFunctionSpecializationRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LODwithFunctionSpecializationRenderer.h; sourceTree = "<group>"; };
+		5FA221B421CE566800937444 /* LODwithFunctionSpecializationRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LODwithFunctionSpecializationRenderer.m; sourceTree = "<group>"; };
+		5FA221B621CE566E00937444 /* LODwithFunctionSpecializationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LODwithFunctionSpecializationViewController.h; sourceTree = "<group>"; };
+		5FA221B721CE566E00937444 /* LODwithFunctionSpecializationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LODwithFunctionSpecializationViewController.m; sourceTree = "<group>"; };
+		5FA221BC21CE58E000937444 /* AAPLGLHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLGLHeaders.h; sourceTree = "<group>"; };
+		5FA221BD21CE58E000937444 /* AAPLOpenGLRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLOpenGLRenderer.h; sourceTree = "<group>"; };
+		5FA221BE21CE58E000937444 /* shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shader.vsh; sourceTree = "<group>"; };
+		5FA221BF21CE58E000937444 /* shaderTexRect.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderTexRect.fsh; sourceTree = "<group>"; };
+		5FA221C021CE58E000937444 /* AAPLOpenGLRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLOpenGLRenderer.m; sourceTree = "<group>"; };
+		5FA221C121CE58E000937444 /* shaderTex2D.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = shaderTex2D.fsh; sourceTree = "<group>"; };
+		5FA221C721CE58F100937444 /* AAPLShaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = AAPLShaders.metal; sourceTree = "<group>"; };
+		5FA221C821CE58F100937444 /* AAPLMetalRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLMetalRenderer.m; sourceTree = "<group>"; };
+		5FA221C921CE58F100937444 /* AAPLMetalRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMetalRenderer.h; sourceTree = "<group>"; };
+		5FA221CA21CE58F100937444 /* AAPLShaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLShaderTypes.h; sourceTree = "<group>"; };
+		5FA221CD21CE598500937444 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		5FA221D821CE5A7000937444 /* AAPLMetalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLMetalViewController.m; sourceTree = "<group>"; };
+		5FA221D921CE5A7000937444 /* AAPLOpenGLMetalInteropTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLOpenGLMetalInteropTexture.h; sourceTree = "<group>"; };
+		5FA221DA21CE5A7000937444 /* AAPLMetalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLMetalViewController.h; sourceTree = "<group>"; };
+		5FA221DB21CE5A7000937444 /* AAPLOpenGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLOpenGLViewController.h; sourceTree = "<group>"; };
+		5FA221DC21CE5A7100937444 /* AAPLOpenGLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLOpenGLViewController.m; sourceTree = "<group>"; };
+		5FA221DD21CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLOpenGLMetalInteropTexture.m; sourceTree = "<group>"; };
+		5FA221E121CE616E00937444 /* OpenGLMetalInteroperability.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = OpenGLMetalInteroperability.storyboard; sourceTree = "<group>"; };
 		5FA6C54521C13A0300692123 /* Render Pipeline.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Render Pipeline.md"; sourceTree = "<group>"; };
 		5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Pipeline Statistics of a Draw.md"; sourceTree = "<group>"; };
 		5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Performance Metrics with GPU Counters.md"; sourceTree = "<group>"; };
@@ -665,6 +708,7 @@
 		5F4DF97421B9410000DC9FCD /* Sample */ = {
 			isa = PBXGroup;
 			children = (
+				5FA221B921CE589900937444 /* OpenGLMetalInteroperability */,
 				5FE524E221CBCE3D00B5F956 /* LODwithFunctionSpecialization */,
 				5FEEE6F521CA64600019D0FB /* DynamicTerrainWithArgumentBuffers */,
 				5F7168D321C8BF1700DC9957 /* ArgumentBufferArraysWithHeaps */,
@@ -762,6 +806,63 @@
 			path = ArgumentBufferArraysWithHeaps;
 			sourceTree = "<group>";
 		};
+		5FA221B921CE589900937444 /* OpenGLMetalInteroperability */ = {
+			isa = PBXGroup;
+			children = (
+				5FA221E121CE616E00937444 /* OpenGLMetalInteroperability.storyboard */,
+				5FA221CF21CE59AF00937444 /* Application */,
+				5FA221CD21CE598500937444 /* Assets */,
+				5FA221BA21CE58BE00937444 /* Renderer */,
+			);
+			path = OpenGLMetalInteroperability;
+			sourceTree = "<group>";
+		};
+		5FA221BA21CE58BE00937444 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				5FA221C621CE58E400937444 /* Metal */,
+				5FA221BB21CE58CF00937444 /* OpenGL */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		5FA221BB21CE58CF00937444 /* OpenGL */ = {
+			isa = PBXGroup;
+			children = (
+				5FA221BC21CE58E000937444 /* AAPLGLHeaders.h */,
+				5FA221BD21CE58E000937444 /* AAPLOpenGLRenderer.h */,
+				5FA221C021CE58E000937444 /* AAPLOpenGLRenderer.m */,
+				5FA221BE21CE58E000937444 /* shader.vsh */,
+				5FA221C121CE58E000937444 /* shaderTex2D.fsh */,
+				5FA221BF21CE58E000937444 /* shaderTexRect.fsh */,
+			);
+			path = OpenGL;
+			sourceTree = "<group>";
+		};
+		5FA221C621CE58E400937444 /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				5FA221C921CE58F100937444 /* AAPLMetalRenderer.h */,
+				5FA221C821CE58F100937444 /* AAPLMetalRenderer.m */,
+				5FA221C721CE58F100937444 /* AAPLShaders.metal */,
+				5FA221CA21CE58F100937444 /* AAPLShaderTypes.h */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		5FA221CF21CE59AF00937444 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				5FA221DA21CE5A7000937444 /* AAPLMetalViewController.h */,
+				5FA221D821CE5A7000937444 /* AAPLMetalViewController.m */,
+				5FA221D921CE5A7000937444 /* AAPLOpenGLMetalInteropTexture.h */,
+				5FA221DD21CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m */,
+				5FA221DB21CE5A7000937444 /* AAPLOpenGLViewController.h */,
+				5FA221DC21CE5A7100937444 /* AAPLOpenGLViewController.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
 		5FCD5678215A8D4800E26E01 = {
 			isa = PBXGroup;
 			children = (
@@ -824,6 +925,9 @@
 		5FE524E221CBCE3D00B5F956 /* LODwithFunctionSpecialization */ = {
 			isa = PBXGroup;
 			children = (
+				5FA221B621CE566E00937444 /* LODwithFunctionSpecializationViewController.h */,
+				5FA221B721CE566E00937444 /* LODwithFunctionSpecializationViewController.m */,
+				5FA221A821CE534000937444 /* LODwithFunctionSpecialization.storyboard */,
 				5FE524FD21CBD1AC00B5F956 /* Assets.xcassets */,
 				5FE524FC21CBD1AC00B5F956 /* Models */,
 				5FE524E821CBCE8000B5F956 /* Renderer */,
@@ -834,6 +938,12 @@
 		5FE524E821CBCE8000B5F956 /* Renderer */ = {
 			isa = PBXGroup;
 			children = (
+				5FA221B321CE566800937444 /* LODwithFunctionSpecializationRenderer.h */,
+				5FA221B421CE566800937444 /* LODwithFunctionSpecializationRenderer.m */,
+				5FA221B021CE563100937444 /* LODwithFunctionSpecializationMesh.h */,
+				5FA221B121CE563100937444 /* LODwithFunctionSpecializationMesh.m */,
+				5FA221AE21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal */,
+				5FA221AD21CE55F300937444 /* LODwithFunctionSpecializationShaderTypes.h */,
 			);
 			path = Renderer;
 			sourceTree = "<group>";
@@ -950,6 +1060,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA221C221CE58E000937444 /* shader.vsh in Resources */,
 				5FE524FE21CBD1AD00B5F956 /* Models in Resources */,
 				5F462CCF21BC1DE20035143E /* ImageFilteringWithHeapsAndFencesImages in Resources */,
 				5F7168EC21C8BFD500DC9957 /* ArgumentBufferArraysWithHeaps.storyboard in Resources */,
@@ -957,17 +1068,20 @@
 				5F7168CE21C8979A00DC9957 /* Assets.xcassets in Resources */,
 				5FEEE72921CA6F610019D0FB /* Textures in Resources */,
 				5F31CDF521C15C9100B8514B /* DeferredLightingMeshes in Resources */,
+				5FA221C521CE58E000937444 /* shaderTex2D.fsh in Resources */,
 				5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */,
 				5F0B7B6621800584008D28D1 /* resource in Resources */,
 				5FEEE72421CA6D210019D0FB /* DynamicTerrainWithArgumentBuffers.storyboard in Resources */,
 				5F462CEE21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncoding.storyboard in Resources */,
 				5FEEE72821CA6F610019D0FB /* DynamicTerrainWithArgumentBuffersMeshes in Resources */,
 				5F31CE9121C3DE7A00B8514B /* HelloComputeImage.tga in Resources */,
+				5FA221E221CE616E00937444 /* OpenGLMetalInteroperability.storyboard in Resources */,
 				5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */,
 				5F4DF97D21B944A400DC9FCD /* DevicesAndCommands.storyboard in Resources */,
 				5F462D6721C0FCBA0035143E /* DeferredLighting.storyboard in Resources */,
 				5F462CE521BCFC660035143E /* BasicIndirectCommandBuffers.storyboard in Resources */,
 				5F7168D021C8979A00DC9957 /* BasicArgumentBuffers.storyboard in Resources */,
+				5FA221CE21CE598500937444 /* Assets in Resources */,
 				5F462D0921BDFD5E0035143E /* BasicBuffers.storyboard in Resources */,
 				5F31CE9021C3DE7A00B8514B /* HelloCompute.storyboard in Resources */,
 				5F462CFE21BD40280035143E /* HelloTriangle.storyboard in Resources */,
@@ -979,6 +1093,8 @@
 				5F462CCD21BC188E0035143E /* ImageFilteringWithHeapsAndFences.storyboard in Resources */,
 				5FCD568E215A8D4B00E26E01 /* Assets.xcassets in Resources */,
 				5F7168EB21C8BFD500DC9957 /* Assets.xcassets in Resources */,
+				5FA221A921CE534000937444 /* LODwithFunctionSpecialization.storyboard in Resources */,
+				5FA221C321CE58E000937444 /* shaderTexRect.fsh in Resources */,
 				5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -996,6 +1112,7 @@
 				5FEEE71B21CA6CEC0019D0FB /* AAPLParticleRenderer.mm in Sources */,
 				5F462CCB21BC188E0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal in Sources */,
 				5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */,
+				5FA221B821CE566E00937444 /* LODwithFunctionSpecializationViewController.m in Sources */,
 				5F462CC821BC188E0035143E /* ImageFilteringWithHeapsAndFencesRenderer.m in Sources */,
 				5F4DF97B21B9428500DC9FCD /* DevicesAndCommandsViewController.m in Sources */,
 				5F462CFD21BD40280035143E /* HelloTriangleViewController.m in Sources */,
@@ -1013,6 +1130,7 @@
 				5F462D6021C0B1740035143E /* DeferredLightingBufferExamination.m in Sources */,
 				5F31CE8F21C3DE7A00B8514B /* HelloComputeRenderer.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
+				5FA221C421CE58E000937444 /* AAPLOpenGLRenderer.m in Sources */,
 				5F31CE9221C3DE7A00B8514B /* HelloComputeShaders.metal in Sources */,
 				5F462D1721BE34AD0035143E /* BasicTexturingRenderer.m in Sources */,
 				5F462D4921C0B1110035143E /* DeferredLightingPointLights.metal in Sources */,
@@ -1024,6 +1142,7 @@
 				5F462CEF21BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingViewController.m in Sources */,
 				5F219B3E2191653700D002F9 /* AVFoundationViewController.m in Sources */,
 				5F462D4A21C0B1110035143E /* DeferredLightingSkybox.metal in Sources */,
+				5FA221B521CE566800937444 /* LODwithFunctionSpecializationRenderer.m in Sources */,
 				5FEEE71521CA6CEC0019D0FB /* AAPLTerrainRenderer.mm in Sources */,
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
@@ -1033,6 +1152,7 @@
 				5F462D1921BE34AD0035143E /* BasicTexturingImage.m in Sources */,
 				5F462D5E21C0B1740035143E /* DeferredLightingRenderer_macOS.m in Sources */,
 				5FEEE71221CA6CEC0019D0FB /* AAPLMainRenderer.mm in Sources */,
+				5FA221DF21CE5A7100937444 /* AAPLOpenGLViewController.m in Sources */,
 				5F462D5C21C0B1740035143E /* AAPLMathUtilities.m in Sources */,
 				5F462D4B21C0B1110035143E /* DeferredLightingBufferExamination.metal in Sources */,
 				5FEEE71E21CA6CEC0019D0FB /* AAPLTerrainRendererUtilities.metal in Sources */,
@@ -1061,14 +1181,20 @@
 				5F462D5B21C0B1740035143E /* DeferredLightingMesh.m in Sources */,
 				5FEEE71921CA6CEC0019D0FB /* AAPLParticleRenderer.metal in Sources */,
 				5F462D4D21C0B1110035143E /* DeferredLightingDirectionalLight.metal in Sources */,
+				5FA221DE21CE5A7100937444 /* AAPLMetalViewController.m in Sources */,
 				5FEEE71721CA6CEC0019D0FB /* AAPLMainRendererUtilities.metal in Sources */,
 				5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
 				5FEEE71D21CA6CEC0019D0FB /* AAPLVegetationRenderer.mm in Sources */,
 				5F462D4E21C0B1110035143E /* DeferredLightingGBuffer.metal in Sources */,
+				5FA221CC21CE58F100937444 /* AAPLMetalRenderer.m in Sources */,
 				5F7168CF21C8979A00DC9957 /* BasicArgumentBuffersViewController.m in Sources */,
+				5FA221AF21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal in Sources */,
 				5F7168CD21C8979A00DC9957 /* BasicArgumentBuffersShaders.metal in Sources */,
+				5FA221CB21CE58F100937444 /* AAPLShaders.metal in Sources */,
+				5FA221E021CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m in Sources */,
 				5F31CE8E21C3DE7A00B8514B /* HelloComputeImage.m in Sources */,
+				5FA221B221CE563100937444 /* LODwithFunctionSpecializationMesh.m in Sources */,
 				5F462D0A21BDFD5E0035143E /* BasicBuffersRenderer.m in Sources */,
 				5F7168D121C8979A00DC9957 /* BasicArgumentBuffersRenderer.m in Sources */,
 				5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */,

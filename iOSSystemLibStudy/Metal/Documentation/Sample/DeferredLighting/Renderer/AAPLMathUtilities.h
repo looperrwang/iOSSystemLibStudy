@@ -30,6 +30,15 @@ float AAPL_SIMD_OVERLOAD degrees_from_radians(float radians);
 /// Returns the number of radians in the specified number of degrees
 float AAPL_SIMD_OVERLOAD radians_from_degrees(float degrees);
 
+/// Fast random seed
+void AAPL_SIMD_OVERLOAD seedRand(uint32_t seed);
+
+/// Fast integer random
+int32_t AAPL_SIMD_OVERLOAD randi(void);
+
+/// Fast floating-point random
+float AAPL_SIMD_OVERLOAD randf(float x);
+
 /// Returns a vector that is linearly interpolated between the two provided vectors
 vector_float3 AAPL_SIMD_OVERLOAD vector_lerp(vector_float3 v0, vector_float3 v1, float t);
 
