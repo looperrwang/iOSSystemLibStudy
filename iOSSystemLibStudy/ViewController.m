@@ -85,11 +85,11 @@
     [self.data addObject:[[CellData alloc] initWithText:@"GLKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"GSS" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HealthKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"HealthKitUI" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"HealthKitUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"HomeKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"iAd" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IdentityLookup" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"ImageIO - 完成" vcName:@"ImageIOViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ImageIO" vcName:@"ImageIOViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"Intents" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"IntentsUI" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"IOKit" vcName:@""]];
@@ -132,7 +132,7 @@
     //[self.data addObject:[[CellData alloc] initWithText:@"Twitter" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"UIKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"UserNotifications" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"UserNotificationsUI" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"UserNotificationsUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"VideoSubscriberAccount" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"VideoToolbox" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Vision" vcName:@""]];
@@ -141,9 +141,9 @@
     //[self.data addObject:[[CellData alloc] initWithText:@"WebKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"Swift" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"CarPlay" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Natural Language" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"SiriKit" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"SMS and Call Reporting" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"SMS and Call Reporting" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"AuthenticationServices" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Compression" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Core Services" vcName:@""]];
