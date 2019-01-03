@@ -2099,6 +2099,603 @@ Core Animation 将渲染缓冲区的内容与视图层次结构中的任何其�
     - 如果你的应用使用 OpenGL ES 2.0 或更高版本，然后应用在顶点着色器中执行计算并将其分配给 varying 变量。图形硬件对 varying 变量进行插值并作为输入传递给片段着色器。另一种方式是将计算的输入赋值给 varying 变量，并在片段着色器中执行计算。这样做会将执行该计算的成本从每个顶点成本更改为每个片段成本，降低了顶点阶段的压力，但增加了管道片段阶段的压力。当你的应用程序阻塞在顶点处理时，执行此操作，此操作计算成本低廉，并且可以通过更改显着减少顶点计数。
     - 如果应用使用 OpenGL ES 1.1 ，则可以使用 DOT3 照明执行每片段照明。可以通过添加凹凸贴图纹理来保存法线信息并使用纹理合并操作和 GL_DOT3_RGB 模式应用凹凸贴图来完成此操作。
 
+### Avoid Storing Constants in Attribute Arrays
+
+> If your models include attributes that uses data that remains constant across the entire model, do not duplicate that data for each vertex. OpenGL ES 2.0 and 3.0 apps can either set a constant vertex attribute or use a uniform shader value to hold the value instead. OpenGL ES 1.1 app should use a per-vertex attribute function such as glColor4ub or glTexCoord2f instead.
+
+如果模型包含使用在整个模型中保持不变的数据的属性，则不要在每个顶点中包含该数据。OpenGL ES 2.0 和 3.0 应用程序可以设置常量顶点属性，也可以使用统一着色器值来保存这样的值。OpenGL ES 1.1 应用程序应该使用每顶点属性函数，例如 glColor4ub 或 glTexCoord2f 。
+
+### Use the Smallest Acceptable Types for Attributes
+
+> When specifying the size of each of your attribute’s components, choose the smallest data type that provides acceptable results. Here are some guidelines:
+>
+> - Specify vertex colors using four unsigned byte components (GL_UNSIGNED_BYTE).
+> - Specify texture coordinates using 2 or 4 unsigned bytes (GL_UNSIGNED_BYTE) or unsigned short (GL_UNSIGNED_SHORT). Do not pack multiple sets of texture coordinates into a single attribute.
+> - Avoid using the OpenGL ES GL_FIXED data type. It requires the same amount of memory as GL_FLOAT, but provides a smaller range of values. All iOS devices support hardware floating-point units, so floating point values can be processed more quickly.
+> - OpenGL ES 3.0 contexts support a wider range of small data types, such as GL_HALF_FLOAT and GL_INT_2_10_10_10_REV. These often provide sufficient precision for attributes such as normals, with a smaller footprint than GL_FLOAT.
+>
+> If you specify smaller components, be sure you reorder your vertex format to avoid misaligning your vertex data. See [Avoid Misaligned Vertex Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW7).
+
+指定每个属性组件的大小时，选择提供可接受结果的最小数据类型。以下是一些指导原则：
+
+- 使用四个无符号字节组件（ GL_UNSIGNED_BYTE ）指定顶点颜色。
+- 使用 2 个或 4 个无符号字节（ GL_UNSIGNED_BYTE ）或无符号短整型（ GL_UNSIGNED_SHORT ）指定纹理坐标。不要将多组纹理坐标打包到单个属性中。
+- 避免使用 OpenGL ES GL_FIXED 数据类型。它需要与 GL_FLOAT 相同的内存占用，但提供的值范围较小。所有 iOS 设备都支持硬件浮点单元，因此可以更快地处理浮点值。
+- OpenGL ES 3.0 上下文支持更广泛的小数据类型，例如 GL_HALF_FLOAT 和 GL_INT_2_10_10_10_REV 。这些通常为法线等属性提供足够的精度，同时拥有比 GL_FLOAT 更小的空间占用。
+
+如果指定较小的组件，确保重新排序顶点格式以避免错位顶点数据。见 [Avoid Misaligned Vertex Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW7) 。
+
+### Use Interleaved Vertex Data
+
+> You can specify vertex data as a series of arrays (also known as a struct of arrays) or as an array where each element includes multiple attributes (an array of structs). The preferred format on iOS is an array of structs with a single interleaved vertex format. Interleaved data provides better memory locality for each vertex.
+>
+> Figure 8-2  Interleaved memory structures place all data for a vertex together in memory
+
+可以将顶点数据指定为一系列数组（也称为数组结构），也可以指定为每个元素包含多个属性（结构数组）的数组。iOS 上的首选格式是具有单个交错顶点格式的结构数组。交错数据为每个顶点提供更好的内存局部性。
+
+图 8-2 交错内存结构将顶点的所有数据放在一起存储在内存中
+
+![InterleavedMemoryStructuresPlaceAllDataForVertexTogetherInMemory](../../resource/OpenGLES/Markdown/InterleavedMemoryStructuresPlaceAllDataForVertexTogetherInMemory.png)
+
+> An exception to this rule is when your app needs to update some vertex data at a rate different from the rest of the vertex data, or if some data can be shared between two or more models. In either case, you may want to separate the attribute data into two or more structures.
+>
+> Figure 8-3  Use multiple vertex structures when some data is used differently
+
+此规则的一个例外是当应用需要以不同于其他顶点数据的速率更新某些顶点数据时，或者某些数据可以在两个或更多模型之间共享时。在任何一种情况下，你可能希望将属性数据分成两个或多个结构。
+
+图 8-3 当数据使用方式有差异时使用多个顶点结构
+
+![UseMultipleVertexStructuresWhenSomeDataIsUsedDifferently](../../resource/OpenGLES/Markdown/UseMultipleVertexStructuresWhenSomeDataIsUsedDifferently.png)
+
+### Avoid Misaligned Vertex Data
+
+> When you are designing your vertex structure, align the beginning of each attribute to an offset that is either a multiple of its component size or 4 bytes, whichever is larger. When an attribute is misaligned, iOS must perform additional processing before passing the data to the graphics hardware.
+>
+> In Figure 8-4, the position and normal data are each defined as three short integers, for a total of six bytes. The normal data begins at offset 6, which is a multiple of the native size (2 bytes), but is not a multiple of 4 bytes. If this vertex data were submitted to iOS, iOS would have to take additional time to copy and align the data before passing it to the hardware. To fix this, explicitly add two bytes of padding after each attribute.
+>
+> Figure 8-4  Align Vertex Data to avoid additional processing
+
+在设计顶点结构时，将每个属性的起始对其到其组件大小或 4 字节整数倍的偏移处，以较大者为准。当属性未对齐时，iOS 必须在将数据传递到图形硬件之前执行额外的处理。
+
+在图 8-4 中，位置和法线数据各自定义为三个短整数，总共六个字节。法线数据从偏移值 6 起始，偏移量为原始大小（ 2 字节）的整数倍，但不是 4 字节的整数倍。如果将此顶点数据提交到 iOS ，则在将数据传递给硬件之前，iOS 必须花费额外的时间来复制和对齐数据。要解决此问题，在每个属性后显式添加两个填充字节。
+
+图 8-4 对齐顶点数据以避免额外处理
+
+![AlignVertexDataToAvoidAdditionalProcessing](../../resource/OpenGLES/Markdown/AlignVertexDataToAvoidAdditionalProcessing.png)
+
+### Use Triangle Strips to Batch Vertex Data
+
+> Using triangle strips significantly reduces the number of vertex calculations that OpenGL ES must perform on your models. On the left side of Figure 8-5, three triangles are specified using a total of nine vertices. C, E and G actually specify the same vertex! By specifying the data as a triangle strip, you can reduce the number of vertices from nine to five.
+>
+> Figure 8-5  Triangle strip
+
+使用三角形条可以显着减少 OpenGL ES 必须在模型上执行的顶点计算次数。在图 8-5 的左侧，使用总共九个顶点指定三个三角形。C，E 和 G 实际上指定了相同的顶点！通过将数据指定为三角形条带，可以将顶点数量从 9 减少到 5 。
+
+图 8-5 三角形条带
+
+![TriangleStrip](../../resource/OpenGLES/Markdown/TriangleStrip.png)
+
+> Sometimes, your app can combine more than one triangle strip into a single larger triangle strip. All of the strips must share the same rendering requirements. This means:
+>
+> - You must use the same shader to draw all of the triangle strips.
+> - You must be able to render all of the triangle strips without changing any OpenGL state.
+> - The triangle strips must share the same vertex attributes.
+>
+> To merge two triangle strips, duplicate the last vertex of the first strip and the first vertex of the second strip, as shown in Figure 8-6. When this strip is submitted to OpenGL ES, triangles DEE, EEF, EFF, and FFG are considered degenerate and not processed or rasterized.
+>
+> Figure 8-6  Use degenerate triangles to merge triangle strips
+
+有时，应用可以将多个三角形条带组合成一个更大的三角形条带。所有条带必须共享相同的渲染要求。这意味着：
+
+- 必须使用相同的着色器绘制所有三角形条带。
+- 必须能够渲染所有三角形条而不更改任何 OpenGL 状态。
+- 三角形条必须共享相同的顶点属性。
+
+要合并两个三角形条，需要重复第一个条带的最后一个顶点和第二个条带的第一个顶点，如图 8-6 所示。当此条带提交给 OpenGL ES 时，三角形 DEE ，EEF ，EFF 和 FFG 被认为是简并的，不会对其进行处理或栅格化。
+
+图 8-6 使用简并三角形合并三角形条带
+
+![UseDegenerateTrianglesToMergTtriangleStrips](../../resource/OpenGLES/Markdown/UseDegenerateTrianglesToMergTtriangleStrips.png)
+
+> For best performance, your models should be submitted as a single indexed triangle strip. To avoid specifying data for the same vertex multiple times in the vertex buffer, use a separate index buffer and draw the triangle strip using the glDrawElements function (or the glDrawElementsInstanced or glDrawRangeElements functions, if appropriate).
+>
+> In OpenGL ES 3.0, you can use the primitive restart feature to merge triangle strips without using degenerate triangles. When this feature is enabled, OpenGL ES treats the largest possible value in an index buffer as a command to finish one triangle strip and start another. Listing 8-1 demonstrates this approach.
+>
+> Listing 8-1  Using primitive restart in OpenGL ES 3.0
+
+为获得最佳性能，你的模型应作为单个索引三角形条提交。要避免在顶点缓冲区中多次指定同一顶点的数据，使用单独的索引缓冲区并使用 glDrawElements 函数（或 glDrawElementsInstanced 或 glDrawRangeElements 函数，如果适用）绘制三角形条。
+
+在 OpenGL ES 3.0 中，你可以使用图元 restart 功能来合并三角形条而不使用简并三角形。启用此功能后，OpenGL ES 会将索引缓冲区中可能的最大值视为完成一个三角形条带并启动另一个三角形条带的命令。清单 8-1 演示了这种方法。
+
+清单 8-1 在 OpenGL ES 3.0 中使用图元 restart
+
+```objc
+// Prepare index buffer data (not shown: vertex buffer data, loading vertex and index buffers)
+GLushort indexData[11] = {
+    0, 1, 2, 3, 4,    // triangle strip ABCDE
+    0xFFFF,           // primitive restart index (largest possible GLushort value)
+    5, 6, 7, 8, 9,    // triangle strip FGHIJ
+};
+
+// Draw triangle strips
+glEnable(GL_PRIMITIVE_RESTART_FIXED_INDEX);
+glDrawElements(GL_TRIANGLE_STRIP, 11, GL_UNSIGNED_SHORT, 0);
+```
+
+> Where possible, sort vertex and index data so triangles that share common vertices are drawn reasonably close to each other in the triangle strip. Graphics hardware often caches recent vertex calculations to avoid recalculating a vertex.
+
+在可能的情况下，对顶点和索引数据进行排序，以便共享公共顶点的三角形在三角形条带中相互接近地绘制。 图形硬件通常会缓存最近的顶点计算，以避免重复计算顶点。
+
+### Use Vertex Buffer Objects to Manage Copying Vertex Data
+
+> Listing 8-2 provides a function that a simple app might use to provide position and color data to the vertex shader. It enables two attributes and configures each to point at the interleaved vertex structure. Finally, it calls the glDrawElements function to render the model as a single triangle strip.
+>
+> Listing 8-2  Submitting vertex data to a shader program
+
+清单 8-2 提供了一个用于简单应用程序向顶点着色器提供位置和颜色数据的函数。它启用两个属性，并将每个属性配置为指向交错的顶点结构。最后，它调用 glDrawElements 函数将模型作为单个三角形条带渲染。
+
+清单 8-2 将顶点数据提交到着色器程序
+
+```objc
+typedef struct _vertexStruct
+{
+    GLfloat position[2];
+    GLubyte color[4];
+} vertexStruct;
+
+void DrawModel()
+{
+    const vertexStruct vertices[] = {...};
+    const GLubyte indices[] = {...};
+
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE,
+    sizeof(vertexStruct), &vertices[0].position);
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+    sizeof(vertexStruct), &vertices[0].color);
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+
+    glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, indices);
+}
+```
+
+> This code works, but is inefficient. Each time DrawModel is called, the index and vertex data are copied to OpenGL ES, and transferred to the graphics hardware. If the vertex data does not change between invocations, these unnecessary copies can impact performance. To avoid unnecessary copies, your app should store its vertex data in a vertex buffer object (VBO). Because OpenGL ES owns the vertex buffer object’s memory, it can store the buffer in memory that is more accessible to the graphics hardware, or pre-process the data into the preferred format for the graphics hardware.
+>
+> Note: When using vertex array objects in OpenGL ES 3.0, you must also use vertex buffer objects.
+>
+> Listing 8-3 creates a pair of vertex buffer objects, one to hold the vertex data and the second for the strip’s indices. In each case, the code generates a new object, binds it to be the current buffer, and fills the buffer. CreateVertexBuffers would be called when the app is initialized.
+>
+> Listing 8-3  Creating a vertex buffer object
+
+这样的代码是可以工作的，但效率低下。每次调用 DrawModel 时，索引和顶点数据都会复制到 OpenGL ES ，并传输到图形硬件。如果顶点数据在调用之间没有变化，则这些不必要的拷贝会影响性能。为避免不必要的拷贝，你的应用程序应将其顶点数据存储在顶点缓冲区对象（ VBO ）中。由于 OpenGL ES 拥有顶点缓冲区对象的内存，因此它可以将缓冲区存储在图形硬件更易于访问的内存中，或者将数据预处理为图形硬件的首选格式。
+
+注意：在 OpenGL ES 3.0 中使用顶点数组对象时，还必须使用顶点缓冲区对象。
+
+清单 8-3 创建了一对顶点缓冲区对象，一个用于保存顶点数据，另一个用于存储条带索引。在每种情况下，代码都会生成一个新对象，将其绑定为当前缓冲区，并填充缓冲区。CreateVertexBuffers 将会在应用程序初始化时将调用。
+
+清单 8-3 创建顶点缓冲区对象
+
+```objc
+GLuint    vertexBuffer;
+GLuint    indexBuffer;
+
+void CreateVertexBuffers()
+{
+
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+}
+```
+
+> Listing 8-4 modifies Listing 8-2 to use the vertex buffer objects. The key difference in Listing 8-4 is that the parameters to the glVertexAttribPointer functions no longer point to the vertex arrays. Instead, each is an offset into the vertex buffer object.
+>
+> Listing 8-4  Drawing with a vertex buffer object
+
+清单 8-4 修改了清单 8-2 以使用顶点缓冲区对象。清单 8-4 的主要区别在于 glVertexAttribPointer 函数的参数不再指向顶点数组。相反，对应的参数为顶点缓冲区对象的偏移量。
+
+清单 8-4 使用顶点缓冲区对象绘制
+
+```objc
+void DrawModelUsingVertexBuffers()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE,
+    sizeof(vertexStruct), (void *)offsetof(vertexStruct, position));
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+    sizeof(vertexStruct), (void *)offsetof(vertexStruct, color));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte),  GL_UNSIGNED_BYTE, (void*)0);
+}
+```
+
+### Buffer Usage Hints
+
+> The previous example initialized the vertex buffer once and never changed its contents afterwards. You can change the contents of a vertex buffer. A key part of the design of vertex buffer objects is that the app can inform OpenGL ES how it uses the data stored in the buffer. An OpenGL ES implementation can use this hint to alter the strategy it uses for storing the vertex data. In Listing 8-3, each call to the glBufferData function provides a usage hint as the last parameter. Passing GL_STATIC_DRAW into glBufferData tells OpenGL ES that the contents of both buffers are never expected to change, which gives OpenGL ES more opportunities to optimize how and where the data is stored.
+>
+> The OpenGL ES specification defines the following usage cases:
+>
+> - GL_STATIC_DRAW is for vertex buffers that are rendered many times, and whose contents are specified once and never change.
+> - GL_DYNAMIC_DRAW is for vertex buffers that are rendered many times, and whose contents change during the rendering loop.
+> - GL_STREAM_DRAW is for vertex buffers that are rendered a small number of times and then discarded.
+>
+> In iOS, GL_DYNAMIC_DRAW and GL_STREAM_DRAW are equivalent. You can use the glBufferSubData function to update buffer contents, but doing so incurs a performance penalty because it flushes the command buffer and waits for all commands to complete. Double or triple buffering can reduce this performance cost somewhat. (See [Use Double Buffering to Avoid Resource Conflicts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW5).) For better performance, use the glMapBufferRange function in OpenGL ES 3.0 or the corresponding function provided by the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 2.0 or 1.1.
+>
+> If different attributes inside your vertex format require different usage patterns, split the vertex data into multiple structures and allocate a separate vertex buffer object for each collection of attributes that share common usage characteristics. Listing 8-5 modifies the previous example to use a separate buffer to hold the color data. By allocating the color buffer using the GL_DYNAMIC_DRAW hint, OpenGL ES can allocate that buffer so that your app maintains reasonable performance.
+>
+> Listing 8-5  Drawing a model with multiple vertex buffer objects
+
+前面的示例初始化顶点缓冲区一次，之后其内容保持不变。你可以更改顶点缓冲区的内容。顶点缓冲区对象设计的一个关键部分是应用程序可以通知 OpenGL ES 如何使用缓冲区中存储的数据。OpenGL ES 实现可以使用此提示来更改用于存储顶点数据的策略。在清单 8-3 中，每次调用 glBufferData 函数都会提供一个用法提示作为最后一个参数。将 GL_STATIC_DRAW 传递给 glBufferData 告诉 OpenGL ES 两个缓冲区的内容永远不会发生变化，这为 OpenGL ES 提供了更多优化数据存储方式和位置的机会。
+
+OpenGL ES 规范定义了以下使用方式：
+
+- GL_STATIC_DRAW 用于多次渲染的顶点缓冲区，其内容指定一次且永不改变。
+- GL_DYNAMIC_DRAW 用于多次渲染的顶点缓冲区，其内容在渲染循环期间发生变化。
+- GL_STREAM_DRAW 用于渲染少量次数然后被丢弃的顶点缓冲区。
+
+在 iOS 中，GL_DYNAMIC_DRAW 和 GL_STREAM_DRAW 是等效的。你可以使用 glBufferSubData 函数来更新缓冲区内容，但这样做会导致性能下降，因为它会刷新命令缓冲区并等待所有命令完成。双重或三重缓冲可以在一定程度上降低性能成本。（见 [Use Double Buffering to Avoid Resource Conflicts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW5) 。）为了获得更好的性能，请使用 OpenGL ES 3.0 中的 glMapBufferRange 函数或 OpenGL ES 2.0 或 1.1 中 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展提供的相应函数。
+
+如果顶点格式中的不同属性需要不同的使用模式，将顶点数据拆分为多个结构，并为共享通用使用特征的每个属性集合分配单独的顶点缓冲区对象。清单 8-5 修改了前一个示例，以使用单独的缓冲区来保存颜色数据。通过使用 GL_DYNAMIC_DRAW 提示分配颜色缓冲区，OpenGL ES 可以分配该缓冲区，以便应用程序保持合理的性能。
+
+清单 8-5 使用多个顶点缓冲区对象绘制模型
+
+```objc
+typedef struct _vertexStatic
+{
+    GLfloat position[2];
+} vertexStatic;
+
+typedef struct _vertexDynamic
+{
+    GLubyte color[4];
+} vertexDynamic;
+
+// Separate buffers for static and dynamic data.
+GLuint    staticBuffer;
+GLuint    dynamicBuffer;
+GLuint    indexBuffer;
+
+const vertexStatic staticVertexData[] = {...};
+vertexDynamic dynamicVertexData[] = {...};
+const GLubyte indices[] = {...};
+
+void CreateBuffers()
+{
+    // Static position data
+    glGenBuffers(1, &staticBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, staticBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(staticVertexData), staticVertexData, GL_STATIC_DRAW);
+
+    // Dynamic color data
+    // While not shown here, the expectation is that the data in this buffer changes between frames.
+    glGenBuffers(1, &dynamicBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, dynamicBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(dynamicVertexData), dynamicVertexData, GL_DYNAMIC_DRAW);
+
+    // Static index data
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+}
+
+void DrawModelUsingMultipleVertexBuffers()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, staticBuffer);
+    glVertexAttribPointer(GLKVertexAttribPosition, 2, GL_FLOAT, GL_FALSE,
+    sizeof(vertexStruct), (void *)offsetof(vertexStruct, position));
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+
+    glBindBuffer(GL_ARRAY_BUFFER, dynamicBuffer);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+    sizeof(vertexStruct), (void *)offsetof(vertexStruct, color));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glDrawElements(GL_TRIANGLE_STRIP, sizeof(indices)/sizeof(GLubyte), GL_UNSIGNED_BYTE, (void*)0);
+}
+```
+
+### Consolidate Vertex Array State Changes Using Vertex Array Objects
+
+> Take a closer look at the DrawModelUsingMultipleVertexBuffers function in Listing 8-5. It enables many attributes, binds multiple vertex buffer objects, and configures attributes to point into the buffers. All of that initialization code is essentially static; none of the parameters change from frame to frame. If this function is called every time the app renders a frame, there’s a lot of unnecessary overhead reconfiguring the graphics pipeline. If the app draws many different kinds of models, reconfiguring the pipeline may become a bottleneck. Instead, use a vertex array object to store a complete attribute configuration. Vertex array objects are part of the core OpenGL ES 3.0 specification and are available in OpenGL ES 2.0 and 1.1 through the [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) extension.
+>
+> Figure 8-7 shows an example configuration with two vertex array objects. Each configuration is independent of the other; each vertex array object can reference a different set of vertex attributes, which can be stored in the same vertex buffer object or split across several vertex buffer objects.
+>
+> Figure 8-7  Vertex array object configuration
+
+仔细看清单 8-5 中的 DrawModelUsingMultipleVertexBuffers 函数。它启用许多属性，绑定多个顶点缓冲区对象，并配置属性以指向缓冲区。所有初始化代码基本上都是静态的；没有参数在帧与帧之间变化。如果每次应用程序渲染帧时都调用此函数，则会有很多不必要的重新配置图形管道的开销。如果应用程序绘制了许多不同类型的模型，重新配置管道可能会成为瓶颈。使用顶点数组对象来存储完整的属性配置。顶点数组对象是核心 OpenGL ES 3.0 规范的一部分，可通过 [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) 扩展在 OpenGL ES 2.0 和 1.1 中使用。
+
+图 8-7 显示了具有两个顶点数组对象的示例配置。每个配置都独立于另一个；每个顶点数组对象可以引用一组不同的顶点属性，这些属性可以存储在同一个顶点缓冲区对象中，也可以分割成几个顶点缓冲区对象。
+
+图 8-7 顶点数组对象配置
+
+![VertexArrayObjectConfiguration](../../resource/OpenGLES/Markdown/VertexArrayObjectConfiguration.png)
+
+> Listing 8-6 provides the code used to configure first vertex array object shown above. It generates an identifier for the new vertex array object and then binds the vertex array object to the context. After this, it makes the same calls to configure vertex attributes as it would if the code were not using vertex array objects. The configuration is stored to the bound vertex array object instead of to the context.
+>
+> Listing 8-6  Configuring a vertex array object
+
+清单 8-6 提供了用于配置上面显示的第一个顶点数组对象的代码。它为新的顶点数组对象生成标识符，然后将顶点数组对象绑定到上下文。在此之后，进行与不使用顶点数组对象的代码一致的调用来配置顶点属性。配置存储到绑定的顶点数组对象而不是上下文中。
+
+清单 8-6 配置顶点数组对象
+
+```objc
+void ConfigureVertexArrayObject()
+{
+// Create and bind the vertex array object.
+    glGenVertexArrays(1,&vao1);
+    glBindVertexArray(vao1);
+    // Configure the attributes in the VAO.
+    glBindBuffer(GL_ARRAY_BUFFER, vbo1);
+    glVertexAttribPointer(GLKVertexAttribPosition, 3, GL_FLOAT, GL_FALSE,
+    sizeof(staticFmt), (void*)offsetof(staticFmt,position));
+    glEnableVertexAttribArray(GLKVertexAttribPosition);
+    glVertexAttribPointer(GLKVertexAttribTexCoord0, 2, GL_UNSIGNED_SHORT, GL_TRUE,
+    sizeof(staticFmt), (void*)offsetof(staticFmt,texcoord));
+    glEnableVertexAttribArray(GLKVertexAttribTexCoord0);
+    glVertexAttribPointer(GLKVertexAttribNormal, 3, GL_FLOAT, GL_FALSE,
+    sizeof(staticFmt), (void*)offsetof(staticFmt,normal));
+    glEnableVertexAttribArray(GLKVertexAttribNormal);
+
+    glBindBuffer(GL_ARRAY_BUFFER, vbo2);
+    glVertexAttribPointer(GLKVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE,
+    sizeof(dynamicFmt), (void*)offsetof(dynamicFmt,color));
+    glEnableVertexAttribArray(GLKVertexAttribColor);
+
+    // Bind back to the default state.
+    glBindBuffer(GL_ARRAY_BUFFER,0);
+    glBindVertexArray(0);
+}
+```
+
+> To draw, the code binds the vertex array object and then submits drawing commands as before.
+>
+> Note: In OpenGL ES 3.0, client storage of vertex array data is not allowed—vertex array objects must use vertex buffer objects.
+>
+> For best performance, your app should configure each vertex array object once, and never change it at runtime. If you need to change a vertex array object in every frame, create multiple vertex array objects instead. For example, an app that uses double buffering might configure one set of vertex array objects for odd-numbered frames, and a second set for even numbered frames. Each set of vertex array objects would point at the vertex buffer objects used to render that frame. When a vertex array object’s configuration does not change, OpenGL ES can cache information about the vertex format and improve how it processes those vertex attributes.
+
+代码绑定顶点数组对象，然后像以前一样提交绘图命令来绘制。
+
+注意：在 OpenGL ES 3.0 中，不允许客户端存储顶点数组数据 - 顶点数组对象必须使用顶点缓冲区对象。
+
+为了获得最佳性能，应用应该配置每个顶点数组对象一次，并且永远不要在运行时更改它。如果需要在每帧中更改顶点数组对象，请改为创建多个顶点数组对象。例如，使用双缓冲的应用程序可能为奇数帧配置一组顶点数组对象，为偶数帧配置第二组顶点数组对象。每组顶点数组对象将指向用于渲染该帧的顶点缓冲区对象。当顶点数组对象的配置没有改变时，OpenGL ES 可以缓存有关顶点格式的信息并改进处理这些顶点属性的方式。
+
+### Map Buffers into Client Memory for Fast Updates
+
+> One of the more challenging problems in OpenGL ES app design is working with dynamic resources, especially if your vertex data needs to change every frame. Efficiently balancing parallelism between the CPU and GPU requires carefully managing data transfers between your app’s memory space and OpenGL ES memory. Traditional techniques, such as using the glBufferSubData function, can reduce performance because they force the GPU to wait while data is transferred, even if it could otherwise be rendering from data elsewhere in the same buffer.
+>
+> For example, you may want to both modify a vertex buffer and draw its contents on each pass through a high frame rate rendering loop. A draw command from the last frame rendered may still be utilizing the GPU while the CPU is attempting to access buffer memory to prepare for drawing the next frame—causing the buffer update call to block further CPU work until the GPU is done. You can improve performance in such scenarios by manually synchronizing CPU and GPU access to a buffer.
+>
+> The glMapBufferRange function provides a more efficient way to dynamically update vertex buffers. (This function is available as core API in OpenGL ES 3.0 and through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 1.1 and 2.0.) Use this function to retrieve a pointer to a region of OpenGL ES memory, which you can then use to write new data. The glMapBufferRange function allows mapping of any subrange of the buffer’s data storage into client memory. It also supports hints that allow for asynchronous buffer modification when you use the function together with a OpenGL sync object, as shown in Listing 8-7.
+>
+> Listing 8-7  Dynamically updating a vertex buffer with manual synchronization
+
+OpenGL ES 应用程序设计中一个更具挑战性的问题是使用动态资源，特别是如果顶点数据需要每帧更改。有效地平衡 CPU 和 GPU 之间的并行性需要仔细管理应用程序内存空间和 OpenGL ES 内存之间的数据传输。传统技术（例如使用 glBufferSubData 函数）可能会降低性能，因为它们会强制 GPU 在传输数据时等待，即使它可能是从同一缓冲区中的其他位置进行渲染。
+
+例如，你可能希望修改顶点缓冲区并在每次传递时通过高帧速率渲染循环绘制其内容。当 CPU 尝试访问缓冲内存以准备绘制下一帧时，渲染上一帧的绘图命令可能仍然在利用 GPU  - 导致缓冲区更新调用阻止进一步的 CPU 工作直到 GPU 完成。可以通过手工同步 CPU 和 GPU 对缓冲区的访问来提高此类场景的性能。
+
+glMapBufferRange 函数提供了一种更有效的方式来动态更新顶点缓冲区。（此函数在 OpenGL ES 3.0 中作为核心 API 可用以及 OpenGL ES 1.1 和 2.0 中通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展来使用相同的功能。）使用此函数可以检索指向 OpenGL ES 内存区域的指针，然后可以使用该指针写新数据。glMapBufferRange 函数允许将缓冲区数据存储的任何子区间映射到客户端内存。当与 OpenGL 同步对象一起使用该函数时，还支持允许异步缓冲区更新的提示，如清单 8-7 所示。
+
+清单 8-7 使用手动同步动态更新顶点缓冲区
+
+```objc
+GLsync fence;
+GLboolean UpdateAndDraw(GLuint vbo, GLuint offset, GLuint length, void *data) {
+    GLboolean success;
+
+    // Bind and map buffer.
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    void *old_data = glMapBufferRange(GL_ARRAY_BUFFER, offset, length,
+    GL_MAP_WRITE_BIT | GL_MAP_FLUSH_EXPLICIT_BIT |
+    GL_MAP_UNSYNCHRONIZED_BIT );
+
+    // Wait for fence (set below) before modifying buffer.
+    glClientWaitSync(fence, GL_SYNC_FLUSH_COMMANDS_BIT,
+    GL_TIMEOUT_IGNORED);
+
+    // Modify buffer, flush, and unmap.
+    memcpy(old_data, data, length);
+    glFlushMappedBufferRange(GL_ARRAY_BUFFER, offset, length);
+    success = glUnmapBuffer(GL_ARRAY_BUFFER);
+
+    // Issue other OpenGL ES commands that use other ranges of the VBO's data.
+
+    // Issue draw commands that use this range of the VBO's data.
+    DrawMyVBO(vbo);
+
+    // Create a fence that the next frame will wait for.
+    fence = glFenceSync(GL_SYNC_GPU_COMMANDS_COMPLETE, 0);
+    return success;
+}
+```
+
+> The UpdateAndDraw function in this example uses the glFenceSync function to establish a synchronization point, or fence, immediately after submitting drawing commands that use a particular buffer object. It then uses the glClientWaitSync function (on the next pass through the rendering loop) to check that synchronization point before modifying the buffer object. If those drawing commands finish executing on the GPU before the rendering loop comes back around, CPU execution does not block and the UpdateAndDraw function continues to modify the buffer and draw the next frame. If the GPU has not finished executing those commands, the glClientWaitSync function blocks further CPU execution until the GPU reaches the fence. By manually placing synchronization points only around the sections of your code with potential resource conflicts, you can minimize how long the CPU waits for the GPU.
+
+此示例中的 UpdateAndDraw 函数使用 glFenceSync 函数在提交使用特定缓冲区对象的绘图命令后立即建立同步点或栅栏。然后它使用 glClientWaitSync 函数（在下一次通过渲染循环时）在修改缓冲区对象之前检查该同步点。如果这些绘图命令在渲染循环返回之前在 GPU 上完成执行，则 CPU 执行不会阻塞，并且 UpdateAndDraw 函数继续修改缓冲区并绘制下一帧。如果 GPU 尚未完成执行这些命令，则 glClientWaitSync 功能会阻止 CPU 执行，直到 GPU 到达栅栏。通过仅在代码中可能存在资源冲突的部分手动放置同步点，可以最大限度地减少 CPU 等待 GPU 的时间。
+
+## Best Practices for Working with Texture Data
+
+> Texture data is often the largest portion of the data your app uses to render a frame; textures provide the detail required to present great images to the user. To get the best possible performance out of your app, manage your app’s textures carefully. To summarize the guidelines:
+>
+> - Create your textures when your app is initialized, and never change them in the rendering loop.
+> - Reduce the amount of memory your textures use.
+> - Combine smaller textures into a larger texture atlas.
+> - Use mipmaps to reduce the bandwidth required to fetch texture data.
+> - Use multitexturing to perform texturing operations in a single pass.
+
+纹理数据通常是应用用于渲染帧的数据的最大部分；纹理提供向用户呈现精美图像所需的细节。要从应用程序中获得最佳性能，请仔细管理应用程序的纹理。总结指南：
+
+- 在初始化应用程序时创建纹理，并且永远不要在渲染循环中更改它们。
+- 减少纹理使用的内存量。
+- 将较小的纹理组合成较大的纹理图集。
+- 使用 mipmap 减少获取纹理数据所需的带宽。
+- 使用多纹理在一次 pass 中执行纹理操作。
+
+### Load Textures During Initialization
+
+> Creating and loading textures is an expensive operation. For best results, avoid creating new textures while your app is running. Instead, create and load your texture data during initialization.
+>
+> After you create a texture, avoid changing it except at the beginning or end of a frame. Currently, all iOS devices use a tile-based deferred renderer, making calls to the glTexSubImage and glCopyTexSubImage functions particularly expensive. See [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) for more information.
+
+创建和加载纹理是一项昂贵的操作。为获得最佳效果，避免在应用运行时创建新纹理。而是在初始化期间创建和加载纹理数据。
+
+创建纹理后，避免更改它，除非在帧的开头或结尾处。目前，所有 iOS 设备都使用基于 tile 的延迟渲染器，因此调用 glTexSubImage 和 glCopyTexSubImage 函数代价很高。有关更多信息，见 [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) 。
+
+#### Use the GLKit Framework to Load Texture Data
+
+> Loading texture data is a fundamental operation that is important to get right. Using the GLKit framework, the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class makes creating and loading new textures easy. The [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class can load texture data from a variety of sources, including files, URLs, in-memory representations, and CGImages. Regardless of the input source, the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class creates and loads a new texture from data and returns the texture information as a [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object. Properties of [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) objects can be accessed to perform various tasks, including binding the texture to a context and enabling it for drawing.
+>
+> Note: A [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object does not own the OpenGL ES texture object it describes. You must call the glDeleteTextures function to dispose of texture objects when you are done using them.
+>
+> Listing 9-1 presents a typical strategy to load a new texture from a file and to bind and enable the texture for later use.
+>
+> Listing 9-1  Loading a two-dimensional texture from a file
+
+加载纹理数据是一项重要的基本操作。使用 GLKit 框架，[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类可以轻松创建和加载新纹理。[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类可以从各种来源加载纹理数据，包括文件，URL，内存数据和 CGImages 。无论输入源如何，[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类都会根据数据创建并加载新纹理，并将纹理信息作为 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象返回。可以访问 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象的属性以执行各种任务，包括将纹理绑定到上下文并使其能够用于绘制。
+
+注意：[GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象不拥有它描述的 OpenGL ES 纹理对象。完成使用后，必须调用 glDeleteTextures 函数来释放纹理对象。
+
+清单 9-1 给出了从文件加载新纹理以及绑定和启用纹理以供以后使用的典型策略。
+
+清单 9-1 从文件加载二维纹理
+
+```objc
+GLKTextureInfo *spriteTexture;
+NSError *theError;
+
+NSString *filePath = [[NSBundle mainBundle] pathForResource:@"Sprite" ofType:@"png"]; // 1
+
+spriteTexture = [GLKTextureLoader textureWithContentsOfFile:filePath options:nil error:&theError]; // 2
+glBindTexture(spriteTexture.target, spriteTexture.name); // 3
+```
+
+> Here is what the code does, corresponding to the numbered steps in the listing:
+>
+> 1. Create a path to the image that contains the texture data. This path is passed as a parameter to the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class method [textureWithContentsOfFile:options:error:](https://developer.apple.com/documentation/glkit/glktextureloader/1488932-texturewithcontentsoffile).
+> 2. Load a new texture from the image file and store the texture information in a [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object. There are a variety of texture loading options available. For more information, see [GLKTextureLoader Class Reference](https://developer.apple.com/documentation/glkit/glktextureloader).
+> 3. Bind the texture to a context, using the appropriate properties of the [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object as parameters.
+>
+> The [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class can also load cubemap textures in most common image formats. And, if your app needs to load and create new textures while running, the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class also provides methods for asynchronous texture loading. See [GLKTextureLoader Class Reference](https://developer.apple.com/documentation/glkit/glktextureloader) for more information.
+
+以下是上述代码做的事情，对应于列表中的编号步骤：
+
+1. 创建包含纹理数据的图像的路径。此路径作为参数传递给 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类方法 [textureWithContentsOfFile:options:error:](https://developer.apple.com/documentation/glkit/glktextureloader/1488932-texturewithcontentsoffile) 。
+2. 从图像文件加载新纹理并将纹理信息存储在 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象中。有多种纹理加载选项可供选择。有关更多信息，请参阅 [GLKTextureLoader Class Reference](https://developer.apple.com/documentation/glkit/glktextureloader) 。
+3. 使用 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象的适当属性作为参数，将纹理绑定到上下文。
+
+[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类还可以加载大多数常见图像格式的立方体贴图纹理。而且，如果应用程序需要在运行时加载并创建新纹理，则 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类还提供了异步加载纹理的方法。有关更多信息，见 [GLKTextureLoader Class Reference](https://developer.apple.com/documentation/glkit/glktextureloader) 。
+
+### Reduce Texture Memory Usage
+
+> Reducing the amount of memory your iOS app uses is always an important part of tuning your app. That said, an OpenGL ES app is also constrained in the total amount of memory it can use to load textures. Where possible, your app should always try to reduce the amount of memory it uses to hold texture data. Reducing the memory used by a texture is almost always at the cost of image quality, so you must balance any changes your app makes to its textures with the quality level of the final rendered frame. For best results, try the techniques described below, and choose the one that provides the best memory savings at an acceptable quality level.
+
+减少 iOS 应用程序使用的内存量始终是调整应用程序的重要部分。也就是说，OpenGL ES 应用程序也受限于可用于加载纹理的内存总量。在可能的情况下，应用应始终尝试减少用于保存纹理数据的内存量。减少纹理使用的内存几乎总是以图像质量为代价，因此你必须平衡应用程序对其纹理所做的任何更改以及最终渲染帧的质量级别。为获得最佳效果，请尝试下述技术，并选择能够以可接受的质量水平提供最佳内存节省的技术。
+
+#### Compress Textures
+
+> Texture compression usually provides the best balance of memory savings and quality. OpenGL ES for iOS supports multiple compressed texture formats.
+>
+> All iOS devices support the the PowerVR Texture Compression (PVRTC) format by implementing the [GL_IMG_texture_compression_pvrtc](http://www.khronos.org/registry/gles/extensions/IMG/IMG_texture_compression_pvrtc.txt) extension. There are two levels of PVRTC compression, 4 bits per pixel and 2 bits per pixel, which offer a 8:1 and 16:1 compression ratio over the uncompressed 32-bit texture format respectively. A compressed PVRTC texture still provides a decent level of quality, particularly at the 4-bit level. For more information on compressing textures into PVRTC format, see [Using texturetool to Compress Textures](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TextureTool/TextureTool.html#//apple_ref/doc/uid/TP40008793-CH108-SW1).
+>
+> OpenGL ES 3.0 also supports the ETC2 and EAC compressed texture formats; however, PVRTC textures are recommended on iOS devices.
+
+纹理压缩通常可以最大限度地平衡内存节省和质量。适用于 iOS 的 OpenGL ES 支持多种压缩纹理格式。
+
+所有 iOS 设备都通过实现 [GL_IMG_texture_compression_pvrtc](http://www.khronos.org/registry/gles/extensions/IMG/IMG_texture_compression_pvrtc.txt) 扩展来支持 PowerVR 纹理压缩（ PVRTC ）格式。 PVRTC 压缩有两个级别，每像素 4 位，每像素 2 位，对于未压缩的 32 位纹理格式分别提供 8:1 和 16:1 的压缩比。压缩的 PVRTC 纹理仍然提供了不错的质量水平，特别是在 4 位水平。有关将纹理压缩为 PVRTC 格式的更多信息，见 [Using texturetool to Compress Textures](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TextureTool/TextureTool.html#//apple_ref/doc/uid/TP40008793-CH108-SW1) 。
+
+OpenGL ES 3.0 还支持 ETC2 和 EAC 压缩纹理格式；但是，在 iOS 设备上建议使用 PVRTC 纹理。
+
+#### Use Lower-Precision Color Formats
+
+> If your app cannot use compressed textures, consider using a lower precision pixel format. A texture in RGB565, RGBA5551, or RGBA4444 format uses half the memory of a texture in RGBA8888 format. Use RGBA8888 only when your app needs that level of quality.
+
+如果应用无法使用压缩纹理，考虑使用较低精度的像素格式。RGB565，RGBA5551 或 RGBA4444 格式的纹理使用 RGBA8888 格式纹理的一半内存。仅当应用需要对应级别的质量时才使用 RGBA8888 。
+
+#### Use Properly Sized Textures
+
+> The images that an iOS-based device displays are very small. Your app does not need to provide large textures to present acceptable images to the screen. Halving both dimensions of a texture reduces the amount of memory needed for that texture to one-quarter that of the original texture.
+>
+> Before shrinking your textures, attempt to compress the texture or use a lower-precision color format first. A texture compressed with the PVRTC format usually provides higher image quality than shrinking the texture—and it uses less memory too!
+
+基于 iOS 设备显示的图像非常小。你的应用不需要提供大纹理以在屏幕上显示可接受的图像。将纹理的两个维度减半会将该纹理所需的内存量减少到原始纹理的四分之一。
+
+在缩小纹理之前，首先尝试压缩纹理或使用较低精度的颜色格式。使用 PVRTC 格式压缩的纹理通常比缩小纹理提供更高的图像质量 - 它也使用更少的内存！
+
+### Combine Textures into Texture Atlases
+
+> Binding to a texture takes time for OpenGL ES to process. Apps that reduce the number of changes they make to OpenGL ES state perform better. For textures, one way to avoid binding to new textures is to combine multiple smaller textures into a single large texture, known as a texture atlas. When you use a texture atlas, you can bind a single texture and then make multiple drawing calls that use that texture, or even coalesce multiple drawing calls into a single draw call. The texture coordinates provided in your vertex data are modified to select the smaller portion of the texture from within the atlas.
+
+绑定到纹理需要 OpenGL ES 的处理时间。减少 OpenGL ES 状态变更次数的应用程序表现更好。对于纹理来说，避免绑定到新纹理的一种方法是将多个较小的纹理组合成单个大纹理，称为纹理图集。使用纹理图集时，可以绑定单个纹理，然后发起使用该纹理的多次绘图调用，甚至将多个绘图调用合并为一个绘制调用。 修改顶点数据中提供的纹理坐标，以从图集中选择纹理的较小部分。
+
+![CombineTexturesIntoTextureAtlases](../../resource/OpenGLES/Markdown/CombineTexturesIntoTextureAtlases.png)
+
+> Texture atlases have a few restrictions:
+>
+> - You cannot use a texture atlas if you are using the GL_REPEAT texture wrap parameter.
+> - Filtering may sometimes fetch texels outside the expected range. To use those textures in a texture atlas, you must place padding between the textures that make up the texture atlas.
+> - Because the texture atlas is still a texture, it is subject to the OpenGL ES implementation’s maximum texture size as well as other texture attributes.
+>
+> Xcode can automatically build texture atlases for you from a collection of images. For details on creating a texture atlas, see [Xcode Help](https://help.apple.com/xcode). This feature is provided primarily for developers using the Sprite Kit framework, but any app can make use of the texture atlas files it produces. For each .atlas folder in your project, Xcode creates a .atlasc folder in your app bundle, containing one or more compiled atlas images and a property list (.plist) file. The property list file describes the individual images that make up the atlas and their locations within the atlas image—you can use this information to calculate appropriate texture coordinates for use in OpenGL ES drawing.
+
+纹理图集有一些限制：
+
+- 如果使用 GL_REPEAT 纹理包装参数，则无法使用纹理图集。
+- 过滤有时可能会获取超出预期范围的纹素。要在纹理图集中使用这些纹理，必须在构成纹理图集的纹理之间放置填充。
+- 因为纹理图集仍然是纹理，所以它受 OpenGL ES 实现的最大纹理大小以及其他纹理属性的影响。
+
+Xcode 可以从一组图像中自动为你构建纹理图集。有关创建纹理图集的详细信息，见 [Xcode Help](https://help.apple.com/xcode) 。此功能主要是为使用 Sprite Kit 框架的开发人员提供的，但任何应用程序都可以使用它生成的纹理图集文件。对于项目中的每个 .atlas 文件夹，Xcode 会在应用包中创建一个 .atlasc 文件夹，其中包含一个或多个已编译的图集图像和一个属性列表（ .plist ）文件。属性列表文件描述构成图集的各个图像及其在图集图像中的位置 - 你可以使用此信息计算用于 OpenGL ES 绘图的适当纹理坐标。
+
+### Use Mipmapping to Reduce Memory Bandwidth Usage
+
+> Your app should provide mipmaps for all textures except those being used to draw 2D unscaled images. Although mipmaps use additional memory, they prevent texturing artifacts and improve image quality. More importantly, when the smaller mipmaps are sampled, fewer texels are fetched from texture memory which reduces the memory bandwidth needed by the graphics hardware, improving performance.
+>
+> The GL_LINEAR_MIPMAP_LINEAR filter mode provides the best quality when texturing but requires additional texels to be fetched from memory. Your app can trade some image quality for better performance by specifying the GL_LINEAR_MIPMAP_NEAREST filter mode instead.
+>
+> When combining mip maps with texture atlases, use the TEXTURE_MAX_LEVEL parameter in OpenGL ES 3.0 to control how your textures are filtered. (This functionality is also available in OpenGL ES 1.1 and 2.0 through the [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) extension.)
+
+你的应用应为所有纹理提供 mipmap ，用于绘制 2D 未缩放图像的纹理除外。虽然 mipmaps 使用额外的内存，但它们可以防止纹理瑕疵并提高图像质量。更重要的是，当对较小的 mipmap 进行采样时，只需从纹理内存获取较少的纹素，这减少了图形硬件所需的存储器带宽，从而提高了性能。
+
+GL_LINEAR_MIPMAP_LINEAR 过滤器模式在纹理化时提供最佳质量，但需要从内存中提取额外的其他纹理元素。你的应用可以通过指定 GL_LINEAR_MIPMAP_NEAREST 过滤模式来交换一些图像质量以获得更好的性能。
+
+将 mip 贴图与纹理图集相结合时，使用 OpenGL ES 3.0 中的 TEXTURE_MAX_LEVEL 参数来控制纹理的过滤方式。（此功能也可通过 [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) 扩展在 OpenGL ES 1.1 和 2.0 中使用。）
+
+### Use Multitexturing Instead of Multiple Passes
+
+> Many apps perform multiple passes to draw a model, altering the configuration of the graphics pipeline for each pass. This not only requires additional time to reconfigure the graphics pipeline, but it also requires vertex information to be reprocessed for every pass, and pixel data to be read back from the framebuffer on later passes.
+>
+> All OpenGL ES implementations on iOS support at least two texture units, and most devices support at least eight. Your app should use these texture units to perform as many steps as possible in your algorithm in each pass. You can retrieve the number of texture units available to your app by calling the glGetIntegerv function, passing in GL_MAX_TEXTURE_UNITS as the parameter.
+>
+> If your app requires multiple passes to render a single object:
+>
+> - Ensure that the position data remains unchanged for every pass.
+> - On the second and later stage, test for pixels that are on the surface of your model by calling the glDepthFunc function with GL_EQUAL as the parameter.
+
+许多应用程序执行多次 pass 来绘制模型，从而需要改变每次 pass 的图形管道配置。这不仅需要额外的时间来重新配置图形管道，而且还需要对每次 pass 重新处理顶点信息，并且在后续的 pass 中要从帧缓冲器读回像素数据。
+
+iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数设备至少支持八个。你的应用应使用这些纹理单元在每次 pass 的算法中执行尽可能多的步骤。你可以通过以 GL_MAX_TEXTURE_UNITS 作为参数调用 glGetIntegerv 函数检索应用程序可用的纹理单元数。
+
+如果你的应用需要多次 pass 才能呈现单个对象：
+
+- 确保每次 pass 的位置数据保持不变。
+- 在第二阶段和后期阶段，通过使用 GL_EQUAL 作为参数调用 glDepthFunc 函数来测试模型表面上的像素。
+
+## Best Practices for Shaders
+
+> Shaders provide great flexibility, but they can also be a significant bottleneck if you perform too many calculations or perform them inefficiently.
+
+着色器提供了极大的灵活性，但如果着色器执行太多计算或低效执行它们，它们也可能成为一个重要的瓶颈。
+
+
+
+
 
 
 
