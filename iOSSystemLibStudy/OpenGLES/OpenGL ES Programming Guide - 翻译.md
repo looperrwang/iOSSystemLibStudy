@@ -2693,6 +2693,768 @@ iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数�
 
 着色器提供了极大的灵活性，但如果着色器执行太多计算或低效执行它们，它们也可能成为一个重要的瓶颈。
 
+### Compile and Link Shaders During Initialization
+
+> Creating a shader program is an expensive operation compared to other OpenGL ES state changes. Compile, link, and validate your programs when your app is initialized. Once you’ve created all your shaders, the app can efficiently switch between them by calling glUseProgram.
+
+与其他 OpenGL ES 状态更改相比，创建着色器程序是一项昂贵的操作。初始化应用程序时编译，链接和验证你的着色器程序。一旦你创建了所有着色器，应用程序就可以通过调用 glUseProgram 在它们之间高效切换。
+
+#### Check for Shader Program Errors When Debugging
+
+> Reading diagnostic information after compiling or linking a shader program is not necessary in a Release build of your app and can reduce performance. Use OpenGL ES functions to read shader compile or link logs only in development builds of your app, as shown in Listing 10-1.
+>
+> Listing 10-1  Read shader compile/link logs only in development builds
+
+在应用程序的发布版本中，在编译或链接着色器程序后读取诊断信息不是必需的，并且可能会降低性能。 仅在应用程序的开发版本中使用 OpenGL ES 函数读取着色器编译或链接日志，如清单 10-1 所示。
+
+清单 10-1 仅在开发版本中读取着色器编译/链接日志
+
+```objc
+// After calling glCompileShader, glLinkProgram, or similar
+
+#ifdef DEBUG
+// Check the status of the compile/link
+glGetProgramiv(prog, GL_INFO_LOG_LENGTH, &logLen);
+if(logLen > 0) {
+    // Show any errors as appropriate
+    glGetProgramInfoLog(prog, logLen, &logLen, log);
+    fprintf(stderr, “Prog Info Log: %s\n”, log);
+}
+#endif
+```
+
+> Similarly, you should call the glValidateProgram function only in development builds. You can use this function to find development errors such as failing to bind all texture units required by a shader program. But because validating a program checks it against the entire OpenGL ES context state, it is an expensive operation. Since the results of program validation are only meaningful during development, you should not call this function in Release builds of your app.
+
+同样，应该仅在开发版本中调用 glValidateProgram 函数。你可以使用此函数来查找开发错误，例如无法绑定着色器程序所需的所有纹理单元。但是因为验证着色器程序会对整个 OpenGL ES 上下文状态进行检查，所以这是一项昂贵的操作。由于程序验证的结果仅在开发期间有意义，因此不应在应用程序的发布版本中调用此函数。
+
+#### Use Separate Shader Objects to Speed Compilation and Linking
+
+> Many OpenGL ES apps use several vertex and fragment shaders, and it is often useful to reuse the same fragment shader with different vertex shaders or vice versa. Because the core OpenGL ES specification requires a vertex and fragment shader to be linked together in a single shader program, mixing and matching shaders results in a large number of programs, increasing the total shader compile and link time when you initialize your app.
+>
+> OpenGL ES 2.0 and 3.0 contexts on iOS support the [EXT_separate_shader_objects](http://www.khronos.org/registry/gles/extensions/EXT/EXT_separate_shader_objects.txt) extension. You can use the functions provided by this extension to compile vertex and fragment shaders separately, and to mix and match precompiled shader stages at render time using program pipeline objects. Additionally, this extension provides a simplified interface for compiling and using shaders, shown in Listing 10-2.
+>
+> Listing 10-2  Compiling and using separate shader objects
+
+许多 OpenGL ES 应用程序使用多个顶点和片段着色器，使用不同顶点着色器与相同片段着色器通常很有用，反之亦然。由于核心 OpenGL ES 规范要求将顶点和片段着色器链接为单个着色器程序，因此混合和匹配着色器会导致大量着色器程序，从而在初始化应用程序时增加着色器编译和链接总时间。
+
+iOS 上的 OpenGL ES 2.0 和 3.0 上下文支持 [EXT_separate_shader_objects](http://www.khronos.org/registry/gles/extensions/EXT/EXT_separate_shader_objects.txt) 扩展。可以使用此扩展提供的函数分别编译顶点和片段着色器，并使用程序管道对象在渲染时混合和匹配预编译的着色器阶段。此外，此扩展还提供了用于编译和使用着色器的简化接口，如清单 10-2 所示。
+
+清单 10-2 编译和使用单独的着色器对象
+
+```objc
+- (void)loadShaders
+{
+    const GLchar *vertexSourceText = " ... vertex shader GLSL source code ... ";
+    const GLchar *fragmentSourceText = " ... fragment shader GLSL source code ... ";
+
+    // Compile and link the separate vertex shader program, then read its uniform variable locations
+    _vertexProgram = glCreateShaderProgramvEXT(GL_VERTEX_SHADER, 1, &vertexSourceText);
+    _uniformModelViewProjectionMatrix = glGetUniformLocation(_vertexProgram, "modelViewProjectionMatrix");
+    _uniformNormalMatrix = glGetUniformLocation(_vertexProgram, "normalMatrix");
+
+    // Compile and link the separate fragment shader program (which uses no uniform variables)
+    _fragmentProgram =  glCreateShaderProgramvEXT(GL_FRAGMENT_SHADER, 1, &fragmentSourceText);
+
+    // Construct a program pipeline object and configure it to use the shaders
+    glGenProgramPipelinesEXT(1, &_ppo);
+    glBindProgramPipelineEXT(_ppo);
+    glUseProgramStagesEXT(_ppo, GL_VERTEX_SHADER_BIT_EXT, _vertexProgram);
+    glUseProgramStagesEXT(_ppo, GL_FRAGMENT_SHADER_BIT_EXT, _fragmentProgram);
+}
+
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
+{
+    // Clear the framebuffer
+    glClearColor(0.65f, 0.65f, 0.65f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Use the previously constructed program pipeline and set uniform contents in shader programs
+    glBindProgramPipelineEXT(_ppo);
+    glProgramUniformMatrix4fvEXT(_vertexProgram, _uniformModelViewProjectionMatrix, 1, 0, _modelViewProjectionMatrix.m);
+    glProgramUniformMatrix3fvEXT(_vertexProgram, _uniformNormalMatrix, 1, 0, _normalMatrix.m);
+
+    // Bind a VAO and render its contents
+    glBindVertexArrayOES(_vertexArray);
+    glDrawElements(GL_TRIANGLE_STRIP, _indexCount, GL_UNSIGNED_SHORT, 0);
+}
+```
+
+### Respect the Hardware Limits on Shaders
+
+> OpenGL ES limits the number of each variable type you can use in a vertex or fragment shader. The OpenGL ES specification doesn’t require implementations to provide a software fallback when these limits are exceeded; instead, the shader simply fails to compile or link. When developing your app you must ensure that no errors occur during shader compilation, as shown in Listing 10-1.
+
+OpenGL ES 限制可以在顶点或片段着色器中使用的每种变量类型的数量。当超过这些限制时，OpenGL ES 规范不要求实现提供软件回退；相反，着色器将会编译或链接失败。在开发应用程序时，必须确保在着色器编译期间没有发生错误，如清单 10-1 所示。
+
+### Use Precision Hints
+
+> Precision hints were added to the GLSL ES language specification to address the need for compact shader variables that match the smaller hardware limits of embedded devices. Each shader must specify a default precision; individual shader variables may override this precision to provide hints to the compiler on how that variable is used in your app. An OpenGL ES implementation is not required to use the hint information, but may do so to generate more efficient shaders. The GLSL ES specification lists the range and precision for each hint.
+>
+> Important: The range limits defined by the precision hints are not enforced. You cannot assume your data is clamped to this range.
+>
+> Follow these guidelines:
+>
+> - When in doubt, default to high precision.
+> - Colors in the 0.0 to 1.0 range can usually be represented using low precision variables.
+> - Position data should usually be stored as high precision.
+> - Normals and vectors used in lighting calculations can usually be stored as medium precision.
+> - After reducing precision, retest your app to ensure that the results are what you expect.
+>
+> Listing 10-3 defaults to high precision variables, but calculates the color output using low precision variables because higher precision is not necessary.
+
+> Listing 10-3  Low precision is acceptable for fragment color
+
+GLSL ES 语言规范中增加了精确提示，以满足与嵌入式设备的较小硬件限制相匹配的紧凑着色器变量的需求。每个着色器必须指定默认精度；单个着色器变量可以覆盖此精度，以便向编译器提供有关如何在应用中使用该变量的提示。不要求 OpenGL ES 实现使用该提示信息，但这样做可能生成更有效的着色器。GLSL ES 规范列出了每个提示的范围和精度。
+
+要点：不强制执行精度提示定义的范围限制。你不能假设数据被限制在此范围内。
+
+请遵循以下准则：
+
+- 当类型不明了时，默认为高精度。
+- 通常可以使用低精度变量表示 0.0 到 1.0 范围内的颜色。
+- 位置数据通常应以高精度存储。
+- 照明计算中使用的法线和向量通常可以存储为中等精度。
+- 降低精度后，重新测试应用以确保结果符合预期。
+
+清单 10-3 默认为高精度变量，但使用低精度变量计算颜色输出，因为不需要更高的精度。
+
+清单 10-3 片段颜色可以接受低精度
+
+```objc
+precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
+uniform lowp sampler2D sampler; // Texture2D() result is lowp.
+varying lowp vec4 color;
+varying vec2 texCoord;   // Uses default highp precision.
+
+void main()
+{
+    gl_FragColor = color * texture2D(sampler, texCoord);
+}
+```
+
+> The actual precision of shader variables can vary between different iOS devices, as can the performance of operations at each level of precision. Refer to the [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) for device-specific considerations.
+
+着色器变量的实际精度可以在不同的 iOS 设备之间变化，每个精度级别的操作性能也是如此。有关特定于设备的注意事项，请参阅 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 。
+
+### Perform Vector Calculations Lazily
+
+> Not all graphics processors include vector processors; they may perform vector calculations on a scalar processor. When performing calculations in your shader, consider the order of operations to ensure that the calculations are performed efficiently even if they are performed on a scalar processor.
+>
+> If the code in Listing 10-4 were executed on a vector processor, each multiplication would be executed in parallel across all four of the vector’s components. However, because of the location of the parenthesis, the same operation on a scalar processor would take eight multiplications, even though two of the three parameters are scalar values.
+>
+> Listing 10-4  Poor use of vector operators
+
+并非所有的图形处理器都包含向量处理器；向量计算可能在标量处理器上执行。当执行着色器中的计算时，请考虑操作顺序，以确保即使在标量处理器上执行计算也能高效地执行。
+
+如果清单 10-4 中的代码在向量处理器上执行，则每个乘法将在所有四个向量的成分上并行执行。但是，由于括号的位置，标量处理器上的相同操作将需要 8 次乘法，即使这三个参数中的两个是标量值。
+
+清单 10-4 向量运算符的不当使用
+
+```objc
+highp float f0, f1;
+highp vec4 v0, v1;
+v0 = (v1 * f0) * f1;
+```
+
+> The same calculation can be performed more efficiently by shifting the parentheses as shown in Listing 10-5. In this example, the scalar values are multiplied together first, and the result multiplied against the vector parameter; the entire operation can be calculated with five multiplications.
+>
+> Listing 10-5  Proper use of vector operations
+
+通过移动括号可以更高效地执行相同的计算，如清单 10-5 所示。在此示例中，标量值首先相乘，结果乘以向量参数；整个操作可以用五次乘法计算。
+
+清单 10-5 正确使用向量操作
+
+```objc
+highp float f0, f1;
+highp vec4 v0, v1;
+v0 = v1 * (f0 * f1);
+```
+
+> Similarly, your app should always specify a write mask for a vector operation if it does not use all of the components of the result. On a scalar processor, calculations for components not specified in the mask can be skipped. Listing 10-6 runs twice as fast on a scalar processor because it specifies that only two components are needed.
+>
+> Listing 10-6  Specifying a write mask
+
+同样，如果应用程序不使用计算结果的所有组件的话，则应始终为向量操作指定写掩码。在标量处理器上，可以跳过未在掩码中指定的成分的计算。清单 10-6 在标量处理器上运行速度是原来的两倍，因为它指定只需要两个成分。
+
+清单 10-6 指定写掩码
+
+```objc
+highp vec4 v0;
+highp vec4 v1;
+highp vec4 v2;
+v2.xz = v0 * v1;
+```
+
+### Use Uniforms or Constants Instead of Computing Values in a Shader
+
+> Whenever a value can be calculated outside the shader, pass it into the shader as a uniform or a constant. Recalculating dynamic values can potentially be very expensive in a shader.
+
+只要可以在着色器外部计算值，就可以将其作为统一或常量传递到着色器中。在着色器中重新计算动态值可能非常昂贵。
+
+#### Use Branching Instructions with Caution
+
+> Branches are discouraged in shaders, as they can reduce the ability to execute operations in parallel on 3D graphics processors (although this performance cost is reduced on OpenGL ES 3.0–capable devices).
+>
+> Your app may perform best if you avoid branching entirely. For example, instead of creating a large shader with many conditional options, create smaller shaders specialized for specific rendering tasks. There is a tradeoff between reducing the number of branches in your shaders and increasing the number of shaders you create. Test different options and choose the fastest solution.
+>
+> If your shaders must use branches, follow these recommendations:
+>
+> - Best performance: Branch on a constant known when the shader is compiled.
+> - Acceptable: Branch on a uniform variable.
+> - Potentially slow: Branch on a value computed inside the shader.
+
+在着色器中不鼓励使用分支，因为它们会降低在 3D 图形处理器上并行执行操作的能力（尽管在支持 OpenGL ES 3.0 的设备上降低了性能成本）。
+
+如果完全避免分支的使用，你的应用可能会表现最佳。例如，创建专门用于特定渲染任务的较小着色器，而
+不是创建具有许多条件选项的大型着色器。在减少着色器中的分支数量和增加着色器数量之间需要权衡。 测试不同的选项并选择最快的解决方案。
+
+如果着色器必须使用分支，请遵循以下建议：
+
+- 最佳性能：基于着色器编译时确定的常量值实现分支逻辑。
+- 可接受：基于统一变量实现分支逻辑。
+- 潜在的慢：基于着色器内部计算出来的值实现分支逻辑。
+
+#### Eliminate Loops
+
+> You can eliminate many loops by either unrolling the loop or using vectors to perform operations. For example, this code is very inefficient:
+
+可以通过展开循环或使用向量来执行操作来消除许多循环。例如，以下代码效率非常低：
+
+```objc
+int i;
+float f;
+vec4 v;
+
+for(i = 0; i < 4; i++)
+v[i] += f;
+```
+
+> The same operation can be done directly using a component-wise add:
+
+可以使用组件式添加直接完成相同的操作：
+
+```objc
+float f;
+vec4 v;
+v += f;
+```
+
+> When you cannot eliminate a loop, it is preferred that the loop have a constant limit to avoid dynamic branches.
+
+当无法消除循环时，最好循环具有常量限制以避免动态分支。
+
+#### Avoid Computing Array Indices in Shaders
+
+> Using indices computed in the shader is more expensive than a constant or uniform array index. Accessing uniform arrays is usually cheaper than accessing temporary arrays.
+
+使用着色器中计算的索引比常量或统一数组索引更昂贵。访问统一数组通常比访问临时数组开销更小。
+
+#### Be Aware of Dynamic Texture Lookups
+
+> Dynamic texture lookups, also known as dependent texture reads, occur when a fragment shader computes texture coordinates rather than using the unmodified texture coordinates passed into the shader. Dependent texture reads are supported at no performance cost on OpenGL ES 3.0–capable hardware; on other devices, dependent texture reads can delay loading of texel data, reducing performance. When a shader has no dependent texture reads, the graphics hardware may prefetch texel data before the shader executes, hiding some of the latency of accessing memory.
+>
+> Listing 10-7 shows a fragment shader that calculates new texture coordinates. The calculation in this example can easily be performed in the vertex shader, instead. By moving the calculation to the vertex shader and directly using the vertex shader’s computed texture coordinates, you avoid the dependent texture read.
+>
+> Note: It may not seem obvious, but any calculation on the texture coordinates counts as a dependent texture read. For example, packing multiple sets of texture coordinates into a single varying parameter and using a swizzle command to extract the coordinates still causes a dependent texture read.
+>
+> Listing 10-7  Dependent Texture Read
+
+当片段着色器计算纹理坐标而不是使用传递到着色器中的未修改纹理坐标时，会发生动态纹理查找（也称为从属纹理读取）。支持 OpenGL ES 3.0 的硬件无性能消耗地支持从属纹理读取；在其他设备上，从属纹理读取会延迟纹素数据的加载，从而降低性能。当着色器没有从属纹理读取时，图形硬件可以在着色器执行之前预取纹素数据，隐藏访问存储器的一些延迟。
+
+清单 10-7 显示了一个计算新纹理坐标的片段着色器。此示例中的计算可以在顶点着色器中轻松执行。通过将计算移动到顶点着色器并直接使用顶点着色器计算出来的纹理坐标，可以避免从属纹理读取。
+
+注意：可能看起来不太明显，但对纹理坐标的任何计算都算作依赖纹理读取。例如，将多组纹理坐标打包成单个变化参数，并使用 swizzle 命令提取坐标仍会导致依赖纹理读取。
+
+清单 10-7 依赖纹理读取
+
+```objc
+varying vec2 vTexCoord;
+uniform sampler2D textureSampler;
+
+void main()
+{
+    vec2 modifiedTexCoord = vec2(1.0 - vTexCoord.x, 1.0 - vTexCoord.y);
+    gl_FragColor = texture2D(textureSampler, modifiedTexCoord);
+}
+```
+
+### Fetch Framebuffer Data for Programmable Blending
+
+> Traditional OpenGL and OpenGL ES implementations provide a fixed-function blending stage, illustrated in Figure 10-1. Before issuing a draw call, you specify a blending operation from a fixed set of possible parameters. After your fragment shader outputs color data for a pixel, the OpenGL ES blending stage reads color data for the corresponding pixel in the destination framebuffer, then combines the two according to the specified blending operation to produce an output color.
+
+Figure 10-1  Traditional fixed-function blending
+
+传统的 OpenGL 和 OpenGL ES 实现提供了一个固定功能的混合阶段，如图 10-1 所示。在发出绘制调用之前，可以从一组固定的可能参数中指定混合操作。片段着色器输出像素的颜色数据后，OpenGL ES 混合阶段读取目标帧缓冲区中相应像素的颜色数据，然后根据指定的混合操作将两者合并以生成输出颜色。
+
+图 10-1 传统的固定功能混合
+
+![TraditionalFixed-functionBlending](../../resource/OpenGLES/Markdown/TraditionalFixed-functionBlending.png)
+
+> In iOS 6.0 and later, you can use the [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) extension to implement programmable blending and other effects. Instead of supplying a source color to be blended by OpenGL ES, your fragment shader reads the contents of the destination framebuffer corresponding to the fragment being processed. Your fragment shader can then use whatever algorithm you choose to produce an output color, as shown in Figure 10-2.
+>
+> Figure 10-2  Programmable blending with framebuffer fetch
+
+在 iOS 6.0 及更高版本中，可以使用 [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) 扩展来实现可编程混合和其他效果。你的片段着色器读取与正在处理的片段对应的目标帧缓冲区的内容，而不是提供由 OpenGL ES 混合的源颜色。然后，片段着色器可以使用你选择的任何算法来生成输出颜色，如图 10-2 所示。
+
+图 10-2 使用帧缓冲区提取进行可编程混合
+
+![ProgrammableBlendingWithFramebufferFetch](../../resource/OpenGLES/Markdown/ProgrammableBlendingWithFramebufferFetch.png)
+
+> This extension enables many advanced rendering techniques:
+>
+> - Additional blending modes. By defining your own GLSL ES functions for combining source and destination colors, you can implement blending modes not possible with the OpenGL ES fixed-function blending stage. For example, Listing 10-8 implements the Overlay and Difference blending modes found in popular graphics software.
+> - Post-processing effects. After rendering a scene, you can draw a full-screen quad using a fragment shader that reads the current fragment color and transforms it to produce an output color. The shader in Listing 10-9 can be used with this technique to convert a scene to grayscale.
+> - Non-color fragment operations. Framebuffers may contain non-color data. For example, deferred shading algorithms use multiple render targets to store depth and normal information. Your fragment shader can read such data from one (or more) render targets and use them to produce an output color in another render target.
+>
+> These effects are possible without the framebuffer fetch extension—for example, grayscale conversion can be done by rendering a scene into a texture, then drawing a full-screen quad using that texture and a fragment shader that converts texel colors to grayscale. However, using this extension generally results in better performance.
+>
+> To enable this feature, your fragment shader must declare that it requires the EXT_shader_framebuffer_fetch extension, as shown in Listing 10-8 and Listing 10-9. The shader code to implement this feature differs between versions of the OpenGL ES Shading Language (GLSL ES).
+
+此扩展启用了许多高级渲染技术：
+
+- 其他混合模式。通过定义自己的 GLSL ES 函数来组合源颜色和目标颜色，可以实现 OpenGL ES 固定功能混合阶段无法实现的混合模式。例如，清单 10-8 实现了主流图形软件中的 Overlay 和 Difference 混合模式。
+- 后处理效果。渲染场景后，你可以使用片段着色器绘制全屏四边形，片段着色器读取当前片段颜色并对其进行变换以生成输出颜色。清单 10-9 中的着色器可以与此技术一起使用，将场景转换为灰度。
+- 非颜色片段操作。帧缓冲区可能包含非颜色数据。例如，延迟着色算法使用多个渲染目标来存储深度和法线信息。片段着色器可以从一个（或多个）渲染目标中读取此类数据，并使用它们在另一个渲染目标中生成输出颜色。
+
+在没有帧缓冲区获取扩展的情况下也可以实现这些效果 - 例如，可以通过将场景渲染到纹理中，然后使用该纹理绘制全屏四边形并将纹理颜色转换为灰度的片段着色器来完成灰度转换。但是，使用此扩展通常会带来更好的性能。
+
+要启用此特性，片段着色器必须声明它需要 EXT_shader_framebuffer_fetch 扩展，如清单 10-8 和清单 10-9 所示。实现此功能的着色器代码在 OpenGL ES 着色语言（ GLSL ES ）的版本之间有所不同。
+
+#### Using Framebuffer Fetch in GLSL ES 1.0
+
+> For OpenGL ES 2.0 contexts and OpenGL ES 3.0 contexts not using #version 300 es shaders, you use the gl_FragColor builtin variable for fragment shader output and the gl_LastFragData builtin variable to read framebuffer data, as illustrated in Listing 10-8.
+
+Listing 10-8  Fragment shader for programmable blending in GLSL ES 1.0
+
+对于不使用 #version 300 es 着色器的 OpenGL ES 2.0 上下文和 OpenGL ES 3.0 上下文，可以使用 gl_FragColor 内置变量进行片段着色器输出，使用 gl_LastFragData 内置变量来读取帧缓冲数据，如清单 10-8 所示。
+
+清单 10-8 用于 GLSL ES 1.0 中可编程混合的片段着色器
+
+```objc
+#extension GL_EXT_shader_framebuffer_fetch : require
+
+#define kBlendModeDifference 1
+#define kBlendModeOverlay    2
+#define BlendOverlay(a, b) ( (b<0.5) ? (2.0*b*a) : (1.0-2.0*(1.0-a)*(1.0-b)) )
+
+uniform int blendMode;
+varying lowp vec4 sourceColor;
+
+void main()
+{
+    lowp vec4 destColor = gl_LastFragData[0];
+    if (blendMode == kBlendModeDifference) {
+        gl_FragColor = abs( destColor - sourceColor );
+    } else if (blendMode == kBlendModeOverlay) {
+        gl_FragColor.r = BlendOverlay(sourceColor.r, destColor.r);
+        gl_FragColor.g = BlendOverlay(sourceColor.g, destColor.g);
+        gl_FragColor.b = BlendOverlay(sourceColor.b, destColor.b);
+        gl_FragColor.a = sourceColor.a;
+    } else { // normal blending
+        gl_FragColor = sourceColor;
+    }
+}
+```
+
+#### Using Framebuffer Fetch in GLSL ES 3.0
+
+> In GLSL ES 3.0, you use user-defined variables declared with the out qualifier for fragment shader outputs. If you declare a fragment shader output variable with the inout qualifier, it will contain framebuffer data when the fragment shader executes. Listing 10-9 illustrates a grayscale post-processing technique using an inout variable.
+>
+> Listing 10-9  Fragment shader for color post-processing in GLSL ES 3.0
+
+在 GLSL ES 3.0 中，使用用 out 限定符声明的用户定义变量进行片段着色器输出。如果使用 inout 限定符声明片段着色器输出变量，则在片段着色器执行时它将包含帧缓冲区数据。清单 10-9 说明了使用 inout 变量的灰度后处理技术。
+
+清单 10-9 用于 GLSL ES 3.0 中颜色后处理的片段着色器
+
+```objc
+#version 300 es
+#extension GL_EXT_shader_framebuffer_fetch : require
+
+layout(location = 0) inout lowp vec4 destColor;
+
+void main()
+{
+    lowp float luminance = dot(vec3(0.3, 0.59, 0.11), destColor.rgb);
+    destColor.rgb = vec3(luminance);
+}
+```
+
+### Use Textures for Larger Memory Buffers in Vertex Shaders
+
+> In iOS 7.0 and later, vertex shaders can read from currently bound texture units. Using this technique you can access much larger memory buffers during vertex processing, enabling high performance for some advanced rendering techniques. For example:
+>
+> - Displacement mapping. Draw a mesh with default vertex positions, then read from a texture in the vertex shader to alter the position of each vertex. Listing 10-10 demonstrates using this technique to generate three-dimensional geometry from a grayscale height map texture.
+> - Instanced drawing. As described in [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20), instanced drawing can dramatically reduce CPU overhead when rendering a scene that contains many similar objects. However, providing per-instance information to the vertex shader can be a challenge. A texture can store extensive information for many instances. For example, you could render a vast cityscape by drawing hundreds of instances from vertex data describing only a simple cube. For each instance, the vertex shader could use the gl_InstanceID variable to sample from a texture, obtaining a transformation matrix, color variation, texture coordinate offset, and height variation to apply to each building.
+>
+> Listing 10-10  Vertex shader for rendering from a height map
+
+在 iOS 7.0 及更高版本中，顶点着色器可以从当前绑定的纹理单元中读取。使用此技术，你可以在顶点处理期间访问更大的内存缓冲区，从而为某些高级渲染技术提供高性能。例如：
+
+- 位移映射。绘制具有默认顶点位置的网格，然后从顶点着色器中读取纹理以更改每个顶点的位置。清单 10-10 演示了如何使用此技术从灰度高度贴图纹理生成三维几何。
+- 实例绘图。如 [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20) 中所述，实例化绘图可以在渲染包含许多类似对象的场景时显着降低 CPU 开销。但是，向顶点着色器提供每个实例信息可能是一个挑战。纹理可以存储许多实例的大量信息。例如，你可以通过从仅描述简单立方体的顶点数据中绘制数百个实例来渲染大量城市景观。对于每个实例，顶点着色器可以使用 gl_InstanceID 变量从纹理中进行采样，获得应用于每个建筑物的变换矩阵，颜色变化，纹理坐标偏移和高度变化。
+
+清单 10-10 用于从高度图渲染的顶点着色器
+
+```objc
+attribute vec2 xzPos;
+
+uniform mat4 modelViewProjectionMatrix;
+uniform sampler2D heightMap;
+
+void main()
+{
+    // Use the vertex X and Z values to look up a Y value in the texture.
+    vec4 position = texture2D(heightMap, xzPos);
+    // Put the X and Z values into their places in the position vector.
+    position.xz = xzPos;
+
+    // Transform the position vector from model to clip space.
+    gl_Position = modelViewProjectionMatrix * position;
+}
+```
+
+> You can also use uniform arrays and uniform buffer objects (in OpenGL ES 3.0) to provide bulk data to a vertex shader, but vertex texture access offers several potential advantages. You can store much more data in a texture than in either a uniform array or uniform buffer object, and you can use texture wrapping and filtering options to interpolate the data stored in a texture. Additionally, you can render to a texture, taking advantage of the GPU to produce data for use in a later vertex processing stage.
+>
+> To determine whether vertex texture sampling is available on a device (and the number of texture units available to vertex shaders), check the value of the MAX_VERTEX_TEXTURE_IMAGE_UNITS limit at run time. (See [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3).)
+
+还可以使用统一数组和统一缓冲对象（在 OpenGL ES 3.0 中）为顶点着色器提供批量数据，但顶点纹理访问提供了几个潜在的优势。可以在纹理中存储比在统一数组或统一缓冲区对象相比更多的数据，并且可以使用纹理包装和过滤选项来对存储在纹理中的数据进行插值。此外，你可以渲染到纹理，利用 GPU 生成数据，以便在以后的顶点处理阶段使用。
+
+要确定设备上是否可以使用顶点纹理采样（以及顶点着色器可用的纹理单元数），请在运行时检查 MAX_VERTEX_TEXTURE_IMAGE_UNITS 限制的值。（见 [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3) 。）
+
+## Concurrency and OpenGL ES
+
+> In computing, concurrency usually refers to executing tasks on more than one processor at the same time. By performing work in parallel, tasks complete sooner, and apps become more responsive to the user. A well-designed OpenGL ES app already exhibits a specific form of concurrency—concurrency between app processing on the CPU and OpenGL ES processing on the GPU. Many techniques introduced in [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) are aimed specifically at creating OpenGL apps that exhibit great CPU-GPU parallelism. Designing a concurrent app means decomposing the work into subtasks and identifying which tasks can safely operate in parallel and which tasks must be executed sequentially—that is, which tasks are dependent on either resources used by other tasks or results returned from those tasks.
+>
+> Each process in iOS consists of one or more threads. A thread is a stream of execution that runs code for the process. Apple offers both traditional threads and a feature called Grand Central Dispatch (GCD). Using Grand Central Dispatch, you can decompose a task into subtasks without manually managing threads. GCD allocates threads based on the number of cores available on the device and automatically schedules tasks to those threads.
+>
+> At a higher level, Cocoa Touch offers [NSOperation](https://developer.apple.com/documentation/foundation/nsoperation) and [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) to provide an Objective-C abstraction for creating and scheduling units of work.
+>
+> This chapter does not describe these technologies in detail. Before you consider how to add concurrency to your OpenGL ES app, consult [Concurrency Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091). If you plan to manage threads manually, also see [Threading Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/Introduction/Introduction.html#//apple_ref/doc/uid/10000057i). Regardless of which technique you use, there are additional restrictions when calling OpenGL ES on multithreaded systems. This chapter helps you understand when multithreading improves your OpenGL ES app’s performance, the restrictions OpenGL ES places on multithreaded app, and common design strategies you might use to implement concurrency in an OpenGL ES app.
+
+在计算中，并发通常是指同时在多个处理器上执行任务。通过并行执行工作，任务可以更快完成，并且应用程序对用户的响应更快。精心设计的 OpenGL ES 应用程序已经展示了特定的并发形式 - CPU 上的应用程序处理和 GPU 上的 OpenGL ES 处理之间的并行。[OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) 中引入的许多技术专门用于创建具有出色 CPU-GPU 并行性的 OpenGL 应用程序。设计并发应用程序意味着将工作分解为子任务并确定哪些任务可以安全地并行运行，哪些任务必须按顺序执行 - 即哪些任务依赖于其他任务使用的资源或从这些任务返回的结果。
+
+iOS 中的每个进程都包含一个或多个线程。线程是执行流程，用于运行进程的代码。Apple 提供传统线程和称为 Grand Central Dispatch（GCD）的功能。使用 Grand Central Dispatch ，可以将任务分解为子任务，而无需手动管理线程。GCD 根据设备上可用的核心数分配线程，并自动调度这些线程执行任务。
+
+在更高层次上，Cocoa Touch 提供 [NSOperation](https://developer.apple.com/documentation/foundation/nsoperation) 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) 来提供Objective-C抽象，用于创建和调度工作单元。
+
+本章不详细描述这些技术。在考虑如何为 OpenGL ES 应用程序添加并发之前，请参阅 [Concurrency Programming Guide](https://developer.apple.com/library/archive/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091) 。如果计划手动管理线程，请参阅 [Threading Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/Introduction/Introduction.html#//apple_ref/doc/uid/10000057i) 。无论使用哪种技术，在多线程系统上调用 OpenGL ES 时都有其他限制。本章帮助你了解多线程何时提高 OpenGL ES 应用程序的性能，OpenGL ES 对多线程应用程序的限制，以及可能用于在 OpenGL ES 应用程序中实现并发的常用设计策略。
+
+### Deciding Whether You Can Benefit from Concurrency
+
+> Creating a multithreaded app requires significant effort in the design, implementation, and testing of your app. Threads also add complexity and overhead. Your app may need to copy data so that it can be handed to a worker thread, or multiple threads may need to synchronize access to the same resources. Before you attempt to implement concurrency in an OpenGL ES app, optimize your OpenGL ES code in a single-threaded environment using the techniques described in [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1). Focus on achieving great CPU-GPU parallelism first and then assess whether concurrent programming can provide additional performance.
+>
+> A good candidate has either or both of the following characteristics:
+>
+> - The app performs many tasks on the CPU that are independent of OpenGL ES rendering. Games, for example, simulate the game world, calculate artificial intelligence from computer-controlled opponents, and play sound. You can exploit parallelism in this scenario because many of these tasks are not dependent on your OpenGL ES drawing code.
+> - Profiling your app has shown that your OpenGL ES rendering code spends a lot of time in the CPU. In this scenario, the GPU is idle because your app is incapable of feeding it commands fast enough. If your CPU-bound code has already been optimized, you may be able to improve its performance further by splitting the work into tasks that execute concurrently.
+>
+> If your app is blocked waiting for the GPU, and has no work it can perform in parallel with its OpenGL ES drawing, then it is not a good candidate for concurrency. If the CPU and GPU are both idle, then your OpenGL ES needs are probably simple enough that no further tuning is needed.
+
+创建多线程应用程序需要在应用程序的设计，实现和测试方面付出巨大努力。线程也增加了复杂性和开销。你的应用可能需要复制数据以便将其传递给工作线程，或者多个线程可能需要同步对相同资源的访问。尝试在 OpenGL ES 应用程序中实现并发之前，使用 [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) 中描述的技术在单线程环境中优化 OpenGL ES 代码。首先关注实现出色的 CPU-GPU 并行性，然后评估并发编程是否可以提供额外的性能。
+
+一个好的候选人具有以下特征中的一个或两个：
+
+- 该应用程序在 CPU 上执行许多独立于 OpenGL ES 渲染的任务。例如，游戏模拟游戏世界，从计算机控制的对手计算人工智能，并播放声音。你可以在此方案中利用并行性，因为其中许多任务不依赖于 OpenGL ES 绘图代码。
+- 应用进分析表明，OpenGL ES 渲染代码花费了 CPU 大量时间。在这种情况下，GPU 处于空闲状态，因为应用程序无法足够快地提供命令。如果已经优化了 CPU 绑定代码，则可以通过将工作分成并发执行的任务来进一步提高其性能。
+
+如果应用程序阻塞等待 GPU ，并且没有可以与 OpenGL ES 绘制工作可以并行执行的工作，那么这样的应用程序不适合并发。如果 CPU 和 GPU 都处于空闲状态，那么你的 OpenGL ES 需求可能非常简单，无需进一步调整。
+
+### OpenGL ES Restricts Each Context to a Single Thread
+
+> Each thread in iOS has a single current OpenGL ES rendering context. Every time your app calls an OpenGL ES function, OpenGL ES implicitly looks up the context associated with the current thread and modifies the state or objects associated with that context.
+>
+> OpenGL ES is not reentrant. If you modify the same context from multiple threads simultaneously, the results are unpredictable. Your app might crash or it might render improperly. If for some reason you decide to set more than one thread to target the same context, then you must synchronize threads by placing a mutex around all OpenGL ES calls to the context. OpenGL ES commands that block—such as glFinish—do not synchronize threads.
+>
+> GCD and [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) objects can execute your tasks on a thread of their choosing. They may create a thread specifically for that task, or they may reuse an existing thread. But in either case, you cannot guarantee which thread executes the task. For an OpenGL ES app, that means:
+>
+> - Each task must set the context before executing any OpenGL ES commands.
+> - Two tasks that access the same context may never execute simultaneously.
+> - Each task should clear the thread’s context before exiting.
+
+iOS 中的每个线程都有一个当前的 OpenGL ES 渲染上下文。每次应用程序调用 OpenGL ES 函数时，OpenGL ES 都会隐式查找与当前线程关联的上下文，并修改与该上下文关联的状态或对象。
+
+OpenGL ES 不可重入。如果同时从多个线程修改相同的上下文，则结果是不可预测的。应用可能会崩溃或渲染错误。如果由于某种原因决定设置多个线程来操作相同的上下文，则必须通过在所有 OpenGL ES 调用上下文中放置互斥来同步线程。阻塞式的 OpenGL ES 命令（如 glFinish ）不会同步线程。
+
+GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) 对象可以在他们选择的线程上执行你的任务。他们可能专门为该任务创建一个线程，或者重用现有的线程。但在任何一种情况下，都无法保证哪个线程执行任务。对于 OpenGL ES 应用程序，这意味着：
+
+- 每个任务必须在执行任何 OpenGL ES 命令之前设置上下文。
+- 访问相同上下文的两个任务可能永远不会同时执行。
+- 每个任务都应该在退出之前清除线程的上下文。
+
+### Strategies for Implementing Concurrency in OpenGL ES Apps
+
+> A concurrent OpenGL ES app should focus on CPU parallelism so that OpenGL ES can provide more work to the GPU. Here are a few strategies for implementing concurrency in an OpenGL ES app:
+>
+> - Decompose your app into OpenGL ES and non-OpenGL ES tasks that can execute concurrently. Your OpenGL ES drawing code executes as a single task, so it still executes in a single thread. This strategy works best when your app has other tasks that require significant CPU processing.
+> - If performance profiling reveals that your application spends a lot of CPU time inside OpenGL, move some of that processing to another thread by enabling multithreading for your OpenGL ES context. The advantage is simplicity; enabling multithreading takes a single line of code. See [Multithreaded OpenGL ES](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW1).
+> - If your app spends a lot of CPU time preparing data to send to OpenGL ES, divide the work between tasks that prepare rendering data and tasks that submit rendering commands to OpenGL ES. See [Perform OpenGL ES Computations in a Worker Task](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW6)
+> - If your app has multiple scenes it can render simultaneously or work it can perform in multiple contexts, it can create multiple tasks, with one OpenGL ES context per task. If the contexts need access to the same art assets, use a sharegroup to share OpenGL ES objects between the contexts. See [Use Multiple OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW7).
+
+并发 OpenGL ES 应用程序应关注 CPU 并行性，以便 OpenGL ES 可以为 GPU 提供更多工作。以下是在 OpenGL ES 应用程序中实现并发的一些策略：
+
+- 将应用程序分解为可以同时执行的 OpenGL ES 和非 OpenGL ES 任务。OpenGL ES 绘图代码作为单个任务执行，因此它仍然在单个线程中执行。当应用程序具有需要大量 CPU 处理的其他任务时，此策略最有效。
+- 如果性能分析显示应用程序在 OpenGL 中花费了大量 CPU 时间，请通过为 OpenGL ES 上下文启用多线程来将一些处理移动到另一个线程。优点是简单；启用多线程只需一行代码。请参阅 [Multithreaded OpenGL ES](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW1) 。
+- 如果应用程序花费大量 CPU 时间准备要发送到 OpenGL ES 的数据，将准备渲染数据的任务和提交渲染命令任务之间的工作分配给 OpenGL ES 。见 [Perform OpenGL ES Computations in a Worker Task](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW6)
+- 如果应用程序具有可以同时渲染的多个场景，或可以同时在多个上下文上执行的工作，则可以创建多个任务，每个任务一个 OpenGL ES 上下文。如果上下文需要访问相同的艺术资产，使用共享组在上下文之间共享 OpenGL ES 对象。见 [Use Multiple OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW7) 。
+
+### Multithreaded OpenGL ES
+
+> Whenever your application calls an OpenGL ES function, OpenGL ES processes the parameters to put them in a format that the hardware understands. The time required to process these commands varies depending on whether the inputs are already in a hardware-friendly format, but there is always overhead in preparing commands for the hardware.
+>
+> If your application spends a lot of time performing calculations inside OpenGL ES, and you’ve already taken steps to pick ideal data formats, your application might gain an additional benefit by enabling multithreading for the OpenGL ES context. A multithreaded OpenGL ES context automatically creates a worker thread and transfers some of its calculations to that thread. On a multicore device, enabling multithreading allows internal OpenGL ES calculations performed on the CPU to act in parallel with your application, improving performance. Synchronizing functions continue to block the calling thread.
+>
+> To enable OpenGL ES multithreading, set the value of the [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) property of your [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object to YES.
+>
+> Note: Enabling or disabling multithreaded execution causes OpenGL ES to flush previous commands and incurs the overhead of setting up the additional thread. Enable or disable multithreading in an initialization function rather than in the rendering loop.
+>
+> Enabling multithreading means OpenGL ES must copy parameters to transmit them to the worker thread. Because of this overhead, always test your application with and without multithreading enabled to determine whether it provides a substantial performance improvement. You can minimize this overhead by implementing your own strategy for x OpenGL ES use in a multithreaded app, as described in the remainder of this chapter.
+
+应用程序调用 OpenGL ES 函数时，OpenGL ES 处理参数为硬件理解的格式。处理这些命令所需的时间取决于输入是否已经是硬件友好的格式，但是为硬件准备命令总是有开销的。
+
+如果你的应用程序花费大量时间在 OpenGL ES 中执行计算，并且已经采取了理想的数据格式，那么通过为 OpenGL ES 上下文启用多线程，你的应用程序可能会获得额外的好处。多线程 OpenGL ES 上下文自动创建工作线程并将其部分计算传输到该线程。在多核设备上，启用多线程允许 CPU 上执行的内部 OpenGL ES 计算与应用程序并行运行，从而提高性能。同步函数继续阻塞调用线程。
+
+要启用 OpenGL ES 多线程，设置 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象的 [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) 属性的值为YES。
+
+注意：启用或禁用多线程执行会导致 OpenGL ES 刷新以前的命令并导致设置其他线程的开销。在初始化函数中启用或禁用多线程，而不是在渲染循环中启用或禁用多线程。
+
+启用多线程意味着 OpenGL ES 必须复制参数以将它们传输到工作线程。由于这种开销，始终在启用和不启用多线程的情况下测试应用程序，以确定它是否提供了显着的性能改进。你可以通过在多线程应用程序中实现自己的 x OpenGL ES 使用策略来最小化此开销，如本章其余部分所述。
+
+### Perform OpenGL ES Computations in a Worker Task
+
+> Some app perform lots of calculations on their data before passing the data down to OpenGL ES. For example, the app might create new geometry or animate existing geometry. Where possible, such calculations should be performed inside OpenGL ES. This takes advantage of the greater parallelism available inside the GPU, and reduces the overhead of copying results between your app and OpenGL ES.
+>
+> The approach described in Figure 6-6 alternates between updating OpenGL ES objects and executing rendering commands that use those objects. OpenGL ES renders on the GPU in parallel with your app’s updates running on the CPU. If the calculations performed on the CPU take more processing time than those on the GPU, then the GPU spends more time idle. In this situation, you may be able to take advantage of parallelism on systems with multiple CPUs. Split your OpenGL ES rendering code into separate calculation and processing tasks, and run them in parallel. One task produces data that is consumed by the second and submitted to OpenGL.
+>
+> For best performance, avoid copying data between tasks. Rather than calculating the data in one task and copying it into a vertex buffer object in the other, map the vertex buffer object in the setup code and hand the pointer directly to the worker task.
+>
+> If you can further decompose the modifications task into subtasks, you may see better benefits. For example, assume two or more vertex buffer objects, each of which needs to be updated before submitting drawing commands. Each can be recalculated independently of the others. In this scenario, the modifications to each buffer becomes an operation, using an NSOperationQueue object to manage the work:
+>
+> 1. Set the current context.
+> 2. Map the first buffer.
+> 3. Create an NSOperation object whose task is to fill that buffer.
+> 4. Queue that operation on the operation queue.
+> 5. Perform steps 2 through 4 for the other buffers.
+> 6. Call waitUntilAllOperationsAreFinished on the operation queue.
+> 7. Unmap the buffers.
+> 8. Execute rendering commands.
+
+一些应用程序在将数据传递给 OpenGL ES 之前对其数据执行大量计算。例如，应用程序可能会创建新几何图形或为现有几何图形设置动画。在可能的情况下，此类计算应在 OpenGL ES 内部执行。这利用了 GPU 内部可用的更大并行性，并减少了在应用程序和 OpenGL ES 之间复制结果的开销。
+
+图 6-6 中描述的方法在更新 OpenGL ES 对象和执行使用这些对象的渲染命令之间交替进行。GPU 上运行的 OpenGL ES 渲染器和运行于 CPU 上的应用程序更新并行执行。如果 CPU 上执行的计算比 GPU 上的计算花费更多的处理时间，那么 GPU 将花费更多时间空闲。在这种情况下，你可以利用多 CPU 的系统的并行性。将 OpenGL ES 渲染代码拆分为单独的计算和处理任务，使用并行运行。一个任务生产数据，另一个任务消费数据并提交给 OpenGL 。
+
+为获得最佳性能，避免在任务之间复制数据。在设置代码中映射顶点缓冲区对象，并直接传递指针给工作任务，而不是在一个任务中计算数据然后将其拷贝到另一个任务的顶点缓冲区对象中。
+
+如果可以将修改任务进一步分解为子任务，可能会看到更好的好处。例如，假设有两个或更多顶点缓冲区对象，每个对象都需要在提交绘图命令之前进行更新。每个对象的更新都不依赖于其他对象。在这种情况下，将对每个缓冲区的修改作为一个操作，使用 NSOperationQueue对 象来管理工作：
+
+1. 设置当前上下文。
+2. 映射第一个缓冲区。
+3. 创建一个 NSOperation 对象，其任务是填充该缓冲区。
+4. 将 NSOperation 对象加入队列中。
+5. 对其他缓冲区执行步骤 2 到 4 。
+6. 在操作队列上调用 waitUntilAllOperationsAreFinished 。
+7. 取消缓冲区映射。
+8. 执行渲染命令。
+
+### Use Multiple OpenGL ES Contexts
+
+> One common approach for using multiple contexts is to have one context that updates OpenGL ES objects while the other consumes those resources, with each context running on a separate thread. Because each context runs on a separate thread, its actions are rarely blocked by the other context. To implement this, your app would create two contexts and two threads; each thread controls one context. Further, any OpenGL ES objects your app intends to update on the second thread must be double buffered; a consuming thread may not access an OpenGL ES object while the other thread is modifying it. The process of synchronizing the changes between the contexts is described in detail in [An EAGL Sharegroup Manages OpenGL ES Objects for the Context](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW5).
+>
+> The [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class implements this strategy to provide asynchronous loading of texture data. (See [Use the GLKit Framework to Load Texture Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html#//apple_ref/doc/uid/TP40008793-CH104-SW10).)
+
+使用多个上下文的一种常见方法是使用一个上下文来更新 OpenGL ES 对象，而另一个上下文使用这些资源，每个上下文在一个单独的线程上运行。 由于每个上下文都在单独的线程上运行，因此其操作很少被其他上下文阻塞。要实现这一点，应用程序将创建两个上下文和两个线程；每个线程控制一个上下文。此外，应用程序打算在第二个线程上更新的任何 OpenGL ES 对象必须是双缓冲的；当另一个线程正在修改某个 OpenGL ES 对象时，消费线程可能无法访问该对象。[An EAGL Sharegroup Manages OpenGL ES Objects for the Context](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW5) 中详细描述了在上下文之间同步更改的过程。
+
+[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类实现此策略以提供纹理数据的异步加载。（见 [Use the GLKit Framework to Load Texture Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html#//apple_ref/doc/uid/TP40008793-CH104-SW10) 。）
+
+### Guidelines for Threading OpenGL ES Apps
+
+> Follow these guidelines to ensure successful threading in an app that uses OpenGL ES:
+>
+>- Use only one thread per context. OpenGL ES commands for a specific context are not thread safe. Never have more than one thread accessing a single context simultaneously.
+> - When using GCD, use a dedicated serial queue to dispatch commands to OpenGL ES; this can be used to replace the conventional mutex pattern.
+> - Keep track of the current context. When switching threads it is easy to switch contexts inadvertently, which causes unforeseen effects on the execution of graphic commands. You must set a current context when switching to a newly created thread and clear the current context before leaving the thread.
+
+请遵循以下准则以确保在使用 OpenGL ES 的应用中成功进行线程处理：
+
+- 每个上下文只使用一个线程。用于特定上下文的 OpenGL ES 命令不是线程安全的。永远不要有多个线程同时访问单个上下文。
+- 使用 GCD 时，使用专用的串行队列将命令分派给 OpenGL ES ；这可以用来取代传统的互斥模式。
+- 跟踪当前的上下文。切换线程时，很容易无意中切换上下文，这会对图形命令的执行造成无法预料的影响。切换到新创建的线程时必须设置当前上下文，并在离开线程之前清除当前上下文。
+
+## Adopting OpenGL ES 3.0
+
+> OpenGL ES 3.0 is a superset of the OpenGL ES 2.0 specification, so adopting it in your app is easy. You can continue to use your OpenGL ES 2.0 code while taking advantage of the higher resource limits available to OpenGL ES 3.0 contexts on compatible devices, and add support for OpenGL ES 3.0–specific features where it makes sense for your app’s design.
+
+OpenGL ES 3.0 是 OpenGL ES 2.0 规范的超集，因此在应用程序中使用 OpenGL ES 3.0 很容易。在兼容设备上，你可以继续使用 OpenGL ES 2.0 代码，同时利用 OpenGL ES 3.0 上下文可用的更高资源限制，并添加对 OpenGL ES 3.0 特定功能的支持，使 OpenGL ES 3.0 适用于你的应用程序设计。
+
+### Checklist for Adopting OpenGL ES 3.0
+
+> To use OpenGL ES 3.0 in your app:
+>
+> 1. Create an OpenGL ES context (as described in [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)), and specify the API version constant for OpenGL ES 3.0:
+
+要在应用中使用 OpenGL ES 3.0 ：
+
+1. 创建 OpenGL ES 上下文（如 [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1) 中所述），并为 OpenGL ES 3.0 指定 API 版本常量：
+
+```objc
+EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES3];
+```
+
+> If you plan to make your app available for devices that do not support OpenGL ES 3.0, follow the procedure in [Listing 2-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW2) to fall back to OpenGL ES 2.0 when necessary.
+>
+> 2. Include or import the OpenGL ES 3.0 API headers in source files that use OpenGL ES 3.0 API:
+
+如果计划使应用程序适用于不支持 OpenGL ES 3.0 的设备，按照清单 2-1 中的步骤在必要时回退到 OpenGL ES 2.0 。
+
+在使用 OpenGL ES 3.0 API 的源文件中包含或导入 OpenGL ES 3.0 API 标头：
+
+```objc
+#import <OpenGLES/ES3/gl.h>
+#import <OpenGLES/ES3/glext.h>
+```
+
+> 3. Update code that uses OpenGL ES 2.0 extensions incorporated into or changed by the OpenGL ES 3.0 specifications, as described in Updating Extension Code below.
+> 4. (Optional.) You can use the same shader programs in both OpenGL ES 2.0 and 3.0. However, if you choose to port shaders to GLSL ES 3.0 to use new features, see the caveats in [Adopting OpenGL ES Shading Language version 3.0](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/AdoptingOpenGLES3/AdoptingOpenGLES3.html#//apple_ref/doc/uid/TP40008793-CH504-SW18).
+> 5. Test your app on an OpenGL ES 3.0–compatible device to verify that it behaves correctly.
+
+3. 更新使用 OpenGL ES 2.0 扩展的代码，这些扩展包含在 OpenGL ES 3.0 规范中或由 OpenGL ES 3.0 规范更改，如下面的 Updating Extension Code 中所述。
+4. （可选）可以在 OpenGL ES 2.0 和 3.0 中使用相同的着色器程序。但是，如果你选择将着色器移植到 GLSL ES 3.0 以使用新功能，参阅 [Adopting OpenGL ES Shading Language version 3.0](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/AdoptingOpenGLES3/AdoptingOpenGLES3.html#//apple_ref/doc/uid/TP40008793-CH504-SW18) 中的注意事项。
+5. 在 OpenGL ES 3.0 兼容设备上测试应用程序，以验证其行为是否正常。
+
+### Updating Extension Code
+
+> OpenGL ES 3.0 is a superset of the OpenGL ES 2.0 specification, so apps that use only core OpenGL ES 2.0 features can be used in an OpenGL ES 3.0 context without changes. However, some apps also use OpenGL ES 2.0 extensions. The features provided by these extensions are also available in OpenGL ES 3.0, but using them in an OpenGL ES 3.0 context may require at least minor code changes.
+
+OpenGL ES 3.0 是 OpenGL ES 2.0 规范的超集，因此仅使用核心 OpenGL ES 2.0 功能的应用程序可以在 OpenGL ES 3.0 上下文中使用而无需更改。然而，对于某些使用了 OpenGL ES 2.0 扩展的应用程序。这些扩展提供的功能也可以在 OpenGL ES 3.0 中使用，但在 OpenGL ES 3.0上 下文中使用它们可能至少需要对代码进行少量更改。
+
+#### Remove Extension Suffixes
+
+> The OpenGL ES 2.0 extensions listed below define APIs that are incorporated into the core OpenGL ES 3.0 specification. To use these features in an OpenGL ES 3.0 context, simply remove the extension suffixes from function and constant names. For example, the name of the glMapBufferRangeEXT function becomes glMapBufferRange, and the DEPTH_COMPONENT24_OES constant (used in the internalformat parameter of the glRenderbufferStorage function) becomes DEPTH_COMPONENT24.
+>
+> [OES_depth24](http://www.khronos.org/registry/gles/extensions/OES/OES_depth24.txt)
+> [OES_element_index_uint](http://www.khronos.org/registry/gles/extensions/OES/OES_element_index_uint.txt)
+> [OES_fbo_render_mipmap](http://www.khronos.org/registry/gles/extensions/OES/OES_fbo_render_mipmap.txt)
+> [OES_rgb8_rgba8](http://www.khronos.org/registry/gles/extensions/OES/OES_rgb8_rgba8.txt)
+> [OES_texture_half_float_linear](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float_linear.txt)
+> [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt)
+> [EXT_blend_minmax](http://www.opengl.org/registry/specs/EXT/blend_minmax.txt)
+> [EXT_draw_instanced](http://www.khronos.org/registry/gles/extensions/EXT/draw_instanced.txt)
+> [EXT_instanced_arrays](http://www.khronos.org/registry/gles/extensions/EXT/EXT_instanced_arrays.txt)
+> [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt)
+> [EXT_occlusion_query_boolean](http://www.khronos.org/registry/gles/extensions/EXT/EXT_occlusion_query_boolean.txt)
+> [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt)
+> [APPLE_sync](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_sync.txt)
+> [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt)
+
+下面列出的 OpenGL ES 2.0 扩展定义了包含在核心 OpenGL ES 3.0 规范中的 API 。要在 OpenGL ES 3.0 上下文中使用这些功能，只需从函数和常量名称中删除扩展名后缀。例如，glMapBufferRangeEXT 函数的名称变为 glMapBufferRange ，而 DEPTH_COMPONENT24_OES 常量（在 glRenderbufferStorage 函数的 internalformat 参数中使用）变为 DEPTH_COMPONENT24 。
+
+[OES_depth24](http://www.khronos.org/registry/gles/extensions/OES/OES_depth24.txt)
+[OES_element_index_uint](http://www.khronos.org/registry/gles/extensions/OES/OES_element_index_uint.txt)
+[OES_fbo_render_mipmap](http://www.khronos.org/registry/gles/extensions/OES/OES_fbo_render_mipmap.txt)
+[OES_rgb8_rgba8](http://www.khronos.org/registry/gles/extensions/OES/OES_rgb8_rgba8.txt)
+[OES_texture_half_float_linear](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float_linear.txt)
+[OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt)
+[EXT_blend_minmax](http://www.opengl.org/registry/specs/EXT/blend_minmax.txt)
+[EXT_draw_instanced](http://www.khronos.org/registry/gles/extensions/EXT/draw_instanced.txt)
+[EXT_instanced_arrays](http://www.khronos.org/registry/gles/extensions/EXT/EXT_instanced_arrays.txt)
+[EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt)
+[EXT_occlusion_query_boolean](http://www.khronos.org/registry/gles/extensions/EXT/EXT_occlusion_query_boolean.txt)
+[EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt)
+[APPLE_sync](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_sync.txt)
+[APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt)
+
+#### Modify Use of Extension APIs
+
+> Some features defined by OpenGL ES 2.0 extensions are in the core OpenGL ES 3.0 specification, but with changes to their API definitions. To use these features in an OpenGL ES 3.0 context, make the changes described below.
+
+OpenGL ES 2.0 扩展定义的一些功能属于核心 OpenGL ES 3.0 规范，但对其 API 定义进行了更改。要在 OpenGL ES 3.0 上下文中使用这些功能，请进行下述更改。
+
+##### Working with Texture Formats
+
+> The [OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt), [OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt), [OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt), and [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) extensions define constants for use in the internalformat and type parameters of the glTexImage family of functions. The functionality defined by these extensions is available in the OpenGL ES 3.0 core API, but with some caveats:
+>
+> - The glTexImage functions do not support internalformat constants without explicit sizes. Use explicitly sized constants instead:
+
+[OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt)，[OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt)，[OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt) 和 [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) 扩展定义了在 glTexImage 函数系列的 internalformat 和 type 参数中使用的常量。这些扩展定义的功能在 OpenGL ES 3.0 核心 API 中可用，但有一些注意事项：
+
+- glTexImage 函数不支持没有显式大小的 internalformat 常量。改为使用明确大小的常量：
+
+```objc
+// Replace this OpenGL ES 2.0 code:
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_HALF_FLOAT_OES, data);
+// With this OpenGL ES 3.0 code:
+glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_HALF_FLOAT, data);
+```
+
+> - OpenGL ES 3.0 does not define float or half-float formats for LUMINANCE or LUMINANCE_ALPHA data. Use the corresponding RED or RG formats instead.
+> - The vector returned by depth and depth/stencil texture samplers no longer repeats the depth value in its first three components in OpenGL ES 3.0. Use only the first (.r) component in shader code that samples such textures.
+> - The sRGB format is only valid when used for the internalformat parameter in OpenGL ES 3.0. Use GL_RGB or GL_RGBA for the format parameter for sRGB textures.
+>
+> Alternatively, replace calls to glTexImage functions with calls to the corresponding glTexStorage functions. Texture storage functions are available in as core API in OpenGL ES 3.0, and through the [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) extension in OpenGL ES 1.1 and 2.0. These functions offer an additional benefit: using a glTexStorage function completely specifies an immutable texture object in one call; it performs all consistency checks and memory allocations immediately, guaranteeing that the texture object can never be incomplete due to missing mipmap levels or inconsistent cube map faces.
+
+- OpenGL ES 3.0 没有为 LUMINANCE 或 LUMINANCE_ALPHA 数据定义 float 或 half-float 格式。改用相应的 RED 或 RG 格式。
+- OpenGL ES 3.0中，深度和深度/模板纹理采样器返回的向量不再重复前三个组件中的深度值。在对这样的纹理进行采样的着色器代码中仅使用第一个（.r）成分。
+- sRGB 格式仅当在 OpenGL ES 3.0 中用作 internalformat 参数时才有效。使用 GL_RGB 或 GL_RGBA 作为 sRGB 纹理的 format 参数。
+
+另外，通过调用相应的 glTexStorage 函数替换对 glTexImage 函数的调用。纹理存储功能在 OpenGL ES 3.0 中作为核心 API 提供，OpenGL ES 1.1 和 2.0 中通过 [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) 扩展提供。这些函数提供了额外的好处：使用 glTexStorage 函数在一次调用中完全指定不可变纹理对象；它立即执行所有一致性检查和内存分配，保证纹理对象永远不会因为缺少 mipmap 级别或不一致的立方体贴图面而不完整。
+
+##### Mapping Buffer Objects into Client Memory
+
+> The [OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) extension defines the glMapBuffer function for mapping the entire data storage of a buffer object into client memory. OpenGL ES 3.0 instead defines the glMapBufferRange function, which provides additional functionality: it allows mapping a subset of a buffer object’s data storage and includes options for asynchronous mapping. The glMapBufferRange function is also available in OpenGL ES 1.1 and 2.0 contexts through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension.
+
+[OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) 扩展定义了 glMapBuffe r函数，用于将缓冲区对象的整个数据存储映射到客户机内存。OpenGL ES 3.0 定义了 glMapBufferRange 函数，其提供了额外的功能：它允许映射缓冲区对象数据存储的子集，并包括异步映射的选项。glMapBufferRange 函数也可以通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展在 OpenGL ES 1.1 和 2.0 上下文中使用。
+
+##### Discarding Framebuffers
+
+> The glInvalidateFramebuffer function in OpenGL ES 3.0 replaces the glDiscardFramebufferEXT function provided by the [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) extension. The parameters and behavior of both functions are identical.
+
+OpenGL ES 3.0 中的 glInvalidateFramebuffer 函数替代了 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供的 glDiscardFramebufferEXT 函数。两个函数的参数和行为是相同的。
+
+##### Using Multisampling
+
+> OpenGL ES 3.0 incorporates all features of the [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) extension, except for the glResolveMultisampleFramebufferAPPLE function. Instead the glBlitFramebuffer function provides this and other other framebuffer copying options. To resolve a multisampling buffer, set the read and draw framebuffers (as in [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4)) and then use glBlitFramebuffer to copy the entire read framebuffer into the entire draw framebuffer:
+
+除 glResolveMultisampleFramebufferAPPLE 函数外，OpenGL ES 3.0 包含 [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) 扩展的所有功能。glBlitFramebuffer 函数提供了此功能和其他帧缓冲拷贝选项。要解析多重采样缓冲区，设置读取和绘制帧缓冲区（如 [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4) ），然后使用 glBlitFramebuffer 将整个读取帧缓冲区复制到整个绘制帧缓冲区中：
+
+```objc
+glBlitFramebuffer(0,0,w,h, 0,0,w,h, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+```
+
+#### Continue Using Most Other Extensions in OpenGL ES 3.0
+
+> Several key features of iOS device graphics hardware are not part of the core OpenGL ES 3.0 specification, but remain available as OpenGL ES 3.0 extensions. To use these features, continue to check for extension support using the procedures described in [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3). (See also the [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) to determine which features are available on which devices.)
+>
+> Most code written for OpenGL ES 2.0 extensions that are also present as OpenGL ES 3.0 extensions will work in an OpenGL ES 3.0 context without changes. However, additional caveats apply to extensions which modify the vertex and fragment shader language—for details, see the next section.
+
+iOS 设备图形硬件的一些关键功能不是核心 OpenGL ES 3.0 规范的一部分，但仍作为 OpenGL ES 3.0 扩展保留其可用性。要使用这些功能，使用 [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3) 中描述的过程继续检查扩展支持信息。（另请参阅 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 以确定哪些设备上哪些功能可用。）
+
+为 OpenGL ES 2.0 扩展编写的同时仍然在 OpenGL ES 3.0 扩展保留的大多数代码也可以在 OpenGL ES 3.0 上下文中使用而无需更改。但是，对于修改顶点和片段着色器语言的扩展，还有其他注意事项 - 有关详细信息，请参阅下一节。
+
+### Adopting OpenGL ES Shading Language version 3.0
+
+> OpenGL ES 3.0 includes a new version of the OpenGL ES Shading Language (GLSL ES). OpenGL ES 3.0 contexts can use shader programs written in either version 1.0 or version 3.0 of GLSL ES, but version 3.0 shaders (marked with a #version 300 es directive in shader source code) are required to access certain new features, such as uniform blocks, 32-bit integers and additional integer operations.
+>
+> Some language conventions have changed between GLSL ES version 1.0 and 3.0. These changes make shader source code more portable between OpenGL ES 3.0 and desktop OpenGL ES 3.3 or later, but they also require minor changes to existing shader source code when porting to GLSL ES 3.0:
+>
+> - The attribute and varying qualifiers are replaced in GLSL ES 3.0 by by the keywords in and out. In a vertex shader, use the in qualifier for vertex attributes and the out qualifier for varying outputs. In a fragment shader, use the in qualifier for varying inputs.
+> - GLSL ES 3.0 removes the gl_FragData and gl_FragColor builtin fragment output variables. Instead, you declare your own fragment output variables with the out qualifier.
+> - Texture sampling functions have been renamed in GLSL ES 3.0—all sampler types use the same texture function name. For example, you can use the new texture function with either a sampler2D or samplerCube parameter (replacing the texture2D and textureCube functions from GLSL ES 1.0).
+> - The features added to GLSL ES 1.0 by the [EXT_shader_texture_lod](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_texture_lod.txt), [EXT_shadow_samplers](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shadow_samplers.txt), and [OES_standard_derivatives](http://www.khronos.org/registry/gles/extensions/OES/OES_standard_derivatives.txt) extensions are part of the core GLSL ES specification. When porting shaders that use these features to GLSL ES 3.0, use the corresponding GLSL ES 3.0 functions.
+> - The [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) extension works differently. GLSL ES 3.0 removes the gl_FragData and gl_FragColor builtin fragment output variables in favor of requiring fragment outputs to be declared in the shader. Correspondingly, the gl_LastFragData builtin variable is not present in GLSL ES 3.0 fragment shaders. Instead, any fragment output variables you declare with the inout qualifier contain previous fragment data when the shader runs. For more details, see [Fetch Framebuffer Data for Programmable Blending](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW23).
+>
+> For a complete overview of GLSL ES 3.0, see the OpenGL ES Shading Language 3.0 Specification, available from the [OpenGL ES API Registry](http://www.khronos.org/registry/gles/).
+
+OpenGL ES 3.0 包含一个新版本的 OpenGL ES 着色语言（ GLSL ES ）。OpenGL ES 3.0 上下文可以使用GLSL ES 的 1.0 版或 3.0 版编写的着色器程序，但是需要 3.0 版着色器（在着色器源代码中用 #version 300 es 指令标记）才能访问某些新功能，例如统一块，32 位整数和其他整数运算。
+
+一些语言约定在 GLSL ES 版本 1.0 和 3.0 之间发生了变化。这些更改使得着色器源代码在 OpenGL ES 3.0 和桌面 OpenGL ES 3.3 或更高版本之间更具可移植性，但在移植到 GLSL ES 3.0 时，它们还需要对现有着色器源代码进行微小更改：
+
+- 在GLSL ES 3.0 中，attribute 和 varying 限定符由关键字 in 和 out 替换。在顶点着色器中，顶点属性使用 in 限定符，varying output 使用 out 限定符。在片段着色器中，使用 in 限定符修饰 varying inputs 。
+- GLSL ES 3.0 删除了 gl_FragData 和 gl_FragColor 内置片段输出变量。相反，使用 out 限定符声明自己的片段输出变量。
+- 在 GLSL ES 3.0 中对纹理采样函数进行了重命名 - 所有采样器类型都使用相同的纹理函数名称。例如，你可以将新纹理函数与 sampler2D 或 samplerCube 参数一起使用（替换 GLSL ES 1.0 中的 texture2D 和 textureCube 函数）。
+-  通过 [EXT_shader_texture_lod](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_texture_lod.txt)，[EXT_shadow_samplers](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shadow_samplers.txt) 和 [OES_standard_derivatives](http://www.khronos.org/registry/gles/extensions/OES/OES_standard_derivatives.txt) 扩展添加到 GLSL ES 1.0 的功能是核心 GLSL ES 规范的一部分。将使用这些功能的着色器移植到 GLSL ES 3.0 时，请使用相应的 GLSL ES 3.0 功能。
+- [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) 扩展的工作方式不同。GLSL ES 3.0 删除了 gl_FragData 和 gl_FragColor 内置片段输出变量，有利于要求在着色器中声明片段输出。相应地，GLSL ES 3.0 片段着色器中不存在 gl_LastFragData 内置变量。相反，使用 inout 限定符声明的任何片段输出变量都包含着色器运行时的先前片段数据。有关更多详细信息，见 [Fetch Framebuffer Data for Programmable Blending](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW23) 。
+
+有关 GLSL ES 3.0 的完整概述，见 OpenGL ES 着色语言 3.0 规范，该规范可从 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 获得。
+
+## Xcode OpenGL ES Tools Overview
 
 
 
@@ -2701,35 +3463,243 @@ iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数�
 
 
 
- 
 
 
+## Using texturetool to Compress Textures
 
+> The iOS SDK includes a tool to compress your textures into the PVRTC or ASTC formats, aptly named texturetool. If you have Xcode installed with the iOS 7.0 SDK or later, then texturetool is located at: /Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool.
+>
+> texturetool provides various compression options, with tradeoffs between image quality and size. You need to experiment with each texture to determine which setting provides the best compromise.
+>
+> Note: The encoders, formats, and options available with texturetool are subject to change. This document describes those options available as of iOS 7.
 
+iOS SDK 包含一个叫做 texturetool 的工具，可将纹理压缩为 PVRTC 或 ASTC 格式。如果使用具有 iOS 7.0 SDK 或更高版本的 Xcode ，那么 texturetool 位于：/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool 。
 
+texturetool 提供了各种压缩选项，在图像质量和大小之间进行权衡。你需要尝试各个纹理以确定哪个设置可以提供最佳折衷。
 
+注意：texturetool 可用的编码器，格式和选项可能会发生变化。本文档介绍了自 iOS 7 起可用的选项。
 
+### texturetool Parameters
 
+> The parameters that may be passed to texturetool are described in the rest of this section.
 
+可以传递给 texturetool 的参数将在本节的其余部分中介绍。
 
+```objc
+user$ texturetool -h
 
+Usage: texturetool [-hl]
+texturetool -c <reference_image> <input_image>
+texturetool [-ms] [-e <encoder>] [-p <preview_file>] -o <output> [-f <format>] <input_image>
 
+first form:
+-h       Display this help menu.
+-l       List available encoders, individual encoder options, and file formats.
 
+second form:
+-c       Compare <input_image> to <reference_image> and report differences.
 
+third form:
+-m                Generate a complete mipmap chain from the input image.
+-s                Report numerical differences between <input_image> and the encoded image.
+-e <encoder>      Encode texture levels with <encoder>.
+-p <preview_file> Output a PNG preview of the encoded output to <preview_file>. Requires -e option
+-o <output>       Write processed image to <output>.
+-f <format>       Set file <format> for <output> image.
+```
 
+> Note: The -p option indicates that it requires the -e option. It also requires the -o option.
 
+Listing C-1  Encoding options
 
+注意：-p 选项表示其需要 -e 选项与 -o 选项。
 
+清单 C-1 编码选项
 
+```objc
+user$ texturetool -l
+Encoders:
 
+PVRTC
+--channel-weighting-linear
+--channel-weighting-perceptual
+--bits-per-pixel-2
+--bits-per-pixel-4
+--alpha-is-independent
+--alpha-is-opacity
+--punchthrough-unused
+--punchthrough-allowed
+--punchthrough-forced
+ASTC
+--block-width-4
+--block-width-5
+--block-width-6
+--block-width-8
+--block-width-10
+--block-width-12
+--compression-mode-veryfast
+--compression-mode-fast
+--compression-mode-medium
+--compression-mode-thorough
+--compression-mode-exhaustive
+--srgb-yes
+--srgb-no
+--block-height-4
+--block-height-5
+--block-height-6
+--block-height-8
+--block-height-10
+--block-height-12
 
+Formats:
 
+Raw
+PVR
+KTX
+```
 
+> texturetool defaults to --bits-per-pixel-4, --channel-weighting-linear and -f Raw if no other options are provided.
+>
+> The --bits-per-pixel-2 and --bits-per-pixel-4 options create PVRTC data that encodes source pixels into 2 or 4 bits per pixel. These options represent a fixed 16:1 and 8:1 compression ratio over the uncompressed 32-bit RGBA image data. There is a minimum data size of 32 bytes; the compressor never produces files smaller than this, and at least that many bytes are expected when uploading compressed texture data.
+>
+> When compressing, specifying --channel-weighting-linear spreads compression error equally across all channels. By contrast, specifying --channel-weighting-perceptual attempts to reduce error in the green channel compared to the linear option. In general, PVRTC compression does better with photographic images than with line art.
+>
+> The -m option automatically generates mipmap levels for the source image. These levels are provided as additional image data in the archive created. If you use the Raw image format, then each level of image data is appended one after another to the archive. If you use the PVR archive format, then each mipmap image is provided as a separate image in the archive.
+>
+> The (-f) parameter controls the format of its output file. The default format is Raw. This format is raw compressed texture data, either for a single texture level (without the -m option) or for each texture level concatenated together (with the -m option). Each texture level stored in the file is at least 32 bytes in size and must be uploaded to the GPU in its entirety. The PVR format matches the format used by the PVRTexTool found in Imagination Technologies’s PowerVR SDK. To load a PVR-compressed texture, use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class.
+>
+> The -s and -c options print error metrics during encoding. The -s option compares the input (uncompressed) image to the output (encoded) image, and the -c option compares any two images. Results of the comparison include root-mean-square error (rms), perceptually weighted pRms, worst-case texel error (max), and compositing-based versions of each statistic (rmsC, pRmsC, and maxC). Compositing-based errors assume that the image’s alpha channel is used for opacity and that the color in each texel is blended with the worst-case destination color.
+>
+> The error metrics used with the -s and -c options and by the encoder when optimizing a compressed image treat the image’s alpha channel as an independent channel by default (or when using the --alpha-is-independent option). The --alpha-is-opacity option changes the error metric to one based on a standard blending operation, as implemented by calling glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ).
+>
+> PVR Texture compression supports a special punchthrough mode which can be enabled on a per 4x4 block basis. This mode limits the color gradations that can be used within the block, but introduces the option of forcing the pixel’s alpha value to 0. It can defeat PVRTC smooth color interpolation, introducing block boundary artifacts, so it should be used with care. The three punchthrough options are:
+>
+> - --punchthrough-unused — No punchthrough (the default option).
+> - --punchthrough-allowed — The encoder may enable punchthrough on a block by block basis when optimizing for image quality. This option generally improves the objective (per-pixel) error metrics used by the compression algorithm, but may introduce subjective artifacts.
+> - --punchthrough-forced — Punchthrough is enabled on every block, limiting color gradation but making it possible for any pixel in the block to have an alpha of 0. This option is provided principally for completeness, but may be useful when the results can be compared visually to the other options.
 
+若没有提供其他选项，texturetool 默认为 --bits-per-pixel-4 ， -  channel-weighting-linear 和 -f Raw 。
 
+-bits-per-pixel-2 和 -bits-per-pixel-4 选项创建 PVRTC 数据，将源像素编码为每像素 2 或 4 位。这些选项表示与未压缩的 32 位 RGBA 图像数据相比具有固定的 16:1 和 8:1 压缩比。压缩之后的数据最小大小为 32 字节；压缩器永远不会生成比此值更小的文件，并且在上传压缩纹理数据时至少需要很多字节。
 
+压缩时，指定 --channel-weighting-linear 会在所有通道上均匀地传播压缩误差。与线性选项相比，指定 --channel-weighting-perceptual 尝试减少绿色通道中的错误。通常，PVRTC 压缩对于摄影图像的效果好于艺术线条。
 
+-m 选项自动为源图像生成 mipmap 级别。创建的存档中这些级别作为附件图像数据提供。如果使用原始图像格式，则会将每个级别的图像数据一个接一个地附加到存档中。如果使用 PVR 存档格式，则每个 mipmap 图像在存档中作为单独图像提供。
 
+（ -f ）参数控制其输出文件的格式。默认格式为 Raw 。此格式是原始压缩纹理数据，可以是单个纹理级别（不带 -m 选项），也可以是连接在一起的每个纹理级别（使用 -m 选项）。存储在该文件中的每个纹理级别的大小至少为 32 个字节，并且必须完整地上传到 GPU 。PVR 格式与 Imagination Technologies 的 PowerVR SDK 中的 PVRTexTool 使用的格式相匹配。要加载 PVR 压缩纹理，请使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类。
 
+-s 和 -c 选项在编码期间打印错误指标。-s 选项将输入（未压缩）图像与输出（编码）图像进行比较，-c 选项比较任意两个图像。比较结果包括均方根误差（ rms ），感知加权 pRms ，最坏情况纹素错误（ max ）以及每个统计量的基于合成的版本（ rmsC，pRmsC 和 maxC ）。基于合成的错误假设图像的 alpha 通道用于不透明度，并且每个纹素的颜色与最坏情况的目标颜色混合。
 
+在优化压缩图像时，-s 和 -c 选项与编码器一起使用的误差指标默认将图像的 alpha 通道视为独立通道（或使用 --alpha-is-independent 选项时）。--alpha-is-opacity 选项根据标准混合操作将错误指标更改为 1 ，如通过调用 glBlendFunc（ GL_SRC_ALPHA，GL_ONE_MINUS_SRC_ALPHA ）实现的。
 
+PVR 纹理压缩支持特殊的穿通模式，可以基于每个 4x4 块启用。此模式限制了可在块内使用的颜色等级，但引入了强制像素的 alpha 值为 0 的选项。它可以击败 PVRTC 平滑颜色插值，引入块边界伪像，因此应谨慎使用。三个穿通选项是：
+
+- --punchthrough-unused  - 无穿通（默认选项）。
+- --punchthrough-allowed  - 在优化图像质量时，编码器可以逐块地启用穿通。此选项通常可以改进压缩算法使用的目标（每像素）误差度量，但可能会引入主观伪像。
+- --punchthrough-forced  - 在每个块上启用 Punchthrough ，限制颜色渐变，但使块中的任何像素都可以具有 0 的 alpha 。此选项主要是为了完整性提供，但是当结果可以在视觉上与其他选项进行比较时可能会有用。
+
+> Important: Source images for the encoder must satisfy these requirements:
+> 
+> - Height and width must be at least 8.
+> - Height and width must be a power of 2.
+> - Must be square (height==width).
+> - Source images must be in a format that Image IO accepts in OS X. For best results, your original textures should begin in an uncompressed data format.
+> 
+> Important: If you are using PVRTexTool to compress your textures, then you must create textures that are square and a power of 2 in length. If your app attempts to load a non-square or non-power-of-two texture in iOS, an error is returned.
+
+Listing C-2  Encoding images into the PVRTC compression format
+
+重要：编码器的源图像必须满足以下要求：
+
+- 高度和宽度必须至少为 8 。
+- 高度和宽度必须是 2 的幂。
+- 必须是正方形（高度==宽度）。
+- 源图像必须采用 Image IO 在 OS X 中接受的格式。为获得最佳效果，原始纹理应以未压缩的数据格式开始。
+
+重要提示：如果使用 PVRTexTool 压缩纹理，则必须创建方形和长度为 2 的幂的纹理。如果你的应用尝试在 iOS 中加载非方形或非二次幂纹理，则会返回错误。
+
+清单 C-2 将图像编码为 PVRTC 压缩格式
+
+```objc
+Encode Image.png into PVRTC using linear weights and 4 bpp, and saving as ImageL4.pvrtc
+user$ texturetool -e PVRTC --channel-weighting-linear --bits-per-pixel-4 -o ImageL4.pvrtc Image.png
+
+Encode Image.png into PVRTC using perceptual weights and 4 bpp, and saving as ImageP4.pvrtc
+user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-4 -o ImageP4.pvrtc Image.png
+
+Encode Image.png into PVRTC using linear weights and 2 bpp, and saving as ImageL2.pvrtc
+user$ texturetool -e PVRTC --channel-weighting-linear --bits-per-pixel-2 -o ImageL2.pvrtc Image.png
+
+Encode Image.png into PVRTC using perceptual weights and 2 bpp, and saving as ImageP2.pvrtc
+user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-2 -o ImageP2.pvrtc Image.png
+```
+
+> Listing C-3  Encoding images into the PVRTC compression format while creating a preview
+
+清单 C-3 在创建预览时将图像编码为 PVRTC 压缩格式
+
+```objc
+Encode Image.png into PVRTC using linear weights and 4 bpp, and saving the output as ImageL4.pvrtc and a PNG preview as ImageL4.png
+user$ texturetool -e PVRTC --channel-weighting-linear --bits-per-pixel-4 -o ImageL4.pvrtc -p ImageL4.png Image.png
+
+Encode Image.png into PVRTC using perceptual weights and 4 bpp, and saving the output as ImageP4.pvrtc and a PNG preview as ImageP4.png
+user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-4 -o ImageP4.pvrtc -p ImageP4.png Image.png
+
+Encode Image.png into PVRTC using linear weights and 2 bpp, and saving the output as ImageL2.pvrtc and a PNG preview as ImageL2.png
+user$ texturetool -e PVRTC --channel-weighting-linear --bits-per-pixel-2 -o ImageL2.pvrtc -p ImageL2.png Image.png
+
+Encode Image.png into PVRTC using perceptual weights and 2 bpp, and saving the output as ImageP2.pvrtc and a PNG preview as ImageP2.png
+user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-2 -o ImageP2.pvrtc -p ImageP2.png Image.png
+```
+
+> Note: It is not possible to create a preview without also specifying the -o parameter and a valid output file. Preview images are always in PNG format.
+
+To load a PVR-compressed texture, use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class.
+
+For an example of working with PVR-compressed data directly, see the [PVRTextureLoader](https://developer.apple.com/library/archive/samplecode/PVRTextureLoader/Introduction/Intro.html#//apple_ref/doc/uid/DTS40008121) sample.
+
+注意：如果不指定 -o 参数和有效的输出文件，则无法创建预览。预览图像始终为 PNG 格式。
+
+要加载 PVR 压缩纹理，使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类。
+
+有关直接使用 PVR 压缩数据的示例，见 [PVRTextureLoader](https://developer.apple.com/library/archive/samplecode/PVRTextureLoader/Introduction/Intro.html#//apple_ref/doc/uid/DTS40008121) 示例。
+
+## OpenGL ES 3.0 for Apple A7 GPUs and Later
+
+> For best performance and to access all of the features of modern GPUs, your app should use Metal. However, if your app is using OpenGL ES, use OpenGL ES 3.0. Using OpenGL ES 3.0 gives you access to new features and a larger pool of rendering resources.
+
+为了获得最佳性能并访问现代 GPU 的所有功能，应用应使用 Metal 。 但是，如果你的应用使用的是 OpenGL ES ，则最好使用 OpenGL ES 3.0 。使用 OpenGL ES 3.0 可以访问新功能和更大的渲染资源池。
+
+### Best Practices
+
+> These best practices apply to OpenGL ES 3.0 apps on Apple A7 GPUs and later:
+>
+> - Avoid operations that modify OpenGL ES objects already in use by the renderer because of previously submitted drawing commands. When you need to modify OpenGL ES resources, schedule those modifications at the beginning or end of a frame. These commands include glBufferSubData, glBufferData, glMapBuffer, glTexSubImage, glCopyTexImage, glCopyTexSubImage, glReadPixels, glBindFramebuffer, glFlush, and glFinish.
+> - Follow the drawing guidelines found in [Do Not Sort Rendered Objects Unless Necessary](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW7) in [OpenGL ES Programming Guide](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/index.html).
+
+这些最佳实践适用于 Apple A7 GPU 及更高版本的 OpenGL ES 3.0 应用程序：
+
+- 由于先前提交的绘图命令，避免修改已由渲染器使用的 OpenGL ES 对象的操作。当需要修改 OpenGL ES 资源时，在帧的开头或结尾处进行这些修改。这些命令包括 glBufferSubData ，glBufferData ，glMapBuffer ，glTexSubImage ，glCopyTexImage ，glCopyTexSubImage ，glReadPixels ，glBindFramebuffer ，glFlush 和 glFinish 。
+- 按照 [OpenGL ES Programming Guide](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/index.html) 中的 [Do Not Sort Rendered Objects Unless Necessary](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW7) 中的绘图指南进行操作。
+
+### Considerations
+
+> The Apple A7 GPUs and later process all floating-point calculations using a scalar processor, even when those values are declared in a vector. Proper use of write masks and careful definitions of your calculations can improve the performance of your shaders. For more information, see [Perform Vector Calculations Lazily](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW2).
+>
+> Medium- and low-precision floating-point shader values are computed identically, as 16-bit floating point values. This is a change from the PowerVR SGX hardware, which used 10-bit fixed-point format for low-precision values. If your shaders use low-precision floating point variables and you also support the PowerVR SGX hardware, you must test your shaders on both GPUs.
+>
+> The Apple A7 GPUs and later do not penalize dependent-texture fetches.
+>
+> Always use framebuffer discard operations when your framebuffer contents are no longer needed. The penalty for not doing so is higher than it was on earlier GPUs. For best results, use the [GLKView](https://developer.apple.com/documentation/glkit/glkview) class; it automatically implements framebuffer discard operations.
+>
+> When rendering to multiple targets, limit your app to four image targets (and no more than 128 bits of total data on Apple A7 GPUs and 256 bits of total data on Apple A8 GPUs written to the targets). A single sRGB target counts as 64 bits.
+
+Apple A7 及其后续的 GPU 使用标量处理器处理所有浮点计算，即使这些值声明为向量。正确使用写掩码和仔细定义计算可以提高着色器的性能。有关更多信息，请参阅 [Perform Vector Calculations Lazily](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW2) 。
+
+Medium- 和 low-precision 浮点着色器值的计算方式相同，为 16 位浮点值。这是对 PowerVR SGX 硬件的改变，它使用 10 位定点格式来实现低精度值。如果着色器使用低精度浮点变量并且还支持 PowerVR SGX 硬件，则必须在两个 GPU 上测试着色器。
+
+Apple A7 GPU 及更高版本不会惩罚依赖纹理提取。
+
+当不再需要帧缓冲内容时，始终使用帧缓冲丢弃操作。不这样做的代价在后续 GPU 中要高于早期的 GPU 。为获得最佳效果，使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类；它自动实现帧缓冲丢弃操作。
+
+渲染到多个目标时，将应用程序限制为最多四个图像目标（当写入目标时，Apple A7 GPU 上的总数据不超过 128 位，Apple A8 GPU 上的总数据不超过 256 位）。单个 sRGB 目标计为 64 位。
