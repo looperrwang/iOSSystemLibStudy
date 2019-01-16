@@ -114,7 +114,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
 首先阅读前三章：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts)， [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) 。这些章节概述了 OpenGL ES 如何集成到 iOS 中，以及在 iOS 设备上启动和运行首个 OpenGL ES 应用程序所需的所有详细信息。
 
-如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations) 和 [Multitasking, High Resolution, and Other iOS Features](#multitasking,-high-resolution,-and-other-ios-features) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
+如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations) 和 [Multitasking, High Resolution, and Other iOS Features](#multitasking-high-resolution-and-other-ios-features) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
 
 最后，阅读 [OpenGL ES Design Guidelines](#opengl-es-design-guidelines)，[Tuning Your OpenGL ES App](#tuning-your-opengl-es-app) 以及以下章节，深入探讨如何设计高效的 OpenGL ES 应用程序。
 
@@ -257,7 +257,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 许多 iOS 设备都包含高分辨率显示器，因此你的应用应支持多种显示尺寸和分辨率。
 
-要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](#multitasking,-high-resolution,-and-other-ios-features) 。
+要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](#multitasking-high-resolution-and-other-ios-features) 。
 
 ### Implementing a Rendering Engine
 
@@ -821,12 +821,12 @@ glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, text
 > 3. Allocate and attach a depth buffer (as before).
 > 4. Test the framebuffer for completeness (as before).
 >
-> Although this example assumes you are rendering to a color texture, other options are possible. For example, using the OES_depth_texture extension, you can attach a texture to the depth attachment point to store depth information from the scene into a texture. You might use this depth information to calculate shadows in the final rendered scene.
+> Although this example assumes you are rendering to a color texture, other options are possible. For example, using the [OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt) extension, you can attach a texture to the depth attachment point to store depth information from the scene into a texture. You might use this depth information to calculate shadows in the final rendered scene.
 
 3. 分配并附加深度缓冲区（如前所述）。
 4. 测试帧缓冲区的完整性（如前所述）。
 
-虽然此示例假定你正在渲染颜色纹理，但其他选项也是可能的。例如，使用 OES_depth_texture 扩展，你可以将纹理附加到深度附着点，以将场景中的深度信息存储到纹理中。你可以使用此深度信息来计算最终渲染场景中的阴影。
+虽然此示例假定你正在渲染颜色纹理，但其他选项也是可能的。例如，使用 [OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt) 扩展，你可以将纹理附加到深度附着点，以将场景中的深度信息存储到纹理中。你可以使用此深度信息来计算最终渲染场景中的阴影。
 
 #### Rendering to a Core Animation Layer
 
@@ -1373,7 +1373,7 @@ OpenGL ES 3.0 是 iOS 7 中的新功能。你的应用程序可以使用 OpenGL 
 
 GLSL ES 3.0 增加了新功能，如统一块，32 位整数和其他整数运算，用于在顶点和片段着色器程序中执行更多通用计算任务。要在着色器程序中使用新语言，着色器源代码必须以 #version 330 es 指令开头。 OpenGL ES 3.0 上下文兼容为 OpenGL ES 2.0 编写的着色器。
 
-有关更多详细信息，请参阅 [Adopting OpenGL ES Shading Language version 3.0](#adopting-opengl-es-shading-language-version-3.0) 和 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 中的 OpenGL ES 着色语言 3.0 规范。
+有关更多详细信息，请参阅 [Adopting OpenGL ES Shading Language version 3.0](#adopting-opengl-es-shading-language-version-30) 和 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 中的 OpenGL ES 着色语言 3.0 规范。
 
 ##### Multiple Render Targets
 
