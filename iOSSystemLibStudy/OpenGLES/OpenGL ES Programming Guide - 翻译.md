@@ -337,7 +337,7 @@ OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。�
 
 要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 `nil` ，则初始化旧版本的上下文。清单 2-1 演示了如何执行此操作。
 
-<span id="Listing 2-1">清单 2-1</span> 在同一个应用程序中支持 OpenGL ES 的多个版本
+<span id="listing-2-1">清单 2-1</span> 在同一个应用程序中支持 OpenGL ES 的多个版本
 
 ```objc
 EAGLContext* CreateBestEAGLContext()
