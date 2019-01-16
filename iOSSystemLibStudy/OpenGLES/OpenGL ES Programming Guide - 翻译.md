@@ -2002,9 +2002,9 @@ void main()
 }
 ```
 
-> Instanced drawing is available in the core OpenGL ES 3.0 API and in OpenGL ES 2.0 through the EXT_draw_instanced and EXT_instanced_arrays extensions.
+> Instanced drawing is available in the core OpenGL ES 3.0 API and in OpenGL ES 2.0 through the [EXT_draw_instanced](http://www.khronos.org/registry/gles/extensions/EXT/draw_instanced.txt) and [EXT_instanced_arrays](http://www.khronos.org/registry/gles/extensions/EXT/EXT_instanced_arrays.txt) extensions.
 
-实例绘制在核心 OpenGL ES 3.0 API 和 OpenGL ES 2.0 中通过 EXT_draw_instanced 和 EXT_instanced_arrays 扩展提供
+实例绘制在核心 OpenGL ES 3.0 API 和 OpenGL ES 2.0 中通过 [EXT_draw_instanced](http://www.khronos.org/registry/gles/extensions/EXT/draw_instanced.txt) 和 [EXT_instanced_arrays](http://www.khronos.org/registry/gles/extensions/EXT/EXT_instanced_arrays.txt) 扩展提供
 
 ### Minimize OpenGL ES Memory Usage
 
@@ -3314,7 +3314,7 @@ EAGLContext *context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLE
 > 5. Test your app on an OpenGL ES 3.0–compatible device to verify that it behaves correctly.
 
 3. 更新使用 OpenGL ES 2.0 扩展的代码，这些扩展包含在 OpenGL ES 3.0 规范中或由 OpenGL ES 3.0 规范更改，如下面的 Updating Extension Code 中所述。
-4. （可选）可以在 OpenGL ES 2.0 和 3.0 中使用相同的着色器程序。但是，如果你选择将着色器移植到 GLSL ES 3.0 以使用新功能，参阅 [Adopting OpenGL ES Shading Language version 3.0](#adopting-opengl-es-shading-language-version-3.0) 中的注意事项。
+4. （可选）可以在 OpenGL ES 2.0 和 3.0 中使用相同的着色器程序。但是，如果你选择将着色器移植到 GLSL ES 3.0 以使用新功能，参阅 [Adopting OpenGL ES Shading Language version 3.0](#adopting-opengl-es-shading-language-version-30) 中的注意事项。
 5. 在 OpenGL ES 3.0 兼容设备上测试应用程序，以验证其行为是否正常。
 
 ### Updating Extension Code
@@ -3570,7 +3570,7 @@ glInsertEventMarkerEXT(0, "com.apple.GPUTools.event.debug-frame")
 
 当 OpenGL ES 客户端运行到此标记时，OpenGL ES 完成帧的渲染，然后 Xcode 自动捕获用于渲染该帧的整个命令序列。
 
-在 Xcode 捕获了帧之后，显示 OpenGL ES Frame Debugger 姐买呢。使用此界面检查渲染该帧的 OpenGL ES 命令序列并检查 OpenGL ES 资源，如 [Touring the OpenGL ES Frame Debugger](#touring-the-opengl-es-frame-debugger) 中所述。
+在 Xcode 捕获了帧之后，显示 OpenGL ES Frame Debugger 界面。使用此界面检查渲染该帧的 OpenGL ES 命令序列并检查 OpenGL ES 资源，如 [Touring the OpenGL ES Frame Debugger](#touring-the-opengl-es-frame-debugger) 中所述。
 
 此外，Xcode 可以对应用程序的 OpenGL ES 使用情况进行自动分析，以确定渲染器和着色器体系结构的哪些部分可以从性能优化中获益最多。要使用此选项，请单击 GPU 报告顶部的“Analyze”按钮（如 [Figure B-1](#figure-b-1) 右上方所示）。
 
