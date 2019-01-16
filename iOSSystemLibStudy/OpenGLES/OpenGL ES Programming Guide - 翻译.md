@@ -42,7 +42,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范没有定义窗口层；相反，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 *framebuffer* ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
 
-相关章节：[Checklist for Building OpenGL ES Apps for iOS](#Checklist for Building OpenGL ES Apps for iOS)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)
+相关章节：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)
 
 #### GLKit Provides a Drawing Surface and Animation Support
 
