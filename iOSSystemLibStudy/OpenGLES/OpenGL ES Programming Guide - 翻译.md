@@ -42,7 +42,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范没有定义窗口层；相反，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 *framebuffer* ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
 
-相关章节：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)
+相关章节：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts)
 
 #### GLKit Provides a Drawing Surface and Animation Support
 
@@ -52,7 +52,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 由 UIKit 框架定义的视图和视图控制器控制 iOS 上可视内容的呈现。GLKit 框架提供这些类的 OpenGL ES 感知版本。在开发 OpenGL ES 应用程序时，可以使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象来呈现 OpenGL ES 内容。还可以使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 对象来管理视图并支持在其内容上做动画。
 
-相关章节：[Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit)
+相关章节：[Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit)
 
 #### iOS Supports Alternative Rendering Targets
 
@@ -62,7 +62,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 除了绘制内容以填充整个屏幕或视图层次结构的一部分之外，还可以将 OpenGL ES 帧缓冲区对象用于其他渲染策略。iOS 实现了标准的 OpenGL ES 帧缓冲对象，你可以将其用于渲染到离屏缓冲区或纹理以供 OpenGL ES 场景中的其他地方使用。 此外，iOS 上的 OpenGL ES 支持渲染到 Core Animation layer（ [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类），然后你可以将其与其他图层组合以构建应用程序的用户界面或其他可视化显示。
 
-相关章节：[Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations)
+相关章节：[Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations)
 
 #### Apps Require Additional Performance Tuning
 
@@ -80,7 +80,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
-相关章节：[OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines)，[Best Practices for Working with Vertex Data](#Best Practices for Working with Vertex Data)，[Best Practices for Working with Texture Data](#Best Practices for Working with Texture Data)，[Best Practices for Shaders](#Best Practices for Shaders)，[Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App)
+相关章节：[OpenGL ES Design Guidelines](#opengl-es-design-guidelines)，[Best Practices for Working with Vertex Data](#best-practices-for-working-with-vertex-data)，[Best Practices for Working with Texture Data](#best-practices-for-working-with-texture-data)，[Best Practices for Shaders](#best-practices-for-shaders)，[Tuning Your OpenGL ES App](#tuning-your-opengl-es-app)
 
 #### OpenGL ES May Not Be Used in Background Apps
 
@@ -90,7 +90,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
 在后台运行的应用程序可能无法调用 OpenGL ES 函数。如果你的应用程序在后台运行时访问图形处理器，它将自动由 iOS 终止。为了避免这种情况，你的应用程序应该在移动到后台之前 flush 先前提交给 OpenGL ES 的任何待处理命令，并避免在将其移回前台之前调用 OpenGL ES 。
 
-相关章节：[Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features)
+相关章节：[Multitasking, High Resolution, and Other iOS Features](#multitasking,-high-resolution,-and-other-ios-features)
 
 #### OpenGL ES Places Additional Restrictions on Multithreaded Apps
 
@@ -100,7 +100,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
 利用并发性设计应用程序可以帮助提高应用程序的性能。如果你打算为 OpenGL ES 应用程序添加并发性，则必须确保它不会同时从两个不同的线程访问相同的上下文。
 
-相关章节：[Concurrency and OpenGL ES](#Concurrency and OpenGL ES)
+相关章节：[Concurrency and OpenGL ES](#concurrency-and-opengl-es)
 
 ### How to Use This Document
 
@@ -112,11 +112,11 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 >
 > Unless otherwise noted, OpenGL ES code examples in this book target OpenGL ES 3.0. You may need to make changes to use these code examples with other OpenGL ES versions.
 
-首先阅读前三章：[Checklist for Building OpenGL ES Apps for iOS](#Checklist for Building OpenGL ES Apps for iOS)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)， [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) 。这些章节概述了 OpenGL ES 如何集成到 iOS 中，以及在 iOS 设备上启动和运行首个 OpenGL ES 应用程序所需的所有详细信息。
+首先阅读前三章：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts)， [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) 。这些章节概述了 OpenGL ES 如何集成到 iOS 中，以及在 iOS 设备上启动和运行首个 OpenGL ES 应用程序所需的所有详细信息。
 
-如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations) 和 [Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
+如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations) 和 [Multitasking, High Resolution, and Other iOS Features](#multitasking,-high-resolution,-and-other-ios-features) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
 
-最后，阅读 [OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines)，[Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App) 以及以下章节，深入探讨如何设计高效的 OpenGL ES 应用程序。
+最后，阅读 [OpenGL ES Design Guidelines](#opengl-es-design-guidelines)，[Tuning Your OpenGL ES App](#tuning-your-opengl-es-app) 以及以下章节，深入探讨如何设计高效的 OpenGL ES 应用程序。
 
 除非另有说明，否则本书中的 OpenGL ES 代码示例将以 OpenGL ES 3.0 为目标。如果结合其他 OpenGL ES 版本来使用这些代码示例的话，你可能需要对代码进行一定的更改。
 
@@ -192,7 +192,7 @@ OpenGL ES 规范定义了一个平台无关的 API ，用于使用 GPU 硬件渲
 - OpenGL ES 1.1 仅提供基本的固定功能图形管道，主要用于向后兼容。
 您应该选择支持与你的应用最相关的功能和设备的 OpenGL ES 版本。要了解有关 iOS 设备的 OpenGL ES 功能的更多信息，阅读 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 。
 
-要为计划支持的 OpenGL ES 版本创建上下文，阅读 [Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts) 。要了解你选择的 OpenGL ES 版本如何与你可能在应用程序中使用的渲染算法相关，阅读 [OpenGL ES Versions and Renderer Architecture](#OpenGL ES Versions and Renderer Architecture) 。
+要为计划支持的 OpenGL ES 版本创建上下文，阅读 [Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts) 。要了解你选择的 OpenGL ES 版本如何与你可能在应用程序中使用的渲染算法相关，阅读 [OpenGL ES Versions and Renderer Architecture](#opengl-es-versions-and-renderer-architecture) 。
 
 ### Verifying OpenGL ES Capabilities
 
@@ -239,11 +239,11 @@ BOOL CheckForExtension(NSString *searchName)
 
 在 iOS 中，帧缓冲对象存储绘图命令的结果。（ iOS 不实现窗口系统提供的帧缓冲区。）可以通过多种方式使用帧缓冲区对象的内容：
 
-- GLKit 框架提供了一个视图，用于绘制 OpenGL ES 内容并管理自己的帧缓冲对象，以及一个支持动画 OpenGL ES 内容的视图控制器。使用这些类可以创建全屏视图或使 OpenGL ES 内容融入 UIKit 视图层次结构。要了解这些类，见 [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) 。
+- GLKit 框架提供了一个视图，用于绘制 OpenGL ES 内容并管理自己的帧缓冲对象，以及一个支持动画 OpenGL ES 内容的视图控制器。使用这些类可以创建全屏视图或使 OpenGL ES 内容融入 UIKit 视图层次结构。要了解这些类，见 [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) 。
 - [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类提供了一种将 OpenGL ES 内容作为 Core Animation layer 组件渲染的方式。使用此类时，必须创建自己的 framebuffer 对象。
 - 与任何 OpenGL ES 实现一样，你也可以使用 framebuffers 进行离屏图形处理或渲染到纹理，以便在图形管道中的其他位置使用。使用 OpenGL ES 3.0 ，可以在使用多个渲染目标的渲染算法中使用离屏缓冲区。
 
-要了解有关渲染到屏幕外缓冲区，纹理或核心动画层的信息，见 [Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations) 。
+要了解有关渲染到屏幕外缓冲区，纹理或核心动画层的信息，见 [Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations) 。
 
 ### Integrating with iOS
 
@@ -257,7 +257,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 许多 iOS 设备都包含高分辨率显示器，因此你的应用应支持多种显示尺寸和分辨率。
 
-要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features) 。
+要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](#multitasking,-high-resolution,-and-other-ios-features) 。
 
 ### Implementing a Rendering Engine
 
@@ -267,7 +267,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 设计 OpenGL ES 绘图代码有许多可能的策略，其全部细节超出了本文档的范围。渲染引擎设计的许多方面对于 OpenGL 和 OpenGL ES 的所有实现都是通用的。
 
-要了解对 iOS 设备很重要的设计注意事项，阅读 [OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines) 和 [Concurrency and OpenGL ES](#Concurrency and OpenGL ES) 。
+要了解对 iOS 设备很重要的设计注意事项，阅读 [OpenGL ES Design Guidelines](#opengl-es-design-guidelines) 和 [Concurrency and OpenGL ES](#concurrency-and-opengl-es) 。
 
 ### Debugging and Profiling
 
@@ -277,7 +277,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 Xcode 和 Instruments 提供了许多工具，用于跟踪渲染问题并分析应用程序中 OpenGL ES 的性能。
 
-要了解有关解决问题和提高 OpenGL ES 应用程序性能的更多信息，请阅读 [Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App) 。
+要了解有关解决问题和提高 OpenGL ES 应用程序性能的更多信息，请阅读 [Tuning Your OpenGL ES App](#tuning-your-opengl-es-app) 。
 
 ## Configuring OpenGL ES Contexts
 
@@ -337,7 +337,7 @@ OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。�
 
 要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 `nil` ，则初始化旧版本的上下文。清单 2-1 演示了如何执行此操作。
 
-清单 2-1 在同一个应用程序中支持 OpenGL ES 的多个版本
+<span id="Listing 2-1">清单 2-1</span> 在同一个应用程序中支持 OpenGL ES 的多个版本
 
 ```objc
 EAGLContext* CreateBestEAGLContext()
@@ -390,7 +390,7 @@ Sharegroups 在两种特定情况下最有用：
 - 当上下文之间共享的大多数资源保持不变时。
 - 当你希望应用程序能够在除渲染主线程之外的线程上创建新的 OpenGL ES 对象时。在这种情况下，第二个上下文在单独的线程上运行，专门用于获取数据和创建资源。加载资源后，第一个上下文可以立即绑定并使用该资源。[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类使用此模式提供异步纹理加载。
 
-  要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。清单 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW2) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
+  要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。清单 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](#Listing 2-1) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
 
 要点：与同一个 sharegroup 关联的所有上下文必须使用与初始上下文相同的 OpenGL ES API 版本。
 
