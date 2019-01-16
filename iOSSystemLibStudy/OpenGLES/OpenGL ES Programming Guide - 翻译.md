@@ -1,20 +1,20 @@
-#  OpenGL ES Programming Guide - OpenGL ES 编程指引
+#  OpenGL ES Programming Guide
 
-翻译自英文完整版 https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008793-CH1-SW1
+英文原文 https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008793-CH1-SW1
 
-## About OpenGL ES - OpenGL ES 概述
+## About OpenGL ES
 
-> The Open Graphics Library (OpenGL) is used for visualizing 2D and 3D data. It is a multipurpose open-standard graphics library that supports applications for 2D and 3D digital content creation, mechanical and architectural design, virtual prototyping, flight simulation, video games, and more. You use OpenGL to configure a 3D graphics pipeline and submit data to it. Vertices are transformed and lit, assembled into primitives, and rasterized to create a 2D image. OpenGL is designed to translate function calls into graphics commands that can be sent to underlying graphics hardware. Because this underlying hardware is dedicated to processing graphics commands, OpenGL drawing is typically very fast.
+> The *Open Graphics Library (OpenGL)* is used for visualizing 2D and 3D data. It is a multipurpose open-standard graphics library that supports applications for 2D and 3D digital content creation, mechanical and architectural design, virtual prototyping, flight simulation, video games, and more. You use OpenGL to configure a 3D graphics pipeline and submit data to it. Vertices are transformed and lit, assembled into primitives, and rasterized to create a 2D image. OpenGL is designed to translate function calls into graphics commands that can be sent to underlying graphics hardware. Because this underlying hardware is dedicated to processing graphics commands, OpenGL drawing is typically very fast.
 >
-> OpenGL for Embedded Systems (OpenGL ES) is a simplified version of OpenGL that eliminates redundant functionality to provide a library that is both easier to learn and easier to implement in mobile graphics hardware.
+> *OpenGL for Embedded Systems (OpenGL ES)* is a simplified version of OpenGL that eliminates redundant functionality to provide a library that is both easier to learn and easier to implement in mobile graphics hardware.
 
-Open Graphics Library (OpenGL) 用来可视化 2D 与 3D 数据。它是一个多用途的开放标准图形库，支持 2D 和 3D 数字内容创建、机械和建筑设计、虚拟原型设计、飞行模拟、视频游戏等应用。你可以使用 OpenGL 配置 3D 图形管线并向其提交数据。顶点数据经过变换组装成图元，经过光栅化创建出 2D 图像。OpenGL 旨在将函数调用转换为可以发送到底层图形硬件的图形命令。因为此底层硬件专用于处理图形命令，因此 OpenGL 绘制通常非常快。
+*Open Graphics Library (OpenGL)* 用来可视化 2D 与 3D 数据。它是一个多用途的开放标准图形库，支持 2D 和 3D 数字内容创建、机械和建筑设计、虚拟原型设计、飞行模拟、视频游戏等应用。你可以使用 OpenGL 配置 3D 图形管线并向其提交数据。顶点数据经过变换组装成图元，经过光栅化创建出 2D 图像。OpenGL 旨在将函数调用转换为可以发送到底层图形硬件的图形命令。因为此底层硬件专用于处理图形命令，因此 OpenGL 绘制通常非常快。
 
-OpenGL for Embedded Systems (OpenGL ES) 是 OpenGL 的简化版本，它消除了冗余功能，提供了一个既易于学习更易于在移动图形硬件上实现的库。
+*OpenGL for Embedded Systems (OpenGL ES)* 是 OpenGL 的简化版本，它消除了冗余功能，提供了一个既易于学习更易于在移动图形硬件上实现的库。
 
 ![architecture](../../resource/OpenGLES/Markdown/architecture.png)
 
-### At a Glance - 摘要
+### At a Glance
 
 > OpenGL ES allows an app to harness the power of the underlying graphics processor. The GPU on iOS devices can perform sophisticated 2D and 3D drawing, as well as complex shading calculations on every pixel in the final image. You should use OpenGL ES if the design requirements of your app call for the most direct and comprehensive access possible to GPU hardware. Typical clients for OpenGL ES include video games and simulations that present 3D graphics.
 >
@@ -36,13 +36,13 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 #### OpenGL ES Is a Platform-Neutral API Implemented in iOS
 
-> Because OpenGL ES is a C-based API, it is extremely portable and widely supported. As a C API, it integrates seamlessly with Objective-C Cocoa Touch apps. The OpenGL ES specification does not define a windowing layer; instead, the hosting operating system must provide functions to create an OpenGL ES rendering context, which accepts commands, and a framebuffer, where the results of any drawing commands are written to. Working with OpenGL ES on iOS requires using iOS classes to set up and present a drawing surface and using platform-neutral API to render its contents.
+> Because OpenGL ES is a C-based API, it is extremely portable and widely supported. As a C API, it integrates seamlessly with Objective-C Cocoa Touch apps. The OpenGL ES specification does not define a windowing layer; instead, the hosting operating system must provide functions to create an OpenGL ES *rendering context*, which accepts commands, and a *framebuffer*, where the results of any drawing commands are written to. Working with OpenGL ES on iOS requires using iOS classes to set up and present a drawing surface and using platform-neutral API to render its contents.
 >
 > Relevant Chapters: [Checklist for Building OpenGL ES Apps for iOS](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW1), [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)
 
-由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范没有定义窗口层；相反，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 framebuffer ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
+由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范没有定义窗口层；相反，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 *framebuffer* ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
 
-相关章节：[Checklist for Building OpenGL ES Apps for iOS](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW1)，[Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)
+相关章节：[Checklist for Building OpenGL ES Apps for iOS](#Checklist for Building OpenGL ES Apps for iOS)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)
 
 #### GLKit Provides a Drawing Surface and Animation Support
 
@@ -52,7 +52,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 由 UIKit 框架定义的视图和视图控制器控制 iOS 上可视内容的呈现。GLKit 框架提供这些类的 OpenGL ES 感知版本。在开发 OpenGL ES 应用程序时，可以使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象来呈现 OpenGL ES 内容。还可以使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 对象来管理视图并支持在其内容上做动画。
 
-相关章节：[Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1)
+相关章节：[Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit)
 
 #### iOS Supports Alternative Rendering Targets
 
@@ -62,7 +62,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 除了绘制内容以填充整个屏幕或视图层次结构的一部分之外，还可以将 OpenGL ES 帧缓冲区对象用于其他渲染策略。iOS 实现了标准的 OpenGL ES 帧缓冲对象，你可以将其用于渲染到离屏缓冲区或纹理以供 OpenGL ES 场景中的其他地方使用。 此外，iOS 上的 OpenGL ES 支持渲染到 Core Animation layer（ [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类），然后你可以将其与其他图层组合以构建应用程序的用户界面或其他可视化显示。
 
-相关章节：[Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1)
+相关章节：[Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations)
 
 #### Apps Require Additional Performance Tuning
 
@@ -80,7 +80,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 
 Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
-相关章节：[OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1)，[Best Practices for Working with Vertex Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW1)，[Best Practices for Working with Texture Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html#//apple_ref/doc/uid/TP40008793-CH104-SW1)，[Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3)，[Tuning Your OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW1)
+相关章节：[OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines)，[Best Practices for Working with Vertex Data](#Best Practices for Working with Vertex Data)，[Best Practices for Working with Texture Data](#Best Practices for Working with Texture Data)，[Best Practices for Shaders](#Best Practices for Shaders)，[Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App)
 
 #### OpenGL ES May Not Be Used in Background Apps
 
@@ -90,7 +90,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
 在后台运行的应用程序可能无法调用 OpenGL ES 函数。如果你的应用程序在后台运行时访问图形处理器，它将自动由 iOS 终止。为了避免这种情况，你的应用程序应该在移动到后台之前 flush 先前提交给 OpenGL ES 的任何待处理命令，并避免在将其移回前台之前调用 OpenGL ES 。
 
-相关章节：[Multitasking, High Resolution, and Other iOS Features](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW1)
+相关章节：[Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features)
 
 #### OpenGL ES Places Additional Restrictions on Multithreaded Apps
 
@@ -100,7 +100,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 
 利用并发性设计应用程序可以帮助提高应用程序的性能。如果你打算为 OpenGL ES 应用程序添加并发性，则必须确保它不会同时从两个不同的线程访问相同的上下文。
 
-相关章节：[Concurrency and OpenGL ES](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW2)
+相关章节：[Concurrency and OpenGL ES](#Concurrency and OpenGL ES)
 
 ### How to Use This Document
 
@@ -112,11 +112,11 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 >
 > Unless otherwise noted, OpenGL ES code examples in this book target OpenGL ES 3.0. You may need to make changes to use these code examples with other OpenGL ES versions.
 
-首先阅读前三章：[Checklist for Building OpenGL ES Apps for iOS](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW1)，[Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)， [Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1) 。这些章节概述了 OpenGL ES 如何集成到 iOS 中，以及在 iOS 设备上启动和运行首个 OpenGL ES 应用程序所需的所有详细信息。
+首先阅读前三章：[Checklist for Building OpenGL ES Apps for iOS](#Checklist for Building OpenGL ES Apps for iOS)，[Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts)， [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) 。这些章节概述了 OpenGL ES 如何集成到 iOS 中，以及在 iOS 设备上启动和运行首个 OpenGL ES 应用程序所需的所有详细信息。
 
-如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1) 和[Multitasking, High Resolution, and Other iOS Features](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW1) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
+如果你熟悉在 iOS 中使用 OpenGL ES 的基础知识，请阅读 [Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations) 和 [Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features) ，以获取重要的平台特定指南。熟悉在 5.0 之前的 iOS 版本中使用 OpenGL ES 的开发人员应该学习 [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) ，以获得有关简化 OpenGL ES 开发的新功能的详细信息。
 
-最后，阅读 [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1)，[Tuning Your OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW1) 以及以下章节，深入探讨如何设计高效的 OpenGL ES 应用程序。
+最后，阅读 [OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines)，[Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App) 以及以下章节，深入探讨如何设计高效的 OpenGL ES 应用程序。
 
 除非另有说明，否则本书中的 OpenGL ES 代码示例将以 OpenGL ES 3.0 为目标。如果结合其他 OpenGL ES 版本来使用这些代码示例的话，你可能需要对代码进行一定的更改。
 
@@ -192,21 +192,21 @@ OpenGL ES 规范定义了一个平台无关的 API ，用于使用 GPU 硬件渲
 - OpenGL ES 1.1 仅提供基本的固定功能图形管道，主要用于向后兼容。
 您应该选择支持与你的应用最相关的功能和设备的 OpenGL ES 版本。要了解有关 iOS 设备的 OpenGL ES 功能的更多信息，阅读 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 。
 
-要为计划支持的 OpenGL ES 版本创建上下文，阅读 [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1) 。要了解你选择的 OpenGL ES 版本如何与你可能在应用程序中使用的渲染算法相关，阅读 [OpenGL ES Versions and Renderer Architecture](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW2) 。
+要为计划支持的 OpenGL ES 版本创建上下文，阅读 [Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts) 。要了解你选择的 OpenGL ES 版本如何与你可能在应用程序中使用的渲染算法相关，阅读 [OpenGL ES Versions and Renderer Architecture](#OpenGL ES Versions and Renderer Architecture) 。
 
 ### Verifying OpenGL ES Capabilities
 
 > The [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) summarizes the capabilities and extensions available on shipping iOS devices. However, to allow your app to run on as many devices and iOS versions as possible, your app should always query the OpenGL ES implementation for its capabilities at runtime.
 >
-> To determine implementation specific limits such as the maximum texture size or maximum number of vertex attributes, look up the value for the corresponding token (such as MAX_TEXTURE_SIZE or MAX_VERTEX_ATTRIBS, as found in the gl.h header) using the appropriate glGet function for its data type.
+> To determine implementation specific limits such as the maximum texture size or maximum number of vertex attributes, look up the value for the corresponding token (such as `MAX_TEXTURE_SIZE` or `MAX_VERTEX_ATTRIBS`, as found in the `gl.h` header) using the appropriate `glGet` function for its data type.
 >
-> To check for OpenGL ES 3.0 extensions, use the glGetIntegerv and glGetStringi functions as in the following code example:
+> To check for OpenGL ES 3.0 extensions, use the `glGetIntegerv` and `glGetStringi` functions as in the following code example:
 
 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 总结了 iOS 设备上可用的功能和扩展。但是，要允许你的应用程序在尽可能多的设备和 iOS 版本上运行，你的应用程序应始终在运行时查询 OpenGL ES 实现的功能。
 
-要确定特定于实现的限制（例如最大纹理大小或顶点属性的最大数量），使用与其数据类型适合的 glGet 函数查询相应 token （例如，在 gl.h 头文件中声明的 MAX_TEXTURE_SIZE 或 MAX_VERTEX_ATTRIBS ）的值。
+要确定特定于实现的限制（例如最大纹理大小或顶点属性的最大数量），使用与其数据类型适合的 `glGet` 函数查询相应 token （例如，在 `gl.h` 头文件中声明的 `MAX_TEXTURE_SIZE` 或 `MAX_VERTEX_ATTRIBS` ）的值。
 
-要检查 OpenGL ES 3.0 扩展，使用 glGetIntegerv 和 glGetStringi 函数，如以下代码示例所示：
+要检查 OpenGL ES 3.0 扩展，使用 `glGetIntegerv` 和 `glGetStringi` 函数，如以下代码示例所示：
 
 ```objc
 BOOL CheckForExtension(NSString *searchName)
@@ -223,9 +223,9 @@ BOOL CheckForExtension(NSString *searchName)
 }
 ```
 
-> To check for OpenGL ES 1.1 and 2.0 extensions, call glGetString(GL_EXTENSIONS) to get a space-delimited list of all extension names.
+> To check for OpenGL ES 1.1 and 2.0 extensions, call `glGetString(GL_EXTENSIONS)` to get a space-delimited list of all extension names.
 
-要检查 OpenGL ES 1.1 和 2.0 扩展，调用 glGetString（GL_EXTENSIONS）以获取所有扩展名的以空格分隔的列表。
+要检查 OpenGL ES 1.1 和 2.0 扩展，调用 `glGetString(GL_EXTENSIONS)` 以获取所有扩展名的以空格分隔的列表。
 
 ### Choosing a Rendering Destination
 
@@ -239,11 +239,11 @@ BOOL CheckForExtension(NSString *searchName)
 
 在 iOS 中，帧缓冲对象存储绘图命令的结果。（ iOS 不实现窗口系统提供的帧缓冲区。）可以通过多种方式使用帧缓冲区对象的内容：
 
-- GLKit 框架提供了一个视图，用于绘制 OpenGL ES 内容并管理自己的帧缓冲对象，以及一个支持动画 OpenGL ES 内容的视图控制器。使用这些类可以创建全屏视图或使 OpenGL ES 内容融入 UIKit 视图层次结构。要了解这些类，见 [Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1) 。
+- GLKit 框架提供了一个视图，用于绘制 OpenGL ES 内容并管理自己的帧缓冲对象，以及一个支持动画 OpenGL ES 内容的视图控制器。使用这些类可以创建全屏视图或使 OpenGL ES 内容融入 UIKit 视图层次结构。要了解这些类，见 [Drawing with OpenGL ES and GLKit](#Drawing with OpenGL ES and GLKit) 。
 - [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类提供了一种将 OpenGL ES 内容作为 Core Animation layer 组件渲染的方式。使用此类时，必须创建自己的 framebuffer 对象。
 - 与任何 OpenGL ES 实现一样，你也可以使用 framebuffers 进行离屏图形处理或渲染到纹理，以便在图形管道中的其他位置使用。使用 OpenGL ES 3.0 ，可以在使用多个渲染目标的渲染算法中使用离屏缓冲区。
 
-要了解有关渲染到屏幕外缓冲区，纹理或核心动画层的信息，见 [Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1) 。
+要了解有关渲染到屏幕外缓冲区，纹理或核心动画层的信息，见 [Drawing to Other Rendering Destinations](#Drawing to Other Rendering Destinations) 。
 
 ### Integrating with iOS
 
@@ -257,7 +257,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 许多 iOS 设备都包含高分辨率显示器，因此你的应用应支持多种显示尺寸和分辨率。
 
-要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW1) 。
+要了解有关支持这些和其他 iOS 功能的信息，见 [Multitasking, High Resolution, and Other iOS Features](#Multitasking, High Resolution, and Other iOS Features) 。
 
 ### Implementing a Rendering Engine
 
@@ -267,9 +267,9 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 设计 OpenGL ES 绘图代码有许多可能的策略，其全部细节超出了本文档的范围。渲染引擎设计的许多方面对于 OpenGL 和 OpenGL ES 的所有实现都是通用的。
 
-要了解对 iOS 设备很重要的设计注意事项，阅读 [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) 和 [Concurrency and OpenGL ES](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW2) 。
+要了解对 iOS 设备很重要的设计注意事项，阅读 [OpenGL ES Design Guidelines](#OpenGL ES Design Guidelines) 和 [Concurrency and OpenGL ES](#Concurrency and OpenGL ES) 。
 
-## Debugging and Profiling
+### Debugging and Profiling
 
 > Xcode and Instruments provide a number of tools for tracking down rendering problems and analyzing OpenGL ES performance in your app.
 >
@@ -277,7 +277,7 @@ iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中�
 
 Xcode 和 Instruments 提供了许多工具，用于跟踪渲染问题并分析应用程序中 OpenGL ES 的性能。
 
-要了解有关解决问题和提高 OpenGL ES 应用程序性能的更多信息，请阅读 [Tuning Your OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW1) 。
+要了解有关解决问题和提高 OpenGL ES 应用程序性能的更多信息，请阅读 [Tuning Your OpenGL ES App](#Tuning Your OpenGL ES App) 。
 
 ## Configuring OpenGL ES Contexts
 
@@ -291,51 +291,51 @@ OpenGL ES 的每个实现都提供了一种创建渲染上下文的方法来管�
 
 ### EAGL Is the iOS Implementation of an OpenGL ES Rendering Context
 
-> Before your app can call any OpenGL ES functions, it must initialize an [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object. The EAGLContext class also provides methods used to integrate OpenGL ES content with Core Animation.
+> Before your app can call any OpenGL ES functions, it must initialize an [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object. The `EAGLContext` class also provides methods used to integrate OpenGL ES content with Core Animation.
 
-在你的应用程序可以调用任何 OpenGL ES 函数之前，必须初始化一个 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象。EAGLContext 类还提供了用于将 OpenGL ES 内容与 Core Animation 集成的方法。
+在你的应用程序可以调用任何 OpenGL ES 函数之前，必须初始化一个 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象。`EAGLContext` 类还提供了用于将 OpenGL ES 内容与 Core Animation 集成的方法。
 
 ### The Current Context Is the Target for OpenGL ES Function Calls
 
 > Every thread in an iOS app has a current context; when you call an OpenGL ES function, this is the context whose state is changed by the call.
 >
-> To set a thread’s current context, call the EAGLContext class method [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) when executing on that thread.
+> To set a thread’s current context, call the `EAGLContext` class method [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) when executing on that thread.
 
 iOS 应用中的每个线程都有一个当前上下文；当你调用 OpenGL ES 函数时，对应上下文的状态被该调用所改变。
 
-要设置线程的当前上下文，在该线程上调用 EAGLContext 类的方法 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 。
+要设置线程的当前上下文，在该线程上调用 `EAGLContext` 类的方法 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 。
 
 ```objc
 [EAGLContext setCurrentContext: myContext];
 ```
 
-> Call the EAGLContext class method [currentContext](https://developer.apple.com/documentation/opengles/eaglcontext/1624880-currentcontext) to retrieve a thread’s current context.
+> Call the `EAGLContext` class method [currentContext](https://developer.apple.com/documentation/opengles/eaglcontext/1624880-currentcontext) to retrieve a thread’s current context.
 >
-> Note: If your app actively switches between two or more contexts on the same thread, call the glFlush function before setting a new context as the current context. This ensures that previously submitted commands are delivered to the graphics hardware in a timely fashion.
+> Note: If your app actively switches between two or more contexts on the same thread, call the `glFlush` function before setting a new context as the current context. This ensures that previously submitted commands are delivered to the graphics hardware in a timely fashion.
 >
-> OpenGL ES holds a strong reference to the EAGLContext object corresponding to the current context. (If you are using manual reference counting, OpenGL ES retains this object.) When you call the [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) method to change the current context, OpenGL ES no longer references the previous context. (If you are using manual reference counting, OpenGL ES releases the EAGLContext object.) To prevent EAGLContext objects from being deallocated when not the current context, your app must keep strong references to (or retain) these objects.
+> OpenGL ES holds a strong reference to the `EAGLContext` object corresponding to the current context. (If you are using manual reference counting, OpenGL ES retains this object.) When you call the [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) method to change the current context, OpenGL ES no longer references the previous context. (If you are using manual reference counting, OpenGL ES releases the `EAGLContext` object.) To prevent `EAGLContext` objects from being deallocated when not the current context, your app must keep strong references to (or retain) these objects.
 
-调用 EAGLContext 类方法 [currentContext](https://developer.apple.com/documentation/opengles/eaglcontext/1624880-currentcontext) 来检索线程的当前上下文。
+调用 `EAGLContext` 类方法 [currentContext](https://developer.apple.com/documentation/opengles/eaglcontext/1624880-currentcontext) 来检索线程的当前上下文。
 
-注意：如果你的应用程序在同一个线程上经常在两个或多个上下文之间进行切换，在将新上下文设置为当前上下文之前调用 glFlush 函数。这确保了先前提交的命令以及时的方式传递到图形硬件。
+注意：如果你的应用程序在同一个线程上经常在两个或多个上下文之间进行切换，在将新上下文设置为当前上下文之前调用 `glFlush` 函数。这确保了先前提交的命令以及时的方式传递到图形硬件。
 
-OpenGL ES 拥有与当前上下文对应的 EAGLContext 对象的强引用。（如果使用手动引用计数，OpenGL ES 会保留此对象。）当调用 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 方法来更改当前的上下文，OpenGL ES 不再引用先前的上下文。（如果使用手动引用计数，OpenGL ES 将释放 EAGLContext 对象。）为防止 EAGLContext 对象在不是当前上下文时被释放，你的应用必须保留对这些对象的强引用（或保留）。
+OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。（如果使用手动引用计数，OpenGL ES 会保留此对象。）当调用 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 方法来更改当前的上下文，OpenGL ES 不再引用先前的上下文。（如果使用手动引用计数，OpenGL ES 将释放 `EAGLContext` 对象。）为防止 `EAGLContext` 对象在不是当前上下文时被释放，你的应用必须保留对这些对象的强引用（或保留）。
 
 ### Every Context Targets a Specific Version of OpenGL ES
 
 > An [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object supports only one version of OpenGL ES. For example, code written for OpenGL ES 1.1 is not compatible with an OpenGL ES 2.0 or 3.0 context. Code using core OpenGL ES 2.0 features is compatible with a OpenGL ES 3.0 context, and code designed for OpenGL ES 2.0 extensions can often be used in an OpenGL ES 3.0 context with minor changes. Many new OpenGL ES 3.0 features and increased hardware capabilities require an OpenGL ES 3.0 context.
 >
-> Your app decides which version of OpenGL ES to support when it creates and initializes the [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object. If the device does not support the requested version of OpenGL ES, the [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) method returns nil. Your app must test to ensure that a context was initialized successfully before using it.
+> Your app decides which version of OpenGL ES to support when it creates and initializes the [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object. If the device does not support the requested version of OpenGL ES, the [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) method returns `nil`. Your app must test to ensure that a context was initialized successfully before using it.
 >
-> To support multiple versions of OpenGL ES as rendering options in your app, you should first attempt to initialize a rendering context of the newest version you want to target. If the returned object is nil, initialize a context of an older version instead. Listing 2-1 demonstrates how to do this.
+> To support multiple versions of OpenGL ES as rendering options in your app, you should first attempt to initialize a rendering context of the newest version you want to target. If the returned object is `nil`, initialize a context of an older version instead. Listing 2-1 demonstrates how to do this.
 >
 > Listing 2-1  Supporting multiple versions of OpenGL ES in the same app
 
- 一个 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象仅支持一个版本的 OpenGL ES 。例如，为 OpenGL ES 1.1 编写的代码与 OpenGL ES 2.0 或 3.0 上下文不兼容。使用核心 OpenGL ES 2.0 功能的代码与 OpenGL ES 3.0 上下文兼容，为 OpenGL ES 2.0 扩展而设计的代码通常可以在 OpenGL ES 3.0 上下文中使用，只需稍作修改即可。许多新的 OpenGL ES 3.0 功能和增强的硬件功能需要 OpenGL ES 3.0 上下文。
+一个 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象仅支持一个版本的 OpenGL ES 。例如，为 OpenGL ES 1.1 编写的代码与 OpenGL ES 2.0 或 3.0 上下文不兼容。使用核心 OpenGL ES 2.0 功能的代码与 OpenGL ES 3.0 上下文兼容，为 OpenGL ES 2.0 扩展而设计的代码通常可以在 OpenGL ES 3.0 上下文中使用，只需稍作修改即可。许多新的 OpenGL ES 3.0 功能和增强的硬件功能需要 OpenGL ES 3.0 上下文。
 
-你的应用在创建和初始化 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象时决定支持哪个版本的 OpenGL ES 。如果设备不支持所请求的 OpenGL ES 版本，则 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 方法返回 nil 。你的应用必须对返回值进行测试，以确保在使用之前上下文被成功初始化。
+你的应用在创建和初始化 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象时决定支持哪个版本的 OpenGL ES 。如果设备不支持所请求的 OpenGL ES 版本，则 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 方法返回 `nil` 。你的应用必须对返回值进行测试，以确保在使用之前上下文被成功初始化。
 
-要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 nil ，则初始化旧版本的上下文。清单 2-1 演示了如何执行此操作。
+要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 `nil` ，则初始化旧版本的上下文。清单 2-1 演示了如何执行此操作。
 
 清单 2-1 在同一个应用程序中支持 OpenGL ES 的多个版本
 
@@ -390,7 +390,7 @@ Sharegroups 在两种特定情况下最有用：
 - 当上下文之间共享的大多数资源保持不变时。
 - 当你希望应用程序能够在除渲染主线程之外的线程上创建新的 OpenGL ES 对象时。在这种情况下，第二个上下文在单独的线程上运行，专门用于获取数据和创建资源。加载资源后，第一个上下文可以立即绑定并使用该资源。[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类使用此模式提供异步纹理加载。
 
-要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。清单 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW2) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
+  要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。清单 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW2) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
 
 要点：与同一个 sharegroup 关联的所有上下文必须使用与初始上下文相同的 OpenGL ES API 版本。
 
@@ -409,9 +409,9 @@ EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API]
 >
 > Here are the steps your app should follow to update an OpenGL ES object:
 >
-> 1. Call glFlush on every context that may be using the object.
+> 1. Call `glFlush` on every context that may be using the object.
 > 2. On the context that wants to modify the object, call one or more OpenGL ES functions to change the object.
-> 3. Call glFlush on the context that received the state-modifying commands.
+> 3. Call `glFlush` on the context that received the state-modifying commands.
 > 4. On every other context, rebind the object identifier.
 >
 > Note: Another way to share objects is to use a single rendering context, but multiple destination framebuffers. At rendering time, your app binds the appropriate framebuffer and renders its frames as needed. Because all of the OpenGL ES objects are referenced from a single context, they see the same OpenGL ES data. This pattern uses less resources, but is only useful for single-threaded apps where you can carefully control the state of the context.
@@ -424,9 +424,9 @@ EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API]
 
 以下是应用程序更新 OpenGL ES 对象时应遵循的步骤：
 
-1. 在可能正在使用该对象的每个上下文上调用 glFlush 。
+1. 在可能正在使用该对象的每个上下文上调用 `glFlush` 。
 2. 在要修改对象的上下文中，调用一个或多个 OpenGL ES 函数来更改对象。
-3. 在接收状态修改命令的上下文中调用 glFlush 。
+3. 在接收状态修改命令的上下文中调用 `glFlush` 。
 4. 在每个其他上下文中，重新绑定对象标识符。
 
 注意：共享对象的另一种方法是使用单个渲染上下文，但使用多个目标帧缓冲区。在渲染时，应用程序绑定相应的帧缓冲区并根据需要渲染其帧。由于单个上下文引用所有的 OpenGL ES 对象，所以它们使用相同的 OpenGL ES 数据。此模式使用较少的资源，但仅适用于可以仔细控制上下文状态的单线程应用程序。
@@ -439,13 +439,13 @@ GLKit 框架提供视图和视图控制器类，消除了绘制和动画 OpenGL 
 
 ### A GLKit View Draws OpenGL ES Content on Demand
 
-> The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class provides an OpenGL ES–based equivalent of the standard UIView drawing cycle. A [UIView](https://developer.apple.com/documentation/uikit/uiview) instance automatically configures its graphics context so that your [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) implementation need only perform Quartz 2D drawing commands, and a [GLKView](https://developer.apple.com/documentation/glkit/glkview) instance automatically configures itself so that your drawing method need only perform OpenGL ES drawing commands. The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class provides this functionality by maintaining a framebuffer object that holds the results of your OpenGL ES drawing commands, and then automatically presents them to Core Animation once your drawing method returns.
+> The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class provides an OpenGL ES–based equivalent of the standard `UIView` drawing cycle. A [UIView](https://developer.apple.com/documentation/uikit/uiview) instance automatically configures its graphics context so that your [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) implementation need only perform Quartz 2D drawing commands, and a [GLKView](https://developer.apple.com/documentation/glkit/glkview) instance automatically configures itself so that your drawing method need only perform OpenGL ES drawing commands. The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class provides this functionality by maintaining a framebuffer object that holds the results of your OpenGL ES drawing commands, and then automatically presents them to Core Animation once your drawing method returns.
 >
 > Like a standard UIKit view, a GLKit view renders its content on demand. When your view is first displayed, it calls your drawing method—Core Animation caches the rendered output and displays it whenever your view is shown. When you want to change the contents of your view, call its [setNeedsDisplay](https://developer.apple.com/documentation/uikit/uiview/1622437-setneedsdisplay) method and the view again calls your drawing method, caches the resulting image, and presents it on screen. This approach is useful when the data used to render an image changes infrequently or only in response to user action. By rendering new view contents only when you need to, you conserve battery power on the device and leave more time for the device to perform other actions.
 >
 > Figure 3-1  Rendering OpenGL ES content with a GLKit view
 
-[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类提供了基于 OpenGL ES 的标准 UIView 绘图周期。 [UIView](https://developer.apple.com/documentation/uikit/uiview) 实例自动配置其图形上下文，以便 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 实现只需要执行 Quartz 2D 绘图命令，同时 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例自动配置自身，以便你的绘图方法只需要执行 OpenGL ES 绘图命令。[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类通过维护一个保存 OpenGL ES 绘图命令结果的 framebuffer 对象来提供此功能，然后在绘制方法返回后自动将它们呈现给 Core Animation 。
+[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类提供了基于 OpenGL ES 的标准 `UIView` 绘图周期。 [UIView](https://developer.apple.com/documentation/uikit/uiview) 实例自动配置其图形上下文，以便 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 实现只需要执行 Quartz 2D 绘图命令，同时 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例自动配置自身，以便你的绘图方法只需要执行 OpenGL ES 绘图命令。[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类通过维护一个保存 OpenGL ES 绘图命令结果的 framebuffer 对象来提供此功能，然后在绘制方法返回后自动将它们呈现给 Core Animation 。
 
 与标准的 UIKit 视图一样，GLKit 视图按需呈现其内容。首次显示视图时，它会调用绘图方法 -  Core Animation 会缓存渲染的输出，并在显示视图时显示它。如果要更改视图的内容，调用其 [setNeedsDisplay](https://developer.apple.com/documentation/uikit/uiview/1622437-setneedsdisplay) 方法，然后视图再次调用绘图方法，缓存生成的图像，并将其显示在屏幕上。当用于渲染图像的数据不经常更改或仅响应用户操作时，此方法很有用。通过仅在需要时渲染新视图内容，可以节省设备上的电池电量并为设备留出更多时间来执行其他操作。
 
@@ -455,7 +455,7 @@ GLKit 框架提供视图和视图控制器类，消除了绘制和动画 OpenGL 
 
 #### Creating and Configuring a GLKit View
 
-> You can create and configure a GLKView object either programmatically or using Interface Builder. Before you can use it for drawing, you must associate it with an [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object (see [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)).
+> You can create and configure a `GLKView` object either programmatically or using Interface Builder. Before you can use it for drawing, you must associate it with an [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object (see [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)).
 >
 > - When creating a view programmatically, first create a context and then pass it to the view’s [initWithFrame:context:](https://developer.apple.com/documentation/glkit/glkview/1615609-initwithframe) method.
 > - After loading a view from a storyboard, create a context and set it as the value of the view’s [context](https://developer.apple.com/documentation/glkit/glkview/1615597-context) property.
@@ -464,7 +464,7 @@ GLKit 框架提供视图和视图控制器类，消除了绘制和动画 OpenGL 
 >
 > Listing 3-1  Configuring a GLKit view
 
-你可以通过编程方式或使用 Interface Builder 创建和配置 GLKView 对象。在将其用于绘图之前，必须将其与 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象关联（见 [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1) ）。
+你可以通过编程方式或使用 Interface Builder 创建和配置 `GLKView` 对象。在将其用于绘图之前，必须将其与 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象关联（见 [Configuring OpenGL ES Contexts](#Configuring OpenGL ES Contexts) ）。
 
 - 以编程方式创建视图时，首先创建一个上下文，然后将其传递给视图的 [initWithFrame:context:](https://developer.apple.com/documentation/glkit/glkview/1615609-initwithframe) 方法。
 - 从 storyboard 加载视图后，创建上下文并将其设置为视图的 [context](https://developer.apple.com/documentation/glkit/glkview/1615597-context) 属性的值。
@@ -494,7 +494,7 @@ GLKit 视图自动创建和配置自己的 OpenGL ES 帧缓冲对象和渲染缓
 
 > You can enable multisampling for a [GLKView](https://developer.apple.com/documentation/glkit/glkview) instance using its [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) property. Multisampling is a form of antialiasing that smooths jagged edges, improving image quality in most 3D apps at the cost of using more memory and fragment processing time—if you enable multisampling, always test your app’s performance to ensure that it remains acceptable.
 
-你可以使用其[drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) 属性为 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例启用多重采样。多重采样是一种抗锯齿形式，可以平滑锯齿状边缘，提高大多数 3D 应用程序的图像质量，但代价是使用更多内存和片段处理时间 - 如果启用多重采样，应该始终测试应用程序的性能以确保性能处于可接受的状态。
+你可以使用其 [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) 属性为 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例启用多重采样。多重采样是一种抗锯齿形式，可以平滑锯齿状边缘，提高大多数 3D 应用程序的图像质量，但代价是使用更多内存和片段处理时间 - 如果启用多重采样，应该始终测试应用程序的性能以确保性能处于可接受的状态。
 
 #### Drawing With a GLKit View
 
@@ -964,7 +964,7 @@ displayLink = [myView.window.screen displayLinkWithTarget:self selector:@selecto
 
 ![iOSOpenGLRenderingSteps](../../resource/OpenGLES/Markdown/iOSOpenGLRenderingSteps.png)
 
-#### Clear Buffers
+##### Clear Buffers
 
 > At the start of every frame, erase the contents of all framebuffer attachments whose contents from a previous frames are not needed to draw the next frame. Call the glClear function, passing in a bit mask with all of the buffers to clear, as shown in Listing 4-2.
 >
@@ -983,7 +983,7 @@ glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 使用 glClear “提示” OpenGL ES 可以丢弃渲染缓冲区或纹理的现有内容，避免了将先前内容加载到内存中的操作开销。
 
-#### Prepare Resources and Execute Drawing Commands
+##### Prepare Resources and Execute Drawing Commands
 
 > These two steps encompass most of the key decisions you make in designing your app’s architecture. First, you decide what you want to display to the user and configure the corresponding OpenGL ES objects—such as vertex buffer objects, textures, shader programs and their input variables—for uploading to the GPU. Next, you submit drawing commants that tell the GPU how to use those resources for rendering a frame.
 >
@@ -993,19 +993,19 @@ glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) 中详细介绍了渲染器设计。目前，要注意的最重要的性能优化是，如果仅在渲染新帧的开始时修改 OpenGL ES 对象，则应用程序运行得更快。虽然你的应用程序可以在修改对象和提交绘图命令之间切换（如 [Figure 4-3](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW12)) 中的虚线所示），但如果每帧仅执行每个步骤一次，则运行速度会更快。
 
-#### Execute Drawing Commands
+##### Execute Drawing Commands
 
 > This step takes the objects you prepared in the previous step and submits drawing commands to use them. Designing this portion of your rendering code to run efficiently is covered in detail in [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1). For now, the most important performance optimization to note is that your app runs faster if it only modifies OpenGL ES objects at the start of rendering a new frame. Although your app can alternate between modifying objects and submitting drawing commands (as shown by the dotted line), it runs faster if it only performs each step once.
 
 此步骤使用上一步中准备的对象，并提交绘图命令以使用它们。[OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1) 详细介绍了如何设计渲染代码以便高效运行。目前，要注意的最重要的性能优化是，如果只在渲染新帧的开始时修改 OpenGL ES 对象，则应用程序运行得更快。虽然你的应用程序可以在修改对象和提交绘图命令之间交替（如虚线所示），但如果每个步骤只执行一次，它运行得更快。
 
-#### Resolve Multisampling
+##### Resolve Multisampling
 
 > If your app uses multisampling to improve image quality, your app must resolve the pixels before they are presented to the user. Multisampling is covered in detail in [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4).
 
 如果你的应用使用多重采样来提高图像质量，那么应用必须在将像素呈现给用户之前解析像素。[Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4) 中详细介绍了多重采样。
 
-#### Discard Unneeded Renderbuffers
+##### Discard Unneeded Renderbuffers
 
 > A discard operation is a performance hint that tells OpenGL ES that the contents of one or more renderbuffers are no longer needed. By hinting to OpenGL ES that you do not need the contents of a renderbuffer, the data in the buffers can be discarded and expensive tasks to keep the contents of those buffers updated can be avoided.
 >
@@ -1029,7 +1029,7 @@ glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
 
 注意：glDiscardFramebufferEXT 函数由 OpenGL ES 1.1 和 2.0 的 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供。在 OpenGL ES 3.0 上下文中，请使用 glInvalidateFramebuffer 函数。
 
-#### Present the Results to Core Animation
+##### Present the Results to Core Animation
 
 > At this step, the color renderbuffer holds the completed frame, so all you need to do is present it to the user. Listing 4-4 binds the renderbuffer to the context and presents it. This causes the completed frame to be handed to Core Animation.
 >
@@ -1366,7 +1366,7 @@ OpenGL ES 3.0 是 iOS 7 中的新功能。你的应用程序可以使用 OpenGL 
 
 下面重点介绍 OpenGL ES 3.0 的一些主要功能。有关完整概述，请参阅 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 中的 OpenGL ES 3.0 规范。
 
-#### OpenGL ES Shading Language Version 3.0
+##### OpenGL ES Shading Language Version 3.0
 
 > GLSL ES 3.0 adds new features such as uniform blocks, 32-bit integers, and additional integer operations, for performing more general-purpose computing tasks within vertex and fragment shader programs. To use the new language in a shader program, your shader source code must begin with the #version 330 es directive. OpenGL ES 3.0 contexts remain compatible with shaders written for OpenGL ES 2.0.
 >
@@ -1376,7 +1376,7 @@ GLSL ES 3.0 增加了新功能，如统一块，32 位整数和其他整数运�
 
 有关更多详细信息，请参阅 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 中 [Adopting OpenGL ES Shading Language version 3.0](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/AdoptingOpenGLES3/AdoptingOpenGLES3.html#//apple_ref/doc/uid/TP40008793-CH504-SW18) 和 OpenGL ES 着色语言 3.0 规范。
 
-#### Multiple Render Targets
+##### Multiple Render Targets
 
 > By enabling multiple render targets, you can create fragment shaders that write to multiple framebuffer attachments simultaneously.
 >
@@ -1440,7 +1440,7 @@ void main()
 
 多个渲染目标对于其他高级图形技术也很有用，例如实时反射，屏幕空间环境遮挡和体积照明。
 
-#### Transform Feedback
+##### Transform Feedback
 
 > Graphics hardware uses a highly parallelized architecture optimized for vector processing. You can make better use of this hardware with the new transform feedback feature, which lets you capture output from a vertex shader into a buffer object in GPU memory. You can capture data from one rendering pass to use in another, or disable parts of the graphics pipeline and use transform feedback for general-purpose computation.
 >
@@ -1610,7 +1610,7 @@ OpenGL ES 规范不要求实现立即执行命令。通常，命令排队到命�
 - 当应用程序移动到后台时，应该刷新命令缓冲区，因为当应用程序处于后台时在 GPU 上执行 OpenGL ES 命令会导致 iOS 终止你的应用程序。（见 [Implementing a Multitasking-Aware OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW5) 。）
 - 如果你的应用程序在多个上下文之间共享 OpenGL ES 对象（例如顶点缓冲区或纹理），则应调用 glFlush 函数来同步对这些资源的访问。例如，你应该在一个上下文中加载顶点数据后调用 glFlush 函数，以确保其内容已准备好被另一个上下文检索。当与其他 iOS API（如 Core Image ）共享 OpenGL ES 对象时，此建议也适用。
 
-### Avoid Querying OpenGL ES State
+#### Avoid Querying OpenGL ES State
 
 > Calls to glGet*(), including glGetError(), may require OpenGL ES to execute previous commands before retrieving any state variables. This synchronization forces the graphics hardware to run lockstep with the CPU, reducing opportunities for parallelism. To avoid this, maintain your own copy of any state you need to query, and access it directly, rather than calling OpenGL ES.
 >
@@ -1670,13 +1670,13 @@ OpenGL ES 实现维护一组复杂的状态数据，包括使用 glEnable 或 gl
 
 通过使用专用的设置或关闭例程而不是将这些调用放在绘图循环中，避免设置超过必要的状态。设置和关闭例程对于打开和关闭实现特定视觉效果的特征也很有用 - 例如，在纹理多边形周围绘制线框轮廓时。
 
-### Encapsulate State with OpenGL ES Objects
+#### Encapsulate State with OpenGL ES Objects
 
 > To reduce state changes, create objects that collect multiple OpenGL ES state changes into an object that can be bound with a single function call. For example, vertex array objects store the configuration of multiple vertex attributes into a single object. See [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14).
 
 要减少状态更改，创建将多个 OpenGL ES 状态更改收集到单个对象中的对象，这样的对象可以使用单个函数调用完成绑定。例如，顶点数组对象存储多个顶点属性的配置到单个对象中。见 [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14) 。
 
-### Organize Draw Calls to Minimize State Changes
+#### Organize Draw Calls to Minimize State Changes
 
 > Changing OpenGL ES state has no immediate effect. Instead, when you issue a drawing command, OpenGL ES performs the work necessary to draw with a set of state values. You can reduce the CPU time spent reconfiguring the graphics pipeline by minimizing state changes. For example, keep a state vector in your app, and set the corresponding OpenGL ES state only if your state changes between draw calls. Another useful algorithm is state sorting—keep track of the drawing operations you need to do and the amount of state change necessary for each, then sort them to perform operations using the same state consecutively.
 >
@@ -1743,42 +1743,42 @@ iOS 中 OpenGL ES 应用程序的性能与 OS X 或其他桌面操作系统中�
 通过将 OpenGL ES 命令组织到逻辑组中并向 OpenGL ES 对象添加有意义的标签，可以更有效地进行调试和分析。这些组和标签会出现在 Xcode 中的 OpenGL ES Frame Debugger 中，如图 7-1 所示，以及 Instruments 中的 OpenGL ES Analyzer 。要添加组和标签，请使用 [EXT_debug_marker](http://www.khronos.org/registry/gles/extensions/EXT/EXT_debug_marker.txt) 和 [EXT_debug_label](http://www.khronos.org/registry/gles/extensions/EXT/EXT_debug_label.txt) 扩展。
 
 图 7-1 添加调试标记组之前和之后的 Xcode Frame Debugger
- 
- ![XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups](../../resource/OpenGLES/Markdown/XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups.png)
- 
- > When you have a sequence of drawing commands that represent a single meaningful operation—for example, drawing a game character—you can use a marker to group them for debugging. Listing 7-1 shows how to group the texture, program, vertex array, and draw calls for a single element of a scene. First, it calls the glPushGroupMarkerEXT function to provide a meaningful name, then it issues a group of OpenGL ES commands. Finally, it closes the group with a call to the glPopGroupMarkerEXT function.
- >
- > Listing 7-1  Using a debug marker to annotate drawing commands
- 
- 对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。清单 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 glPushGroupMarkerEXT 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 glPopGroupMarkerEXT 函数来关闭组。
- 
- 清单 7-1 使用调试标记来注释绘图命令
- 
- ```objc
- glPushGroupMarkerEXT(0, "Draw Spaceship");
- glBindTexture(GL_TEXTURE_2D, _spaceshipTexture);
- glUseProgram(_diffuseShading);
- glBindVertexArrayOES(_spaceshipMesh);
- glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT, 0);
- glPopGroupMarkerEXT();
- ```
- 
- > You can use multiple nested markers to create a hierarchy of meaningful groups in a complex scene. When you use the [GLKView](https://developer.apple.com/documentation/glkit/glkview) class to draw OpenGL ES content, it automatically creates a “Rendering” group containing all commands in your drawing method. Any markers you create are nested within this group.
- >
- > Labels provide meaningful names for OpenGL ES objects, such as textures, shader programs, and vertex array objects. Call the glLabelObjectEXT function to give an object a name to be shown when debugging and profiling. Listing 7-2 illustrates using this function to label a vertex array object. If you use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class to load texture data, it automatically labels the OpenGL ES texture objects it creates with their filenames.
- >
- > Listing 7-2  Using a debug label to annotate an OpenGL ES object
- 
- 可以使用多个嵌套标记在复杂场景中创建有意义的组的层次结构。当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类绘制 OpenGL ES 内容时，它会自动创建一个“渲染”组，其中包含绘图方法中的所有命令。你创建的任何标记都嵌套在此组中。
- 
- 标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 glLabelObjectEXT 函数，为对象提供调试和分析时显示的名称。清单 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
- 
- 清单 7-2 使用调试标签注释 OpenGL ES 对象
- 
- ```objc
- glGenVertexArraysOES(1, &_spaceshipMesh);
- glBindVertexArrayOES(_spaceshipMesh);
- glLabelObjectEXT(GL_VERTEX_ARRAY_OBJECT_EXT, _spaceshipMesh, 0, "Spaceship");
+
+![XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups](../../resource/OpenGLES/Markdown/XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups.png)
+
+> When you have a sequence of drawing commands that represent a single meaningful operation—for example, drawing a game character—you can use a marker to group them for debugging. Listing 7-1 shows how to group the texture, program, vertex array, and draw calls for a single element of a scene. First, it calls the glPushGroupMarkerEXT function to provide a meaningful name, then it issues a group of OpenGL ES commands. Finally, it closes the group with a call to the glPopGroupMarkerEXT function.
+>
+> Listing 7-1  Using a debug marker to annotate drawing commands
+
+对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。清单 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 glPushGroupMarkerEXT 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 glPopGroupMarkerEXT 函数来关闭组。
+
+清单 7-1 使用调试标记来注释绘图命令
+
+```objc
+glPushGroupMarkerEXT(0, "Draw Spaceship");
+glBindTexture(GL_TEXTURE_2D, _spaceshipTexture);
+glUseProgram(_diffuseShading);
+glBindVertexArrayOES(_spaceshipMesh);
+glDrawElements(GL_TRIANGLE_STRIP, 256, GL_UNSIGNED_SHORT, 0);
+glPopGroupMarkerEXT();
+```
+
+> You can use multiple nested markers to create a hierarchy of meaningful groups in a complex scene. When you use the [GLKView](https://developer.apple.com/documentation/glkit/glkview) class to draw OpenGL ES content, it automatically creates a “Rendering” group containing all commands in your drawing method. Any markers you create are nested within this group.
+>
+> Labels provide meaningful names for OpenGL ES objects, such as textures, shader programs, and vertex array objects. Call the glLabelObjectEXT function to give an object a name to be shown when debugging and profiling. Listing 7-2 illustrates using this function to label a vertex array object. If you use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class to load texture data, it automatically labels the OpenGL ES texture objects it creates with their filenames.
+>
+> Listing 7-2  Using a debug label to annotate an OpenGL ES object
+
+可以使用多个嵌套标记在复杂场景中创建有意义的组的层次结构。当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类绘制 OpenGL ES 内容时，它会自动创建一个“渲染”组，其中包含绘图方法中的所有命令。你创建的任何标记都嵌套在此组中。
+
+标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 glLabelObjectEXT 函数，为对象提供调试和分析时显示的名称。清单 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
+
+清单 7-2 使用调试标签注释 OpenGL ES 对象
+
+```objc
+glGenVertexArraysOES(1, &_spaceshipMesh);
+glBindVertexArrayOES(_spaceshipMesh);
+glLabelObjectEXT(GL_VERTEX_ARRAY_OBJECT_EXT, _spaceshipMesh, 0, "Spaceship");
 ```
 
 ### General Performance Recommendations
@@ -2289,7 +2289,6 @@ void CreateVertexBuffers()
     glGenBuffers(1, &indexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
 }
 ```
 
@@ -2317,7 +2316,7 @@ void DrawModelUsingVertexBuffers()
 }
 ```
 
-### Buffer Usage Hints
+#### Buffer Usage Hints
 
 > The previous example initialized the vertex buffer once and never changed its contents afterwards. You can change the contents of a vertex buffer. A key part of the design of vertex buffer objects is that the app can inform OpenGL ES how it uses the data stored in the buffer. An OpenGL ES implementation can use this hint to alter the strategy it uses for storing the vertex data. In Listing 8-3, each call to the glBufferData function provides a usage hint as the last parameter. Passing GL_STATIC_DRAW into glBufferData tells OpenGL ES that the contents of both buffers are never expected to change, which gives OpenGL ES more opportunities to optimize how and where the data is stored.
 >
@@ -2925,7 +2924,7 @@ float f;
 vec4 v;
 
 for(i = 0; i < 4; i++)
-v[i] += f;
+    v[i] += f;
 ```
 
 > The same operation can be done directly using a component-wise add:
@@ -3456,14 +3455,354 @@ OpenGL ES 3.0 包含一个新版本的 OpenGL ES 着色语言（ GLSL ES ）。O
 
 ## Xcode OpenGL ES Tools Overview
 
+> Xcode tools for debugging, analyzing, and tuning OpenGL ES applications are useful during all stages of development. The FPS Debug Gauge and GPU report summarize your app’s GPU performance every time you run it from Xcode, so you can quickly spot performance issues while designing and building your renderer. Once you’ve found a trouble spot, capture a frame and use Xcode’s OpenGL ES Frame Debugger interface to pinpoint rendering problems and solve performance issues.
+>
+> Effectively using the Xcode OpenGL ES features requires some familiarity with Xcode’s debugging interface. For background information, read [Xcode Overview](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/index.html#//apple_ref/doc/uid/TP40010215).
 
+用于调试，分析和调整 OpenGL ES 应用程序的 Xcode 工具在开发的所有阶段都很有用。每次从 Xcode 运行应用程序时， FPS Debug Gauge and GPU 报告都会总结应用程序的 GPU 性能，因此可以在设计和构建渲染器时快速发现性能问题。一旦找到故障点，捕获一个帧并使用 Xcode 的 OpenGL ES Frame Debugger 界面来查明渲染问题并解决性能问题。
 
+有效地使用 Xcode OpenGL ES 功能需要熟悉 Xcode 的调试界面。有关背景信息，请阅读 [Xcode Overview](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/index.html#//apple_ref/doc/uid/TP40010215) 。
 
+### Using the FPS Debug Gauge and GPU Report
 
+> The FPS debug gauge and accompanying GPU report, shown in Figure B-1, provide a high-level summary of your app’s OpenGL ES performance while it runs. By monitoring these displays when developing your app, you can discover performance issues as they arise and consider where to focus your tuning efforts.
+>
+> Figure B-1  FPS Debug Gauge and GPU Report
 
+FPS 调试仪和随附的 GPU 报告（如图 B-1 所示）提供了应用程序运行时 OpenGL ES 性能的高级摘要。通过在开发应用程序时监控这些显示，可以发现性能问题，并考虑调整优化的重点。
 
+图 B-1 FPS 调试指示器和 GPU 报告
 
+![FPSDebugGaugeAndGPUReport](../../resource/OpenGLES/FPSDebugGaugeAndGPUReport.png)
 
+> Note: Some features of the FPS gauge and GPU report rely on a display link timer. If you do not use the [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) or [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) classes to animate your OpenGL ES displays, the gauge and report cannot show performance relative to a target frame rate or provide accurate CPU frame time information.
+
+注意：FPS 仪表和 GPU 报告的某些功能依赖于 display link 计时器。如果不使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 或 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 类为 OpenGL ES 显示设置动画，则仪表和报告无法显示相对于目标帧率的性能或提供准确的 CPU 帧时间信息。
+
+> The debug gauge and report contain the following displays:
+>
+> - FPS Gauge. Shows the current animation rate of your app, in frames per second (FPS), and a recent history of FPS readings. Click this gauge to display the GPU report in Xcode’s primary editor.
+> - Frames Per Second. Shows the current frame rate, relative to the target frame rate set by your app (often 30 or 60 FPS). A blue arc indicates the recent range of FPS readings.
+> - Utilization. Shows three bars, breaking down your app’s use of the different processing resources on the GPU and indicating the possible locations of performance bottlenecks in your use of graphics hardware.
+>    The Tiler bar measures use of the GPU’s geometry processing resources. High tiler utilization can indicate performance bottlenecks in the vertex and primitive processing stages of the OpenGL ES pipeline, such as using inefficient vertex shader code or drawing an excessive number of vertices or primitives each frame.
+>
+>    The Renderer bar measures use of the GPU’s pixel processing resources. High renderer utilization can indicate performance bottlenecks in the fragment and pixel processing stages of the OpenGL ES pipeline, such as using inefficient fragment shader code or processing additional fragments each frame for color blending.
+>
+>    The Device bar shows overall GPU usage, incorporating both tiler and renderer usage.
+>
+> - Frame Time. Shows the time spent processing each frame on both the CPU and GPU. This graph can indicate whether your app makes effective use of CPU/GPU parallelism.
+>    If your app spends more time in CPU processing, you may be able to improve performance by moving work to the GPU. For example, if each frame requires many similar glDrawArrays or glDrawElements calls, you can use hardware instancing to reduce CPU overhead. (For details, see [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20).)
+>
+>    If your app spends more time in GPU processing, you may be able to improve performance by moving work to the CPU. For example, if a shader performs the same calculation with the same result for every vertex or fragment during a particular draw call, you can perform that computation once on the CPU and pass its result to the shader in a uniform variable. (See [Use Uniforms or Constants Instead of Computing Values in a Shader](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW11).)
+>
+> - Program Performance. Only appears after you capture a frame (see Capturing and Analyzing an OpenGL ES Frame below), showing the time spent in each shader program while rendering the captured frame, both in milliseconds and as a percentage of the total frame rendering time. Expanding the listing for a program shows the draw calls made using that program and the rendering time contribution from each. Select a program in the list to view its shader source code in the assistant editor, or click the arrow icon next to a draw call to select that call in the frame navigator (see Navigator Area below).
+>
+> Note: The Program Performance view only appears when debugging on devices that support OpenGL ES 3.0 (regardless of whether your app uses an OpenGL ES 3.0 or 2.0 context).
+>
+>    When tuning your app, you can use this graph to find opportunities for optimization. For example, if one program takes 50% of the frame rendering time, you gain more performance by optimizing it than by improving the speed of a program that accounts for only 10% of frame time. Though this view organizes frame time by shader program, remember that improving your shader algorithms isn’t the only way to optimize your app’s performance—for example, you can also reduce the number of draw calls that use a costly shader program, or reduce the number of fragments processed by a slow fragment shader.
+>
+> - Problems & Solutions. Only appears after Xcode analyzes a frame capture (see Capturing and Analyzing an OpenGL ES Frame), this area lists possible issues found during analysis and recommendations for improving performance.
+When you make changes to a GLSL shader program in a captured frame (see Editing Shader Programs below), the Frame Time and Program Performance graphs expand to show both the baseline rendering time of the frame as originally captured and the current rendering time using your edited shaders.
+
+调试仪表和报告包含以下显示：
+
+- FPS Gauge。以每秒帧数（ FPS ）显示应用的当前动画速率，和最近的 FPS 历史记录。单击此仪表可在 Xcode 的主编辑器中显示 GPU 报告。
+- 每秒帧数。显示当前帧率，相对于应用设置的目标帧率（通常为 30 或 60 FPS ）。蓝色圆弧表示最近的 FPS 读数范围。
+- 利用率。显示三个栏，分解应用程序对 GPU 上不同处理资源的使用，并指出对图形硬件的使用中可能存在的性能瓶颈位置。
+Tiler 栏测量 GPU 的几何处理资源的使用。高 tiler 利用率指示 OpenGL ES 管道的顶点和图元处理阶段中的性能瓶颈，例如使用低效的顶点着色器代码或每帧绘制过多的顶点或图元。
+
+Renderer 栏测量 GPU 的像素处理资源的使用。高 renderer 利用率指示 OpenGL ES 管道的片段和像素处理阶段中的性能瓶颈，例如使用低效片段着色器代码或者每帧处理用于颜色混合的附加片段。
+
+设备栏显示整体 GPU 使用情况，包括 tiler 和渲染器使用情况。
+
+- 帧时间。显示在 CPU 和 GPU 上处理每帧所花费的时间。此图表可以指示应用是否有效利用 CPU / GPU 的并行性。
+如果应用在 CPU 处理上花费更多时间，可以通过将工作转移到 GPU 来提高性能。例如，如果每帧需要许多类似的 glDrawArrays 或 glDrawElements 调用，则可以使用硬件实例化来减少 CPU 开销。（有关详细信息，见 [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20) 。）
+
+如果应用在 GPU 处理上花费更多时间，可以通过将工作转移到 CPU 来提高性能。例如，如果着色器在特定绘制调用期间对每个顶点或片段执行相同的计算并使用相同的结果，则可以在 CPU 上执行一次该计算，并将其结果传递给着色器的统一变量中。（请参阅 [Use Uniforms or Constants Instead of Computing Values in a Shader](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW11) 。）
+
+- 程序性能。仅捕获帧后才会出现（见下面的 Capturing and Analyzing an OpenGL ES Frame ），显示渲染捕获帧时每个着色器程序所花费的时间，以毫秒为单位，同时显示占总帧渲染时间的百分比。展开程序的列表显示使用该程序进行的绘制调用以及每个调用的渲染时间贡献。在列表中选择一个程序以在助理编辑器中查看其着色器源代码，或单击绘图调用旁边的箭头图标以在帧导航器中选择该调用（请参阅下面的 Navigator Area ）。
+
+注意：仅当在支持 OpenGL ES 3.0 的设备上进行调试时才会显示“程序性能”视图（无论应用程序是使用 OpenGL ES 3.0 还是 2.0 上下文）。
+
+在调整应用时，可以使用此图表来查找优化机会。例如，如果一个程序占用帧渲染时间的 50％ ，则通过优化它可以获得更高的性能，而不是通过提高仅占帧时间的 10％ 的程序的速度。虽然此视图通过着色器程序组织帧时间，但请记住，改进着色器算法并不是优化应用程序性能的唯一方法 - 例如，你还可以减少使用昂贵的着色器程序的绘制调用次数，或者减少由慢片段着色器处理的片段数。
+
+- 问题与解决方案。仅在 Xcode 分析帧捕获后才会出现（请参阅  Capturing and Analyzing an OpenGL ES Frame ），此区域列出了分析期间发现的可能问题以及提高性能的建议。
+
+当你在捕获的帧中更改 GLSL 着色器程序时（请参阅下面的 Editing Shader Programs ），帧时间和程序性能图表将展开以显示最初捕获的帧的基线渲染时间和使用编辑的当前着色器的渲染时间。
+
+### Capturing and Analyzing an OpenGL ES Frame
+
+> For a detailed look at your app’s OpenGL ES usage, capture the sequence of OpenGL ES commands used to render a single frame of animation. Xcode offers several ways to begin a frame capture:
+>
+> - Manual capture. While running your app in Xcode, click the camera icon in the debug bar (shown in Figure B-2) or choose Capture OpenGL ES Frame from the Debug menu.
+>
+> Figure B-2  Debug Bar with Capture OpenGL ES Frame button
+
+有关应用程序的 OpenGL ES 用法的详细信息，请捕获用于呈现单帧动画的 OpenGL ES 命令序列。Xcode 提供了几种开始帧捕获的方法：
+
+- 手动捕获。在 Xcode 中运行应用程序时，单击调试栏中的摄像头图标（如图 B-2 所示）或从 Debug 菜单中选择 Capture OpenGL ES Frame 。
+
+图 B-2 带有 Capture OpenGL ES Frame 按钮的调试栏
+
+![DebugBarWithCaptureOpenGLESFrameButton](../../resource/OpenGLES/Markdown/DebugBarWithCaptureOpenGLESFrameButton.png)
+
+> Note: The Capture OpenGL ES Frame button automatically appears only if your project links against the OpenGL ES or Sprite Kit framework. You can choose whether it appears for other projects by editing the active scheme. (See [About the Scheme Editing Dialog](http://help.apple.com/xcode).)
+>
+> - Breakpoint action. Choose Capture OpenGL ES Frame as an action for any breakpoint. When the debugger reaches a breakpoint with this action, Xcode automatically captures a frame. (See [Setting Breakpoint Actions and Options](http://help.apple.com/xcode).) If you use this action with an OpenGL ES Error breakpoint while developing your app (see [Adding an OpenGL ES Error Breakpoint](http://help.apple.com/xcode)), you can use the OpenGL ES Frame Debugger to investigate the causes of OpenGL ES errors whenever they occur.
+> - OpenGL ES event marker. Programmatically trigger a frame capture by inserting an event marker in the OpenGL ES command stream. The following command inserts such a marker:
+
+注意：仅当项目链接了 OpenGL ES 或 Sprite Kit 框架时，才会自动显示 Capture OpenGL ES Frame 按钮。可以通过编辑激活模式来选择是否为其他项目显示。（请参阅 [About the Scheme Editing Dialog](http://help.apple.com/xcode) 。）
+
+- 断点动作。选择 Capture OpenGL ES Frame 作为任何断点的操作。当调试器到达具有该操作的断点时，Xcode 会自动捕获一个帧。（见 [Setting Breakpoint Actions and Options](http://help.apple.com/xcode) 。）如果在开发应用程序时将此操作与 OpenGL ES 错误断点一起使用（见 [Adding an OpenGL ES Error Breakpoint](http://help.apple.com/xcode) ），则可以使用 OpenGL ES 帧调试器来调查 OpenGL ES 错误的原因。
+- OpenGL ES 事件标记。通过在 OpenGL ES 命令流中插入事件标记，以编程方式触发帧捕获。以下命令插入这样的标记：
+
+```objc
+glInsertEventMarkerEXT(0, "com.apple.GPUTools.event.debug-frame")
+```
+
+> When the OpenGL ES client reaches this marker, it finishes rendering the frame, then Xcode automatically captures the entire sequence of commands used to render that frame.
+>
+> After Xcode has captured the frame, it shows the OpenGL ES Frame Debugger interface. Use this interface to inspect the sequence of OpenGL ES commands that render the frame and examine OpenGL ES resources, as discussed in [Touring the OpenGL ES Frame Debugger](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW11).
+>
+> In addition, Xcode can perform an automated analysis of your app’s OpenGL ES usage to determine which parts of your renderer and shader architecture can benefit most from performance optimizations. To use this option, click the Analyze button at the top of the GPU report (shown at the top right in Figure B-1).
+>
+> When you click the Analyze button, Xcode captures a frame (if one hasn’t been captured already), then runs your rendering code through a series of experiments using the attached iOS device. For example, to see if your rendering speed is limited by texture sizes, Xcode runs the captured sequence of OpenGL ES commands both with the texture data your app submitted to the GPU and with a size-reduced texture set. After Xcode finishes its analysis, the Problems & Solutions area of the GPU report lists any issues it found and suggestions for possible performance improvements.
+
+当 OpenGL ES 客户端运行到此标记时，OpenGL ES 完成帧的渲染，然后 Xcode 自动捕获用于渲染该帧的整个命令序列。
+
+在 Xcode 捕获了帧之后，显示 OpenGL ES Frame Debugger 姐买呢。使用此界面检查渲染该帧的 OpenGL ES 命令序列并检查 OpenGL ES 资源，如 [Touring the OpenGL ES Frame Debugger](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW11) 中所述。
+
+此外，Xcode 可以对应用程序的 OpenGL ES 使用情况进行自动分析，以确定渲染器和着色器体系结构的哪些部分可以从性能优化中获益最多。要使用此选项，请单击 GPU 报告顶部的“Analyze”按钮（如图 B-1 右上方所示）。
+
+单击“Analyze”按钮时，Xcode 会捕获一个帧（若该帧未被捕获），则使用附加的 iOS 设备通过一系列实验运行渲染代码。例如，要查看渲染速度是否受纹理大小的限制，Xcode 使用应用程序提交给 GPU 的纹理数据运行捕获到的 OpenGL ES  命令序列，同时使用尺寸缩小了的纹理集运行相同的命令序列。Xcode 完成其分析之后，GPU 报告的 Problems & Solutions 区域列出它找到的任何问题以及可能的性能改进建议。
+
+### Touring the OpenGL ES Frame Debugger
+
+> After Xcode captures a frame, it automatically reconfigures its interface for OpenGL ES debugging. The OpenGL ES Frame Debugger interface modifies several areas of the Xcode workspace window to provide information about the OpenGL ES rendering process, as shown in Figure B-3 and Figure B-4 and summarized below. (The frame debugger does not use the inspector or library panes, so you may wish to hide Xcode’s utility area during OpenGL ES debugging.)
+>
+> Figure B-3  Frame debugger examining draw calls and resources
+
+Xcode 捕获帧后，它会自动重新配置 OpenGL ES 调试的界面。OpenGL ES Frame Debugger 界面修改了 Xcode 工作区窗口的几个区域，以提供有关 OpenGL ES 渲染过程的信息，如图 B-3 和图 B-4 所示，并总结如下。（帧调试器不使用检查器或库面板，因此你可能希望在 OpenGL ES 调试期间隐藏 Xcode 的实用程序区域。）
+
+图 B-3 帧调试器检查绘制调用和资源
+
+![FrameDebuggerExaminingDrawCallsAndResources](../../resource/OpenGLES/Markdown/FrameDebuggerExaminingDrawCallsAndResources.png)
+
+> Figure B-4  Frame debugger examining shader program performance and analysis results
+
+图 B-4 检查着色器程序性能并分析结果的帧调试器
+
+![FrameDebuggerExaminingShaderProgramPerformanceAndAnalysisResults](../../resource/OpenGLES/Markdown/FrameDebuggerExaminingShaderProgramPerformanceAndAnalysisResults.png)
+
+#### Navigator Area
+
+> In the OpenGL ES frame debugger interface, the debug navigator is replaced by the OpenGL ES frame navigator. This navigator shows the OpenGL ES commands that render the captured frame, organized sequentially or according to their associated shader program. Use the Frame View Options popup menu at the top of the frame navigator to switch between view styles.
+>
+> Figure B-5  View Frame By popup menu in navigator
+
+在 OpenGL ES 帧调试器界面中，调试导航器被 OpenGL ES 帧导航器取代。此导航器显示了渲染捕获帧的 OpenGL ES 命令，按顺序组织或根据其关联的着色器程序进行组织。使用帧导航器顶部的“Frame View Options”弹出菜单可在视图样式之间切换。
+
+图 B-5 导航器中的弹出菜单
+
+![ViewFrameByPopupMenuInNavigator](../../resource/OpenGLES/Markdown/ViewFrameByPopupMenuInNavigator.png)
+
+##### View Frame By Call
+
+> View the captured frame by call when you want to study OpenGL ES commands in sequence to pinpoint errors, diagnose rendering problems, or identify common performance issues. In this mode, the frame navigator lists commands in the order your app called them. Error or warning icons appear next to commands that result in OpenGL ES errors or that may indicate performance issues.
+
+You can add structure to this list by using the glPushGroupMarkerEXT and glPopGroupMarkerEXT functions to annotate groups of OpenGL ES commands—these groups appear as folders you can expand or collapse to show more or less detail. (For details, see [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6).) You can also expand an OpenGL ES command to show a stack trace indicating where in your application code the command was issued.
+
+Use the context menu to choose whether to abbreviate command names and which commands, groups, and warnings to show. Use the flag icon at the bottom of the navigator to switch between showing all OpenGL ES commands and showing only those which draw into the framebuffer.
+
+Clicking an OpenGL ES command in the list navigates to that point in the OpenGL ES command sequence, affecting the contents of other areas of the frame debugger interface, as discussed below, and showing the effects of the OpenGL ES calls up to that point on the attached device’s display.
+
+如果要按顺序研究 OpenGL ES 命令以查明错误，诊断渲染问题或识别常见性能问题，选择 View the captured frame by call 。在此模式下，帧导航器按照应用程序调用它们的顺序列出命令。导致 OpenGL ES 错误或可能表示性能问题的命令旁边会出现错误或警告图标。
+
+可以使用 glPushGroupMarkerEXT 和 glPopGroupMarkerEXT 函数为此列表添加结构，以注释 OpenGL ES 命令组 - 这些组显示为可以展开或折叠以显示更多或更少细节的文件夹的形式。（有关详细信息，见 [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6) 。）你还可以展开 OpenGL ES 命令以显示堆栈跟踪，指示命令发出的相应应用程序代码的位置。
+
+使用上下文菜单选择是否缩写命令名称以及要显示的命令，组和警告。使用导航器底部的标志图标在显示所有 OpenGL ES 命令和仅显示绘制到帧缓冲区的命令之间切换。
+
+单击列表中的 OpenGL ES 命令导航到 OpenGL ES 命令序列中的那一点，影响帧调试器界面的其他区域的内容，如下所述，显示在附加设备显示屏上 OpenGL ES 调用对该点的影响。
+
+##### View Frame By Program
+
+> View the captured frame by program when you want to analyze the GPU time spent on each shader program and draw command.
+>
+> Expand the listing for a program to see the time contribution from each shader in the program and each draw call. Expand the listing for a draw call to show a stack trace indicating where in your application code that command was issued.
+>
+> Use the context menu to refine the display—you can choose whether programs are sorted by their time contributions and whether timing information is displayed as a percentage of the total rendering time.
+>
+> Clicking a program or shader shows the corresponding GLSL source code in the primary editor. Clicking an OpenGL ES command navigates to that point in the frame capture sequence.
+>
+> Note: The View Frame By Program option is only available when debugging on devices that support OpenGL ES 3.0 (regardless of whether your app uses an OpenGL ES 3.0 or 2.0 context). On other devices, the Frame View Options popup menu is disabled.
+
+当想要分析在每个着色器程序和绘制命令上花费的 GPU 时间时，选择 View the captured frame by program 。
+
+展开程序的列表，以查看程序和每个绘制调用中每个着色器的时间贡献。展开绘制调用的列表以显示堆栈跟踪，指示应用程序代码中发出命令的位置。
+
+使用上下文菜单优化显示 - 可以选择是否按时间贡献对程序进行排序，以及计时信息是否显示为总渲染时间的百分比。
+
+单击程序或着色器会在主编辑器中显示相应的 GLSL 源代码。单击 OpenGL ES 命令导航到帧捕获序列中的该点。
+
+注意：View Frame By Program 选项仅在支持 OpenGL ES 3.0 的设备上进行调试时可用（无论应用程序是使用 OpenGL ES 3.0 还是 2.0 上下文）。在其他设备上，“Frame View Options”弹出菜单被禁用。
+
+#### Editor Area
+
+> When working with a frame capture, you use the primary editor to preview the framebuffer being rendered to, and the assistant editor to examine OpenGL ES resources and edit GLSL shader programs. By default, the assistant editor shows a graphical overview of all resources currently owned by the OpenGL ES context, as shown in Figure B-3. Use the assistant editor’s jump bar to show only those resources bound for use as of the call selected in the frame navigator, or to select an individual resource for further inspection. You can also double-click a resource in the overview to inspect it. When you select a resource, the assistant editor changes to a format suited for tasks appropriate to that resource’s type.
+
+使用帧捕获时，使用主编辑器预览要渲染的帧缓冲区，使用辅助编辑器检查 OpenGL ES 资源并编辑 GLSL 着色器程序。默认情况下，辅助编辑器显示 OpenGL ES 上下文当前拥有的所有资源的图形概览，如图 B-3 所示。 使用辅助编辑器的跳转栏来仅显示在帧导航器中选择的调用使用的资源，或选择单个资源以供进一步检查。还可以双击概览中的资源来检查它。选择资源时，辅助编辑器将更改为适合该资源类型的任务的格式。
+
+##### Previewing Framebuffer Contents
+
+> The primary editor shows the contents of the framebuffer as rendered by the draw call currently selected in the frame navigator. (If the selected OpenGL ES command in the frame navigator is not a drawing command—for example, a command that sets state such as glUseProgram—the framebuffer reflects the rendering done by the most recent draw call prior to the selection.) You can also navigate the sequence of OpenGL ES commands using the jump bar at the top of the primary editor.
+>
+> Figure B-6  Framebuffer info popover
+
+主编辑器显示帧导航器中当前选中的绘制调用渲染的帧缓冲区内容。（如果帧导航器中选定的 OpenGL ES 命令不是绘图命令 - 例如，譬如 glUseProgram 这类设置状态的命令  - 帧缓冲区反映了由选中的命令之前的最近绘制调用所做的渲染。）你还可以使用主编辑器顶部的跳转栏浏览 OpenGL ES 命令序列。
+
+图 B-6 帧缓冲区信息弹出窗口
+
+![FramebufferInfoPopover](../../resource/OpenGLES/Markdown/FramebufferInfoPopover.png)
+
+> The editor shows a preview for each framebuffer attachment currently bound for drawing. For example, most approaches to 3D rendering use a framebuffer with attachments for both color and depth, as illustrated in . Use the controls in the lower left of the editor to choose which framebuffer attachments are currently shown. Clicking the info button, left of each framebuffer attachment’s name, shows a popover detailing the attachment’s properties, as shown in Figure B-6. Click the settings button, right of the framebuffer attachment’s name, to show a popover with controls that adjust the preview image. For example, you can use these controls to make a certain range of Z values in a depth buffer more visible in its grayscale preview, as shown in Figure B-7.
+>
+> Figure B-7  Framebuffer settings popover
+
+编辑器显示当前绑定用于绘图的每个帧缓冲附件的预览。例如，大多数 3D 渲染方法都使用带有颜色和深度附件的帧缓冲，如图所示。使用编辑器左下角的控件选择当前显示的帧缓冲附件。单击每个帧缓冲附件名称左侧的信息按钮，会显示一个详细说明附件属性的弹出窗口，如图 B-6 所示。单击帧缓冲附件名称右侧的设置按钮，以显示带有用于调整预览图像控件的弹出窗口。例如，你可以使用这些控件在深度缓冲区中使一定范围的 Z 值在其灰度预览中更加可见，如图 B-7 所示。
+
+图 B-7 帧缓冲设置弹出窗口
+
+![FramebufferSettingsPopover](../../resource/OpenGLES/Markdown/FramebufferSettingsPopover.png)
+
+> Each framebuffer attachment preview also shows a green wireframe highlighting the effect of the current draw call (as illustrated in Figure B-3). Use the context menu in a preview image to choose whether the highlight appears in the preview or on the display of the attached device.
+
+每个帧缓冲附件预览还会显示一个绿色线框，突出显示当前绘制调用的效果（如图 B-3 所示）。使用预览图像中的上下文菜单选择突出显示是在预览中还是在所连接设备的显示屏上。
+
+##### Editing Shader Programs
+
+> When you select a shader program in the assistant editor’s jump bar or resource overview, the assistant editor shows the GLSL source code for that program’s fragment shader (as shown in Figure B-8). When you select a program in the frame navigator (see View Frame By Program), the primary editor shows the program’s fragment shader and the assistant editor shows its vertex shader. In any editor showing a fragment shader, you can use the jump bar to switch to its counterpart vertex shader, and vice versa.
+>
+> Figure B-8  GLSL shader source editor with update button
+
+在辅助编辑器的跳转栏或资源概述中选择着色器程序时，辅助编辑器会显示该程序的片段着色器的 GLSL 源代码（如图 B-8 所示）。在帧导航器中选择程序时（见 View Frame By Program ），主编辑器显示程序的片段着色器，辅助编辑器显示其顶点着色器。在显示片段着色器的任何编辑器中，可以使用跳转条切换到其对应的顶点着色器，反之亦然。
+
+图 B-8 带有更新按钮的 GLSL 着色器源编辑器
+
+![GLSLshaderSourceEditorWithUpdateButton](../../resource/OpenGLES/Markdown/GLSLshaderSourceEditorWithUpdateButton.png)
+
+> Each line of the shader source code is highlighted in the right margin with a bar representing its relative contribution to rendering time. Use these to focus your shader optimization efforts—if a few lines account for a greater share of rendering time, look into faster alternatives for those lines. (For shader performance tips, see [Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3).)
+>
+> You can make changes to the shader source code in the editor. Then, click the Update button below the editor (shown in Figure B-8) to recompile the shader program and see its effects on the captured frame. If compiling the shader results in error or warning messages from the GLSL compiler, Xcode annotates the shader source code for each issue. The recompiled shader program remains in use on the device, so you can resume running your app. Click the Continue button in the debug bar to see your shader changes in action.
+
+着色器源代码每行右边都有高亮显示了条形图，该条形图表示该行对渲染时间的相对贡献。使用这些来集中着色器优化工作 - 如果某几行占用渲染时间的更大份额，请查看这些行的更快替代方案。（有关着色器性能提示，请参阅 [Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3) 。）
+
+你可以在编辑器中更改着色器源代码。然后，单击编辑器下方的“更新”按钮（如图 B-8 所示）以重新编译着色器程序并查看其对捕获帧的影响。如果编译着色器会出现来自 GLSL 编译器的错误或警告消息，则 Xcode 会在着色器源代码中为每个问题添加注释。重新编译仍在设备上使用的着色器程序，可以继续应用程序的运行。单击调试栏中的“Continue”按钮以查看着色器更改的操作。
+
+##### Inspecting Vertex Data
+
+> When you inspect an array buffer, the assistant editor shows the contents of the buffer (see Figure B-9). Because a buffer in OpenGL ES memory has no defined format, you use the pop-up menus at the bottom of the editor to choose how its contents appear (for example, as 32-bit integers or floating-point values, or as twice as many 16-bit integers or half-float values), and how many columns Xcode uses to display the data.
+>
+> Figure B-9  Assistant editor previewing array buffer contents
+
+检查数组缓冲区时，辅助编辑器会显示缓冲区的内容（参见图 B-9 ）。由于 OpenGL ES 内存中的缓冲区没有定义格式，因此可以使用编辑器底部的弹出菜单选择其内容的显示方式（例如，32 位整数或浮点值，或者两倍于 16 位整数或半浮点数的值），以及 Xcode 用于显示数据的列数。
+
+图 B-9 辅助编辑器预览数组缓冲区内容
+
+![AssistantEditorPreviewingArrayBufferContents](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingArrayBufferContents.png)
+
+> A vertex array object (VAO) encapsulates one or more data buffers in OpenGL ES memory and the attribute bindings used for supplying vertex data from the buffers to a shader program. (For details on using VAOs, see [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14).) Because the VAO bindings include information about the format of the buffers’ contents, inspecting a VAO shows its contents as interpreted by OpenGL ES (see Figure B-10).
+>
+> Figure B-10  Assistant editor previewing vertex array object
+
+顶点数组对象（ VAO ）封装 OpenGL ES 内存中的一个或多个数据缓冲区以及用于将缓冲区中的顶点数据提供给着色器程序的属性绑定。（有关使用 VAO 的详细信息，请参阅 [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14) 。）由于 VAO 绑定包含有关缓冲区内容格式的信息，因此检查 VAO 会显示由 OpenGL ES 解释的内容（参见图 B-10 ）。
+
+图 B-10 辅助编辑器预览顶点数组对象
+
+![AssistantEditorPreviewingVertexArrayObject](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingVertexArrayObject.png)
+
+##### Viewing Textures or Renderbuffers
+
+> When you inspect a texture or renderbuffer, the assistant editor shows an image preview of its contents. You can use the same controls found in the primary editor to get more information about the texture object or renderbuffer and to adjust the image preview. For textures, you can use an additional control in the lower left corner of the assistant editor to preview each mipmap level of the texture and (if applicable) each face of a cube map texture (as shown in Figure B-11).
+>
+> Figure B-11  Assistant editor previewing cube map texture
+
+检查纹理或渲染缓冲区时，辅助编辑器会显示其内容的图像预览。可以使用主编辑器中的相同控件来获取有关纹理对象或渲染缓冲区的更多信息，并调整图像预览。对于纹理，可以使用辅助编辑器左下角的附加控件来预览纹理的每个 mipmap 级别以及（如果适用）立方体贴图纹理的每个面（如图 B-11 所示）。
+
+图 B-11 辅助编辑器预览立方体贴图纹理
+
+![AssistantEditorPreviewingCubeMapTexture](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingCubeMapTexture.png)
+
+#### Debug Area
+
+> The debug bar provides multiple controls for navigating the captured sequence of OpenGL ES commands (shown in Figure B-12). You can use its menus to follow the hierarchy shown in the frame navigator and choose a command, or you can use the arrows and slider to move back and forth in the sequence. Press the Continue button to end frame debugging and return to running your application.
+>
+> Figure B-12  OpenGL ES debug bar
+
+调试栏提供了多个控件，用于导航捕获的 OpenGL ES 命令序列（如图 B-12 所示）。你可以使用其菜单在帧导航器中显示的层次结构中进行导航并选择一个命令，也可以使用箭头和滑块在序列中来回移动。按“Continue”按钮结束帧调试并返回运行的应用程序。
+
+图 B-12 OpenGL ES 调试栏
+
+![OpenGLESDebugBar](../../resource/OpenGLES/Markdown/OpenGLESDebugBar.png)
+
+> The frame debugger has no debug console. Instead, Xcode offers multiple variables views, each of which provides a different summary of the current state of the OpenGL ES rendering process. Use the popup menu to choose between the available variables views, discussed in the following sections.
+
+帧调试器没有调试控制台。相反，Xcode 提供了多个变量视图，每个视图都提供了 OpenGL ES 渲染过程当前状态的不同摘要。使用弹出菜单在可用变量视图之间进行选择，这将在以下各节中讨论。
+
+##### The All GL Objects View
+
+> The All GL Objects view, similar to the Bound GL Objects view shown on the right in Figure B-13, lists the same OpenGL ES resources as the graphical overview in the assistant editor. Unlike the graphical overview, however, this view can provide more detailed information about a resource when you expand its disclosure triangle. For example, expanding the listing for a framebuffer or buffer object shows information otherwise available only through OpenGL ES query functions such as glGetBufferParameter and glGetFramebufferAttachmentParameter. Expanding the listing for a shader program shows its status, attribute bindings, and the currently bound value for each uniform variable.
+
+All GL Objects 视图类似于图 B-13 右侧所示的 Bound GL Objects 视图，列出了与辅助编辑器中的图形概览相同的 OpenGL ES 资源。但是，与图形概述不同的是，当展开其显示三角形时，此视图可以提供有关资源的更详细信息。例如，展开帧缓冲区或缓冲区对象的列表显示仅通过 OpenGL ES 查询函数（例如 glGetBufferParameter 和 glGetFramebufferAttachmentParameter ）可用的信息。 展开着色器程序的列表会显示其状态，属性绑定以及每个统一变量的当前绑定值。
+
+##### The Bound GL Objects View
+
+> The Bound GL Objects view, shown on the right in Figure B-13, behaves identically to the All GL Objects view, but lists only resources currently bound for use as of the selected OpenGL ES command in the frame navigator.
+>
+> Figure B-13  Debug area with GL Context and Bound GL Objects views
+
+图 B-13 右侧所示的 Bound GL Objects 视图的行为与 All GL Objects 视图相同，但仅列出从帧导航栏中选中的 OpenGL ES 命令开始使用的当前绑定的资源。
+
+图 B-13 具有 GL Context 和 Bound GL Objects 视图的调试区域
+
+![DebugAreaWithGLContextAndBoundGLObjectsViews](../../resource/OpenGLES/Markdown/DebugAreaWithGLContextAndBoundGLObjectsViews.png)
+
+##### The GL Context View
+
+> The GL Context view, shown on the left in Figure B-13, lists the entire state vector of the OpenGL ES renderer, organized into functional groups. When you select a call in the frame navigator that changes OpenGL ES state, the changed values appear highlighted. For example, calling the glCullFace or glFrontFace function changes and highlights values in the Culling section of the state list. Enabling blending with the glEnable(GL_BLEND) call or changing blending parameters with the glBlendFunc function changes and highlights values in the Blending section of the state list.
+
+GL Context 视图（如图 B-13 左侧所示）列出了 OpenGL ES 渲染器的整个状态向量，以功能为单位组织。当在帧导航器中选择一个更改 OpenGL ES 状态的调用时，更改的值将突出显示。例如，调用 glCullFace 或 glFrontFace 函数会更改并高亮显示状态列表的 Culling 部分中的值。使用 glEnable（GL_BLEND）调用启用混合或使用 glBlendFunc 函数更改混合参数会更改并高亮显示状态列表的 Blending 部分中的值。
+
+##### The Context Info View
+
+> The Context Info view, shown on the right in Figure B-14, lists static information about the OpenGL ES renderer in use: name, version, capabilities, extensions and similar data. You can look through this data instead of writing your own code to query renderer attributes such as GL_MAX_TEXTURE_IMAGE_UNITS and GL_EXTENSIONS.
+>
+> Figure B-14  Debug area with Auto and Context Info views
+
+如图 B-14 右侧所示，Context Info 视图列出了有关 OpenGL ES 渲染器正在使用的静态信息：名称，版本，功能，扩展和类似数据。你可以直接在该视图中查看此数据，而不用编写自己的代码来查询渲染器属性，例如 GL_MAX_TEXTURE_IMAGE_UNITS 和 GL_EXTENSIONS 。
+
+图 B-14 具有 Auto 和 Context Info 视图的调试区域
+
+![DebugAreaWithAutoAndContextInfoViews](../../resource/OpenGLES/Markdown/DebugAreaWithAutoAndContextInfoViews.png)
+
+##### The Auto View
+
+> The Auto view, shown on the left in Figure B-14, automatically lists a subset of items normally found in the other variables views and other information appropriate to the selected call in the frame navigator. For example:
+>
+> - If the selected call results in an OpenGL ES error, or if Xcode has identified possible performance issues with the selected call, the view lists the errors or warnings and suggested fixes for each.
+> - If the selected call changes part of the OpenGL ES context state, or its behavior is dependent on context state, the view automatically lists relevant items from the GL Context view.
+> - If the selected call binds a resource or makes use of bound resources such as vertex array objects, programs, or textures, the view automatically lists relevant items from the Bound GL Objects view.
+> - If a draw call is selected, the view lists program performance information, including the total time spent in each shader during that draw call and, if you’ve changed and recompiled shaders since capturing the frame, the difference from the baseline time spent in each shader. (Program performance information is only available when debugging on an OpenGL ES 3.0–capable device.)
+>
+> In addition, this view lists aggregate statistics about frame rendering performance, including the number of draw calls and frame rate.
+
+自动视图（如图 B-14 左侧所示）自动列出通常在其他变量视图中找到的项目子集以及适用于帧导航器中所选调用的其他信息。例如：
+
+- 如果所选调用导致 OpenGL ES 错误，或者 Xcode 已识别出所选调用可能存在的性能问题，则该视图会列出相关错误或警告以及建议的修复方案。
+- 如果所选调用更改了 OpenGL ES 上下文状态的一部分，或者其行为依赖于上下文状态，则该视图会自动列出 GL Context 视图中的相关项。
+- 如果所选调用绑定资源或使用绑定资源（如顶点数组对象，程序或纹理），则该视图会自动列出 Bound GL Objects 视图中的相关项。
+- 如果选取了某个绘制调用，则该视图会列出程序性能信息，包括在绘制调用期间在每个着色器中花费的总时间，如果自捕获帧后更改和重新编译了着色器，也包括每个着色器花费的时间与基准时间的差距。（只有在支持 OpenGL ES 3.0 的设备上进行调试时，才能使用程序性能信息。）
+
+此外，此视图还列出了有关帧渲染性能的聚合统计信息，包括绘制调用的数量和帧率。
 
 ## Using texturetool to Compress Textures
 
@@ -3703,354 +4042,3 @@ Apple A7 GPU 及更高版本不会惩罚依赖纹理提取。
 当不再需要帧缓冲内容时，始终使用帧缓冲丢弃操作。不这样做的代价在后续 GPU 中要高于早期的 GPU 。为获得最佳效果，使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类；它自动实现帧缓冲丢弃操作。
 
 渲染到多个目标时，将应用程序限制为最多四个图像目标（当写入目标时，Apple A7 GPU 上的总数据不超过 128 位，Apple A8 GPU 上的总数据不超过 256 位）。单个 sRGB 目标计为 64 位。
-
-## Xcode OpenGL ES Tools Overview
-
-> Xcode tools for debugging, analyzing, and tuning OpenGL ES applications are useful during all stages of development. The FPS Debug Gauge and GPU report summarize your app’s GPU performance every time you run it from Xcode, so you can quickly spot performance issues while designing and building your renderer. Once you’ve found a trouble spot, capture a frame and use Xcode’s OpenGL ES Frame Debugger interface to pinpoint rendering problems and solve performance issues.
->
-> Effectively using the Xcode OpenGL ES features requires some familiarity with Xcode’s debugging interface. For background information, read [Xcode Overview](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/index.html#//apple_ref/doc/uid/TP40010215).
-
-用于调试，分析和调整 OpenGL ES 应用程序的 Xcode 工具在开发的所有阶段都很有用。每次从 Xcode 运行应用程序时， FPS Debug Gauge and GPU 报告都会总结应用程序的 GPU 性能，因此可以在设计和构建渲染器时快速发现性能问题。一旦找到故障点，捕获一个帧并使用 Xcode 的 OpenGL ES Frame Debugger 界面来查明渲染问题并解决性能问题。
-
-有效地使用 Xcode OpenGL ES 功能需要熟悉 Xcode 的调试界面。有关背景信息，请阅读 [Xcode Overview](https://developer.apple.com/library/archive/documentation/ToolsLanguages/Conceptual/Xcode_Overview/index.html#//apple_ref/doc/uid/TP40010215) 。
-
-### Using the FPS Debug Gauge and GPU Report
-
-> The FPS debug gauge and accompanying GPU report, shown in Figure B-1, provide a high-level summary of your app’s OpenGL ES performance while it runs. By monitoring these displays when developing your app, you can discover performance issues as they arise and consider where to focus your tuning efforts.
->
-> Figure B-1  FPS Debug Gauge and GPU Report
-
-FPS 调试仪和随附的 GPU 报告（如图 B-1 所示）提供了应用程序运行时 OpenGL ES 性能的高级摘要。通过在开发应用程序时监控这些显示，可以发现性能问题，并考虑调整优化的重点。
-
-图 B-1 FPS 调试指示器和 GPU 报告
-
-![FPSDebugGaugeAndGPUReport](../../resource/OpenGLES/FPSDebugGaugeAndGPUReport.png)
-
-> Note: Some features of the FPS gauge and GPU report rely on a display link timer. If you do not use the [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) or [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) classes to animate your OpenGL ES displays, the gauge and report cannot show performance relative to a target frame rate or provide accurate CPU frame time information.
-
-注意：FPS 仪表和 GPU 报告的某些功能依赖于 display link 计时器。如果不使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 或 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 类为 OpenGL ES 显示设置动画，则仪表和报告无法显示相对于目标帧率的性能或提供准确的 CPU 帧时间信息。
-
-> The debug gauge and report contain the following displays:
->
-> - FPS Gauge. Shows the current animation rate of your app, in frames per second (FPS), and a recent history of FPS readings. Click this gauge to display the GPU report in Xcode’s primary editor.
-> - Frames Per Second. Shows the current frame rate, relative to the target frame rate set by your app (often 30 or 60 FPS). A blue arc indicates the recent range of FPS readings.
-> - Utilization. Shows three bars, breaking down your app’s use of the different processing resources on the GPU and indicating the possible locations of performance bottlenecks in your use of graphics hardware.
->    The Tiler bar measures use of the GPU’s geometry processing resources. High tiler utilization can indicate performance bottlenecks in the vertex and primitive processing stages of the OpenGL ES pipeline, such as using inefficient vertex shader code or drawing an excessive number of vertices or primitives each frame.
->
->    The Renderer bar measures use of the GPU’s pixel processing resources. High renderer utilization can indicate performance bottlenecks in the fragment and pixel processing stages of the OpenGL ES pipeline, such as using inefficient fragment shader code or processing additional fragments each frame for color blending.
->
->    The Device bar shows overall GPU usage, incorporating both tiler and renderer usage.
->
-> - Frame Time. Shows the time spent processing each frame on both the CPU and GPU. This graph can indicate whether your app makes effective use of CPU/GPU parallelism.
->    If your app spends more time in CPU processing, you may be able to improve performance by moving work to the GPU. For example, if each frame requires many similar glDrawArrays or glDrawElements calls, you can use hardware instancing to reduce CPU overhead. (For details, see [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20).)
->
->    If your app spends more time in GPU processing, you may be able to improve performance by moving work to the CPU. For example, if a shader performs the same calculation with the same result for every vertex or fragment during a particular draw call, you can perform that computation once on the CPU and pass its result to the shader in a uniform variable. (See [Use Uniforms or Constants Instead of Computing Values in a Shader](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW11).)
->
-> - Program Performance. Only appears after you capture a frame (see Capturing and Analyzing an OpenGL ES Frame below), showing the time spent in each shader program while rendering the captured frame, both in milliseconds and as a percentage of the total frame rendering time. Expanding the listing for a program shows the draw calls made using that program and the rendering time contribution from each. Select a program in the list to view its shader source code in the assistant editor, or click the arrow icon next to a draw call to select that call in the frame navigator (see Navigator Area below).
->
-> Note: The Program Performance view only appears when debugging on devices that support OpenGL ES 3.0 (regardless of whether your app uses an OpenGL ES 3.0 or 2.0 context).
->
->    When tuning your app, you can use this graph to find opportunities for optimization. For example, if one program takes 50% of the frame rendering time, you gain more performance by optimizing it than by improving the speed of a program that accounts for only 10% of frame time. Though this view organizes frame time by shader program, remember that improving your shader algorithms isn’t the only way to optimize your app’s performance—for example, you can also reduce the number of draw calls that use a costly shader program, or reduce the number of fragments processed by a slow fragment shader.
->
-> - Problems & Solutions. Only appears after Xcode analyzes a frame capture (see Capturing and Analyzing an OpenGL ES Frame), this area lists possible issues found during analysis and recommendations for improving performance.
-When you make changes to a GLSL shader program in a captured frame (see Editing Shader Programs below), the Frame Time and Program Performance graphs expand to show both the baseline rendering time of the frame as originally captured and the current rendering time using your edited shaders.
-
-调试仪表和报告包含以下显示：
-
-- FPS Gauge。以每秒帧数（ FPS ）显示应用的当前动画速率，和最近的 FPS 历史记录。单击此仪表可在 Xcode 的主编辑器中显示 GPU 报告。
-- 每秒帧数。显示当前帧率，相对于应用设置的目标帧率（通常为 30 或 60 FPS ）。蓝色圆弧表示最近的 FPS 读数范围。
-- 利用率。显示三个栏，分解应用程序对 GPU 上不同处理资源的使用，并指出对图形硬件的使用中可能存在的性能瓶颈位置。
-Tiler 栏测量 GPU 的几何处理资源的使用。高 tiler 利用率指示 OpenGL ES 管道的顶点和图元处理阶段中的性能瓶颈，例如使用低效的顶点着色器代码或每帧绘制过多的顶点或图元。
-
-Renderer 栏测量 GPU 的像素处理资源的使用。高 renderer 利用率指示 OpenGL ES 管道的片段和像素处理阶段中的性能瓶颈，例如使用低效片段着色器代码或者每帧处理用于颜色混合的附加片段。
-
-设备栏显示整体 GPU 使用情况，包括 tiler 和渲染器使用情况。
-
-- 帧时间。显示在 CPU 和 GPU 上处理每帧所花费的时间。此图表可以指示应用是否有效利用 CPU / GPU 的并行性。
-如果应用在 CPU 处理上花费更多时间，可以通过将工作转移到 GPU 来提高性能。例如，如果每帧需要许多类似的 glDrawArrays 或 glDrawElements 调用，则可以使用硬件实例化来减少 CPU 开销。（有关详细信息，见 [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20) 。）
-
-如果应用在 GPU 处理上花费更多时间，可以通过将工作转移到 CPU 来提高性能。例如，如果着色器在特定绘制调用期间对每个顶点或片段执行相同的计算并使用相同的结果，则可以在 CPU 上执行一次该计算，并将其结果传递给着色器的统一变量中。（请参阅 [Use Uniforms or Constants Instead of Computing Values in a Shader](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW11) 。）
-
-- 程序性能。仅捕获帧后才会出现（见下面的 Capturing and Analyzing an OpenGL ES Frame ），显示渲染捕获帧时每个着色器程序所花费的时间，以毫秒为单位，同时显示占总帧渲染时间的百分比。展开程序的列表显示使用该程序进行的绘制调用以及每个调用的渲染时间贡献。在列表中选择一个程序以在助理编辑器中查看其着色器源代码，或单击绘图调用旁边的箭头图标以在帧导航器中选择该调用（请参阅下面的 Navigator Area ）。
-
-注意：仅当在支持 OpenGL ES 3.0 的设备上进行调试时才会显示“程序性能”视图（无论应用程序是使用 OpenGL ES 3.0 还是 2.0 上下文）。
-
-在调整应用时，可以使用此图表来查找优化机会。例如，如果一个程序占用帧渲染时间的 50％ ，则通过优化它可以获得更高的性能，而不是通过提高仅占帧时间的 10％ 的程序的速度。虽然此视图通过着色器程序组织帧时间，但请记住，改进着色器算法并不是优化应用程序性能的唯一方法 - 例如，你还可以减少使用昂贵的着色器程序的绘制调用次数，或者减少由慢片段着色器处理的片段数。
-
-- 问题与解决方案。仅在 Xcode 分析帧捕获后才会出现（请参阅  Capturing and Analyzing an OpenGL ES Frame ），此区域列出了分析期间发现的可能问题以及提高性能的建议。
-
-当你在捕获的帧中更改 GLSL 着色器程序时（请参阅下面的 Editing Shader Programs ），帧时间和程序性能图表将展开以显示最初捕获的帧的基线渲染时间和使用编辑的当前着色器的渲染时间。
-
-### Capturing and Analyzing an OpenGL ES Frame
-
-> For a detailed look at your app’s OpenGL ES usage, capture the sequence of OpenGL ES commands used to render a single frame of animation. Xcode offers several ways to begin a frame capture:
->
-> - Manual capture. While running your app in Xcode, click the camera icon in the debug bar (shown in Figure B-2) or choose Capture OpenGL ES Frame from the Debug menu.
->
-> Figure B-2  Debug Bar with Capture OpenGL ES Frame button
-
-有关应用程序的 OpenGL ES 用法的详细信息，请捕获用于呈现单帧动画的 OpenGL ES 命令序列。Xcode 提供了几种开始帧捕获的方法：
-
-- 手动捕获。在 Xcode 中运行应用程序时，单击调试栏中的摄像头图标（如图 B-2 所示）或从 Debug 菜单中选择 Capture OpenGL ES Frame 。
-
-图 B-2 带有 Capture OpenGL ES Frame 按钮的调试栏
-
-![DebugBarWithCaptureOpenGLESFrameButton](../../resource/OpenGLES/Markdown/DebugBarWithCaptureOpenGLESFrameButton.png)
-
-> Note: The Capture OpenGL ES Frame button automatically appears only if your project links against the OpenGL ES or Sprite Kit framework. You can choose whether it appears for other projects by editing the active scheme. (See [About the Scheme Editing Dialog](http://help.apple.com/xcode).)
->
-> - Breakpoint action. Choose Capture OpenGL ES Frame as an action for any breakpoint. When the debugger reaches a breakpoint with this action, Xcode automatically captures a frame. (See [Setting Breakpoint Actions and Options](http://help.apple.com/xcode).) If you use this action with an OpenGL ES Error breakpoint while developing your app (see [Adding an OpenGL ES Error Breakpoint](http://help.apple.com/xcode)), you can use the OpenGL ES Frame Debugger to investigate the causes of OpenGL ES errors whenever they occur.
-> - OpenGL ES event marker. Programmatically trigger a frame capture by inserting an event marker in the OpenGL ES command stream. The following command inserts such a marker:
-
-注意：仅当项目链接了 OpenGL ES 或 Sprite Kit 框架时，才会自动显示 Capture OpenGL ES Frame 按钮。可以通过编辑激活模式来选择是否为其他项目显示。（请参阅 [About the Scheme Editing Dialog](http://help.apple.com/xcode) 。）
-
-- 断点动作。选择 Capture OpenGL ES Frame 作为任何断点的操作。当调试器到达具有该操作的断点时，Xcode 会自动捕获一个帧。（见 [Setting Breakpoint Actions and Options](http://help.apple.com/xcode) 。）如果在开发应用程序时将此操作与 OpenGL ES 错误断点一起使用（见 [Adding an OpenGL ES Error Breakpoint](http://help.apple.com/xcode) ），则可以使用 OpenGL ES 帧调试器来调查 OpenGL ES 错误的原因。
-- OpenGL ES 事件标记。通过在 OpenGL ES 命令流中插入事件标记，以编程方式触发帧捕获。以下命令插入这样的标记：
-
-```objc
-glInsertEventMarkerEXT(0, "com.apple.GPUTools.event.debug-frame")
-```
-
-> When the OpenGL ES client reaches this marker, it finishes rendering the frame, then Xcode automatically captures the entire sequence of commands used to render that frame.
->
-> After Xcode has captured the frame, it shows the OpenGL ES Frame Debugger interface. Use this interface to inspect the sequence of OpenGL ES commands that render the frame and examine OpenGL ES resources, as discussed in [Touring the OpenGL ES Frame Debugger](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW11).
->
-> In addition, Xcode can perform an automated analysis of your app’s OpenGL ES usage to determine which parts of your renderer and shader architecture can benefit most from performance optimizations. To use this option, click the Analyze button at the top of the GPU report (shown at the top right in Figure B-1).
->
-> When you click the Analyze button, Xcode captures a frame (if one hasn’t been captured already), then runs your rendering code through a series of experiments using the attached iOS device. For example, to see if your rendering speed is limited by texture sizes, Xcode runs the captured sequence of OpenGL ES commands both with the texture data your app submitted to the GPU and with a size-reduced texture set. After Xcode finishes its analysis, the Problems & Solutions area of the GPU report lists any issues it found and suggestions for possible performance improvements.
-
-当 OpenGL ES 客户端运行到此标记时，OpenGL ES 完成帧的渲染，然后 Xcode 自动捕获用于渲染该帧的整个命令序列。
-
-在 Xcode 捕获了帧之后，显示 OpenGL ES Frame Debugger 姐买呢。使用此界面检查渲染该帧的 OpenGL ES 命令序列并检查 OpenGL ES 资源，如 [Touring the OpenGL ES Frame Debugger](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW11) 中所述。
-
-此外，Xcode 可以对应用程序的 OpenGL ES 使用情况进行自动分析，以确定渲染器和着色器体系结构的哪些部分可以从性能优化中获益最多。要使用此选项，请单击 GPU 报告顶部的“Analyze”按钮（如图 B-1 右上方所示）。
-
-单击“Analyze”按钮时，Xcode 会捕获一个帧（若该帧未被捕获），则使用附加的 iOS 设备通过一系列实验运行渲染代码。例如，要查看渲染速度是否受纹理大小的限制，Xcode 使用应用程序提交给 GPU 的纹理数据运行捕获到的 OpenGL ES  命令序列，同时使用尺寸缩小了的纹理集运行相同的命令序列。Xcode 完成其分析之后，GPU 报告的 Problems & Solutions 区域列出它找到的任何问题以及可能的性能改进建议。
-
-### Touring the OpenGL ES Frame Debugger
-
-> After Xcode captures a frame, it automatically reconfigures its interface for OpenGL ES debugging. The OpenGL ES Frame Debugger interface modifies several areas of the Xcode workspace window to provide information about the OpenGL ES rendering process, as shown in Figure B-3 and Figure B-4 and summarized below. (The frame debugger does not use the inspector or library panes, so you may wish to hide Xcode’s utility area during OpenGL ES debugging.)
->
-> Figure B-3  Frame debugger examining draw calls and resources
-
-Xcode 捕获帧后，它会自动重新配置 OpenGL ES 调试的界面。OpenGL ES Frame Debugger 界面修改了 Xcode 工作区窗口的几个区域，以提供有关 OpenGL ES 渲染过程的信息，如图 B-3 和图 B-4 所示，并总结如下。（帧调试器不使用检查器或库面板，因此你可能希望在 OpenGL ES 调试期间隐藏 Xcode 的实用程序区域。）
-
-图 B-3 帧调试器检查绘制调用和资源
-
-![FrameDebuggerExaminingDrawCallsAndResources](../../resource/OpenGLES/Markdown/FrameDebuggerExaminingDrawCallsAndResources.png)
-
-> Figure B-4  Frame debugger examining shader program performance and analysis results
-
-图 B-4 检查着色器程序性能并分析结果的帧调试器
-
-![FrameDebuggerExaminingShaderProgramPerformanceAndAnalysisResults](../../resource/OpenGLES/Markdown/FrameDebuggerExaminingShaderProgramPerformanceAndAnalysisResults.png)
-
-#### Navigator Area
-
-> In the OpenGL ES frame debugger interface, the debug navigator is replaced by the OpenGL ES frame navigator. This navigator shows the OpenGL ES commands that render the captured frame, organized sequentially or according to their associated shader program. Use the Frame View Options popup menu at the top of the frame navigator to switch between view styles.
->
-> Figure B-5  View Frame By popup menu in navigator
-
-在 OpenGL ES 帧调试器界面中，调试导航器被 OpenGL ES 帧导航器取代。此导航器显示了渲染捕获帧的 OpenGL ES 命令，按顺序组织或根据其关联的着色器程序进行组织。使用帧导航器顶部的“Frame View Options”弹出菜单可在视图样式之间切换。
-
-图 B-5 导航器中的弹出菜单
-
-![ViewFrameByPopupMenuInNavigator](../../resource/OpenGLES/Markdown/ViewFrameByPopupMenuInNavigator.png)
-
-#### View Frame By Call
-
-> View the captured frame by call when you want to study OpenGL ES commands in sequence to pinpoint errors, diagnose rendering problems, or identify common performance issues. In this mode, the frame navigator lists commands in the order your app called them. Error or warning icons appear next to commands that result in OpenGL ES errors or that may indicate performance issues.
-
-You can add structure to this list by using the glPushGroupMarkerEXT and glPopGroupMarkerEXT functions to annotate groups of OpenGL ES commands—these groups appear as folders you can expand or collapse to show more or less detail. (For details, see [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6).) You can also expand an OpenGL ES command to show a stack trace indicating where in your application code the command was issued.
-
-Use the context menu to choose whether to abbreviate command names and which commands, groups, and warnings to show. Use the flag icon at the bottom of the navigator to switch between showing all OpenGL ES commands and showing only those which draw into the framebuffer.
-
-Clicking an OpenGL ES command in the list navigates to that point in the OpenGL ES command sequence, affecting the contents of other areas of the frame debugger interface, as discussed below, and showing the effects of the OpenGL ES calls up to that point on the attached device’s display.
-
-如果要按顺序研究 OpenGL ES 命令以查明错误，诊断渲染问题或识别常见性能问题，选择 View the captured frame by call 。在此模式下，帧导航器按照应用程序调用它们的顺序列出命令。导致 OpenGL ES 错误或可能表示性能问题的命令旁边会出现错误或警告图标。
-
-可以使用 glPushGroupMarkerEXT 和 glPopGroupMarkerEXT 函数为此列表添加结构，以注释 OpenGL ES 命令组 - 这些组显示为可以展开或折叠以显示更多或更少细节的文件夹的形式。（有关详细信息，见 [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6) 。）你还可以展开 OpenGL ES 命令以显示堆栈跟踪，指示命令发出的相应应用程序代码的位置。
-
-使用上下文菜单选择是否缩写命令名称以及要显示的命令，组和警告。使用导航器底部的标志图标在显示所有 OpenGL ES 命令和仅显示绘制到帧缓冲区的命令之间切换。
-
-单击列表中的 OpenGL ES 命令导航到 OpenGL ES 命令序列中的那一点，影响帧调试器界面的其他区域的内容，如下所述，显示在附加设备显示屏上 OpenGL ES 调用对该点的影响。
-
-#### View Frame By Program
-
-> View the captured frame by program when you want to analyze the GPU time spent on each shader program and draw command.
->
-> Expand the listing for a program to see the time contribution from each shader in the program and each draw call. Expand the listing for a draw call to show a stack trace indicating where in your application code that command was issued.
->
-> Use the context menu to refine the display—you can choose whether programs are sorted by their time contributions and whether timing information is displayed as a percentage of the total rendering time.
->
-> Clicking a program or shader shows the corresponding GLSL source code in the primary editor. Clicking an OpenGL ES command navigates to that point in the frame capture sequence.
->
-> Note: The View Frame By Program option is only available when debugging on devices that support OpenGL ES 3.0 (regardless of whether your app uses an OpenGL ES 3.0 or 2.0 context). On other devices, the Frame View Options popup menu is disabled.
-
-当想要分析在每个着色器程序和绘制命令上花费的 GPU 时间时，选择 View the captured frame by program 。
-
-展开程序的列表，以查看程序和每个绘制调用中每个着色器的时间贡献。展开绘制调用的列表以显示堆栈跟踪，指示应用程序代码中发出命令的位置。
-
-使用上下文菜单优化显示 - 可以选择是否按时间贡献对程序进行排序，以及计时信息是否显示为总渲染时间的百分比。
-
-单击程序或着色器会在主编辑器中显示相应的 GLSL 源代码。单击 OpenGL ES 命令导航到帧捕获序列中的该点。
-
-注意：View Frame By Program 选项仅在支持 OpenGL ES 3.0 的设备上进行调试时可用（无论应用程序是使用 OpenGL ES 3.0 还是 2.0 上下文）。在其他设备上，“Frame View Options”弹出菜单被禁用。
-
-#### Editor Area
-
-> When working with a frame capture, you use the primary editor to preview the framebuffer being rendered to, and the assistant editor to examine OpenGL ES resources and edit GLSL shader programs. By default, the assistant editor shows a graphical overview of all resources currently owned by the OpenGL ES context, as shown in Figure B-3. Use the assistant editor’s jump bar to show only those resources bound for use as of the call selected in the frame navigator, or to select an individual resource for further inspection. You can also double-click a resource in the overview to inspect it. When you select a resource, the assistant editor changes to a format suited for tasks appropriate to that resource’s type.
-
-使用帧捕获时，使用主编辑器预览要渲染的帧缓冲区，使用辅助编辑器检查 OpenGL ES 资源并编辑 GLSL 着色器程序。默认情况下，辅助编辑器显示 OpenGL ES 上下文当前拥有的所有资源的图形概览，如图 B-3 所示。 使用辅助编辑器的跳转栏来仅显示在帧导航器中选择的调用使用的资源，或选择单个资源以供进一步检查。还可以双击概览中的资源来检查它。选择资源时，辅助编辑器将更改为适合该资源类型的任务的格式。
-
-##### Previewing Framebuffer Contents
-
-> The primary editor shows the contents of the framebuffer as rendered by the draw call currently selected in the frame navigator. (If the selected OpenGL ES command in the frame navigator is not a drawing command—for example, a command that sets state such as glUseProgram—the framebuffer reflects the rendering done by the most recent draw call prior to the selection.) You can also navigate the sequence of OpenGL ES commands using the jump bar at the top of the primary editor.
->
-> Figure B-6  Framebuffer info popover
-
-主编辑器显示帧导航器中当前选中的绘制调用渲染的帧缓冲区内容。（如果帧导航器中选定的 OpenGL ES 命令不是绘图命令 - 例如，譬如 glUseProgram 这类设置状态的命令  - 帧缓冲区反映了由选中的命令之前的最近绘制调用所做的渲染。）你还可以使用主编辑器顶部的跳转栏浏览 OpenGL ES 命令序列。
-
-图 B-6 帧缓冲区信息弹出窗口
-
-![FramebufferInfoPopover](../../resource/OpenGLES/Markdown/FramebufferInfoPopover.png)
-
-> The editor shows a preview for each framebuffer attachment currently bound for drawing. For example, most approaches to 3D rendering use a framebuffer with attachments for both color and depth, as illustrated in . Use the controls in the lower left of the editor to choose which framebuffer attachments are currently shown. Clicking the info button, left of each framebuffer attachment’s name, shows a popover detailing the attachment’s properties, as shown in Figure B-6. Click the settings button, right of the framebuffer attachment’s name, to show a popover with controls that adjust the preview image. For example, you can use these controls to make a certain range of Z values in a depth buffer more visible in its grayscale preview, as shown in Figure B-7.
->
-> Figure B-7  Framebuffer settings popover
-
-编辑器显示当前绑定用于绘图的每个帧缓冲附件的预览。例如，大多数 3D 渲染方法都使用带有颜色和深度附件的帧缓冲，如图所示。使用编辑器左下角的控件选择当前显示的帧缓冲附件。单击每个帧缓冲附件名称左侧的信息按钮，会显示一个详细说明附件属性的弹出窗口，如图 B-6 所示。单击帧缓冲附件名称右侧的设置按钮，以显示带有用于调整预览图像控件的弹出窗口。例如，你可以使用这些控件在深度缓冲区中使一定范围的 Z 值在其灰度预览中更加可见，如图 B-7 所示。
-
-图 B-7 帧缓冲设置弹出窗口
-
-![FramebufferSettingsPopover](../../resource/OpenGLES/Markdown/FramebufferSettingsPopover.png)
-
-> Each framebuffer attachment preview also shows a green wireframe highlighting the effect of the current draw call (as illustrated in Figure B-3). Use the context menu in a preview image to choose whether the highlight appears in the preview or on the display of the attached device.
-
-每个帧缓冲附件预览还会显示一个绿色线框，突出显示当前绘制调用的效果（如图 B-3 所示）。使用预览图像中的上下文菜单选择突出显示是在预览中还是在所连接设备的显示屏上。
-
-##### Editing Shader Programs
-
-> When you select a shader program in the assistant editor’s jump bar or resource overview, the assistant editor shows the GLSL source code for that program’s fragment shader (as shown in Figure B-8). When you select a program in the frame navigator (see View Frame By Program), the primary editor shows the program’s fragment shader and the assistant editor shows its vertex shader. In any editor showing a fragment shader, you can use the jump bar to switch to its counterpart vertex shader, and vice versa.
->
-> Figure B-8  GLSL shader source editor with update button
-
-在辅助编辑器的跳转栏或资源概述中选择着色器程序时，辅助编辑器会显示该程序的片段着色器的 GLSL 源代码（如图 B-8 所示）。在帧导航器中选择程序时（见 View Frame By Program ），主编辑器显示程序的片段着色器，辅助编辑器显示其顶点着色器。在显示片段着色器的任何编辑器中，可以使用跳转条切换到其对应的顶点着色器，反之亦然。
-
-图 B-8 带有更新按钮的 GLSL 着色器源编辑器
-
-![GLSLshaderSourceEditorWithUpdateButton](../../resource/OpenGLES/Markdown/GLSLshaderSourceEditorWithUpdateButton.png)
-
-> Each line of the shader source code is highlighted in the right margin with a bar representing its relative contribution to rendering time. Use these to focus your shader optimization efforts—if a few lines account for a greater share of rendering time, look into faster alternatives for those lines. (For shader performance tips, see [Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3).)
->
-> You can make changes to the shader source code in the editor. Then, click the Update button below the editor (shown in Figure B-8) to recompile the shader program and see its effects on the captured frame. If compiling the shader results in error or warning messages from the GLSL compiler, Xcode annotates the shader source code for each issue. The recompiled shader program remains in use on the device, so you can resume running your app. Click the Continue button in the debug bar to see your shader changes in action.
-
-着色器源代码每行右边都有高亮显示了条形图，该条形图表示该行对渲染时间的相对贡献。使用这些来集中着色器优化工作 - 如果某几行占用渲染时间的更大份额，请查看这些行的更快替代方案。（有关着色器性能提示，请参阅 [Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3) 。）
-
-你可以在编辑器中更改着色器源代码。然后，单击编辑器下方的“更新”按钮（如图 B-8 所示）以重新编译着色器程序并查看其对捕获帧的影响。如果编译着色器会出现来自 GLSL 编译器的错误或警告消息，则 Xcode 会在着色器源代码中为每个问题添加注释。重新编译仍在设备上使用的着色器程序，可以继续应用程序的运行。单击调试栏中的“Continue”按钮以查看着色器更改的操作。
-
-##### Inspecting Vertex Data
-
-> When you inspect an array buffer, the assistant editor shows the contents of the buffer (see Figure B-9). Because a buffer in OpenGL ES memory has no defined format, you use the pop-up menus at the bottom of the editor to choose how its contents appear (for example, as 32-bit integers or floating-point values, or as twice as many 16-bit integers or half-float values), and how many columns Xcode uses to display the data.
->
-> Figure B-9  Assistant editor previewing array buffer contents
-
-检查数组缓冲区时，辅助编辑器会显示缓冲区的内容（参见图 B-9 ）。由于 OpenGL ES 内存中的缓冲区没有定义格式，因此可以使用编辑器底部的弹出菜单选择其内容的显示方式（例如，32 位整数或浮点值，或者两倍于 16 位整数或半浮点数的值），以及 Xcode 用于显示数据的列数。
-
-图 B-9 辅助编辑器预览数组缓冲区内容
-
-![AssistantEditorPreviewingArrayBufferContents](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingArrayBufferContents.png)
-
-> A vertex array object (VAO) encapsulates one or more data buffers in OpenGL ES memory and the attribute bindings used for supplying vertex data from the buffers to a shader program. (For details on using VAOs, see [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14).) Because the VAO bindings include information about the format of the buffers’ contents, inspecting a VAO shows its contents as interpreted by OpenGL ES (see Figure B-10).
->
-> Figure B-10  Assistant editor previewing vertex array object
-
-顶点数组对象（ VAO ）封装 OpenGL ES 内存中的一个或多个数据缓冲区以及用于将缓冲区中的顶点数据提供给着色器程序的属性绑定。（有关使用 VAO 的详细信息，请参阅 [Consolidate Vertex Array State Changes Using Vertex Array Objects](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW14) 。）由于 VAO 绑定包含有关缓冲区内容格式的信息，因此检查 VAO 会显示由 OpenGL ES 解释的内容（参见图 B-10 ）。
-
-图 B-10 辅助编辑器预览顶点数组对象
-
-![AssistantEditorPreviewingVertexArrayObject](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingVertexArrayObject.png)
-
-##### Viewing Textures or Renderbuffers
-
-> When you inspect a texture or renderbuffer, the assistant editor shows an image preview of its contents. You can use the same controls found in the primary editor to get more information about the texture object or renderbuffer and to adjust the image preview. For textures, you can use an additional control in the lower left corner of the assistant editor to preview each mipmap level of the texture and (if applicable) each face of a cube map texture (as shown in Figure B-11).
->
-> Figure B-11  Assistant editor previewing cube map texture
-
-检查纹理或渲染缓冲区时，辅助编辑器会显示其内容的图像预览。可以使用主编辑器中的相同控件来获取有关纹理对象或渲染缓冲区的更多信息，并调整图像预览。对于纹理，可以使用辅助编辑器左下角的附加控件来预览纹理的每个 mipmap 级别以及（如果适用）立方体贴图纹理的每个面（如图 B-11 所示）。
-
-图 B-11 辅助编辑器预览立方体贴图纹理
-
-![AssistantEditorPreviewingCubeMapTexture](../../resource/OpenGLES/Markdown/AssistantEditorPreviewingCubeMapTexture.png)
-
-#### Debug Area
-
-> The debug bar provides multiple controls for navigating the captured sequence of OpenGL ES commands (shown in Figure B-12). You can use its menus to follow the hierarchy shown in the frame navigator and choose a command, or you can use the arrows and slider to move back and forth in the sequence. Press the Continue button to end frame debugging and return to running your application.
->
-> Figure B-12  OpenGL ES debug bar
-
-调试栏提供了多个控件，用于导航捕获的 OpenGL ES 命令序列（如图 B-12 所示）。你可以使用其菜单在帧导航器中显示的层次结构中进行导航并选择一个命令，也可以使用箭头和滑块在序列中来回移动。按“Continue”按钮结束帧调试并返回运行的应用程序。
-
-图 B-12 OpenGL ES 调试栏
-
-![OpenGLESDebugBar](../../resource/OpenGLES/Markdown/OpenGLESDebugBar.png)
-
-> The frame debugger has no debug console. Instead, Xcode offers multiple variables views, each of which provides a different summary of the current state of the OpenGL ES rendering process. Use the popup menu to choose between the available variables views, discussed in the following sections.
-
-帧调试器没有调试控制台。相反，Xcode 提供了多个变量视图，每个视图都提供了 OpenGL ES 渲染过程当前状态的不同摘要。使用弹出菜单在可用变量视图之间进行选择，这将在以下各节中讨论。
-
-##### The All GL Objects View
-
-> The All GL Objects view, similar to the Bound GL Objects view shown on the right in Figure B-13, lists the same OpenGL ES resources as the graphical overview in the assistant editor. Unlike the graphical overview, however, this view can provide more detailed information about a resource when you expand its disclosure triangle. For example, expanding the listing for a framebuffer or buffer object shows information otherwise available only through OpenGL ES query functions such as glGetBufferParameter and glGetFramebufferAttachmentParameter. Expanding the listing for a shader program shows its status, attribute bindings, and the currently bound value for each uniform variable.
-
-All GL Objects 视图类似于图 B-13 右侧所示的 Bound GL Objects 视图，列出了与辅助编辑器中的图形概览相同的 OpenGL ES 资源。但是，与图形概述不同的是，当展开其显示三角形时，此视图可以提供有关资源的更详细信息。例如，展开帧缓冲区或缓冲区对象的列表显示仅通过 OpenGL ES 查询函数（例如 glGetBufferParameter 和 glGetFramebufferAttachmentParameter ）可用的信息。 展开着色器程序的列表会显示其状态，属性绑定以及每个统一变量的当前绑定值。
-
-##### The Bound GL Objects View
-
-> The Bound GL Objects view, shown on the right in Figure B-13, behaves identically to the All GL Objects view, but lists only resources currently bound for use as of the selected OpenGL ES command in the frame navigator.
->
-> Figure B-13  Debug area with GL Context and Bound GL Objects views
-
-图 B-13 右侧所示的 Bound GL Objects 视图的行为与 All GL Objects 视图相同，但仅列出从帧导航栏中选中的 OpenGL ES 命令开始使用的当前绑定的资源。
-
-图 B-13 具有 GL Context 和 Bound GL Objects 视图的调试区域
-
-![DebugAreaWithGLContextAndBoundGLObjectsViews](../../resource/OpenGLES/Markdown/DebugAreaWithGLContextAndBoundGLObjectsViews.png)
-
-##### The GL Context View
-
-> The GL Context view, shown on the left in Figure B-13, lists the entire state vector of the OpenGL ES renderer, organized into functional groups. When you select a call in the frame navigator that changes OpenGL ES state, the changed values appear highlighted. For example, calling the glCullFace or glFrontFace function changes and highlights values in the Culling section of the state list. Enabling blending with the glEnable(GL_BLEND) call or changing blending parameters with the glBlendFunc function changes and highlights values in the Blending section of the state list.
-
-GL Context 视图（如图 B-13 左侧所示）列出了 OpenGL ES 渲染器的整个状态向量，以功能为单位组织。当在帧导航器中选择一个更改 OpenGL ES 状态的调用时，更改的值将突出显示。例如，调用 glCullFace 或 glFrontFace 函数会更改并高亮显示状态列表的 Culling 部分中的值。使用 glEnable（GL_BLEND）调用启用混合或使用 glBlendFunc 函数更改混合参数会更改并高亮显示状态列表的 Blending 部分中的值。
-
-##### The Context Info View
-
-> The Context Info view, shown on the right in Figure B-14, lists static information about the OpenGL ES renderer in use: name, version, capabilities, extensions and similar data. You can look through this data instead of writing your own code to query renderer attributes such as GL_MAX_TEXTURE_IMAGE_UNITS and GL_EXTENSIONS.
->
-> Figure B-14  Debug area with Auto and Context Info views
-
-如图 B-14 右侧所示，Context Info 视图列出了有关 OpenGL ES 渲染器正在使用的静态信息：名称，版本，功能，扩展和类似数据。你可以直接在该视图中查看此数据，而不用编写自己的代码来查询渲染器属性，例如 GL_MAX_TEXTURE_IMAGE_UNITS 和 GL_EXTENSIONS 。
-
-图 B-14 具有 Auto 和 Context Info 视图的调试区域
-
-![DebugAreaWithAutoAndContextInfoViews](../../resource/OpenGLES/Markdown/DebugAreaWithAutoAndContextInfoViews.png)
-
-##### The Auto View
-
-> The Auto view, shown on the left in Figure B-14, automatically lists a subset of items normally found in the other variables views and other information appropriate to the selected call in the frame navigator. For example:
->
-> - If the selected call results in an OpenGL ES error, or if Xcode has identified possible performance issues with the selected call, the view lists the errors or warnings and suggested fixes for each.
-> - If the selected call changes part of the OpenGL ES context state, or its behavior is dependent on context state, the view automatically lists relevant items from the GL Context view.
-> - If the selected call binds a resource or makes use of bound resources such as vertex array objects, programs, or textures, the view automatically lists relevant items from the Bound GL Objects view.
-> - If a draw call is selected, the view lists program performance information, including the total time spent in each shader during that draw call and, if you’ve changed and recompiled shaders since capturing the frame, the difference from the baseline time spent in each shader. (Program performance information is only available when debugging on an OpenGL ES 3.0–capable device.)
->
-> In addition, this view lists aggregate statistics about frame rendering performance, including the number of draw calls and frame rate.
-
-自动视图（如图 B-14 左侧所示）自动列出通常在其他变量视图中找到的项目子集以及适用于帧导航器中所选调用的其他信息。例如：
-
-- 如果所选调用导致 OpenGL ES 错误，或者 Xcode 已识别出所选调用可能存在的性能问题，则该视图会列出相关错误或警告以及建议的修复方案。
-- 如果所选调用更改了 OpenGL ES 上下文状态的一部分，或者其行为依赖于上下文状态，则该视图会自动列出 GL Context 视图中的相关项。
-- 如果所选调用绑定资源或使用绑定资源（如顶点数组对象，程序或纹理），则该视图会自动列出 Bound GL Objects 视图中的相关项。
-- 如果选取了某个绘制调用，则该视图会列出程序性能信息，包括在绘制调用期间在每个着色器中花费的总时间，如果自捕获帧后更改和重新编译了着色器，也包括每个着色器花费的时间与基准时间的差距。（只有在支持 OpenGL ES 3.0 的设备上进行调试时，才能使用程序性能信息。）
-
-此外，此视图还列出了有关帧渲染性能的聚合统计信息，包括绘制调用的数量和帧率。
