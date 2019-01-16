@@ -335,7 +335,7 @@ OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。�
 
 你的应用在创建和初始化 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象时决定支持哪个版本的 OpenGL ES 。如果设备不支持所请求的 OpenGL ES 版本，则 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 方法返回 `nil` 。你的应用必须对返回值进行测试，以确保在使用之前上下文被成功初始化。
 
-要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 `nil` ，则初始化旧版本的上下文。清单 2-1 演示了如何执行此操作。
+要在应用程序中支持多个版本的 OpenGL ES 作为渲染选项，你应首先尝试初始化你所面向的最新版本的渲染上下文。如果返回的对象为 `nil` ，则初始化旧版本的上下文。Listing 2-1 演示了如何执行此操作。
 
 <span id="listing-2-1">Listing 2-1</span> 在同一个应用程序中支持 OpenGL ES 的多个版本
 
@@ -390,11 +390,11 @@ Sharegroups 在两种特定情况下最有用：
 - 当上下文之间共享的大多数资源保持不变时。
 - 当你希望应用程序能够在除渲染主线程之外的线程上创建新的 OpenGL ES 对象时。在这种情况下，第二个上下文在单独的线程上运行，专门用于获取数据和创建资源。加载资源后，第一个上下文可以立即绑定并使用该资源。[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类使用此模式提供异步纹理加载。
 
-  要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。清单 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](#listing-2-1) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
+  要创建引用同一个 sharegroup 的多个上下文，首先通过调用 [initWithAPI:](https://developer.apple.com/documentation/opengles/eaglcontext/1624895-initwithapi) 来初始化第一个上下文：将自动为该上下文创建一个 sharegroup 。通过调用 [initWithAPI:sharegroup:](https://developer.apple.com/documentation/opengles/eaglcontext/1624877-initwithapi) 方法使用第一个上下文的 sharegroup 来初始化第二个及后续的上下文。Listing 2-2 显示了该项工作。第一个上下文是使用 [Listing 2-1](#listing-2-1) 中定义的便捷函数创建的。通过从第一个上下文中提取 API 版本和 sharegroup 来创建第二个上下文。
 
 要点：与同一个 sharegroup 关联的所有上下文必须使用与初始上下文相同的 OpenGL ES API 版本。
 
-清单 2-2 使用公共 sharegroup 创建两个上下文
+Listing 2-2 使用公共 sharegroup 创建两个上下文
 
 ```objc
 EAGLContext* firstContext = CreateBestEAGLContext();
@@ -469,9 +469,9 @@ GLKit 框架提供视图和视图控制器类，消除了绘制和动画 OpenGL 
 - 以编程方式创建视图时，首先创建一个上下文，然后将其传递给视图的 [initWithFrame:context:](https://developer.apple.com/documentation/glkit/glkview/1615609-initwithframe) 方法。
 - 从 storyboard 加载视图后，创建上下文并将其设置为视图的 [context](https://developer.apple.com/documentation/glkit/glkview/1615597-context) 属性的值。
 
-GLKit 视图自动创建和配置自己的 OpenGL ES 帧缓冲对象和渲染缓冲区。你可以使用视图的 drawable 属性控制这些对象的属性，如清单 3-1 所示。 如果更改 GLKit 视图的大小，比例因子或可绘制属性，它会在下次绘制其内容时自动销毁并重新创建相应的帧缓冲区对象和渲染缓冲区。
+GLKit 视图自动创建和配置自己的 OpenGL ES 帧缓冲对象和渲染缓冲区。你可以使用视图的 drawable 属性控制这些对象的属性，如 Listing 3-1 所示。 如果更改 GLKit 视图的大小，比例因子或可绘制属性，它会在下次绘制其内容时自动销毁并重新创建相应的帧缓冲区对象和渲染缓冲区。
 
-清单 3-1 配置 GLKit 视图
+Listing 3-1 配置 GLKit 视图
 
 ```objc
 - (void)viewDidLoad
@@ -502,9 +502,9 @@ GLKit 视图自动创建和配置自己的 OpenGL ES 帧缓冲对象和渲染缓
 >
 > Listing 3-2  Example drawing method for a GLKit view
 
-[Figure 3-1](#figure-3-1) 概述了绘制 OpenGL ES 内容的三个步骤：准备 OpenGL ES 基础结构，发布绘图命令，以及将渲染的内容呈现给 Core Animation 以供显示。[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类实现第一步和第三步。对于第二步，实现一个类似于 清单 3-2 中示例的绘图方法。
+[Figure 3-1](#figure-3-1) 概述了绘制 OpenGL ES 内容的三个步骤：准备 OpenGL ES 基础结构，发布绘图命令，以及将渲染的内容呈现给 Core Animation 以供显示。[GLKView](https://developer.apple.com/documentation/glkit/glkview) 类实现第一步和第三步。对于第二步，实现一个类似于 Listing 3-2 中示例的绘图方法。
 
-清单 3-2 GLKit 视图的绘图方法示例
+Listing 3-2 GLKit 视图的绘图方法示例
 
 ```objc
 - (void)drawRect:(CGRect)rect
@@ -561,9 +561,9 @@ GLKView 类能够为 OpenGL ES 绘图提供简单的接口，因为它管理 Ope
 
 许多 OpenGL ES 应用程序在自定义类中实现呈现代码。这种方法的一个优点是，它允许你通过为每个算法定义不同的渲染器类来轻松支持多种渲染算法。共享通用功能的渲染算法可以从超类继承共享函数。例如，你可以使用不同的渲染器类来支持 OpenGL ES 2.0 和 3.0（见 [Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts) ）。或者你可以使用它们自定义渲染，以便在具有更强大硬件的设备上获得更好的图像质量。
 
-GLKit 非常适合这种方法 - 你可以使渲染器对象成为标准 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例的委托。渲染器类遵循 [GLKViewDelegate](https://developer.apple.com/documentation/glkit/glkviewdelegate) 协议并实现 [glkView:drawInRect:](https://developer.apple.com/documentation/glkit/glkviewdelegate/1615595-glkview) 方法，而不是继承 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 并实现 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 方法。清单 3-3 演示了如何在应用程序启动时根据硬件特性选择渲染器类。
+GLKit 非常适合这种方法 - 你可以使渲染器对象成为标准 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例的委托。渲染器类遵循 [GLKViewDelegate](https://developer.apple.com/documentation/glkit/glkviewdelegate) 协议并实现 [glkView:drawInRect:](https://developer.apple.com/documentation/glkit/glkviewdelegate/1615595-glkview) 方法，而不是继承 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 并实现 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 方法。Listing 3-3 演示了如何在应用程序启动时根据硬件特性选择渲染器类。
 
-清单 3-3 根据硬件特性选择渲染器类
+Listing 3-3 根据硬件特性选择渲染器类
 
 ```objc
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -627,9 +627,9 @@ Figure 3-2 动画循环
 >
 > Listing 3-4  Using a GLKit view and view controller to draw and animate OpenGL ES content
 
-清单 3-4 演示了使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类和 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例渲染动画 OpenGL ES 内容的典型策略。
+Listing 3-4 演示了使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类和 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例渲染动画 OpenGL ES 内容的典型策略。
 
-清单 3-4 使用 GLKi t视图和视图控制器来绘制和动画 OpenGL ES 内容
+Listing 3-4 使用 GLKi t视图和视图控制器来绘制和动画 OpenGL ES 内容
 
 ```objc
 @implementation PlanetViewController // subclass of GLKViewController
@@ -969,9 +969,9 @@ Figure 4-3 显示了 OpenGL ES 应用程序在 iOS 上渲染和呈现帧的步�
 >
 > Listing 4-2  Clear framebuffer attachments
 
-在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中来自前一帧的内容不需要在下一帧中进行绘制了。调用 glClear 函数，传入一个位掩码，清除所有缓冲区，如清单 4-2 所示。
+在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中来自前一帧的内容不需要在下一帧中进行绘制了。调用 glClear 函数，传入一个位掩码，清除所有缓冲区，如 Listing 4-2 所示。
 
-清单 4-2 清除帧缓冲附件
+Listing 4-2 清除帧缓冲附件
 
 ```objc
 glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
@@ -1014,9 +1014,9 @@ glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 丢弃操作是一个性能提示，告诉 OpenGL ES 不再需要一个或多个渲染缓冲区的内容。通过向 OpenGL ES 暗示不再需要渲染缓冲区的内容，缓冲区中的数据可以被丢弃掉，并且可以避免用于保持这些缓冲区内容更新的昂贵任务。
 
-在渲染循环的这个阶段，应用已经提交了该帧的所有绘图命令。当应用需要将颜色渲染缓冲区显示到屏幕时，它可能不需要深度缓冲区的内容。清单 4-3 丢弃了深度缓冲区的内容。
+在渲染循环的这个阶段，应用已经提交了该帧的所有绘图命令。当应用需要将颜色渲染缓冲区显示到屏幕时，它可能不需要深度缓冲区的内容。Listing 4-3 丢弃了深度缓冲区的内容。
 
-清单 4-3 丢弃深度帧缓冲区
+Listing 4-3 丢弃深度帧缓冲区
 
 ```objc
 const GLenum discards[]  = {GL_DEPTH_ATTACHMENT};
@@ -1071,9 +1071,9 @@ Figure 4-4 多重采样的工作原理
 >
 > Listing 4-5  Creating the multisample buffer
 
-清单 4-5 显示了创建多重采样缓冲区的代码。此代码使用先前创建的缓冲区的宽度和高度。它调用 glRenderbufferStorageMultisampleAPPLE 函数为 renderbuffer 创建多重采样存储。
+Listing 4-5 显示了创建多重采样缓冲区的代码。此代码使用先前创建的缓冲区的宽度和高度。它调用 glRenderbufferStorageMultisampleAPPLE 函数为 renderbuffer 创建多重采样存储。
 
-清单 4-5 创建多重采样缓冲区
+Listing 4-5 创建多重采样缓冲区
 
 ```objc
 glGenFramebuffers(1, &sampleFramebuffer);
@@ -1395,9 +1395,9 @@ Figure 6-3 片段着色器输出到多个渲染目标的示例
 >
 > Listing 6-1  Setting up multiple render targets
 
-你可以设置多个渲染目标并将它们添加到 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中描述的过程中。可以为一个帧缓冲区创建多个颜色附件。然后，调用 glDrawBuffers 函数来指定在渲染时使用哪些帧缓冲附件，如清单 6-1 所示。
+你可以设置多个渲染目标并将它们添加到 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中描述的过程中。可以为一个帧缓冲区创建多个颜色附件。然后，调用 glDrawBuffers 函数来指定在渲染时使用哪些帧缓冲附件，如 Listing 6-1 所示。
 
-清单 6-1 设置多个渲染目标
+Listing 6-1 设置多个渲染目标
 
 ```objc
 // Attach (previously created) textures to the framebuffer.
@@ -1413,7 +1413,7 @@ glDrawBuffers(3, targets);
 
 > When your app issues drawing commands, your fragment shader determines what color (or non-color data) is output for each pixel in each render target. Listing 6-2 shows a basic fragment shader that renders to multiple targets by assigning to fragment output variables whose locations match those set in Listing 6-1.
 
-当应用程序发出绘图命令时，片段着色器确定每个渲染目标中每个像素输出的颜色（或非颜色数据）。清单 6-2 显示了一个基本的片段着色器，它通过与清单 6-1 中设置匹配的 locations 来对着色器输出变量赋值达到渲染至多个目标的目的。
+当应用程序发出绘图命令时，片段着色器确定每个渲染目标中每个像素输出的颜色（或非颜色数据）。Listing 6-2 显示了一个基本的片段着色器，它通过与 Listing 6-1 中设置匹配的 locations 来对着色器输出变量赋值达到渲染至多个目标的目的。
 
 ```objc
 #version 300 es
@@ -1749,9 +1749,9 @@ Figure 7-1 添加调试标记组之前和之后的 Xcode Frame Debugger
 >
 > Listing 7-1  Using a debug marker to annotate drawing commands
 
-对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。清单 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 glPushGroupMarkerEXT 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 glPopGroupMarkerEXT 函数来关闭组。
+对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。Listing 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 glPushGroupMarkerEXT 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 glPopGroupMarkerEXT 函数来关闭组。
 
-清单 7-1 使用调试标记来注释绘图命令
+Listing 7-1 使用调试标记来注释绘图命令
 
 ```objc
 glPushGroupMarkerEXT(0, "Draw Spaceship");
@@ -1770,9 +1770,9 @@ glPopGroupMarkerEXT();
 
 可以使用多个嵌套标记在复杂场景中创建有意义的组的层次结构。当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类绘制 OpenGL ES 内容时，它会自动创建一个“渲染”组，其中包含绘图方法中的所有命令。你创建的任何标记都嵌套在此组中。
 
-标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 glLabelObjectEXT 函数，为对象提供调试和分析时显示的名称。清单 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
+标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 glLabelObjectEXT 函数，为对象提供调试和分析时显示的名称。Listing 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
 
-清单 7-2 使用调试标签注释 OpenGL ES 对象
+Listing 7-2 使用调试标签注释 OpenGL ES 对象
 
 ```objc
 glGenVertexArraysOES(1, &_spaceshipMesh);
@@ -1922,9 +1922,9 @@ Figure 7-2 修剪透明对象以减少片段处理
 
 实例化绘图命令允许使用单个绘制调用多次绘制相同的顶点数据。实例化绘图移动实例变量的处理到运行于 GPU 上的着色器代码中，而不是使用 CPU 时间来设置网格的不同实例之间的变化 - 例如位置偏移，变换矩阵，颜色或纹理坐标，以及为绘制的每个实例发起单独的绘制命令。
 
-多次重复使用的顶点数据是实例绘图的主要候选对象。例如，清单 7-3 中的代码在场景中的多个位置绘制一个对象。但是，大量 glUniform 和 glDrawArrays 调用会增加 CPU 开销，从而降低性能。
+多次重复使用的顶点数据是实例绘图的主要候选对象。例如，Listing 7-3 中的代码在场景中的多个位置绘制一个对象。但是，大量 glUniform 和 glDrawArrays 调用会增加 CPU 开销，从而降低性能。
 
-清单 7-3 不使用实例绘制多个相似对象
+Listing 7-3 不使用实例绘制多个相似对象
 
 ```objc
 for (x = 0; x < 10; x++) {
@@ -1941,11 +1941,11 @@ for (x = 0; x < 10; x++) {
 >
 > Listing 7-4  OpenGL ES 3.0 vertex shader using gl_InstanceID to compute per-instance information
 
-采用实例化绘图需要两个步骤：首先，使用单个调用 glDrawArraysInstanced 或 glDrawElementsInstanced 来替换上面的循环。这些调用在其他方面与 glDrawArrays 或 glDrawElements 相同，但具有指示要绘制的实例数的附加参数（对于清单 7-3 中的示例，为 100 ）。其次，选择并实现 OpenGL ES 提供的两种策略之一，以便在顶点着色器中使用每个实例信息。
+采用实例化绘图需要两个步骤：首先，使用单个调用 glDrawArraysInstanced 或 glDrawElementsInstanced 来替换上面的循环。这些调用在其他方面与 glDrawArrays 或 glDrawElements 相同，但具有指示要绘制的实例数的附加参数（对于 Listing 7-3 中的示例，为 100 ）。其次，选择并实现 OpenGL ES 提供的两种策略之一，以便在顶点着色器中使用每个实例信息。
 
-使用着色器实例 ID 策略，顶点着色器可以派生或查找每个实例的信息。每次顶点着色器运行时，其 gl_InstanceID 内置变量都包含一个标识当前正在绘制的实例的数字。使用此数字在着色器代码中计算位置偏移，颜色或其他单独实例的变量，或在统一数组或其他大容量存储中查找每个实例的信息。例如，清单 7-4 使用此技术绘制位于 10 x 10 网格中的 100 个网格实例。
+使用着色器实例 ID 策略，顶点着色器可以派生或查找每个实例的信息。每次顶点着色器运行时，其 gl_InstanceID 内置变量都包含一个标识当前正在绘制的实例的数字。使用此数字在着色器代码中计算位置偏移，颜色或其他单独实例的变量，或在统一数组或其他大容量存储中查找每个实例的信息。例如，Listing 7-4 使用此技术绘制位于 10 x 10 网格中的 100 个网格实例。
 
-清单 7-4 使用 gl_InstanceID 计算每个实例信息的 OpenGL ES 3.0 顶点着色器
+Listing 7-4 使用 gl_InstanceID 计算每个实例信息的 OpenGL ES 3.0 顶点着色器
 
 ```objc
 #version 300 es
@@ -1968,9 +1968,9 @@ void main()
 >
 > Listing 7-5  Using a vertex attribute for per-instance information
 
-使用实例数组策略，可以将每个实例信息存储在顶点数组属性中。然后，你的顶点着色器可以访问该属性以使用每个实例的信息。调用 glVertexAttribDivisor 函数以指定该属性在 OpenGL ES 绘制每个实例时如何前进。清单 7-5 演示了为实例化绘图设置顶点数组，清单 7-6 显示了相应的着色器。
+使用实例数组策略，可以将每个实例信息存储在顶点数组属性中。然后，你的顶点着色器可以访问该属性以使用每个实例的信息。调用 glVertexAttribDivisor 函数以指定该属性在 OpenGL ES 绘制每个实例时如何前进。Listing 7-5 演示了为实例化绘图设置顶点数组，Listing 7-6 显示了相应的着色器。
 
-清单 7-5 为每个实例信息使用 vertex 属性
+Listing 7-5 为每个实例信息使用 vertex 属性
 
 ```objc
 #define kMyInstanceDataAttrib 5
@@ -1985,7 +1985,7 @@ glVertexAttribDivisor(kMyInstanceDataAttrib, 1);
 
 > Listing 7-6  OpenGL ES 3.0 vertex shader using instanced arrays
 
-清单 7-6 使用实例数组的 OpenGL ES 3.0 顶点着色器
+Listing 7-6 使用实例数组的 OpenGL ES 3.0 顶点着色器
 
 ```objc
 #version 300 es
@@ -2204,9 +2204,9 @@ Figure 8-6 使用简并三角形合并三角形条带
 
 为获得最佳性能，你的模型应作为单个索引三角形条提交。要避免在顶点缓冲区中多次指定同一顶点的数据，使用单独的索引缓冲区并使用 glDrawElements 函数（或 glDrawElementsInstanced 或 glDrawRangeElements 函数，如果适用）绘制三角形条。
 
-在 OpenGL ES 3.0 中，你可以使用图元 restart 功能来合并三角形条而不使用简并三角形。启用此功能后，OpenGL ES 会将索引缓冲区中可能的最大值视为完成一个三角形条带并启动另一个三角形条带的命令。清单 8-1 演示了这种方法。
+在 OpenGL ES 3.0 中，你可以使用图元 restart 功能来合并三角形条而不使用简并三角形。启用此功能后，OpenGL ES 会将索引缓冲区中可能的最大值视为完成一个三角形条带并启动另一个三角形条带的命令。Listing 8-1 演示了这种方法。
 
-清单 8-1 在 OpenGL ES 3.0 中使用图元 restart
+Listing 8-1 在 OpenGL ES 3.0 中使用图元 restart
 
 ```objc
 // Prepare index buffer data (not shown: vertex buffer data, loading vertex and index buffers)
@@ -2295,9 +2295,9 @@ void CreateVertexBuffers()
 >
 > Listing 8-4  Drawing with a vertex buffer object
 
-清单 8-4 修改了 [Listing 8-2](#listing-8-2) 以使用顶点缓冲区对象。清单 8-4 的主要区别在于 glVertexAttribPointer 函数的参数不再指向顶点数组。相反，对应的参数为顶点缓冲区对象的偏移量。
+Listing 8-4 修改了 [Listing 8-2](#listing-8-2) 以使用顶点缓冲区对象。Listing 8-4 的主要区别在于 glVertexAttribPointer 函数的参数不再指向顶点数组。相反，对应的参数为顶点缓冲区对象的偏移量。
 
-清单 8-4 使用顶点缓冲区对象绘制
+Listing 8-4 使用顶点缓冲区对象绘制
 
 ```objc
 void DrawModelUsingVertexBuffers()
@@ -2341,7 +2341,7 @@ OpenGL ES 规范定义了以下使用方式：
 
 在 iOS 中，GL_DYNAMIC_DRAW 和 GL_STREAM_DRAW 是等效的。你可以使用 glBufferSubData 函数来更新缓冲区内容，但这样做会导致性能下降，因为它会刷新命令缓冲区并等待所有命令完成。双重或三重缓冲可以在一定程度上降低性能成本。（见 [Use Double Buffering to Avoid Resource Conflicts](#use-double-buffering-to-avoid-resource-conflicts) 。）为了获得更好的性能，请使用 OpenGL ES 3.0 中的 glMapBufferRange 函数或 OpenGL ES 2.0 或 1.1 中 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展提供的相应函数。
 
-如果顶点格式中的不同属性需要不同的使用模式，将顶点数据拆分为多个结构，并为共享通用使用特征的每个属性集合分配单独的顶点缓冲区对象。清单 8-5 修改了前一个示例，以使用单独的缓冲区来保存颜色数据。通过使用 GL_DYNAMIC_DRAW 提示分配颜色缓冲区，OpenGL ES 可以分配该缓冲区，以便应用程序保持合理的性能。
+如果顶点格式中的不同属性需要不同的使用模式，将顶点数据拆分为多个结构，并为共享通用使用特征的每个属性集合分配单独的顶点缓冲区对象。Listing 8-5 修改了前一个示例，以使用单独的缓冲区来保存颜色数据。通过使用 GL_DYNAMIC_DRAW 提示分配颜色缓冲区，OpenGL ES 可以分配该缓冲区，以便应用程序保持合理的性能。
 
 <span id="listing-8-5">Listing 8-5</span> 使用多个顶点缓冲区对象绘制模型
 
@@ -2421,9 +2421,9 @@ Figure 8-7 顶点数组对象配置
 >
 > Listing 8-6  Configuring a vertex array object
 
-清单 8-6 提供了用于配置上面显示的第一个顶点数组对象的代码。它为新的顶点数组对象生成标识符，然后将顶点数组对象绑定到上下文。在此之后，进行与不使用顶点数组对象的代码一致的调用来配置顶点属性。配置存储到绑定的顶点数组对象而不是上下文中。
+Listing 8-6 提供了用于配置上面显示的第一个顶点数组对象的代码。它为新的顶点数组对象生成标识符，然后将顶点数组对象绑定到上下文。在此之后，进行与不使用顶点数组对象的代码一致的调用来配置顶点属性。配置存储到绑定的顶点数组对象而不是上下文中。
 
-清单 8-6 配置顶点数组对象
+Listing 8-6 配置顶点数组对象
 
 ```objc
 void ConfigureVertexArrayObject()
@@ -2480,9 +2480,9 @@ OpenGL ES 应用程序设计中一个更具挑战性的问题是使用动态资�
 
 例如，你可能希望修改顶点缓冲区并在每次传递时通过高帧速率渲染循环绘制其内容。当 CPU 尝试访问缓冲内存以准备绘制下一帧时，渲染上一帧的绘图命令可能仍然在利用 GPU  - 导致缓冲区更新调用阻止进一步的 CPU 工作直到 GPU 完成。可以通过手工同步 CPU 和 GPU 对缓冲区的访问来提高此类场景的性能。
 
-glMapBufferRange 函数提供了一种更有效的方式来动态更新顶点缓冲区。（此函数在 OpenGL ES 3.0 中作为核心 API 可用以及 OpenGL ES 1.1 和 2.0 中通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展来使用相同的功能。）使用此函数可以检索指向 OpenGL ES 内存区域的指针，然后可以使用该指针写新数据。glMapBufferRange 函数允许将缓冲区数据存储的任何子区间映射到客户端内存。当与 OpenGL 同步对象一起使用该函数时，还支持允许异步缓冲区更新的提示，如清单 8-7 所示。
+glMapBufferRange 函数提供了一种更有效的方式来动态更新顶点缓冲区。（此函数在 OpenGL ES 3.0 中作为核心 API 可用以及 OpenGL ES 1.1 和 2.0 中通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展来使用相同的功能。）使用此函数可以检索指向 OpenGL ES 内存区域的指针，然后可以使用该指针写新数据。glMapBufferRange 函数允许将缓冲区数据存储的任何子区间映射到客户端内存。当与 OpenGL 同步对象一起使用该函数时，还支持允许异步缓冲区更新的提示，如 Listing 8-7 所示。
 
-清单 8-7 使用手动同步动态更新顶点缓冲区
+Listing 8-7 使用手动同步动态更新顶点缓冲区
 
 ```objc
 GLsync fence;
@@ -2561,9 +2561,9 @@ GLboolean UpdateAndDraw(GLuint vbo, GLuint offset, GLuint length, void *data) {
 
 注意：[GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象不拥有它描述的 OpenGL ES 纹理对象。完成使用后，必须调用 glDeleteTextures 函数来释放纹理对象。
 
-清单 9-1 给出了从文件加载新纹理以及绑定和启用纹理以供以后使用的典型策略。
+Listing 9-1 给出了从文件加载新纹理以及绑定和启用纹理以供以后使用的典型策略。
 
-清单 9-1 从文件加载二维纹理
+Listing 9-1 从文件加载二维纹理
 
 ```objc
 GLKTextureInfo *spriteTexture;
@@ -2703,9 +2703,9 @@ iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数�
 >
 > Listing 10-1  Read shader compile/link logs only in development builds
 
-在应用程序的发布版本中，在编译或链接着色器程序后读取诊断信息不是必需的，并且可能会降低性能。 仅在应用程序的开发版本中使用 OpenGL ES 函数读取着色器编译或链接日志，如清单 10-1 所示。
+在应用程序的发布版本中，在编译或链接着色器程序后读取诊断信息不是必需的，并且可能会降低性能。 仅在应用程序的开发版本中使用 OpenGL ES 函数读取着色器编译或链接日志，如 Listing 10-1 所示。
 
-清单 10-1 仅在开发版本中读取着色器编译/链接日志
+Listing 10-1 仅在开发版本中读取着色器编译/链接日志
 
 ```objc
 // After calling glCompileShader, glLinkProgram, or similar
@@ -2735,9 +2735,9 @@ if(logLen > 0) {
 
 许多 OpenGL ES 应用程序使用多个顶点和片段着色器，使用不同顶点着色器与相同片段着色器通常很有用，反之亦然。由于核心 OpenGL ES 规范要求将顶点和片段着色器链接为单个着色器程序，因此混合和匹配着色器会导致大量着色器程序，从而在初始化应用程序时增加着色器编译和链接总时间。
 
-iOS 上的 OpenGL ES 2.0 和 3.0 上下文支持 [EXT_separate_shader_objects](http://www.khronos.org/registry/gles/extensions/EXT/EXT_separate_shader_objects.txt) 扩展。可以使用此扩展提供的函数分别编译顶点和片段着色器，并使用程序管道对象在渲染时混合和匹配预编译的着色器阶段。此外，此扩展还提供了用于编译和使用着色器的简化接口，如清单 10-2 所示。
+iOS 上的 OpenGL ES 2.0 和 3.0 上下文支持 [EXT_separate_shader_objects](http://www.khronos.org/registry/gles/extensions/EXT/EXT_separate_shader_objects.txt) 扩展。可以使用此扩展提供的函数分别编译顶点和片段着色器，并使用程序管道对象在渲染时混合和匹配预编译的着色器阶段。此外，此扩展还提供了用于编译和使用着色器的简化接口，如 Listing 10-2 所示。
 
-清单 10-2 编译和使用单独的着色器对象
+Listing 10-2 编译和使用单独的着色器对象
 
 ```objc
 - (void)loadShaders
@@ -2781,7 +2781,7 @@ iOS 上的 OpenGL ES 2.0 和 3.0 上下文支持 [EXT_separate_shader_objects](h
 
 > OpenGL ES limits the number of each variable type you can use in a vertex or fragment shader. The OpenGL ES specification doesn’t require implementations to provide a software fallback when these limits are exceeded; instead, the shader simply fails to compile or link. When developing your app you must ensure that no errors occur during shader compilation, as shown in Listing 10-1.
 
-OpenGL ES 限制可以在顶点或片段着色器中使用的每种变量类型的数量。当超过这些限制时，OpenGL ES 规范不要求实现提供软件回退；相反，着色器将会编译或链接失败。在开发应用程序时，必须确保在着色器编译期间没有发生错误，如清单 10-1 所示。
+OpenGL ES 限制可以在顶点或片段着色器中使用的每种变量类型的数量。当超过这些限制时，OpenGL ES 规范不要求实现提供软件回退；相反，着色器将会编译或链接失败。在开发应用程序时，必须确保在着色器编译期间没有发生错误，如 Listing 10-1 所示。
 
 ### Use Precision Hints
 
@@ -2813,9 +2813,9 @@ GLSL ES 语言规范中增加了精确提示，以满足与嵌入式设备的较
 - 照明计算中使用的法线和向量通常可以存储为中等精度。
 - 降低精度后，重新测试应用以确保结果符合预期。
 
-清单 10-3 默认为高精度变量，但使用低精度变量计算颜色输出，因为不需要更高的精度。
+Listing 10-3 默认为高精度变量，但使用低精度变量计算颜色输出，因为不需要更高的精度。
 
-清单 10-3 片段颜色可以接受低精度
+Listing 10-3 片段颜色可以接受低精度
 
 ```objc
 precision highp float; // Defines precision for float and float-derived (vector/matrix) types.
@@ -2843,9 +2843,9 @@ void main()
 
 并非所有的图形处理器都包含向量处理器；向量计算可能在标量处理器上执行。当执行着色器中的计算时，请考虑操作顺序，以确保即使在标量处理器上执行计算也能高效地执行。
 
-如果清单 10-4 中的代码在向量处理器上执行，则每个乘法将在所有四个向量的成分上并行执行。但是，由于括号的位置，标量处理器上的相同操作将需要 8 次乘法，即使这三个参数中的两个是标量值。
+如果 Listing 10-4 中的代码在向量处理器上执行，则每个乘法将在所有四个向量的成分上并行执行。但是，由于括号的位置，标量处理器上的相同操作将需要 8 次乘法，即使这三个参数中的两个是标量值。
 
-清单 10-4 向量运算符的不当使用
+Listing 10-4 向量运算符的不当使用
 
 ```objc
 highp float f0, f1;
@@ -2857,9 +2857,9 @@ v0 = (v1 * f0) * f1;
 >
 > Listing 10-5  Proper use of vector operations
 
-通过移动括号可以更高效地执行相同的计算，如清单 10-5 所示。在此示例中，标量值首先相乘，结果乘以向量参数；整个操作可以用五次乘法计算。
+通过移动括号可以更高效地执行相同的计算，如 Listing 10-5 所示。在此示例中，标量值首先相乘，结果乘以向量参数；整个操作可以用五次乘法计算。
 
-清单 10-5 正确使用向量操作
+Listing 10-5 正确使用向量操作
 
 ```objc
 highp float f0, f1;
@@ -2871,9 +2871,9 @@ v0 = v1 * (f0 * f1);
 >
 > Listing 10-6  Specifying a write mask
 
-同样，如果应用程序不使用计算结果的所有组件的话，则应始终为向量操作指定写掩码。在标量处理器上，可以跳过未在掩码中指定的成分的计算。清单 10-6 在标量处理器上运行速度是原来的两倍，因为它指定只需要两个成分。
+同样，如果应用程序不使用计算结果的所有组件的话，则应始终为向量操作指定写掩码。在标量处理器上，可以跳过未在掩码中指定的成分的计算。Listing 10-6 在标量处理器上运行速度是原来的两倍，因为它指定只需要两个成分。
 
-清单 10-6 指定写掩码
+Listing 10-6 指定写掩码
 
 ```objc
 highp vec4 v0;
@@ -2958,11 +2958,11 @@ v += f;
 
 当片段着色器计算纹理坐标而不是使用传递到着色器中的未修改纹理坐标时，会发生动态纹理查找（也称为从属纹理读取）。支持 OpenGL ES 3.0 的硬件无性能消耗地支持从属纹理读取；在其他设备上，从属纹理读取会延迟纹素数据的加载，从而降低性能。当着色器没有从属纹理读取时，图形硬件可以在着色器执行之前预取纹素数据，隐藏访问存储器的一些延迟。
 
-清单 10-7 显示了一个计算新纹理坐标的片段着色器。此示例中的计算可以在顶点着色器中轻松执行。通过将计算移动到顶点着色器并直接使用顶点着色器计算出来的纹理坐标，可以避免从属纹理读取。
+Listing 10-7 显示了一个计算新纹理坐标的片段着色器。此示例中的计算可以在顶点着色器中轻松执行。通过将计算移动到顶点着色器并直接使用顶点着色器计算出来的纹理坐标，可以避免从属纹理读取。
 
 注意：可能看起来不太明显，但对纹理坐标的任何计算都算作依赖纹理读取。例如，将多组纹理坐标打包成单个变化参数，并使用 swizzle 命令提取坐标仍会导致依赖纹理读取。
 
-清单 10-7 依赖纹理读取
+Listing 10-7 依赖纹理读取
 
 ```objc
 varying vec2 vTexCoord;
@@ -3015,7 +3015,7 @@ Figure 10-2 使用帧缓冲区提取进行可编程混合
 
 在没有帧缓冲区获取扩展的情况下也可以实现这些效果 - 例如，可以通过将场景渲染到纹理中，然后使用该纹理绘制全屏四边形并将纹理颜色转换为灰度的片段着色器来完成灰度转换。但是，使用此扩展通常会带来更好的性能。
 
-要启用此特性，片段着色器必须声明它需要 EXT_shader_framebuffer_fetch 扩展，如清单 10-8 和清单 10-9 所示。实现此功能的着色器代码在 OpenGL ES 着色语言（ GLSL ES ）的版本之间有所不同。
+要启用此特性，片段着色器必须声明它需要 EXT_shader_framebuffer_fetch 扩展，如 Listing 10-8 和 Listing 10-9 所示。实现此功能的着色器代码在 OpenGL ES 着色语言（ GLSL ES ）的版本之间有所不同。
 
 #### Using Framebuffer Fetch in GLSL ES 1.0
 
@@ -3023,7 +3023,7 @@ Figure 10-2 使用帧缓冲区提取进行可编程混合
 >
 > Listing 10-8  Fragment shader for programmable blending in GLSL ES 1.0
 
-对于不使用 #version 300 es 着色器的 OpenGL ES 2.0 上下文和 OpenGL ES 3.0 上下文，可以使用 gl_FragColor 内置变量进行片段着色器输出，使用 gl_LastFragData 内置变量来读取帧缓冲数据，如清单 10-8 所示。
+对于不使用 #version 300 es 着色器的 OpenGL ES 2.0 上下文和 OpenGL ES 3.0 上下文，可以使用 gl_FragColor 内置变量进行片段着色器输出，使用 gl_LastFragData 内置变量来读取帧缓冲数据，如 Listing 10-8 所示。
 
 <span id="listing-10-8">Listing 10-8</span> 用于 GLSL ES 1.0 中可编程混合的片段着色器
 
@@ -3059,7 +3059,7 @@ void main()
 >
 > Listing 10-9  Fragment shader for color post-processing in GLSL ES 3.0
 
-在 GLSL ES 3.0 中，使用用 out 限定符声明的用户定义变量进行片段着色器输出。如果使用 inout 限定符声明片段着色器输出变量，则在片段着色器执行时它将包含帧缓冲区数据。清单 10-9 说明了使用 inout 变量的灰度后处理技术。
+在 GLSL ES 3.0 中，使用用 out 限定符声明的用户定义变量进行片段着色器输出。如果使用 inout 限定符声明片段着色器输出变量，则在片段着色器执行时它将包含帧缓冲区数据。Listing 10-9 说明了使用 inout 变量的灰度后处理技术。
 
 <span id="listing-10-9">Listing 10-9</span> 用于 GLSL ES 3.0 中颜色后处理的片段着色器
 
@@ -3087,10 +3087,10 @@ void main()
 
 在 iOS 7.0 及更高版本中，顶点着色器可以从当前绑定的纹理单元中读取。使用此技术，你可以在顶点处理期间访问更大的内存缓冲区，从而为某些高级渲染技术提供高性能。例如：
 
-- 位移映射。绘制具有默认顶点位置的网格，然后从顶点着色器中读取纹理以更改每个顶点的位置。清单 10-10 演示了如何使用此技术从灰度高度贴图纹理生成三维几何。
+- 位移映射。绘制具有默认顶点位置的网格，然后从顶点着色器中读取纹理以更改每个顶点的位置。Listing 10-10 演示了如何使用此技术从灰度高度贴图纹理生成三维几何。
 - 实例绘图。如 [Use Instanced Drawing to Minimize Draw Calls](#use-instanced-drawing-to-minimize-draw-calls) 中所述，实例化绘图可以在渲染包含许多类似对象的场景时显着降低 CPU 开销。但是，向顶点着色器提供每个实例信息可能是一个挑战。纹理可以存储许多实例的大量信息。例如，你可以通过从仅描述简单立方体的顶点数据中绘制数百个实例来渲染大量城市景观。对于每个实例，顶点着色器可以使用 gl_InstanceID 变量从纹理中进行采样，获得应用于每个建筑物的变换矩阵，颜色变化，纹理坐标偏移和高度变化。
 
-清单 10-10 用于从高度图渲染的顶点着色器
+Listing 10-10 用于从高度图渲染的顶点着色器
 
 ```objc
 attribute vec2 xzPos;
@@ -3853,7 +3853,7 @@ Listing C-1  Encoding options
 
 注意：-p 选项表示其需要 -e 选项与 -o 选项。
 
-清单 C-1 编码选项
+Listing C-1 编码选项
 
 ```objc
 user$ texturetool -l
@@ -3957,7 +3957,7 @@ Listing C-2  Encoding images into the PVRTC compression format
 
 重要提示：如果使用 PVRTexTool 压缩纹理，则必须创建方形和长度为 2 的幂的纹理。如果你的应用尝试在 iOS 中加载非方形或非二次幂纹理，则会返回错误。
 
-清单 C-2 将图像编码为 PVRTC 压缩格式
+Listing C-2 将图像编码为 PVRTC 压缩格式
 
 ```objc
 Encode Image.png into PVRTC using linear weights and 4 bpp, and saving as ImageL4.pvrtc
@@ -3975,7 +3975,7 @@ user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-2 -o 
 
 > Listing C-3  Encoding images into the PVRTC compression format while creating a preview
 
-清单 C-3 在创建预览时将图像编码为 PVRTC 压缩格式
+Listing C-3 在创建预览时将图像编码为 PVRTC 压缩格式
 
 ```objc
 Encode Image.png into PVRTC using linear weights and 4 bpp, and saving the output as ImageL4.pvrtc and a PNG preview as ImageL4.png
