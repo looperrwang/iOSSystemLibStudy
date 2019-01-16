@@ -182,7 +182,7 @@ OpenGL ES 规范定义了一个平台无关的 API ，用于使用 GPU 硬件渲
 > - OpenGL ES 2.0 is the baseline profile for iOS devices, featuring a configurable graphics pipeline based on programmable shaders.
 > - OpenGL ES 1.1 provides only a basic fixed-function graphics pipeline and is available in iOS primarily for backward compatibility.
 > You should target the version or versions of OpenGL ES that support the features and devices most relevant to your app. To learn more about the OpenGL ES capabilities of iOS devices, read [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599).
-
+>
 > To create contexts for the versions of OpenGL ES you plan to support, read [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1). To learn how your choice of OpenGL ES version relates to the rendering algorithms you might use in your app, read [OpenGL ES Versions and Renderer Architecture](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW2).
 
 确定你的应用程序是否应支持 OpenGL ES 3.0 ，OpenGL ES 2.0 ，OpenGL ES 1.1 或多个版本。
@@ -234,7 +234,7 @@ BOOL CheckForExtension(NSString *searchName)
 > - The GLKit framework provides a view that draws OpenGL ES content and manages its own framebuffer object, and a view controller that supports animating OpenGL ES content. Use these classes to create full screen views or to fit your OpenGL ES content into a UIKit view hierarchy. To learn about these classes, read [Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1).
 > - The [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) class provides a way to draw OpenGL ES content as part of a Core Animation layer composition. You must create your own framebuffer object when using this class.
 > - As with any OpenGL ES implementation, you can also use framebuffers for offscreen graphics processing or rendering to a texture for use elsewhere in the graphics pipeline. With OpenGL ES 3.0, offscreen buffers can be used in rendering algorithms that utilize multiple render targets.
-
+>
 > To learn about rendering to an offscreen buffer, a texture, or a Core Animation layer, read [Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1).
 
 在 iOS 中，帧缓冲对象存储绘图命令的结果。（ iOS 不实现窗口系统提供的帧缓冲区。）可以通过多种方式使用帧缓冲区对象的内容：
@@ -522,9 +522,9 @@ Listing 3-2 GLKit 视图的绘图方法示例
 }
 ```
 
-> Note: The glClear function hints to OpenGL ES that any existing framebuffer contents can be discarded, avoiding costly memory operations to load the previous contents into memory. To ensure optimal performance, you should always call this function before drawing.
+> Note: The `glClear` function hints to OpenGL ES that any existing framebuffer contents can be discarded, avoiding costly memory operations to load the previous contents into memory. To ensure optimal performance, you should always call this function before drawing.
 >
-> The GLKView class is able to provide a simple interface for OpenGL ES drawing because it manages the standard parts of the OpenGL ES rendering process:
+> The `GLKView` class is able to provide a simple interface for OpenGL ES drawing because it manages the standard parts of the OpenGL ES rendering process:
 >
 > - Before invoking your drawing method, the view:
     - Makes its [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object the current context
@@ -537,9 +537,9 @@ Listing 3-2 GLKit 视图的绘图方法示例
     - Discards renderbuffers whose contents are no longer needed
     - Presents renderbuffer contents to Core Animation for caching and display
 
-注意：glClear 函数暗示 OpenGL ES 可以丢弃任何现有的帧缓冲内容，避免了将先前的内容加载到内存所需内存操作的开销。为确保最佳性能，应始终在绘制前调用此函数。
+注意：`glClear` 函数暗示 OpenGL ES 可以丢弃任何现有的帧缓冲内容，避免了将先前的内容加载到内存所需内存操作的开销。为确保最佳性能，应始终在绘制前调用此函数。
 
-GLKView 类能够为 OpenGL ES 绘图提供简单的接口，因为它管理 OpenGL ES 渲染过程的标准部分：
+`GLKView` 类能够为 OpenGL ES 绘图提供简单的接口，因为它管理 OpenGL ES 渲染过程的标准部分：
 
 - 在调用绘图方法之前，视图进行以下操作：
     - 设置其 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象为当前上下文
@@ -605,7 +605,7 @@ Figure 3-2 动画循环
 
 #### Understanding the Animation Loop
 
-> For the update phase, the view controller calls its own update method (or its delegate’s [glkViewControllerUpdate:](https://developer.apple.com/documentation/glkit/glkviewcontrollerdelegate/1620710-glkviewcontrollerupdate) method). In this method, you should prepare for drawing the next frame. For example, a game might use this method to determine the positions of player and enemy characters based on input events received since the last frame, and a scientific visualization might use this method to run a step of its simulation. If you need timing information to determine your app’s state for the next frame, use one of the view controller’s timing properties such as the [timeSinceLastUpdate](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620726-timesincelastupdate) property. In Figure 3-2, the update phase increments an angle variable and uses it to calculate a transformation matrix.
+> For the update phase, the view controller calls its own `update` method (or its delegate’s [glkViewControllerUpdate:](https://developer.apple.com/documentation/glkit/glkviewcontrollerdelegate/1620710-glkviewcontrollerupdate) method). In this method, you should prepare for drawing the next frame. For example, a game might use this method to determine the positions of player and enemy characters based on input events received since the last frame, and a scientific visualization might use this method to run a step of its simulation. If you need timing information to determine your app’s state for the next frame, use one of the view controller’s timing properties such as the [timeSinceLastUpdate](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620726-timesincelastupdate) property. In Figure 3-2, the update phase increments an `angle` variable and uses it to calculate a transformation matrix.
 >
 > For the display phase, the view controller calls its view’s [display](https://developer.apple.com/documentation/glkit/glkview/1615571-display) method, which in turn calls your drawing method. In your drawing method, you submit OpenGL ES drawing commands to the GPU to render your content. For optimal performance, your app should modify OpenGL ES objects at the start of rendering a new frame, and submit drawing commands afterward. In Figure 3-2, the display phase sets a uniform variable in a shader program to the matrix calculated in the update phase, and then submits a drawing command to render new content.
 >
@@ -613,7 +613,7 @@ Figure 3-2 动画循环
 >
 > Important: For best results, choose a frame rate your app can consistently achieve. A smooth, consistent frame rate produces a more pleasant user experience than a frame rate that varies erratically.
 
-对于更新阶段，视图控制器调用自己的更新方法（或其委托的 [glkViewControllerUpdate:](https://developer.apple.com/documentation/glkit/glkviewcontrollerdelegate/1620710-glkviewcontrollerupdate) 方法）。在此方法中，应该为下一帧的绘制做准备。例如，游戏可以使用此方法基于自上一帧以来接收的输入事件来确定玩家和敌人角色的位置，科学可视化可以使用该方法来运行其模拟步骤。如果你需要时序信息来确定应用程序的下一帧状态，使用视图控制器的时序属性之一，例如 [timeSinceLastUpdate](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620726-timesincelastupdate) 属性。在 Figure 3-2 中，更新阶段递增角度变量并使用它来计算变换矩阵。
+对于更新阶段，视图控制器调用自己的 `update` 方法（或其委托的 [glkViewControllerUpdate:](https://developer.apple.com/documentation/glkit/glkviewcontrollerdelegate/1620710-glkviewcontrollerupdate) 方法）。在此方法中，应该为下一帧的绘制做准备。例如，游戏可以使用此方法基于自上一帧以来接收的输入事件来确定玩家和敌人角色的位置，科学可视化可以使用该方法来运行其模拟步骤。如果你需要时序信息来确定应用程序的下一帧状态，使用视图控制器的时序属性之一，例如 [timeSinceLastUpdate](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620726-timesincelastupdate) 属性。在 Figure 3-2 中，更新阶段递增 `angle` 变量并使用它来计算变换矩阵。
 
 对于显示阶段，视图控制器调用其视图的 [display](https://developer.apple.com/documentation/glkit/glkview/1615571-display) 方法，该方法又调用你的绘图方法。在绘图方法中，向 GPU 提交 OpenGL ES 绘图命令以渲染内容。为获得最佳性能，你的应用应在渲染新帧的开始时修改 OpenGL ES 对象，然后提交绘图命令。在 Figure 3-2 中，显示阶段设置着色器程序中的统一变量为在更新阶段计算的矩阵，然后提交绘图命令以渲染新内容。
 
@@ -679,13 +679,13 @@ Listing 3-4 使用 GLKi t视图和视图控制器来绘制和动画 OpenGL ES �
 @end
 ```
 
-> In this example, an instance of the PlanetViewController class (a custom [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) subclass) is loaded from a storyboard, along with a standard [GLKView](https://developer.apple.com/documentation/glkit/glkview) instance and its drawable properties. The viewDidLoad method creates an OpenGL ES context and provides it to the view, and also sets the frame rate for the animation loop.
+> In this example, an instance of the `PlanetViewController` class (a custom [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) subclass) is loaded from a storyboard, along with a standard [GLKView](https://developer.apple.com/documentation/glkit/glkview) instance and its drawable properties. The `viewDidLoad` method creates an OpenGL ES context and provides it to the view, and also sets the frame rate for the animation loop.
 
-The view controller is automatically the delegate of its view, so it implements both the update and display phases of the animation loop. In the update method, it calculates the transformation matrices needed to display a rotating planet. In the glkView:drawInRect: method, it provides those matrices to a shader program and submits drawing commands to render the planet geometry.
+The view controller is automatically the delegate of its view, so it implements both the update and display phases of the animation loop. In the `update` method, it calculates the transformation matrices needed to display a rotating planet. In the `glkView:drawInRect:` method, it provides those matrices to a shader program and submits drawing commands to render the planet geometry.
 
-在此示例中，从故事板加载 PlanetViewController 类（自定义 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类）的实例，以及标准[GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例及其可绘制属性。viewDidLoad 方法创建 OpenGL ES 上下文并将其提供给视图，设置动画循环的帧速率。
+在此示例中，从故事板加载 `PlanetViewController` 类（自定义 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类）的实例，以及标准[GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例及其可绘制属性。`viewDidLoad` 方法创建 OpenGL ES 上下文并将其提供给视图，设置动画循环的帧速率。
 
-视图控制器自动成为其视图的代理，因此它实现了动画循环的更新和显示阶段。在更新方法中，它计算显示旋转行星所需的变换矩阵。在 glkView:drawInRect: 方法中，它将这些矩阵提供给着色器程序并提交绘图命令以渲染行星几何体。
+视图控制器自动成为其视图的代理，因此它实现了动画循环的更新和显示阶段。在 `update` 方法中，它计算显示旋转行星所需的变换矩阵。在 `glkView:drawInRect:` 方法中，它将这些矩阵提供给着色器程序并提交绘图命令以渲染行星几何体。
 
 ### Using GLKit to Develop Your Renderer
 
@@ -792,9 +792,9 @@ if(status != GL_FRAMEBUFFER_COMPLETE) {
 }
 ```
 
-> After drawing to an offscreen renderbuffer, you can return its contents to the CPU for further processing using the glReadPixels function.
+> After drawing to an offscreen renderbuffer, you can return its contents to the CPU for further processing using the `glReadPixels` function.
 
-绘制到屏幕外渲染缓冲区后，可以使用 glReadPixels 函数将其内容返回到 CPU 进行进一步处理。
+绘制到屏幕外渲染缓冲区后，可以使用 `glReadPixels` 函数将其内容返回到 CPU 进行进一步处理。
 
 #### Using Framebuffer Objects to Render to a Texture
 
@@ -848,9 +848,9 @@ Figure 4-2 Core Animation 与 OpenGL ES 共享渲染缓冲区
 >
 > 1. Create a [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) object and configure its properties.
 >
->    For optimal performance, set the value of the layer’s [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) property to YES. See [Be Aware of Core Animation Compositing Performance](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW8).
+>    For optimal performance, set the value of the layer’s [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) property to `YES`. See [Be Aware of Core Animation Compositing Performance](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW8).
 >
->     Optionally, configure the surface properties of the rendering surface by assigning a new dictionary of values to the [drawableProperties](https://developer.apple.com/documentation/quartzcore/caeagllayer/1805302-drawableproperties) property of the CAEAGLLayer object. You can specify the pixel format for the renderbuffer and specify whether the renderbuffer’s contents are discarded after they are sent to Core Animation. For a list of the permitted keys, see [EAGLDrawable Protocol Reference](https://developer.apple.com/documentation/opengles/eagldrawable).
+>     Optionally, configure the surface properties of the rendering surface by assigning a new dictionary of values to the [drawableProperties](https://developer.apple.com/documentation/quartzcore/caeagllayer/1805302-drawableproperties) property of the `CAEAGLLayer` object. You can specify the pixel format for the renderbuffer and specify whether the renderbuffer’s contents are discarded after they are sent to Core Animation. For a list of the permitted keys, see [EAGLDrawable Protocol Reference](https://developer.apple.com/documentation/opengles/eagldrawable).
 >
 > 2. Allocate an OpenGL ES context and make it the current context. See [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1).
 >
@@ -866,9 +866,9 @@ Figure 4-2 Core Animation 与 OpenGL ES 共享渲染缓冲区
 
 1. 创建 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 对象并配置其属性。
 
-    为获得最佳性能，将图层的 [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) 属性值设置为YES。见 [Be Aware of Core Animation Compositing Performance](#be-aware-of-core-animation-compositing-performance) 。
+    为获得最佳性能，将图层的 [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) 属性值设置为 `YES` 。见 [Be Aware of Core Animation Compositing Performance](#be-aware-of-core-animation-compositing-performance) 。
 
-    可选地，通过为 CAEAGLLayer 对象的 [drawableProperties](https://developer.apple.com/documentation/quartzcore/caeagllayer/1805302-drawableproperties) 属性指定新的字典来配置渲染表面的表面属性。你可以指定渲染缓冲区的像素格式，并指定渲染缓冲区的内容在发送到 Core Animation 后是否被丢弃。有关支持健的列表，见 [EAGLDrawable Protocol Reference](https://developer.apple.com/documentation/opengles/eagldrawable) 。
+    可选地，通过为 `CAEAGLLayer` 对象的 [drawableProperties](https://developer.apple.com/documentation/quartzcore/caeagllayer/1805302-drawableproperties) 属性指定新的字典来配置渲染表面的表面属性。你可以指定渲染缓冲区的像素格式，并指定渲染缓冲区的内容在发送到 Core Animation 后是否被丢弃。有关支持健的列表，见 [EAGLDrawable Protocol Reference](https://developer.apple.com/documentation/opengles/eagldrawable) 。
 
 2. 分配 OpenGL ES 上下文并设置其为当前上下文。见 [Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts) 。
 3. 创建帧缓冲对象（如上面的 [Creating Offscreen Framebuffer Objects](#creating-offscreen-framebuffer-objects) ）。
@@ -939,15 +939,15 @@ displayLink = [myView.window.screen displayLinkWithTarget:self selector:@selecto
 [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 ```
 
-> Inside your implementation of the drawFrame method, read the display link’s [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) property to get the timestamp for the next frame to be rendered. It can use that value to calculate the positions of objects in the next frame.
+> Inside your implementation of the `drawFrame` method, read the display link’s [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) property to get the timestamp for the next frame to be rendered. It can use that value to calculate the positions of objects in the next frame.
 >
-> Normally, the display link object is fired every time the screen refreshes; that value is usually 60 Hz, but may vary on different devices. Most apps do not need to update the screen 60 times per second. You can set the display link’s [frameInterval](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621231-frameinterval) property to the number of actual frames that go by before your method is called. For example, if the frame interval was set to 3, your app is called every third frame, or roughly 20 frames per second.
+> Normally, the display link object is fired every time the screen refreshes; that value is usually 60 Hz, but may vary on different devices. Most apps do not need to update the screen 60 times per second. You can set the display link’s [frameInterval](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621231-frameinterval) property to the number of actual frames that go by before your method is called. For example, if the frame interval was set to `3`, your app is called every third frame, or roughly 20 frames per second.
 >
 > Important: For best results, choose a frame rate your app can consistently achieve. A smooth, consistent frame rate produces a more pleasant user experience than a frame rate that varies erratically.
 
-在 drawFrame 方法的实现中，读取display link 的 [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) 属性以获取要渲染的下一帧的时间戳。可以使用该值来计算下一帧中对象的位置。
+在 `drawFrame` 方法的实现中，读取display link 的 [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) 属性以获取要渲染的下一帧的时间戳。可以使用该值来计算下一帧中对象的位置。
 
-通常，每次屏幕刷新时都会触发 display link 对象；该值通常为 60 Hz ，但可能因设备而异。大多数应用程序不需要每秒更新屏幕 60 次。可以将 display link 的 [frameInterval](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621231-frameinterval) 属性设置为调用方法之前经过的实际帧数。例如，如果帧间隔设置为 3 ，则每隔三帧调用一次应用程序，大约每秒 20 帧。
+通常，每次屏幕刷新时都会触发 display link 对象；该值通常为 60 Hz ，但可能因设备而异。大多数应用程序不需要每秒更新屏幕 60 次。可以将 display link 的 [frameInterval](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621231-frameinterval) 属性设置为调用方法之前经过的实际帧数。例如，如果帧间隔设置为 `3` ，则每隔三帧调用一次应用程序，大约每秒 20 帧。
 
 重要提示：为获得最佳效果，请选择应用可以始终保持的帧率。平滑，一致的帧速率比非正常变化的帧率产生更愉快的用户体验。
 
@@ -965,11 +965,11 @@ Figure 4-3 显示了 OpenGL ES 应用程序在 iOS 上渲染和呈现帧的步�
 
 ##### Clear Buffers
 
-> At the start of every frame, erase the contents of all framebuffer attachments whose contents from a previous frames are not needed to draw the next frame. Call the glClear function, passing in a bit mask with all of the buffers to clear, as shown in Listing 4-2.
+> At the start of every frame, erase the contents of all framebuffer attachments whose contents from a previous frames are not needed to draw the next frame. Call the `glClear` function, passing in a bit mask with all of the buffers to clear, as shown in Listing 4-2.
 >
 > Listing 4-2  Clear framebuffer attachments
 
-在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中来自前一帧的内容不需要在下一帧中进行绘制了。调用 glClear 函数，传入一个位掩码，清除所有缓冲区，如 Listing 4-2 所示。
+在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中来自前一帧的内容不需要在下一帧中进行绘制了。调用 `glClear` 函数，传入一个位掩码，清除所有缓冲区，如 Listing 4-2 所示。
 
 Listing 4-2 清除帧缓冲附件
 
@@ -978,9 +978,9 @@ glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 ```
 
-> Using glClear “hints” to OpenGL ES that the existing contents of a renderbuffer or texture can be discarded, avoiding costly operations to load the previous contents into memory.
+> Using `glClear` “hints” to OpenGL ES that the existing contents of a renderbuffer or texture can be discarded, avoiding costly operations to load the previous contents into memory.
 
-使用 glClear “提示” OpenGL ES 可以丢弃渲染缓冲区或纹理的现有内容，避免了将先前内容加载到内存中的操作开销。
+使用 `glClear` “提示” OpenGL ES 可以丢弃渲染缓冲区或纹理的现有内容，避免了将先前内容加载到内存中的操作开销。
 
 ##### Prepare Resources and Execute Drawing Commands
 
@@ -1024,9 +1024,9 @@ glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 glDiscardFramebufferEXT(GL_FRAMEBUFFER,1,discards);
 ```
 
-> Note: The glDiscardFramebufferEXT function is provided by the [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) extension for OpenGL ES 1.1 and 2.0. In a OpenGL ES 3.0 context, use the glInvalidateFramebuffer function instead.
+> Note: The `glDiscardFramebufferEXT` function is provided by the [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) extension for OpenGL ES 1.1 and 2.0. In a OpenGL ES 3.0 context, use the `glInvalidateFramebuffer` function instead.
 
-注意：glDiscardFramebufferEXT 函数由 OpenGL ES 1.1 和 2.0 的 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供。在 OpenGL ES 3.0 上下文中，请使用 glInvalidateFramebuffer 函数。
+注意：`glDiscardFramebufferEXT` 函数由 OpenGL ES 1.1 和 2.0 的 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供。在 OpenGL ES 3.0 上下文中，请使用 `glInvalidateFramebuffer` 函数。
 
 ##### Present the Results to Core Animation
 
@@ -1045,11 +1045,11 @@ glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 
 > By default, you must assume that the contents of the renderbuffer are discarded after your app presents the renderbuffer. This means that every time your app presents a frame, it must completely re-create the frame’s contents when it renders a new frame. The code above always erases the color buffer for this reason.
 >
-> If your app wants to preserve the contents of the color renderbuffer between frames, add the [kEAGLDrawablePropertyRetainedBacking](https://developer.apple.com/documentation/opengles/keagldrawablepropertyretainedbacking) key to the dictionary stored in the drawableProperties property of the CAEAGLLayer object, and remove the GL_COLOR_BUFFER_BIT constant from the earlier glClear function call. Retained backing may require iOS to allocate additional memory to preserve the buffer’s contents, which may reduce your app’s performance.
+> If your app wants to preserve the contents of the color renderbuffer between frames, add the [kEAGLDrawablePropertyRetainedBacking](https://developer.apple.com/documentation/opengles/keagldrawablepropertyretainedbacking) key to the dictionary stored in the `drawableProperties` property of the `CAEAGLLayer` object, and remove the `GL_COLOR_BUFFER_BIT` constant from the earlier `glClear` function call. Retained backing may require iOS to allocate additional memory to preserve the buffer’s contents, which may reduce your app’s performance.
 
 默认情况下，你必须假设在应用程序显示渲染缓冲区后，将放弃渲染缓冲区的内容。这意味着每次你的应用程序呈现一帧时，它必须在渲染一个新帧时完全重新创建帧的内容。由于这个原因，上面的代码总是擦除颜色缓冲区。
 
-如果应用程序想要在帧之间保留颜色渲染缓冲区的内容，将 [kEAGLDrawablePropertyRetainedBacking](https://developer.apple.com/documentation/opengles/keagldrawablepropertyretainedbacking) 键添加到 CAEAGLLayer 对象的 drawableProperties 属性中的字典中，并从早期的 glClear 函数调用中删除 GL_COLOR_BUFFER_BIT 常量。保留备份可能需要 iOS 分配额外的内存来保留缓冲区的内容，这可能会降低应用程序的性能。
+如果应用程序想要在帧之间保留颜色渲染缓冲区的内容，将 [kEAGLDrawablePropertyRetainedBacking](https://developer.apple.com/documentation/opengles/keagldrawablepropertyretainedbacking) 键添加到 `CAEAGLLayer` 对象的 `drawableProperties` 属性中的字典中，并从早期的 `glClear` 函数调用中删除 `GL_COLOR_BUFFER_BIT` 常量。保留备份可能需要 iOS 分配额外的内存来保留缓冲区的内容，这可能会降低应用程序的性能。
 
 ### Using Multisampling to Improve Image Quality
 
@@ -1067,11 +1067,11 @@ Figure 4-4 多重采样的工作原理
 
 ![HowMultisamplingWorks](../../resource/OpenGLES/Markdown/HowMultisamplingWorks.png)
 
-> Listing 4-5 shows the code to create the multisampling buffer. This code uses the width and height of the previously created buffer. It calls the glRenderbufferStorageMultisampleAPPLE function to create multisampled storage for the renderbuffer.
+> Listing 4-5 shows the code to create the multisampling buffer. This code uses the width and height of the previously created buffer. It calls the `glRenderbufferStorageMultisampleAPPLE` function to create multisampled storage for the renderbuffer.
 >
 > Listing 4-5  Creating the multisample buffer
 
-Listing 4-5 显示了创建多重采样缓冲区的代码。此代码使用先前创建的缓冲区的宽度和高度。它调用 glRenderbufferStorageMultisampleAPPLE 函数为 renderbuffer 创建多重采样存储。
+Listing 4-5 显示了创建多重采样缓冲区的代码。此代码使用先前创建的缓冲区的宽度和高度。它调用 `glRenderbufferStorageMultisampleAPPLE` 函数为 renderbuffer 创建多重采样存储。
 
 Listing 4-5 创建多重采样缓冲区
 
@@ -1167,12 +1167,12 @@ OpenGL ES 应用程序退到后台时必须执行额外的其他工作。如果�
 >
 > If you do not use GLKit views or view controllers or if you submit OpenGL ES commands outside a [GLKView](https://developer.apple.com/documentation/glkit/glkview) drawing method, you must take the following steps to ensure that your app is not terminated in the background:
 >
-> 1. In your app delegate’s [applicationWillResignActive:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive) method, your app should stop its animation timer (if any), place itself into a known good state, and then call the glFinish function.
-> 2. In your app delegate’s [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) method, your app may want to delete some of its OpenGL ES objects to make memory and resources available to the foreground app. Call the glFinish function to ensure that the resources are removed immediately.
+> 1. In your app delegate’s [applicationWillResignActive:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive) method, your app should stop its animation timer (if any), place itself into a known good state, and then call the `glFinish` function.
+> 2. In your app delegate’s [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) method, your app may want to delete some of its OpenGL ES objects to make memory and resources available to the foreground app. Call the `glFinish` function to ensure that the resources are removed immediately.
 > 3. After your app exits its [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) method, it must not make any new OpenGL ES calls. If it makes an OpenGL ES call, it is terminated by iOS.
 > 4. In your app’s [applicationWillEnterForeground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground) method, re-create any objects and restart your animation timer.
 >
-> To summarize, your app needs to call the glFinish function to ensure that all previously submitted commands are drained from the command buffer and are executed by OpenGL ES. After it moves into the background, you must avoid all use of OpenGL ES until it moves back into the foreground.
+> To summarize, your app needs to call the `glFinish` function to ensure that all previously submitted commands are drained from the command buffer and are executed by OpenGL ES. After it moves into the background, you must avoid all use of OpenGL ES until it moves back into the foreground.
 
 如果 OpenGL ES 应用程序尝试在图形硬件上执行 OpenGL ES 命令，则会被终止|。iOS 不允许后台应用程序访问图形处理器，以便最前端的应用程序始终能够为用户提供出色的体验。应用程序如果在后台时发出 OpenGL ES 调用或者在后台时之前提交的命令到达 GPU 都会被系统杀死。应用必须确保所有先前提交的命令在进入后台之前都已完成执行。
 
@@ -1180,12 +1180,12 @@ OpenGL ES 应用程序退到后台时必须执行额外的其他工作。如果�
 
 如果不使用 GLKit 视图或视图控制器，或者如果在 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 绘图方法之外提交 OpenGL ES 命令，则必须执行以下步骤以确保你的应用程序不会在后台被终止：
 
-1. 在你的 app delegate 的 [applicationWillResignActive:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive) 方法中，你的 app 应该停止它的动画计时器（如果有的话），将自己置于一个已知的良好状态，然后调用 glFinish 函数。
-2. 在你的 app delegate 的 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法中，你的应用可能希望删除一些 OpenGL ES 对象，以为前台应用程序留出足够可用的内存和资源。调用 glFinish 函数以确保资源被立即删除。
+1. 在你的 app delegate 的 [applicationWillResignActive:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive) 方法中，你的 app 应该停止它的动画计时器（如果有的话），将自己置于一个已知的良好状态，然后调用 `glFinish` 函数。
+2. 在你的 app delegate 的 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法中，你的应用可能希望删除一些 OpenGL ES 对象，以为前台应用程序留出足够可用的内存和资源。调用 `glFinish` 函数以确保资源被立即删除。
 3. 在应用程序退出其 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法后，它不能进行任何新的 OpenGL ES 调用。如果它进行 OpenGL ES 调用，它将被 iOS 终止。
 4. 在应用程序的 [applicationWillEnterForeground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground) 方法中，重新创建任何对象并重新启动动画计时器。
 
-总而言之，应用程序需要调用 glFinish 函数以确保所有先前提交的命令都从命令缓冲区中排出并由 OpenGL ES 执行。移动到后台后，必须避免使用 OpenGL ES ，直到它回到前台。
+总而言之，应用程序需要调用 `glFinish` 函数以确保所有先前提交的命令都从命令缓冲区中排出并由 OpenGL ES 执行。移动到后台后，必须避免使用 OpenGL ES ，直到它回到前台。
 
 #### Delete Easily Re-Created Resources Before Moving to the Background
 
@@ -1225,41 +1225,41 @@ OpenGL ES 应用程序退到后台时必须执行额外的其他工作。如果�
 
 > By default, the value of a GLKit view’s [contentScaleFactor](https://developer.apple.com/documentation/uikit/uiview/1622657-contentscalefactor) property matches the scale of the screen that contains it, so its associated framebuffer is configured for rendering at the full resolution of the display. For more information on how high-resolution displays are supported in UIKit, see [Supporting High-Resolution Screens In Views](https://developer.apple.com/library/archive/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/SupportingHiResScreensInViews/SupportingHiResScreensInViews.html#//apple_ref/doc/uid/TP40010156-CH15).
 >
-> If you present OpenGL ES content using a Core Animation layer, its scale factor is set to 1.0 by default. To draw at the full resolution of a Retina display, you should change the scale factor of the [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) object to match the screen’s scale factor.
+> If you present OpenGL ES content using a Core Animation layer, its scale factor is set to `1.0` by default. To draw at the full resolution of a Retina display, you should change the scale factor of the [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) object to match the screen’s scale factor.
 >
 > When supporting devices with high resolution displays, you should adjust the model and texture assets of your app accordingly. When running on a high-resolution device, you might want to choose more detailed models and textures to render a better image. Conversely, on a standard-resolution device, you can use smaller models and textures.
 >
-> Important: Many OpenGL ES API calls express dimensions in screen pixels. If you use a scale factor greater than 1.0, you should adjust dimensions accordingly when using the glScissor, glBlitFramebuffer, glLineWidth, or glPointSize functions or the gl_PointSize shader variable.
+> Important: Many OpenGL ES API calls express dimensions in screen pixels. If you use a scale factor greater than `1.0`, you should adjust dimensions accordingly when using the `glScissor`, `glBlitFramebuffer`, `glLineWidth`, or `glPointSize` functions or the `gl_PointSize` shader variable.
 >
 > An important factor when determining how to support high-resolution displays is performance. The doubling of scale factor on a Retina display quadruples the number of pixels, causing the GPU to process four times as many fragments. If your app performs many per-fragment calculations, the increase in pixels may reduce the frame rate. If you find that your app runs significantly slower at a higher scale factor, consider one of the following options:
 >
 > - Optimize your fragment shader’s performance using the performance-tuning guidelines found in this document.
 > - Implement a simpler algorithm in your fragment shader. By doing so, you are reducing the quality of individual pixels to render the overall image at a higher resolution.
 > - Use a fractional scale factor between 1.0 and and the screen’s scale factor. A scale factor of 1.5 provides better quality than a scale factor of 1.0 but needs to fill fewer pixels than an image scaled to 2.0.
-> - Use lower-precision formats for your GLKView object’s [drawableColorFormat](https://developer.apple.com/documentation/glkit/glkview/1615587-drawablecolorformat) and [drawableDepthFormat](https://developer.apple.com/documentation/glkit/glkview/1615583-drawabledepthformat) properties. By doing this, you reduce the memory bandwidth required to operate on the underlying renderbuffers.
+> - Use lower-precision formats for your `GLKView` object’s [drawableColorFormat](https://developer.apple.com/documentation/glkit/glkview/1615587-drawablecolorformat) and [drawableDepthFormat](https://developer.apple.com/documentation/glkit/glkview/1615583-drawabledepthformat) properties. By doing this, you reduce the memory bandwidth required to operate on the underlying renderbuffers.
 > - Use a lower scale factor and enable multisampling. An added advantage is that multisampling also provides higher quality on devices that do not support high-resolution displays.
 >
-> To enable multisampling for a GLKView object, change the value of its [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) property. If you are not rendering to a GLKit view, you must manually set up multisampling buffers and resolve them before presenting a final image (see [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4)).
+> To enable multisampling for a `GLKView` object, change the value of its [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) property. If you are not rendering to a GLKit view, you must manually set up multisampling buffers and resolve them before presenting a final image (see [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4)).
 >
 > Multisampling is not free; additional memory is required to store the additional samples, and resolving the samples into the resolve framebuffer takes time. If you add multisampling to your app, always test your app’s performance to ensure that it remains acceptable.
 
 默认情况下，GLKit 视图的 [contentScaleFactor](https://developer.apple.com/documentation/uikit/uiview/1622657-contentscalefactor) 属性的值与包含它的屏幕的 scale 相匹配，因此其关联的帧缓冲区配置为以显示的完整分辨率进行渲染。有关 UIKit 中如何支持高分辨率显示的更多信息，请参阅 [Supporting High-Resolution Screens In Views](https://developer.apple.com/library/archive/documentation/2DDrawing/Conceptual/DrawingPrintingiOS/SupportingHiResScreensInViews/SupportingHiResScreensInViews.html#//apple_ref/doc/uid/TP40010156-CH15) 。
 
-如果使用 Core Animation 层显示 OpenGL ES 内容，默认情况下其比例因子设置为 1.0 。要以 Retina 显示屏的全分辨率进行绘制，你应该更改 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 对象的比例因子以匹配屏幕的比例因子。
+如果使用 Core Animation 层显示 OpenGL ES 内容，默认情况下其比例因子设置为 `1.0` 。要以 Retina 显示屏的全分辨率进行绘制，你应该更改 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 对象的比例因子以匹配屏幕的比例因子。
 
 支持高分辨率显示器的设备时，应相应地调整应用程序的模型和纹理资源。在高分辨率设备上运行时，你可能希望选择更详细的模型和纹理来渲染更好的图像。相反，在标准分辨率设备上，你可以使用较小的模型和纹理。
 
-重要提示：许多 OpenGL ES API 调用表示屏幕像素的尺寸。如果使用大于 1.0 的比例因子，则应在使用glScissor，glBlitFramebuffer，glLineWidth 或 glPointSize 函数或 gl_PointSize 着色器变量时相应地调整尺寸。
+重要提示：许多 OpenGL ES API 调用表示屏幕像素的尺寸。如果使用大于 `1.0` 的比例因子，则应在使用`glScissor`，`glBlitFramebuffer`，`glLineWidth` 或 `glPointSize` 函数或 `gl_PointSize` 着色器变量时相应地调整尺寸。
 
 确定如何支持高分辨率显示器时，一个重要因素是性能。Retina 显示器上的比例因子加倍使像素数量变为四倍，从而导致 GPU 处理四倍的片段。如果你的应用程序执行许多每片段计算，则像素的增加可能会降低帧率。如果发现应用程序在较高比例因子下运行速度明显较慢，请考虑以下选项之一：
 
 - 使用本文档中的性能调优指南优化片段着色器的性能。
 - 在片段着色器中实现更简单的算法。通过这样做，降低了单个像素的质量，同时以更高的分辨率渲染整个图像。
 - 使用介于 1.0 和屏幕比例因子之间的小数比例因子。比例因子 1.5 比 1.0 的比例因子提供了更好的图像质量，同时与比例因子为 2.0 的图像相比，只需要填充更少的像素。
-- 设置 GLKView 对象的 [drawableColorFormat](https://developer.apple.com/documentation/glkit/glkview/1615587-drawablecolorformat) 和 [drawableDepthFormat](https://developer.apple.com/documentation/glkit/glkview/1615583-drawabledepthformat) 属性为低精度格式。通过这样做，可以减少操作底层渲染缓冲区所需的内存带宽。
+- 设置 `GLKView` 对象的 [drawableColorFormat](https://developer.apple.com/documentation/glkit/glkview/1615587-drawablecolorformat) 和 [drawableDepthFormat](https://developer.apple.com/documentation/glkit/glkview/1615583-drawabledepthformat) 属性为低精度格式。通过这样做，可以减少操作底层渲染缓冲区所需的内存带宽。
 - 使用较低比例因子并启用多重采样。另一个优点是多重采样还可以在不支持高分辨率显示器的设备上提供更高的质量的图像。
 
-要为 GLKView 对象启用多重采样，请更改其 [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) 属性的值。如果不是渲染到 GLKit 视图上，则必须手动设置多重采样缓冲区并在显示最终图像之前解析它们（请参阅 [Using Multisampling to Improve Image Quality](#using-multisampling-to-improve-image-quality) ）。
+要为 `GLKView` 对象启用多重采样，请更改其 [drawableMultisample](https://developer.apple.com/documentation/glkit/glkview/1615601-drawablemultisample) 属性的值。如果不是渲染到 GLKit 视图上，则必须手动设置多重采样缓冲区并在显示最终图像之前解析它们（请参阅 [Using Multisampling to Improve Image Quality](#using-multisampling-to-improve-image-quality) ）。
 
 多重采样不是无开销的；需要额外的内存来存储额外的样本，并且将样本解析为解析帧缓冲需要一定的时间。如果向应用添加多重采样，请始终测试应用的性能，以确保其仍然处于可以接受的状态。
 
@@ -1267,13 +1267,13 @@ OpenGL ES 应用程序退到后台时必须执行额外的其他工作。如果�
 
 > Like any app, an OpenGL ES app should support the user interface orientations appropriate to its content. You declare the supported interface orientations for your app in its information property list, or for the view controller hosting your OpenGL ES content using its [supportedInterfaceOrientations](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621435-supportedinterfaceorientations) method. (See [View Controller Programming Guide](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457) for iOS for details.)
 >
-> By default, the [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) and GLKView classes handle orientation changes automatically: When the user rotates the device to a supported orientation, the system animates the orientation change and changes the size of the view controller’s view. When its size changes, a GLKView object adjusts the size of its framebuffer and viewport accordingly. If you need to respond to this change, implement the [viewWillLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621437-viewwilllayoutsubviews) or [viewDidLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621398-viewdidlayoutsubviews) method in your GLKViewController subclass, or implement the [layoutSubviews](https://developer.apple.com/documentation/uikit/uiview/1622482-layoutsubviews) method if you’re using a custom GLKView subclass.
+> By default, the [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) and `GLKView` classes handle orientation changes automatically: When the user rotates the device to a supported orientation, the system animates the orientation change and changes the size of the view controller’s view. When its size changes, a `GLKView` object adjusts the size of its framebuffer and viewport accordingly. If you need to respond to this change, implement the [viewWillLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621437-viewwilllayoutsubviews) or [viewDidLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621398-viewdidlayoutsubviews) method in your `GLKViewController` subclass, or implement the [layoutSubviews](https://developer.apple.com/documentation/uikit/uiview/1622482-layoutsubviews) method if you’re using a custom `GLKView` subclass.
 >
 > If you draw OpenGL ES content using a Core Animation layer, your app should still include a view controller to manage user interface orientation.
 
 与任何应用程序一样，OpenGL ES 应用程序应支持适合其内容的用户界面方向。在应用程序的属性列表中声明其支持的界面方向，或者使用 [supportedInterfaceOrientations](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621435-supportedinterfaceorientations) 方法为托管 OpenGL ES 内容的视图控制器声明支持的界面方向。（有关详细信息，请参阅 [View Controller Programming Guide](https://developer.apple.com/library/archive/featuredarticles/ViewControllerPGforiPhoneOS/index.html#//apple_ref/doc/uid/TP40007457) 。）
 
-默认情况下，[GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 和 GLKView 类自动处理方向更改：当用户将设备旋转到支持的方向时，系统会设置方向更改的动画并更改视图控制器视图的大小。当其大小更改时，GLKView 对象会相应地调整其帧缓冲区和视口的大小。如果需要响应此更改，请在 GLKViewController 子类中实现 [viewWillLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621437-viewwilllayoutsubviews) 或 [viewDidLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621398-viewdidlayoutsubviews) 方法，或者如果使用的是自定义 GLKView 子类的话，则实现 [layoutSubviews](https://developer.apple.com/documentation/uikit/uiview/1622482-layoutsubviews) 方法。
+默认情况下，[GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 和 `GLKView` 类自动处理方向更改：当用户将设备旋转到支持的方向时，系统会设置方向更改的动画并更改视图控制器视图的大小。当其大小更改时，`GLKView` 对象会相应地调整其帧缓冲区和视口的大小。如果需要响应此更改，请在 `GLKViewController` 子类中实现 [viewWillLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621437-viewwilllayoutsubviews) 或 [viewDidLayoutSubviews](https://developer.apple.com/documentation/uikit/uiviewcontroller/1621398-viewdidlayoutsubviews) 方法，或者如果使用的是自定义 `GLKView` 子类的话，则实现 [layoutSubviews](https://developer.apple.com/documentation/uikit/uiview/1622482-layoutsubviews) 方法。
 
 如果使用核心动画层绘制 OpenGL ES 内容，你的应用程序仍应包含一个视图控制器来管理用户界面方向。
 
@@ -1367,11 +1367,11 @@ OpenGL ES 3.0 是 iOS 7 中的新功能。你的应用程序可以使用 OpenGL 
 
 ##### OpenGL ES Shading Language Version 3.0
 
-> GLSL ES 3.0 adds new features such as uniform blocks, 32-bit integers, and additional integer operations, for performing more general-purpose computing tasks within vertex and fragment shader programs. To use the new language in a shader program, your shader source code must begin with the #version 330 es directive. OpenGL ES 3.0 contexts remain compatible with shaders written for OpenGL ES 2.0.
+> GLSL ES 3.0 adds new features such as uniform blocks, 32-bit integers, and additional integer operations, for performing more general-purpose computing tasks within vertex and fragment shader programs. To use the new language in a shader program, your shader source code must begin with the `#version 330 es` directive. OpenGL ES 3.0 contexts remain compatible with shaders written for OpenGL ES 2.0.
 >
 > For more details, see [Adopting OpenGL ES Shading Language version 3.0](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/AdoptingOpenGLES3/AdoptingOpenGLES3.html#//apple_ref/doc/uid/TP40008793-CH504-SW18) and the OpenGL ES Shading Language 3.0 Specification in the [OpenGL ES API Registry](http://www.khronos.org/registry/gles/).
 
-GLSL ES 3.0 增加了新功能，如统一块，32 位整数和其他整数运算，用于在顶点和片段着色器程序中执行更多通用计算任务。要在着色器程序中使用新语言，着色器源代码必须以 #version 330 es 指令开头。 OpenGL ES 3.0 上下文兼容为 OpenGL ES 2.0 编写的着色器。
+GLSL ES 3.0 增加了新功能，如统一块，32 位整数和其他整数运算，用于在顶点和片段着色器程序中执行更多通用计算任务。要在着色器程序中使用新语言，着色器源代码必须以 `#version 330 es` 指令开头。 OpenGL ES 3.0 上下文兼容为 OpenGL ES 2.0 编写的着色器。
 
 有关更多详细信息，请参阅 [Adopting OpenGL ES Shading Language version 3.0](#adopting-opengl-es-shading-language-version-30) 和 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 中的 OpenGL ES 着色语言 3.0 规范。
 
@@ -1391,11 +1391,11 @@ Figure 6-3 片段着色器输出到多个渲染目标的示例
 
 ![ExampleOfFragmentShaderOutputToMultipleRenderTargets](../../resource/OpenGLES/Markdown/ExampleOfFragmentShaderOutputToMultipleRenderTargets.png)
 
-> You set up multiple render targets with an addition to the process described in [Creating a Framebuffer Object](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW5). Instead of creating a single color attachment for a framebuffer, you create several. Then, call the glDrawBuffers function to specify which framebuffer attachments to use in rendering, as shown in Listing 6-1.
+> You set up multiple render targets with an addition to the process described in [Creating a Framebuffer Object](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW5). Instead of creating a single color attachment for a framebuffer, you create several. Then, call the `glDrawBuffers` function to specify which framebuffer attachments to use in rendering, as shown in Listing 6-1.
 >
 > Listing 6-1  Setting up multiple render targets
 
-你可以设置多个渲染目标并将它们添加到 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中描述的过程中。可以为一个帧缓冲区创建多个颜色附件。然后，调用 glDrawBuffers 函数来指定在渲染时使用哪些帧缓冲附件，如 Listing 6-1 所示。
+你可以设置多个渲染目标并将它们添加到 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中描述的过程中。可以为一个帧缓冲区创建多个颜色附件。然后，调用 `glDrawBuffers` 函数来指定在渲染时使用哪些帧缓冲附件，如 Listing 6-1 所示。
 
 Listing 6-1 设置多个渲染目标
 
@@ -1471,9 +1471,9 @@ Figure 6-5 使用变换反馈的图形管道配置示例
 
 > 1. At initialization time, create a vertex buffer and fill it with data containing the initial state of all particles in the simulation.
 > 2. Implement your particle simulation in a GLSL vertex shader program, and run it each frame by drawing the contents of the vertex buffer containing particle position data.
->    - To render with transform feedback enabled, call the glBeginTransformFeedback function. (Call glEndTransformFeedback() before resuming normal drawing.)
->    - Use the glTransformFeedbackVaryings function to specify which shader outputs should be captured by transform feedback, and use the glBindBufferBase or glBindBufferRange function and GL_TRANSFORM_FEEDBACK_BUFFER buffer type to specify the buffer they will be captured into.
->    - Disable rasterization (and subsequent stages of the pipeline) by calling glEnable(GL_RASTERIZER_DISCARD).
+>    - To render with transform feedback enabled, call the `glBeginTransformFeedback` function. (Call `glEndTransformFeedback()` before resuming normal drawing.)
+>    - Use the `glTransformFeedbackVaryings` function to specify which shader outputs should be captured by transform feedback, and use the `glBindBufferBase` or `glBindBufferRange` function and `GL_TRANSFORM_FEEDBACK_BUFFER` buffer type to specify the buffer they will be captured into.
+>    - Disable rasterization (and subsequent stages of the pipeline) by calling `glEnable(GL_RASTERIZER_DISCARD)`.
 > 3. To render the simulation results for display, use the vertex buffer containing particle positions as an input to second drawing pass, with rasterization (and the rest of the pipeline) once again enabled and using vertex and fragment shaders appropriate for rendering your app’s visual content.
 > 4. On the next frame, use the vertex buffer output by the last frame’s simulation step as input to the next simulation step.
 >
@@ -1481,9 +1481,9 @@ Figure 6-5 使用变换反馈的图形管道配置示例
 
 1. 在初始化时，创建一个顶点缓冲区并用包含模拟中所有粒子初始状态的数据填充它。
 2. 在 GLSL 顶点着色器程序中实现粒子模拟，并通过绘制包含粒子位置数据的顶点缓冲区的内容来每帧运行它。
-    - 要在启用转换反馈的情况下进行渲染，调用 glBeginTransformFeedback 函数。（在恢复正常绘图之前调用 glEndTransformFeedback() 。）
-    - 使用 glTransformFeedbackVaryings 函数指定变换反馈应捕获哪些着色器输出，并使用 glBindBufferBase 或 glBindBufferRange 函数和 GL_TRANSFORM_FEEDBACK_BUFFER 缓冲区类型来指定被捕获数据存储的缓冲区。
-    - 通过调用 glEnable（GL_RASTERIZER_DISCARD）禁用光栅化（以及管道的后续阶段）。
+    - 要在启用转换反馈的情况下进行渲染，调用 `glBeginTransformFeedback` 函数。（在恢复正常绘图之前调用 `glEndTransformFeedback()` 。）
+    - 使用 `glTransformFeedbackVaryings` 函数指定变换反馈应捕获哪些着色器输出，并使用 `glBindBufferBase` 或 `glBindBufferRange` 函数和 `GL_TRANSFORM_FEEDBACK_BUFFER` 缓冲区类型来指定被捕获数据存储的缓冲区。
+    - 通过调用 `glEnable(GL_RASTERIZER_DISCARD)` 禁用光栅化（以及管道的后续阶段）。
 3. 要渲染模拟结果，使用包含粒子位置的顶点缓冲区作为第二个绘图过程的输入，再次启用光栅化（以及管道的其余部分）并使用适合渲染应用程序可视内容的顶点和片段着色器。
 4. 在下一帧中，使用最后一帧模拟步骤的顶点缓冲输出作为下一个模拟步骤的输入。
 
@@ -1583,41 +1583,41 @@ Figure 6-6 显示了使用 OpenGL ES 的应用程序执行动画显示的处理�
 >
 > These situations require OpenGL ES to submit the command buffer to the hardware for execution.
 >
-> - The function glFlush sends the command buffer to the graphics hardware. It blocks until commands are submitted to the hardware but does not wait for the commands to finish executing.
-> - The function glFinish flushes the command buffer and then waits for all previously submitted commands to finish executing on the graphics hardware.
-> - Functions that retrieve framebuffer content (such as glReadPixels) also wait for submitted commands to complete.
+> - The function `glFlush` sends the command buffer to the graphics hardware. It blocks until commands are submitted to the hardware but does not wait for the commands to finish executing.
+> - The function `glFinish` flushes the command buffer and then waits for all previously submitted commands to finish executing on the graphics hardware.
+> - Functions that retrieve framebuffer content (such as `glReadPixels`) also wait for submitted commands to complete.
 > - The command buffer is full.
 
 OpenGL ES 规范不要求实现立即执行命令。通常，命令排队到命令缓冲区并在稍后由硬件执行。通常，OpenGL ES 会等待应用程序排队许多命令，然后再将命令发送到硬件，批处理通常会更有效。但是，某些 OpenGL ES 函数必须立即刷新命令缓冲区。其他函数不仅刷新命令缓冲区，还会阻塞，直到先前提交的命令完成后再返回对应用程序的控制。仅在需要该行为时才使用刷新和同步命令。过度使用刷新或同步命令可能会导致应用程序在等待硬件完成渲染时停止运行。
 
 以下这些情况会导致 OpenGL ES 将命令缓冲区提交给硬件执行。
 
-- 函数 glFlush 将命令缓冲区发送到图形硬件。它会阻塞，直到命令提交给硬件，但不会等待命令完成执行。
-- 函数 glFinish 刷新命令缓冲区，然后等待所有先前提交的命令在图形硬件上完成执行。
-- 检索帧缓冲内容的函数（例如 glReadPixels ）也会等待提交的命令完成。
+- 函数 `glFlush` 将命令缓冲区发送到图形硬件。它会阻塞，直到命令提交给硬件，但不会等待命令完成执行。
+- 函数 `glFinish` 刷新命令缓冲区，然后等待所有先前提交的命令在图形硬件上完成执行。
+- 检索帧缓冲内容的函数（例如 `glReadPixels` ）也会等待提交的命令完成。
 - 命令缓冲区已满。
 
 #### Using glFlush Effectively
 
-> On some desktop OpenGL implementations, it can be useful to periodically call the glFlush function to efficiently balance CPU and GPU work, but this is not the case in iOS. The Tile-Based Deferred Rendering algorithm implemented by iOS graphics hardware depends on buffering all vertex data in a scene at once, so it can be optimally processed for hidden surface removal. Typically, there are only two situations where an OpenGL ES app should call the glFlush or glFinish functions.
+> On some desktop OpenGL implementations, it can be useful to periodically call the `glFlush` function to efficiently balance CPU and GPU work, but this is not the case in iOS. The Tile-Based Deferred Rendering algorithm implemented by iOS graphics hardware depends on buffering all vertex data in a scene at once, so it can be optimally processed for hidden surface removal. Typically, there are only two situations where an OpenGL ES app should call the `glFlush` or `glFinish` functions.
 >
 > - You should flush the command buffer when your app moves to the background, because executing OpenGL ES commands on the GPU while your app is in the background causes iOS to terminate your app. (See [Implementing a Multitasking-Aware OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW5).)
-> - If your app shares OpenGL ES objects (such as vertex buffers or textures) between multiple contexts, you should call the glFlush function to synchronize access to these resources. For example, you should call the glFlush function after loading vertex data in one context to ensure that its contents are ready to be retrieved by another context. This advice also applies when sharing OpenGL ES objects with other iOS APIs such as Core Image.
+> - If your app shares OpenGL ES objects (such as vertex buffers or textures) between multiple contexts, you should call the `glFlush` function to synchronize access to these resources. For example, you should call the `glFlush` function after loading vertex data in one context to ensure that its contents are ready to be retrieved by another context. This advice also applies when sharing OpenGL ES objects with other iOS APIs such as Core Image.
 
-在某些桌面 OpenGL 实现中，定期调用 glFlush 函数以有效平衡 CPU 和 GPU 工作可能很有用，但在 iOS 中并非如此。由 iOS 图形硬件实现的基于 Tile 的延迟渲染算法依赖于一次性缓冲场景中的所有顶点数据，因此可以对隐藏表面移除进行最佳处理。通常，只有两种情况，OpenGL ES 应用程序应该调用 glFlush 或 glFinish 函数。
+在某些桌面 OpenGL 实现中，定期调用 `glFlush` 函数以有效平衡 CPU 和 GPU 工作可能很有用，但在 iOS 中并非如此。由 iOS 图形硬件实现的基于 Tile 的延迟渲染算法依赖于一次性缓冲场景中的所有顶点数据，因此可以对隐藏表面移除进行最佳处理。通常，只有两种情况，OpenGL ES 应用程序应该调用 `glFlush` 或 `glFinish` 函数。
 
 - 当应用程序移动到后台时，应该刷新命令缓冲区，因为当应用程序处于后台时在 GPU 上执行 OpenGL ES 命令会导致 iOS 终止你的应用程序。（见 [Implementing a Multitasking-Aware OpenGL ES App](#implementing-a-multitasking-aware-opengl-es-app) 。）
-- 如果你的应用程序在多个上下文之间共享 OpenGL ES 对象（例如顶点缓冲区或纹理），则应调用 glFlush 函数来同步对这些资源的访问。例如，你应该在一个上下文中加载顶点数据后调用 glFlush 函数，以确保其内容已准备好被另一个上下文检索。当与其他 iOS API（如 Core Image ）共享 OpenGL ES 对象时，此建议也适用。
+- 如果你的应用程序在多个上下文之间共享 OpenGL ES 对象（例如顶点缓冲区或纹理），则应调用 `glFlush` 函数来同步对这些资源的访问。例如，你应该在一个上下文中加载顶点数据后调用 `glFlush` 函数，以确保其内容已准备好被另一个上下文检索。当与其他 iOS API（如 Core Image ）共享 OpenGL ES 对象时，此建议也适用。
 
 #### Avoid Querying OpenGL ES State
 
-> Calls to glGet*(), including glGetError(), may require OpenGL ES to execute previous commands before retrieving any state variables. This synchronization forces the graphics hardware to run lockstep with the CPU, reducing opportunities for parallelism. To avoid this, maintain your own copy of any state you need to query, and access it directly, rather than calling OpenGL ES.
+> Calls to `glGet*()`, including `glGetError()`, may require OpenGL ES to execute previous commands before retrieving any state variables. This synchronization forces the graphics hardware to run lockstep with the CPU, reducing opportunities for parallelism. To avoid this, maintain your own copy of any state you need to query, and access it directly, rather than calling OpenGL ES.
 >
-> When errors occur, OpenGL ES sets an error flag. These and other errors appear in OpenGL ES Frame Debugger in Xcode or OpenGL ES Analyzer in Instruments. You should use those tools instead of the glGetError function, which degrades performance if called frequently. Other queries such as glCheckFramebufferStatus(), glGetProgramInfoLog() and glValidateProgram() are also generally only useful while developing and debugging. You should omit calls to these functions in Release builds of your app.
+> When errors occur, OpenGL ES sets an error flag. These and other errors appear in OpenGL ES Frame Debugger in Xcode or OpenGL ES Analyzer in Instruments. You should use those tools instead of the `glGetError` function, which degrades performance if called frequently. Other queries such as `glCheckFramebufferStatus()`, `glGetProgramInfoLog()` and `glValidateProgram()` are also generally only useful while developing and debugging. You should omit calls to these functions in Release builds of your app.
 
-调用 glGet*() ，包括 glGetError() ，可能需要 OpenGL ES 在检索任何状态变量之前执行先前的命令。此同步会强制图形硬件与 CPU 保持同步，从而减少并行机会。要避免这种情况，你需要维护需要查询的任何状态的副本，并直接访问它，而不是调用 OpenGL ES 。
+调用 `glGet*()` ，包括 `glGetError()` ，可能需要 OpenGL ES 在检索任何状态变量之前执行先前的命令。此同步会强制图形硬件与 CPU 保持同步，从而减少并行机会。要避免这种情况，你需要维护需要查询的任何状态的副本，并直接访问它，而不是调用 OpenGL ES 。
 
-发生错误时，OpenGL ES 会设置错误标志。这些和其他错误出现在 Xcode 中的 OpenGL ES Frame Debugger 或 Instruments 中的 OpenGL ES Analyzer 中。你应该使用这些工具而不是 glGetError 函数，因为如果经常调用 glGetError 的话，会降低性能。其他查询（如 glCheckFramebufferStatus() ， glGetProgramInfoLog() 和 glValidateProgram() ）通常仅在开发和调试时有用。你应该在应用的发布版本中省略对这些函数的调用。
+发生错误时，OpenGL ES 会设置错误标志。这些和其他错误出现在 Xcode 中的 OpenGL ES Frame Debugger 或 Instruments 中的 OpenGL ES Analyzer 中。你应该使用这些工具而不是 `glGetError` 函数，因为如果经常调用 glGetError 的话，会降低性能。其他查询（如 `glCheckFramebufferStatus()` ， `glGetProgramInfoLog()` 和 `glValidateProgram()` ）通常仅在开发和调试时有用。你应该在应用的发布版本中省略对这些函数的调用。
 
 ### Use OpenGL ES to Manage Your Resources
 
@@ -1657,15 +1657,15 @@ Figure 6-8 双缓冲纹理数据
 
 ### Be Mindful of OpenGL ES State
 
-> OpenGL ES implementations maintain a complex set of state data, including switches you set with the glEnable or glDisable functions, the current shader program and its uniform variables, currently bound texture units, and currently bound vertex buffers and their enabled vertex attributes. The hardware has one current state, which is compiled and cached lazily. Switching state is expensive, so it's best to design your app to minimize state switches.
+> OpenGL ES implementations maintain a complex set of state data, including switches you set with the `glEnable` or `glDisable` functions, the current shader program and its uniform variables, currently bound texture units, and currently bound vertex buffers and their enabled vertex attributes. The hardware has one current state, which is compiled and cached lazily. Switching state is expensive, so it's best to design your app to minimize state switches.
 >
-> Don't set a state that's already set. Once a feature is enabled, it does not need to be enabled again. For instance, if you call a glUniform function with the same arguments more than once, OpenGL ES may not check to see if the same uniform state is already set. It simply updates the state value even if that value is identical to the current value.
+> Don't set a state that's already set. Once a feature is enabled, it does not need to be enabled again. For instance, if you call a `glUniform` function with the same arguments more than once, OpenGL ES may not check to see if the same uniform state is already set. It simply updates the state value even if that value is identical to the current value.
 >
 > Avoid setting a state more than necessary by using dedicated setup or shutdown routines rather than putting such calls in a drawing loop. Setup and shutdown routines are also useful for turning on and off features that achieve a specific visual effect—for example, when drawing a wire-frame outline around a textured polygon.
 
-OpenGL ES 实现维护一组复杂的状态数据，包括使用 glEnable 或 glDisable 函数设置的开关，当前着色器程序及其统一变量，当前绑定的纹理单元，以及当前绑定的顶点缓冲区及其启用的顶点属性。硬件只有一个当前状态，该状态以懒惰的方式被编译和缓存。切换状态代价很高，因此最好设计你的应用以最小化状态切换。
+OpenGL ES 实现维护一组复杂的状态数据，包括使用 `glEnable` 或 `glDisable` 函数设置的开关，当前着色器程序及其统一变量，当前绑定的纹理单元，以及当前绑定的顶点缓冲区及其启用的顶点属性。硬件只有一个当前状态，该状态以懒惰的方式被编译和缓存。切换状态代价很高，因此最好设计你的应用以最小化状态切换。
 
-不要设置已设置的状态。启用某项功能后，无需再次启用该功能。例如，如果使用相同的参数多次调用 glUniform 函数，OpenGL ES 可能无法检查是否已设置相同的统一状态。即使该值与当前值相同，它也只是简单地更新状态值。
+不要设置已设置的状态。启用某项功能后，无需再次启用该功能。例如，如果使用相同的参数多次调用 `glUniform` 函数，OpenGL ES 可能无法检查是否已设置相同的统一状态。即使该值与当前值相同，它也只是简单地更新状态值。
 
 通过使用专用的设置或关闭例程而不是将这些调用放在绘图循环中，避免设置超过必要的状态。设置和关闭例程对于打开和关闭实现特定视觉效果的特征也很有用 - 例如，在纹理多边形周围绘制线框轮廓时。
 
@@ -1719,14 +1719,14 @@ iOS 中 OpenGL ES 应用程序的性能与 OS X 或其他桌面操作系统中�
 
 #### Watch for OpenGL ES Errors in Xcode and Instruments
 
-> OpenGL ES errors occur when your app uses the OpenGL ES API incorrectly (for example, by requesting operations that the underlying hardware is not capable of performing). Even if your content renders correctly, these errors may indicate performance problems. The traditional way to check for OpenGL ES errors is to call the glGetError function; however, repeatedly calling this function can significantly degrade performance. Instead, use the tools described above to test for errors:
+> OpenGL ES errors occur when your app uses the OpenGL ES API incorrectly (for example, by requesting operations that the underlying hardware is not capable of performing). Even if your content renders correctly, these errors may indicate performance problems. The traditional way to check for OpenGL ES errors is to call the `glGetError` function; however, repeatedly calling this function can significantly degrade performance. Instead, use the tools described above to test for errors:
 >
 > - When profiling your app in Instruments, see the detail pane for OpenGL ES Analyzer tool to view any OpenGL ES errors reported while recording.
 > - While debugging your app in Xcode, capture a frame to examine the drawing commands used to produce it, as well as any errors encountered while performing those commands.
 >
 > You can also configure Xcode to stop program execution when an OpenGL ES error is encountered. (See Adding an OpenGL ES Error Breakpoint.)
 
-当应用程序错误地使用 OpenGL ES API 时（例如，请求底层硬件无法执行的操作），会发生 OpenGL ES 错误。即使内容呈现正确，这些错误也可能表示性能问题。检查 OpenGL ES 错误的传统方法是调用 glGetError 函数；但是，反复调用此函数会显着降低性能。相反，应该使用上述工具来测试错误：
+当应用程序错误地使用 OpenGL ES API 时（例如，请求底层硬件无法执行的操作），会发生 OpenGL ES 错误。即使内容呈现正确，这些错误也可能表示性能问题。检查 OpenGL ES 错误的传统方法是调用 `glGetError` 函数；但是，反复调用此函数会显着降低性能。相反，应该使用上述工具来测试错误：
 
 - 在仪器中分析应用程序时，查看 OpenGL ES 分析工具的详细信息窗格，以查看录制时报告的任何 OpenGL ES 错误。
 - 在 Xcode 中调试应用程序时，捕获帧以检查用于生成它的绘图命令，以及执行这些命令时遇到的任何错误。
@@ -1745,11 +1745,11 @@ Figure 7-1 添加调试标记组之前和之后的 Xcode Frame Debugger
 
 ![XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups](../../resource/OpenGLES/Markdown/XcodeFrameDebuggerBeforeAndAfterAddingDebugMarkerGroups.png)
 
-> When you have a sequence of drawing commands that represent a single meaningful operation—for example, drawing a game character—you can use a marker to group them for debugging. Listing 7-1 shows how to group the texture, program, vertex array, and draw calls for a single element of a scene. First, it calls the glPushGroupMarkerEXT function to provide a meaningful name, then it issues a group of OpenGL ES commands. Finally, it closes the group with a call to the glPopGroupMarkerEXT function.
+> When you have a sequence of drawing commands that represent a single meaningful operation—for example, drawing a game character—you can use a marker to group them for debugging. Listing 7-1 shows how to group the texture, program, vertex array, and draw calls for a single element of a scene. First, it calls the `glPushGroupMarkerEXT` function to provide a meaningful name, then it issues a group of OpenGL ES commands. Finally, it closes the group with a call to the `glPopGroupMarkerEXT` function.
 >
 > Listing 7-1  Using a debug marker to annotate drawing commands
 
-对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。Listing 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 glPushGroupMarkerEXT 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 glPopGroupMarkerEXT 函数来关闭组。
+对于代表一个有意义操作的一系列绘图命令 - 例如，绘制游戏角色 - 你可以使用标记对它们进行分组以进行调试。Listing 7-1 显示了如何对场景的单个元素的纹理，程序，顶点数组和绘制调用进行分组。首先，调用 `glPushGroupMarkerEXT` 函数来提供有意义的名称，然后发出一组 OpenGL ES 命令。最后，通过调用 `glPopGroupMarkerEXT` 函数来关闭组。
 
 Listing 7-1 使用调试标记来注释绘图命令
 
@@ -1764,13 +1764,13 @@ glPopGroupMarkerEXT();
 
 > You can use multiple nested markers to create a hierarchy of meaningful groups in a complex scene. When you use the [GLKView](https://developer.apple.com/documentation/glkit/glkview) class to draw OpenGL ES content, it automatically creates a “Rendering” group containing all commands in your drawing method. Any markers you create are nested within this group.
 >
-> Labels provide meaningful names for OpenGL ES objects, such as textures, shader programs, and vertex array objects. Call the glLabelObjectEXT function to give an object a name to be shown when debugging and profiling. Listing 7-2 illustrates using this function to label a vertex array object. If you use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class to load texture data, it automatically labels the OpenGL ES texture objects it creates with their filenames.
+> Labels provide meaningful names for OpenGL ES objects, such as textures, shader programs, and vertex array objects. Call the `glLabelObjectEXT` function to give an object a name to be shown when debugging and profiling. Listing 7-2 illustrates using this function to label a vertex array object. If you use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class to load texture data, it automatically labels the OpenGL ES texture objects it creates with their filenames.
 >
 > Listing 7-2  Using a debug label to annotate an OpenGL ES object
 
 可以使用多个嵌套标记在复杂场景中创建有意义的组的层次结构。当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类绘制 OpenGL ES 内容时，它会自动创建一个“渲染”组，其中包含绘图方法中的所有命令。你创建的任何标记都嵌套在此组中。
 
-标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 glLabelObjectEXT 函数，为对象提供调试和分析时显示的名称。Listing 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
+标签为 OpenGL ES 对象提供有意义的名称，例如纹理，着色器程序和顶点数组对象。调用 `glLabelObjectEXT` 函数，为对象提供调试和分析时显示的名称。Listing 7-2 说明了使用此函数标记顶点数组对象。如果使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类加载纹理数据，它会自动使用文件名标记它创建的 OpenGL ES 纹理对象。
 
 Listing 7-2 使用调试标签注释 OpenGL ES 对象
 
@@ -1824,13 +1824,13 @@ glLabelObjectEXT(GL_VERTEX_ARRAY_OBJECT_EXT, _spaceshipMesh, 0, "Spaceship");
 
 ### Use Tile-Based Deferred Rendering Efficiently
 
-> All GPUs used in iOS devices use tile-based deferred rendering (TBDR). When you call OpenGL ES functions to submit rendering commands to the hardware, the commands are buffered until a large list of commands is accumulated. The hardware does not begin processing vertices and shading pixels until you present the renderbuffer or flush the command buffer. It then renders these commands as a single operation by dividing the framebuffer into tiles and then drawing the commands once for each tile, with each tile rendering only the primitives that are visible within it. (The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class presents the renderbuffer after your drawing method returns. If you create your own renderbuffer for display using the [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) class, you present it using the OpenGL ES context’s [presentRenderbuffer:](https://developer.apple.com/documentation/opengles/eaglcontext/1622257-presentrenderbuffer) method. The glFlush or glFinish function flushes the command buffer.)
+> All GPUs used in iOS devices use tile-based deferred rendering (TBDR). When you call OpenGL ES functions to submit rendering commands to the hardware, the commands are buffered until a large list of commands is accumulated. The hardware does not begin processing vertices and shading pixels until you present the renderbuffer or flush the command buffer. It then renders these commands as a single operation by dividing the framebuffer into tiles and then drawing the commands once for each tile, with each tile rendering only the primitives that are visible within it. (The [GLKView](https://developer.apple.com/documentation/glkit/glkview) class presents the renderbuffer after your drawing method returns. If you create your own renderbuffer for display using the [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) class, you present it using the OpenGL ES context’s [presentRenderbuffer:](https://developer.apple.com/documentation/opengles/eaglcontext/1622257-presentrenderbuffer) method. The `glFlush` or `glFinish` function flushes the command buffer.)
 >
 > Because tile memory is part of the GPU hardware, parts of the rendering process such as depth testing and blending are much more efficient—in both time and energy usage—than on a traditional stream-based GPU architecture. Because this architecture processes all vertices for an entire scene at once, the GPU can perform hidden surface removal before fragments are processed. Pixels that are not visible are discarded without sampling textures or performing fragment processing, significantly reducing the calculations that the GPU must perform to render the tile.
 >
 > Some rendering strategies that are useful on traditional stream-based renderer have a high performance costs on iOS graphics hardware. Following the guidelines below can help your app perform well on TBDR hardware.
 
-iOS 设备中使用的所有 GPU 都使用基于 tile 的延迟渲染（TBDR）。当你调用 OpenGL ES 函数向硬件提交渲染命令时，这些命令将会被缓存下来，直到累积了大量命令。在呈现渲染缓冲区或刷新命令缓冲区之前，硬件不会开始处理顶点和着色像素。然后，硬件将这些命令作为单个操作进行渲染，方法是将帧缓冲区划分为 tile ，然后为每个 tile 绘制一次命令，每个图块仅渲染其中可见的图元。（ [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类在绘图方法返回后呈现渲染缓冲区。如果使用 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类创建自己的渲染缓冲区，则使用 OpenGL ES 上下文的 [presentRenderbuffer:](https://developer.apple.com/documentation/opengles/eaglcontext/1622257-presentrenderbuffer) 方法显示它。glFlush 或 glFinish 函数刷新命令缓冲区。）
+iOS 设备中使用的所有 GPU 都使用基于 tile 的延迟渲染（TBDR）。当你调用 OpenGL ES 函数向硬件提交渲染命令时，这些命令将会被缓存下来，直到累积了大量命令。在呈现渲染缓冲区或刷新命令缓冲区之前，硬件不会开始处理顶点和着色像素。然后，硬件将这些命令作为单个操作进行渲染，方法是将帧缓冲区划分为 tile ，然后为每个 tile 绘制一次命令，每个图块仅渲染其中可见的图元。（ [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类在绘图方法返回后呈现渲染缓冲区。如果使用 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类创建自己的渲染缓冲区，则使用 OpenGL ES 上下文的 [presentRenderbuffer:](https://developer.apple.com/documentation/opengles/eaglcontext/1622257-presentrenderbuffer) 方法显示它。`glFlush` 或 `glFinish` 函数刷新命令缓冲区。）
 
 因为 tile 内存是 GPU 硬件的一部分，所以渲染过程的一部分（如深度测试和混合）在时间和能量使用方面比传统的基于流的 GPU 架构更有效。由于此体系结构一次处理整个场景的所有顶点，因此 GPU 可以在处理片段之前执行隐藏表面移除。不可见的像素会被丢弃而不会进行纹理的采样或执行片段处理，从而显著减少了渲染 tile GPU 必须执行的计算。
 
@@ -1838,51 +1838,51 @@ iOS 设备中使用的所有 GPU 都使用基于 tile 的延迟渲染（TBDR）�
 
 #### Avoid Logical Buffer Loads and Stores
 
-> When a TBDR graphics processor begins rendering a tile, it must first transfer the contents of that portion of the framebuffer from shared memory to the tile memory on the GPU. This memory transfer, called a logical buffer load, takes time and energy. Most often, a framebuffer’s previous contents are not necessary for drawing the next frame. Avoid the performance cost of loading previous buffer contents by calling glClear whenever you begin rendering a new frame.
+> When a TBDR graphics processor begins rendering a tile, it must first transfer the contents of that portion of the framebuffer from shared memory to the tile memory on the GPU. This memory transfer, called a logical buffer load, takes time and energy. Most often, a framebuffer’s previous contents are not necessary for drawing the next frame. Avoid the performance cost of loading previous buffer contents by calling `glClear` whenever you begin rendering a new frame.
 >
-> Similarly, when the GPU finishes rendering a tile, it must write the tile’s pixel data back to shared memory. This transfer, called a logical buffer store, also has a performance cost. At least one such transfer is necessary for each frame drawn—the color renderbuffer displayed on the screen must be transferred to shared memory so it can be presented by Core Animation. Other framebuffer attachments used in your rendering algorithm (for example, depth, stencil, and multisampling buffers) need not be preserved, because their contents will be recreated on the next frame drawn. OpenGL ES automatically stores these buffers to shared memory—incurring a performance cost—unless you explicitly invalidate them. To invalidate a buffer, use the glInvalidateFramebuffer command in OpenGL ES 3.0 or the glDiscardFramebufferEXT command in OpenGL ES 1.1 or 2.0. (For more details, see [Discard Unneeded Renderbuffers](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW20).) When you use the basic drawing cycle provided by [GLKView](https://developer.apple.com/documentation/glkit/glkview) class, it automatically invalidates any drawable depth, stencil, or multisampling buffers it creates.
+> Similarly, when the GPU finishes rendering a tile, it must write the tile’s pixel data back to shared memory. This transfer, called a logical buffer store, also has a performance cost. At least one such transfer is necessary for each frame drawn—the color renderbuffer displayed on the screen must be transferred to shared memory so it can be presented by Core Animation. Other framebuffer attachments used in your rendering algorithm (for example, depth, stencil, and multisampling buffers) need not be preserved, because their contents will be recreated on the next frame drawn. OpenGL ES automatically stores these buffers to shared memory—incurring a performance cost—unless you explicitly invalidate them. To invalidate a buffer, use the `glInvalidateFramebuffer` command in OpenGL ES 3.0 or the `glDiscardFramebufferEXT` command in OpenGL ES 1.1 or 2.0. (For more details, see [Discard Unneeded Renderbuffers](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW20).) When you use the basic drawing cycle provided by [GLKView](https://developer.apple.com/documentation/glkit/glkview) class, it automatically invalidates any drawable depth, stencil, or multisampling buffers it creates.
 >
-> Logical buffer store and load operations also occur if you switch rendering destinations. If you render to a texture, then to a view’s framebuffer, then to the same texture again, the texture’s contents must be repeatedly transferred between shared memory and the GPU. Batch your drawing operations so that all drawing to a rendering destination is done together. When you do switch framebuffers (using the glBindFramebuffer or glFramebufferTexture2D function or [bindDrawable](https://developer.apple.com/documentation/glkit/glkview/1615593-binddrawable) method), invalidate unneeded framebuffer attachments to avoid causing a logical buffer store.
+> Logical buffer store and load operations also occur if you switch rendering destinations. If you render to a texture, then to a view’s framebuffer, then to the same texture again, the texture’s contents must be repeatedly transferred between shared memory and the GPU. Batch your drawing operations so that all drawing to a rendering destination is done together. When you do switch framebuffers (using the `glBindFramebuffer` or `glFramebufferTexture2D` function or [bindDrawable](https://developer.apple.com/documentation/glkit/glkview/1615593-binddrawable) method), invalidate unneeded framebuffer attachments to avoid causing a logical buffer store.
 
-当 TBDR 图形处理器开始渲染 tile 时，它必须首先将帧缓冲区的该部分的内容从共享内存传输到 GPU 上的 tile 内存。这种称为逻辑缓冲器加载的存储器传输需要时间和能量。大多数情况下，帧缓冲区的先前内容对于绘制下一帧不是必需的。每当开始渲染新帧时，通过调用 glClear 来避免加载先前缓冲区内容的性能成本。
+当 TBDR 图形处理器开始渲染 tile 时，它必须首先将帧缓冲区的该部分的内容从共享内存传输到 GPU 上的 tile 内存。这种称为逻辑缓冲器加载的存储器传输需要时间和能量。大多数情况下，帧缓冲区的先前内容对于绘制下一帧不是必需的。每当开始渲染新帧时，通过调用 `glClear` 来避免加载先前缓冲区内容的性能成本。
 
-类似地，当 GPU 完成渲染 tile 时，它必须将图块的像素数据写回共享存储器。这种称为逻辑缓冲存储的传输也具有性能成本。对于每个绘制的帧，至少需要一次这样的传输 - 颜色渲染缓冲区要在屏幕上显示就必须传输到共享内存中，以便 Core Animation 可以呈现它。渲染算法中使用的其他帧缓冲附件（例如，深度，模板和多重采样缓冲区）无需保留，因为它们的内容将在下一帧绘制时重新创建。OpenGL ES 会自动将这些缓冲区存储到共享内存中，从而产生性能成本 - 除非你明确地使它们无效。要使缓冲区无效，需要在 OpenGL ES 3.0 中使用 glInvalidateFramebuffer 命令，或在 OpenGL ES 1.1 或 2.0 中使用 glDiscardFramebufferEXT 命令。（有关更多详细信息，请参阅 [Discard Unneeded Renderbuffers](#discard-unneeded-renderbuffers) 。）当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类提供的基本绘图循环时，它会自动使其创建的任何可绘制深度，模板或多重采样缓冲区无效。
+类似地，当 GPU 完成渲染 tile 时，它必须将图块的像素数据写回共享存储器。这种称为逻辑缓冲存储的传输也具有性能成本。对于每个绘制的帧，至少需要一次这样的传输 - 颜色渲染缓冲区要在屏幕上显示就必须传输到共享内存中，以便 Core Animation 可以呈现它。渲染算法中使用的其他帧缓冲附件（例如，深度，模板和多重采样缓冲区）无需保留，因为它们的内容将在下一帧绘制时重新创建。OpenGL ES 会自动将这些缓冲区存储到共享内存中，从而产生性能成本 - 除非你明确地使它们无效。要使缓冲区无效，需要在 OpenGL ES 3.0 中使用 `glInvalidateFramebuffer` 命令，或在 OpenGL ES 1.1 或 2.0 中使用 `glDiscardFramebufferEXT` 命令。（有关更多详细信息，请参阅 [Discard Unneeded Renderbuffers](#discard-unneeded-renderbuffers) 。）当你使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类提供的基本绘图循环时，它会自动使其创建的任何可绘制深度，模板或多重采样缓冲区无效。
 
-如果切换渲染目标，也会发生逻辑缓冲区的存储和加载操作。如果你当前渲染到纹理，然后切换渲染目标为视图的帧缓冲区，然后再次切换渲染到相同的纹理，则该纹理的内存会在共享内存和 GPU 之间反复传输。批量你的绘制操作，以便一起完成绘制到渲染目标的所有绘制。当切换帧缓冲区（使用 glBindFramebuffer 或 glFramebufferTexture2D 函数或 [bindDrawable](https://developer.apple.com/documentation/glkit/glkview/1615593-binddrawable) 方法）时，使不需要的帧缓冲附件无效以避免引起逻辑缓冲区存储。
+如果切换渲染目标，也会发生逻辑缓冲区的存储和加载操作。如果你当前渲染到纹理，然后切换渲染目标为视图的帧缓冲区，然后再次切换渲染到相同的纹理，则该纹理的内存会在共享内存和 GPU 之间反复传输。批量你的绘制操作，以便一起完成绘制到渲染目标的所有绘制。当切换帧缓冲区（使用 `glBindFramebuffer` 或 `glFramebufferTexture2D` 函数或 [bindDrawable](https://developer.apple.com/documentation/glkit/glkview/1615593-binddrawable) 方法）时，使不需要的帧缓冲附件无效以避免引起逻辑缓冲区存储。
 
 #### Use Hidden Surface Removal Effectively
 
 > A TBDR graphics processor automatically uses the depth buffer to perform hidden surface removal for the entire scene, ensuring that only one fragment shader is run for each pixel. Traditional techniques for reducing fragment processing are not necessary. For example, sorting objects or primitives by depth from front to back effectively duplicates the work done by the GPU, wasting CPU time.
 >
-> The GPU cannot perform hidden surface removal when blending or alpha testing is enabled, or if a fragment shader uses the discard instruction or writes to the gl_FragDepth output variable. In these cases, the GPU cannot decide the visibility of a fragment using the depth buffer, so it must run the fragment shaders for all primitives covering each pixel, greatly increasing the time and energy required to render a frame. To avoid this performance cost, minimize your use of blending, discard instructions, and depth writes.
+> The GPU cannot perform hidden surface removal when blending or alpha testing is enabled, or if a fragment shader uses the `discard` instruction or writes to the `gl_FragDepth` output variable. In these cases, the GPU cannot decide the visibility of a fragment using the depth buffer, so it must run the fragment shaders for all primitives covering each pixel, greatly increasing the time and energy required to render a frame. To avoid this performance cost, minimize your use of blending, `discard` instructions, and depth writes.
 >
 > If you cannot avoid blending, alpha testing, or discard instructions, consider the following strategies for reducing their performance impact:
 >
-> - Sort objects by opacity. Draw opaque objects first. Next draw objects requiring a shader using the discard operation (or alpha testing in OpenGL ES 1.1). Finally, draw alpha-blended objects.
-> - Trim objects requiring blending or discard instructions to reduce the number of fragments processed. For example, instead of drawing a square to render a 2D sprite texture containing mostly empty space, draw a polygon that more closely approximates the shape of the image, as shown in Figure 7-2. The performance cost of additional vertex processing is much less than that of running fragment shaders whose results will be unused.
+> - Sort objects by opacity. Draw opaque objects first. Next draw objects requiring a shader using the `discard` operation (or alpha testing in OpenGL ES 1.1). Finally, draw alpha-blended objects.
+> - Trim objects requiring blending or `discard` instructions to reduce the number of fragments processed. For example, instead of drawing a square to render a 2D sprite texture containing mostly empty space, draw a polygon that more closely approximates the shape of the image, as shown in Figure 7-2. The performance cost of additional vertex processing is much less than that of running fragment shaders whose results will be unused.
 >
 > Figure 7-2  Trim transparent objects to reduce fragment processing
 
 TBDR 图形处理器自动使用深度缓冲区为整个场景执行隐藏表面移除，确保每个像素仅运行一个片段着色器。用于减少片段处理的传统技术不是必需的。例如，按深度值从前到后排序对象或图元有效地重复了本该 GPU 处理的工作，浪费了 CPU 时间。
 
-启用混合或 alpha 测试时，或者片段着色器使用 discard 指令或直接写入 gl_FragDepth 输出变量时，GPU 无法执行隐藏曲面移除。在这些情况下，GPU 无法使用深度缓冲区来决定片段的可见性，因此它必须为覆盖每个像素的所有图元运行片段着色器，从而大大增加渲染帧所需的时间和能量。为避免此性能成本，尽量减少混合，discard 指令和深度写入的使用。
+启用混合或 alpha 测试时，或者片段着色器使用 `discard` 指令或直接写入 `gl_FragDepth` 输出变量时，GPU 无法执行隐藏曲面移除。在这些情况下，GPU 无法使用深度缓冲区来决定片段的可见性，因此它必须为覆盖每个像素的所有图元运行片段着色器，从而大大增加渲染帧所需的时间和能量。为避免此性能成本，尽量减少混合，`discard` 指令和深度写入的使用。
 
 如果无法避免使用混合，Alpha 测试或 discard 指令，考虑以下策略以降低其性能影响：
 
-- 按不透明度对对象排序。首先绘制不透明的对象。接下来绘制那些需要使用带有 discard 操作（或 OpenGL ES 1.1 中的 alpha 测试）着色器的对象。最后，绘制 alpha 混合对象。
-- 修剪需要混合或 discard 指令的对象以减少需要处理的片段数量。例如，绘制一个更接近图像形状的多边形，而不是绘制正方形来渲染主要包含空白空间的 2D 精灵纹理， 如 Figure 7-2 所示。额外顶点处理的性能成本远低于运行结果不会被使用的片段着色器的性能成本。
+- 按不透明度对对象排序。首先绘制不透明的对象。接下来绘制那些需要使用带有 `discard` 操作（或 OpenGL ES 1.1 中的 alpha 测试）着色器的对象。最后，绘制 alpha 混合对象。
+- 修剪需要混合或 `discard` 指令的对象以减少需要处理的片段数量。例如，绘制一个更接近图像形状的多边形，而不是绘制正方形来渲染主要包含空白空间的 2D 精灵纹理， 如 Figure 7-2 所示。额外顶点处理的性能成本远低于运行结果不会被使用的片段着色器的性能成本。
 
 Figure 7-2 修剪透明对象以减少片段处理
 
 ![TrimTransparentObjectsToReduceFragmentProcessing](../../resource/OpenGLES/Markdown/TrimTransparentObjectsToReduceFragmentProcessing.png)
 
-> - Use the discard instruction as early as possible in your fragment shader to avoid performing calculations whose results are unused.
-> - Instead of using alpha testing or discard instructions to kill pixels, use alpha blending with alpha set to zero. The color framebuffer is not modified, but the graphics hardware can still use any Z-buffer optimizations it performs. This does change the value stored in the depth buffer and so may require back-to-front sorting of the transparent primitives.
-> - If your performance is limited by unavoidable discard operations, consider a “Z-Prepass” rendering strategy. Render your scene once with a simple fragment shader containing only your discard logic (avoiding expensive lighting calculations) to fill the depth buffer. Then, render your scene again using the GL_EQUAL depth test function and your lighting shaders. Though multipass rendering normally incurs a performance penalty, this approach can yield better performance than a single-pass render that involves a large number of discard operations.
+> - Use the `discard` instruction as early as possible in your fragment shader to avoid performing calculations whose results are unused.
+> - Instead of using alpha testing or `discard` instructions to kill pixels, use alpha blending with alpha set to zero. The color framebuffer is not modified, but the graphics hardware can still use any Z-buffer optimizations it performs. This does change the value stored in the depth buffer and so may require back-to-front sorting of the transparent primitives.
+> - If your performance is limited by unavoidable discard operations, consider a “Z-Prepass” rendering strategy. Render your scene once with a simple fragment shader containing only your discard logic (avoiding expensive lighting calculations) to fill the depth buffer. Then, render your scene again using the `GL_EQUAL` depth test function and your lighting shaders. Though multipass rendering normally incurs a performance penalty, this approach can yield better performance than a single-pass render that involves a large number of discard operations.
 
-- 在片段着色器中尽早使用 discard 指令，以避免执行结果不被使用的计算。
-- 不使用 alpha 测试或 discard 指令来消除像素，而是使用 alpha 设置为零的 alpha 混合。颜色帧缓冲区​​未被修改，但图形硬件仍然可以使用它执行的任何 Z 缓冲区优化。这确实改变了存储在深度缓冲区中的值，因此可能需要对透明图元进行从前到后的排序。
-- 如果性能受到不可避免的 discard 操作的限制，则考虑“Z-Prepass”渲染策略。使用仅包含 discard 逻辑的简单片段着色器（避免昂贵的光照计算）渲染场景一次以填充深度缓冲区。然后，使用 GL_EQUAL 深度测试功能和灯光着色器再次渲染场景。虽然多阶段渲染通常会导致性能损失，但这种方法比涉及大量 discard 操作的单个渲染过程可以获得更好的性能。
+- 在片段着色器中尽早使用 `discard` 指令，以避免执行结果不被使用的计算。
+- 不使用 alpha 测试或 `discard` 指令来消除像素，而是使用 alpha 设置为零的 alpha 混合。颜色帧缓冲区​​未被修改，但图形硬件仍然可以使用它执行的任何 Z 缓冲区优化。这确实改变了存储在深度缓冲区中的值，因此可能需要对透明图元进行从前到后的排序。
+- 如果性能受到不可避免的 discard 操作的限制，则考虑“Z-Prepass”渲染策略。使用仅包含 discard 逻辑的简单片段着色器（避免昂贵的光照计算）渲染场景一次以填充深度缓冲区。然后，使用 `GL_EQUAL` 深度测试功能和灯光着色器再次渲染场景。虽然多阶段渲染通常会导致性能损失，但这种方法比涉及大量 discard 操作的单个渲染过程可以获得更好的性能。
 
 #### Group OpenGL ES Commands for Efficient Resource Management
 
@@ -1896,7 +1896,7 @@ Figure 7-2 修剪透明对象以减少片段处理
 
 ### Minimize the Number of Drawing Commands
 
-> Every time your app submits primitives to be processed by OpenGL ES, the CPU prepares the commands for the graphics hardware. If your app uses many glDrawArrays or glDrawElements calls to render a scene, its performance may be limited by CPU resources without fully utilizing the GPU.
+> Every time your app submits primitives to be processed by OpenGL ES, the CPU prepares the commands for the graphics hardware. If your app uses many `glDrawArrays` or `glDrawElements` calls to render a scene, its performance may be limited by CPU resources without fully utilizing the GPU.
 >
 > To reduce this overhead, look for ways to consolidate your rendering into fewer draw calls. Useful strategies include:
 >
@@ -1904,7 +1904,7 @@ Figure 7-2 修剪透明对象以减少片段处理
 > - Creating texture atlases to draw multiple primitives using different portions of the same texture image, as described in [Combine Textures into Texture Atlases](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html#//apple_ref/doc/uid/TP40008793-CH104-SW2).
 > - Using instanced drawing to render many similar objects, as described below.
 
-每次应用程序提交要由 OpenGL ES 处理的图元时，CPU 都会为图形硬件准备命令。如果应用程序使用许多 glDrawArrays 或 glDrawElements 调用来渲染场景，则其性能可能会受到 CPU 资源的限制，进而无法充分利用 GPU 。
+每次应用程序提交要由 OpenGL ES 处理的图元时，CPU 都会为图形硬件准备命令。如果应用程序使用许多 `glDrawArrays` 或 `glDrawElements` 调用来渲染场景，则其性能可能会受到 CPU 资源的限制，进而无法充分利用 GPU 。
 
 要减少这种开销，寻找将渲染合并为更少绘制调用的方法。有用的策略包括：
 
@@ -1916,13 +1916,13 @@ Figure 7-2 修剪透明对象以减少片段处理
 
 > Instanced drawing commands allow you to draw the same vertex data multiple times using a single draw call. Instead of using CPU time to set up the variations between different instances of a mesh—such as a position offset, transformation matrix, color or texture coordinates—and issuing a draw command for each, instanced drawing moves the processing of instance variations into shader code run on the GPU.
 >
-> Vertex data that is reused multiple times is a prime candidate for instanced drawing. For example, the code in Listing 7-3 draws an object at multiple positions within a scene. However, the many glUniform and glDrawArrays calls add CPU overhead, reducing performance.
+> Vertex data that is reused multiple times is a prime candidate for instanced drawing. For example, the code in Listing 7-3 draws an object at multiple positions within a scene. However, the many `glUniform` and `glDrawArrays` calls add CPU overhead, reducing performance.
 >
 > Listing 7-3  Drawing many similar objects without instancing
 
 实例化绘图命令允许使用单个绘制调用多次绘制相同的顶点数据。实例化绘图移动实例变量的处理到运行于 GPU 上的着色器代码中，而不是使用 CPU 时间来设置网格的不同实例之间的变化 - 例如位置偏移，变换矩阵，颜色或纹理坐标，以及为绘制的每个实例发起单独的绘制命令。
 
-多次重复使用的顶点数据是实例绘图的主要候选对象。例如，Listing 7-3 中的代码在场景中的多个位置绘制一个对象。但是，大量 glUniform 和 glDrawArrays 调用会增加 CPU 开销，从而降低性能。
+多次重复使用的顶点数据是实例绘图的主要候选对象。例如，Listing 7-3 中的代码在场景中的多个位置绘制一个对象。但是，大量 `glUniform` 和 `glDrawArrays` 调用会增加 CPU 开销，从而降低性能。
 
 Listing 7-3 不使用实例绘制多个相似对象
 
@@ -1935,17 +1935,17 @@ for (x = 0; x < 10; x++) {
 }
 ```
 
-> Adopting instanced drawing requires two steps: first, replace loops like the above with a single call to glDrawArraysInstanced or glDrawElementsInstanced. These calls are otherwise identical to glDrawArrays or glDrawElements, but with an additional parameter indicating the number of instances to draw (100 for the example in Listing 7-3). Second, choose and implement one of the two strategies OpenGL ES provides for using per-instance information in your vertex shader.
+> Adopting instanced drawing requires two steps: first, replace loops like the above with a single call to `glDrawArraysInstanced` or `glDrawElementsInstanced`. These calls are otherwise identical to `glDrawArrays` or `glDrawElements`, but with an additional parameter indicating the number of instances to draw (`100` for the example in Listing 7-3). Second, choose and implement one of the two strategies OpenGL ES provides for using per-instance information in your vertex shader.
 >
-> With the shader instance ID strategy, your vertex shader derives or looks up per-instance information. Each time the vertex shader runs, its gl_InstanceID built-in variable contains a number identifying the instance currently being drawn. Use this number to calculate a position offset, color, or other per-instance variation in shader code, or to look up per-instance information in a uniform array or other bulk storage. For example, Listing 7-4 uses this technique to draw 100 instances of a mesh positioned in a 10 x 10 grid.
+> With the shader instance ID strategy, your vertex shader derives or looks up per-instance information. Each time the vertex shader runs, its `gl_InstanceID` built-in variable contains a number identifying the instance currently being drawn. Use this number to calculate a position offset, color, or other per-instance variation in shader code, or to look up per-instance information in a uniform array or other bulk storage. For example, Listing 7-4 uses this technique to draw 100 instances of a mesh positioned in a 10 x 10 grid.
 >
-> Listing 7-4  OpenGL ES 3.0 vertex shader using gl_InstanceID to compute per-instance information
+> Listing 7-4  OpenGL ES 3.0 vertex shader using `gl_InstanceID` to compute per-instance information
 
-采用实例化绘图需要两个步骤：首先，使用单个调用 glDrawArraysInstanced 或 glDrawElementsInstanced 来替换上面的循环。这些调用在其他方面与 glDrawArrays 或 glDrawElements 相同，但具有指示要绘制的实例数的附加参数（对于 Listing 7-3 中的示例，为 100 ）。其次，选择并实现 OpenGL ES 提供的两种策略之一，以便在顶点着色器中使用每个实例信息。
+采用实例化绘图需要两个步骤：首先，使用单个调用 `glDrawArraysInstanced` 或 `glDrawElementsInstanced` 来替换上面的循环。这些调用在其他方面与 `glDrawArrays` 或 `glDrawElements` 相同，但具有指示要绘制的实例数的附加参数（对于 Listing 7-3 中的示例，为 `100` ）。其次，选择并实现 OpenGL ES 提供的两种策略之一，以便在顶点着色器中使用每个实例信息。
 
-使用着色器实例 ID 策略，顶点着色器可以派生或查找每个实例的信息。每次顶点着色器运行时，其 gl_InstanceID 内置变量都包含一个标识当前正在绘制的实例的数字。使用此数字在着色器代码中计算位置偏移，颜色或其他单独实例的变量，或在统一数组或其他大容量存储中查找每个实例的信息。例如，Listing 7-4 使用此技术绘制位于 10 x 10 网格中的 100 个网格实例。
+使用着色器实例 ID 策略，顶点着色器可以派生或查找每个实例的信息。每次顶点着色器运行时，其 `gl_InstanceID` 内置变量都包含一个标识当前正在绘制的实例的数字。使用此数字在着色器代码中计算位置偏移，颜色或其他单独实例的变量，或在统一数组或其他大容量存储中查找每个实例的信息。例如，Listing 7-4 使用此技术绘制位于 10 x 10 网格中的 100 个网格实例。
 
-Listing 7-4 使用 gl_InstanceID 计算每个实例信息的 OpenGL ES 3.0 顶点着色器
+Listing 7-4 使用 `gl_InstanceID` 计算每个实例信息的 OpenGL ES 3.0 顶点着色器
 
 ```objc
 #version 300 es
@@ -1964,11 +1964,11 @@ void main()
 }
 ```
 
-> With the instanced arrays strategy, you store per-instance information in a vertex array attribute. Your vertex shader can then access that attribute to make use of per-instance information. Call the glVertexAttribDivisor function to specify how that attribute advances as OpenGL ES draws each instance. Listing 7-5 demonstrates setting up a vertex array for instanced drawing, and Listing 7-6 shows the corresponding shader.
+> With the instanced arrays strategy, you store per-instance information in a vertex array attribute. Your vertex shader can then access that attribute to make use of per-instance information. Call the `glVertexAttribDivisor` function to specify how that attribute advances as OpenGL ES draws each instance. Listing 7-5 demonstrates setting up a vertex array for instanced drawing, and Listing 7-6 shows the corresponding shader.
 >
 > Listing 7-5  Using a vertex attribute for per-instance information
 
-使用实例数组策略，可以将每个实例信息存储在顶点数组属性中。然后，你的顶点着色器可以访问该属性以使用每个实例的信息。调用 glVertexAttribDivisor 函数以指定该属性在 OpenGL ES 绘制每个实例时如何前进。Listing 7-5 演示了为实例化绘图设置顶点数组，Listing 7-6 显示了相应的着色器。
+使用实例数组策略，可以将每个实例信息存储在顶点数组属性中。然后，你的顶点着色器可以访问该属性以使用每个实例的信息。调用 `glVertexAttribDivisor` 函数以指定该属性在 OpenGL ES 绘制每个实例时如何前进。Listing 7-5 演示了为实例化绘图设置顶点数组，Listing 7-6 显示了相应的着色器。
 
 Listing 7-5 为每个实例信息使用 vertex 属性
 
@@ -2028,13 +2028,13 @@ iOS 中的虚拟内存系统不使用交换文件。当检测到内存不足的�
 
 > Core Animation composites the contents of renderbuffers with any other layers in your view hierarchy, regardless of whether those layers were drawn with OpenGL ES, Quartz or other graphics libraries. That’s helpful, because it means that OpenGL ES is a first-class citizen to Core Animation. However, mixing OpenGL ES content with other content takes time; when used improperly, your app may perform too slowly to reach interactive frame rates.
 >
-> For the absolute best performance, your app should rely solely on OpenGL ES to render your content. Size the view that holds your OpenGL ES content to match the screen, make sure its [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) property is set to YES (the default for [GLKView](https://developer.apple.com/documentation/glkit/glkview) objects) and that no other views or Core Animation layers are visible.
+> For the absolute best performance, your app should rely solely on OpenGL ES to render your content. Size the view that holds your OpenGL ES content to match the screen, make sure its [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) property is set to `YES` (the default for [GLKView](https://developer.apple.com/documentation/glkit/glkview) objects) and that no other views or Core Animation layers are visible.
 >
 > If you render into a Core Animation layer that is composited on top of other layers, making your [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) object opaque reduces—but doesn’t eliminate—the performance cost. If your [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) object is blended on top of layers underneath it in the layer hierarchy, the renderbuffer’s color data must be in a premultiplied alpha format to be composited correctly by Core Animation. Blending OpenGL ES content on top of other content has a severe performance penalty.
 
 Core Animation 将渲染缓冲区的内容与视图层次结构中的任何其他图层组合在一起，无论这些图层是使用OpenGL ES，Quartz 还是其他图形库绘制的。这很有用，因为这意味着 OpenGL ES 是 Core Animation 的一流公民。然而，将 OpenGL ES 内容与其他内容混合需要时间；如果使用不当，应用可能执行速度太慢，无法达到交互式帧速率。
 
-为获得绝对最佳性能，你的应用应仅依靠 OpenGL ES 来呈现内容。调整包含 OpenGL ES 内容的视图的大小以匹配屏幕，确保其 [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) 属性设置为YES（ [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象的默认值），并且不会有其他视图或 Core Animation 图层处于可见状态。
+为获得绝对最佳性能，你的应用应仅依靠 OpenGL ES 来呈现内容。调整包含 OpenGL ES 内容的视图的大小以匹配屏幕，确保其 [opaque](https://developer.apple.com/documentation/quartzcore/calayer/1410763-isopaque) 属性设置为 `YES`（ [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象的默认值），并且不会有其他视图或 Core Animation 图层处于可见状态。
 
 如果使用 OpenGL ES 渲染到的 Core Animation 图层位于其他图层的上面，设置 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 对象的不透明度可以降低性能成本，但不会消除该成本。如果 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 需要与图层层级结构中位于其下面的最顶层图层进行混合的话，则渲染缓冲区的颜色数据必须采用预乘的 Alpha 格式才能被 Core Animation 正确合成。将 OpenGL ES 内容混合到其他内容之上会严重影响性能。
 
@@ -2044,7 +2044,7 @@ Core Animation 将渲染缓冲区的内容与视图层次结构中的任何其�
 >
 > A vertex consists of one or more attributes, such as the position, the color, the normal, or texture coordinates. An OpenGL ES 2.0 or 3.0 app is free to define its own attributes; each attribute in the vertex data corresponds to an attribute variable that acts as an input to the vertex shader. An OpenGL 1.1 app uses attributes defined by the fixed-function pipeline.
 >
-> You define an attribute as a vector consisting of one to four components. All components in the attribute share a common data type. For example, a color might be defined as four GLubyte components (red, green, blue, alpha). When an attribute is loaded into a shader variable, any components that are not provided in the app data are filled in with default values by OpenGL ES. The last component is filled with 1, and other unspecified components are filled with 0, as illustrated in Figure 8-1.
+> You define an attribute as a vector consisting of one to four components. All components in the attribute share a common data type. For example, a color might be defined as four `GLubyte` components (red, green, blue, alpha). When an attribute is loaded into a shader variable, any components that are not provided in the app data are filled in with default values by OpenGL ES. The last component is filled with `1`, and other unspecified components are filled with `0`, as illustrated in Figure 8-1.
 >
 > Figure 8-1  Conversion of attribute data to shader variables
 
@@ -2052,7 +2052,7 @@ Core Animation 将渲染缓冲区的内容与视图层次结构中的任何其�
 
 顶点由一个或多个属性组成，例如位置，颜色，法线或纹理坐标。OpenGL ES 2.0 或 3.0 应用程序可以自由定义自己的属性；顶点数据中的每个属性对应于充当顶点着色器输入的一个属性变量。OpenGL 1.1 应用程序使用固定功能管道定义的属性。
 
-属性被定义为由一到四个成分组成的向量。属性中的所有成分都共享一个公共数据类型。例如，颜色可以定义为四个 GLubyte 成分（红色，绿色，蓝色，alpha ）。当属性加载到着色器变量时，应用程序数据中未提供的任何成分都将使用 OpenGL ES 的默认值填充。最后一个成分填充 1 ，其他未指定的成分填充 0 ，如 Figure 8-1 所示。
+属性被定义为由一到四个成分组成的向量。属性中的所有成分都共享一个公共数据类型。例如，颜色可以定义为四个 `GLubyte` 成分（红色，绿色，蓝色，alpha ）。当属性加载到着色器变量时，应用程序数据中未提供的任何成分都将使用 OpenGL ES 的默认值填充。最后一个成分填充 `1` ，其他未指定的成分填充 `0` ，如 Figure 8-1 所示。
 
 Figure 8-1 将属性数据转换为着色器变量
 
@@ -2086,7 +2086,7 @@ Figure 8-1 将属性数据转换为着色器变量
 > - Use textures to eliminate the need for some vertex information. For example, a bump map can be used to add detail to a model without adding more vertex data.
 > - Some models add vertices to improve lighting details or rendering quality. This is usually done when values are calculated for each vertex and interpolated across the triangle during the rasterization stage. For example, if you directed a spotlight at the center of a triangle, its effect might go unnoticed because the brightest part of the spotlight is not directed at a vertex. By adding vertices, you provide additional interpolant points, at the cost of increasing the size of your vertex data and the calculations performed on the model. Instead of adding additional vertices, consider moving calculations into the fragment stage of the pipeline instead:
 >    - If your app uses OpenGL ES 2.0 or later, then your app performs the calculation in the vertex shader and assigns it to a varying variable. The varying value is interpolated by the graphics hardware and passed to the fragment shader as an input. Instead, assign the calculation’s inputs to varying variables and perform the calculation in the fragment shader. Doing this changes the cost of performing that calculation from a per-vertex cost to a per-fragment cost, reduces pressure on the vertex stage and more pressure on the fragment stage of the pipeline. Do this when your app is blocked on vertex processing, the calculation is inexpensive and the vertex count can be significantly reduced by the change.
->    - If your app uses OpenGL ES 1.1, you can perform per-fragment lighting using DOT3 lighting. You do this by adding a bump map texture to hold normal information and applying the bump map using a texture combine operation with the GL_DOT3_RGB mode.
+>    - If your app uses OpenGL ES 1.1, you can perform per-fragment lighting using DOT3 lighting. You do this by adding a bump map texture to hold normal information and applying the bump map using a texture combine operation with the `GL_DOT3_RGB` mode.
 
 基于 iOS 设备的图形硬件非常强大，但它显示的图像通常非常小。一般不需要极其复杂的模型来在 iOS 上呈现引人注目的图形。减少用于绘制模型的顶点数量可以直接减少顶点数据的大小以及在顶点数据上执行的计算。
 
@@ -2096,31 +2096,31 @@ Figure 8-1 将属性数据转换为着色器变量
 - 使用纹理可以消除对某些顶点信息的需要。例如，凹凸贴图可用于向模型添加细节，而无需添加更多顶点数据。
 - 某些模型添加顶点以改善照明细节或渲染质量。这通常是在顶点着色器计算阶段与光栅化阶段在三角形内插值时完成的。例如，如果将聚光灯指向三角形的中心，其效果可能会被忽视，因为聚光灯的最亮部分未指向顶点。通过添加顶点，可以提供额外的插补点，但代价是增加顶点数据的大小以及在模型上执行的计算。 考虑将相关计算移到管道的片段阶段，而不是添加额外的顶点来解决该问题。
     - 如果你的应用使用 OpenGL ES 2.0 或更高版本，然后应用在顶点着色器中执行计算并将其分配给 varying 变量。图形硬件对 varying 变量进行插值并作为输入传递给片段着色器。另一种方式是将计算的输入赋值给 varying 变量，并在片段着色器中执行计算。这样做会将执行该计算的成本从每个顶点成本更改为每个片段成本，降低了顶点阶段的压力，但增加了管道片段阶段的压力。当你的应用程序阻塞在顶点处理时，执行此操作，此操作计算成本低廉，并且可以通过更改显着减少顶点计数。
-    - 如果应用使用 OpenGL ES 1.1 ，则可以使用 DOT3 照明执行每片段照明。可以通过添加凹凸贴图纹理来保存法线信息并使用纹理合并操作和 GL_DOT3_RGB 模式应用凹凸贴图来完成此操作。
+    - 如果应用使用 OpenGL ES 1.1 ，则可以使用 DOT3 照明执行每片段照明。可以通过添加凹凸贴图纹理来保存法线信息并使用纹理合并操作和 `GL_DOT3_RGB` 模式应用凹凸贴图来完成此操作。
 
 ### Avoid Storing Constants in Attribute Arrays
 
-> If your models include attributes that uses data that remains constant across the entire model, do not duplicate that data for each vertex. OpenGL ES 2.0 and 3.0 apps can either set a constant vertex attribute or use a uniform shader value to hold the value instead. OpenGL ES 1.1 app should use a per-vertex attribute function such as glColor4ub or glTexCoord2f instead.
+> If your models include attributes that uses data that remains constant across the entire model, do not duplicate that data for each vertex. OpenGL ES 2.0 and 3.0 apps can either set a constant vertex attribute or use a uniform shader value to hold the value instead. OpenGL ES 1.1 app should use a per-vertex attribute function such as `glColor4ub` or `glTexCoord2f` instead.
 
-如果模型包含使用在整个模型中保持不变的数据的属性，则不要在每个顶点中包含该数据。OpenGL ES 2.0 和 3.0 应用程序可以设置常量顶点属性，也可以使用统一着色器值来保存这样的值。OpenGL ES 1.1 应用程序应该使用每顶点属性函数，例如 glColor4ub 或 glTexCoord2f 。
+如果模型包含使用在整个模型中保持不变的数据的属性，则不要在每个顶点中包含该数据。OpenGL ES 2.0 和 3.0 应用程序可以设置常量顶点属性，也可以使用统一着色器值来保存这样的值。OpenGL ES 1.1 应用程序应该使用每顶点属性函数，例如 `glColor4ub` 或 `glTexCoord2f` 。
 
 ### Use the Smallest Acceptable Types for Attributes
 
 > When specifying the size of each of your attribute’s components, choose the smallest data type that provides acceptable results. Here are some guidelines:
 >
-> - Specify vertex colors using four unsigned byte components (GL_UNSIGNED_BYTE).
-> - Specify texture coordinates using 2 or 4 unsigned bytes (GL_UNSIGNED_BYTE) or unsigned short (GL_UNSIGNED_SHORT). Do not pack multiple sets of texture coordinates into a single attribute.
-> - Avoid using the OpenGL ES GL_FIXED data type. It requires the same amount of memory as GL_FLOAT, but provides a smaller range of values. All iOS devices support hardware floating-point units, so floating point values can be processed more quickly.
-> - OpenGL ES 3.0 contexts support a wider range of small data types, such as GL_HALF_FLOAT and GL_INT_2_10_10_10_REV. These often provide sufficient precision for attributes such as normals, with a smaller footprint than GL_FLOAT.
+> - Specify vertex colors using four unsigned byte components (`GL_UNSIGNED_BYTE`).
+> - Specify texture coordinates using 2 or 4 unsigned bytes (`GL_UNSIGNED_BYTE`) or unsigned short (`GL_UNSIGNED_SHORT`). Do not pack multiple sets of texture coordinates into a single attribute.
+> - Avoid using the OpenGL ES `GL_FIXED` data type. It requires the same amount of memory as `GL_FLOAT`, but provides a smaller range of values. All iOS devices support hardware floating-point units, so floating point values can be processed more quickly.
+> - OpenGL ES 3.0 contexts support a wider range of small data types, such as `GL_HALF_FLOAT` and `GL_INT_2_10_10_10_REV`. These often provide sufficient precision for attributes such as normals, with a smaller footprint than `GL_FLOAT`.
 >
 > If you specify smaller components, be sure you reorder your vertex format to avoid misaligning your vertex data. See [Avoid Misaligned Vertex Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW7).
 
 指定每个属性组件的大小时，选择提供可接受结果的最小数据类型。以下是一些指导原则：
 
-- 使用四个无符号字节组件（ GL_UNSIGNED_BYTE ）指定顶点颜色。
-- 使用 2 个或 4 个无符号字节（ GL_UNSIGNED_BYTE ）或无符号短整型（ GL_UNSIGNED_SHORT ）指定纹理坐标。不要将多组纹理坐标打包到单个属性中。
-- 避免使用 OpenGL ES GL_FIXED 数据类型。它需要与 GL_FLOAT 相同的内存占用，但提供的值范围较小。所有 iOS 设备都支持硬件浮点单元，因此可以更快地处理浮点值。
-- OpenGL ES 3.0 上下文支持更广泛的小数据类型，例如 GL_HALF_FLOAT 和 GL_INT_2_10_10_10_REV 。这些通常为法线等属性提供足够的精度，同时拥有比 GL_FLOAT 更小的空间占用。
+- 使用四个无符号字节组件（ `GL_UNSIGNED_BYTE` ）指定顶点颜色。
+- 使用 2 个或 4 个无符号字节（ `GL_UNSIGNED_BYTE` ）或无符号短整型（ `GL_UNSIGNED_SHORT` ）指定纹理坐标。不要将多组纹理坐标打包到单个属性中。
+- 避免使用 OpenGL ES `GL_FIXED` 数据类型。它需要与 `GL_FLOAT` 相同的内存占用，但提供的值范围较小。所有 iOS 设备都支持硬件浮点单元，因此可以更快地处理浮点值。
+- OpenGL ES 3.0 上下文支持更广泛的小数据类型，例如 `GL_HALF_FLOAT` 和 `GL_INT_2_10_10_10_REV` 。这些通常为法线等属性提供足够的精度，同时拥有比 `GL_FLOAT` 更小的空间占用。
 
 如果指定较小的组件，确保重新排序顶点格式以避免错位顶点数据。见 [Avoid Misaligned Vertex Data](#avoid-misaligned-vertex-data) 。
 
@@ -2150,13 +2150,13 @@ Figure 8-3 当数据使用方式有差异时使用多个顶点结构
 
 > When you are designing your vertex structure, align the beginning of each attribute to an offset that is either a multiple of its component size or 4 bytes, whichever is larger. When an attribute is misaligned, iOS must perform additional processing before passing the data to the graphics hardware.
 >
-> In [Figure 8-4](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW15), the position and normal data are each defined as three short integers, for a total of six bytes. The normal data begins at offset 6, which is a multiple of the native size (2 bytes), but is not a multiple of 4 bytes. If this vertex data were submitted to iOS, iOS would have to take additional time to copy and align the data before passing it to the hardware. To fix this, explicitly add two bytes of padding after each attribute.
+> In [Figure 8-4](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW15), the position and normal data are each defined as three short integers, for a total of six bytes. The normal data begins at offset `6`, which is a multiple of the native size (2 bytes), but is not a multiple of 4 bytes. If this vertex data were submitted to iOS, iOS would have to take additional time to copy and align the data before passing it to the hardware. To fix this, explicitly add two bytes of padding after each attribute.
 >
 > Figure 8-4  Align Vertex Data to avoid additional processing
 
 在设计顶点结构时，将每个属性的起始对其到其组件大小或 4 字节整数倍的偏移处，以较大者为准。当属性未对齐时，iOS 必须在将数据传递到图形硬件之前执行额外的处理。
 
-在 [Figure 8-4](#figure-8-4) 中，位置和法线数据各自定义为三个短整数，总共六个字节。法线数据从偏移值 6 起始，偏移量为原始大小（ 2 字节）的整数倍，但不是 4 字节的整数倍。如果将此顶点数据提交到 iOS ，则在将数据传递给硬件之前，iOS 必须花费额外的时间来复制和对齐数据。要解决此问题，在每个属性后显式添加两个填充字节。
+在 [Figure 8-4](#figure-8-4) 中，位置和法线数据各自定义为三个短整数，总共六个字节。法线数据从偏移值 `6` 起始，偏移量为原始大小（ 2 字节）的整数倍，但不是 4 字节的整数倍。如果将此顶点数据提交到 iOS ，则在将数据传递给硬件之前，iOS 必须花费额外的时间来复制和对齐数据。要解决此问题，在每个属性后显式添加两个填充字节。
 
 <span id="figure-8-4">Figure 8-4</span> 对齐顶点数据以避免额外处理
 
@@ -2196,13 +2196,13 @@ Figure 8-6 使用简并三角形合并三角形条带
 
 ![UseDegenerateTrianglesToMergTtriangleStrips](../../resource/OpenGLES/Markdown/UseDegenerateTrianglesToMergTtriangleStrips.png)
 
-> For best performance, your models should be submitted as a single indexed triangle strip. To avoid specifying data for the same vertex multiple times in the vertex buffer, use a separate index buffer and draw the triangle strip using the glDrawElements function (or the glDrawElementsInstanced or glDrawRangeElements functions, if appropriate).
+> For best performance, your models should be submitted as a single indexed triangle strip. To avoid specifying data for the same vertex multiple times in the vertex buffer, use a separate index buffer and draw the triangle strip using the `glDrawElements` function (or the `glDrawElementsInstanced` or `glDrawRangeElements` functions, if appropriate).
 >
 > In OpenGL ES 3.0, you can use the primitive restart feature to merge triangle strips without using degenerate triangles. When this feature is enabled, OpenGL ES treats the largest possible value in an index buffer as a command to finish one triangle strip and start another. Listing 8-1 demonstrates this approach.
 >
 > Listing 8-1  Using primitive restart in OpenGL ES 3.0
 
-为获得最佳性能，你的模型应作为单个索引三角形条提交。要避免在顶点缓冲区中多次指定同一顶点的数据，使用单独的索引缓冲区并使用 glDrawElements 函数（或 glDrawElementsInstanced 或 glDrawRangeElements 函数，如果适用）绘制三角形条。
+为获得最佳性能，你的模型应作为单个索引三角形条提交。要避免在顶点缓冲区中多次指定同一顶点的数据，使用单独的索引缓冲区并使用 `glDrawElements` 函数（或 `glDrawElementsInstanced` 或 `glDrawRangeElements` 函数，如果适用）绘制三角形条。
 
 在 OpenGL ES 3.0 中，你可以使用图元 restart 功能来合并三角形条而不使用简并三角形。启用此功能后，OpenGL ES 会将索引缓冲区中可能的最大值视为完成一个三角形条带并启动另一个三角形条带的命令。Listing 8-1 演示了这种方法。
 
@@ -2227,11 +2227,11 @@ glDrawElements(GL_TRIANGLE_STRIP, 11, GL_UNSIGNED_SHORT, 0);
 
 ### Use Vertex Buffer Objects to Manage Copying Vertex Data
 
-> Listing 8-2 provides a function that a simple app might use to provide position and color data to the vertex shader. It enables two attributes and configures each to point at the interleaved vertex structure. Finally, it calls the glDrawElements function to render the model as a single triangle strip.
+> Listing 8-2 provides a function that a simple app might use to provide position and color data to the vertex shader. It enables two attributes and configures each to point at the interleaved vertex structure. Finally, it calls the `glDrawElements` function to render the model as a single triangle strip.
 >
 > Listing 8-2  Submitting vertex data to a shader program
 
-Listing 8-2 提供了一个用于简单应用程序向顶点着色器提供位置和颜色数据的函数。它启用两个属性，并将每个属性配置为指向交错的顶点结构。最后，它调用 glDrawElements 函数将模型作为单个三角形条带渲染。
+Listing 8-2 提供了一个用于简单应用程序向顶点着色器提供位置和颜色数据的函数。它启用两个属性，并将每个属性配置为指向交错的顶点结构。最后，它调用 `glDrawElements` 函数将模型作为单个三角形条带渲染。
 
 <span id="listing-8-2">Listing 8-2</span> 将顶点数据提交到着色器程序
 
@@ -2258,19 +2258,19 @@ void DrawModel()
 }
 ```
 
-> This code works, but is inefficient. Each time DrawModel is called, the index and vertex data are copied to OpenGL ES, and transferred to the graphics hardware. If the vertex data does not change between invocations, these unnecessary copies can impact performance. To avoid unnecessary copies, your app should store its vertex data in a vertex buffer object (VBO). Because OpenGL ES owns the vertex buffer object’s memory, it can store the buffer in memory that is more accessible to the graphics hardware, or pre-process the data into the preferred format for the graphics hardware.
+> This code works, but is inefficient. Each time `DrawModel` is called, the index and vertex data are copied to OpenGL ES, and transferred to the graphics hardware. If the vertex data does not change between invocations, these unnecessary copies can impact performance. To avoid unnecessary copies, your app should store its vertex data in a vertex buffer object (VBO). Because OpenGL ES owns the vertex buffer object’s memory, it can store the buffer in memory that is more accessible to the graphics hardware, or pre-process the data into the preferred format for the graphics hardware.
 >
 > Note: When using vertex array objects in OpenGL ES 3.0, you must also use vertex buffer objects.
 >
-> Listing 8-3 creates a pair of vertex buffer objects, one to hold the vertex data and the second for the strip’s indices. In each case, the code generates a new object, binds it to be the current buffer, and fills the buffer. CreateVertexBuffers would be called when the app is initialized.
+> Listing 8-3 creates a pair of vertex buffer objects, one to hold the vertex data and the second for the strip’s indices. In each case, the code generates a new object, binds it to be the current buffer, and fills the buffer. `CreateVertexBuffers` would be called when the app is initialized.
 >
 > Listing 8-3  Creating a vertex buffer object
 
-这样的代码是可以工作的，但效率低下。每次调用 DrawModel 时，索引和顶点数据都会复制到 OpenGL ES ，并传输到图形硬件。如果顶点数据在调用之间没有变化，则这些不必要的拷贝会影响性能。为避免不必要的拷贝，你的应用程序应将其顶点数据存储在顶点缓冲区对象（ VBO ）中。由于 OpenGL ES 拥有顶点缓冲区对象的内存，因此它可以将缓冲区存储在图形硬件更易于访问的内存中，或者将数据预处理为图形硬件的首选格式。
+这样的代码是可以工作的，但效率低下。每次调用 `DrawModel` 时，索引和顶点数据都会复制到 OpenGL ES ，并传输到图形硬件。如果顶点数据在调用之间没有变化，则这些不必要的拷贝会影响性能。为避免不必要的拷贝，你的应用程序应将其顶点数据存储在顶点缓冲区对象（ VBO ）中。由于 OpenGL ES 拥有顶点缓冲区对象的内存，因此它可以将缓冲区存储在图形硬件更易于访问的内存中，或者将数据预处理为图形硬件的首选格式。
 
 注意：在 OpenGL ES 3.0 中使用顶点数组对象时，还必须使用顶点缓冲区对象。
 
-Listing 8-3 创建了一对顶点缓冲区对象，一个用于保存顶点数据，另一个用于存储条带索引。在每种情况下，代码都会生成一个新对象，将其绑定为当前缓冲区，并填充缓冲区。CreateVertexBuffers 将会在应用程序初始化时将调用。
+Listing 8-3 创建了一对顶点缓冲区对象，一个用于保存顶点数据，另一个用于存储条带索引。在每种情况下，代码都会生成一个新对象，将其绑定为当前缓冲区，并填充缓冲区。`CreateVertexBuffers` 将会在应用程序初始化时将调用。
 
 <span id="listing-8-3">Listing 8-3</span> 创建顶点缓冲区对象
 
@@ -2291,11 +2291,11 @@ void CreateVertexBuffers()
 }
 ```
 
-> Listing 8-4 modifies Listing 8-2 to use the vertex buffer objects. The key difference in Listing 8-4 is that the parameters to the glVertexAttribPointer functions no longer point to the vertex arrays. Instead, each is an offset into the vertex buffer object.
+> Listing 8-4 modifies Listing 8-2 to use the vertex buffer objects. The key difference in Listing 8-4 is that the parameters to the `glVertexAttribPointer` functions no longer point to the vertex arrays. Instead, each is an offset into the vertex buffer object.
 >
 > Listing 8-4  Drawing with a vertex buffer object
 
-Listing 8-4 修改了 [Listing 8-2](#listing-8-2) 以使用顶点缓冲区对象。Listing 8-4 的主要区别在于 glVertexAttribPointer 函数的参数不再指向顶点数组。相反，对应的参数为顶点缓冲区对象的偏移量。
+Listing 8-4 修改了 [Listing 8-2](#listing-8-2) 以使用顶点缓冲区对象。Listing 8-4 的主要区别在于 `glVertexAttribPointer` 函数的参数不再指向顶点数组。相反，对应的参数为顶点缓冲区对象的偏移量。
 
 Listing 8-4 使用顶点缓冲区对象绘制
 
@@ -2317,31 +2317,31 @@ void DrawModelUsingVertexBuffers()
 
 #### Buffer Usage Hints
 
-> The previous example initialized the vertex buffer once and never changed its contents afterwards. You can change the contents of a vertex buffer. A key part of the design of vertex buffer objects is that the app can inform OpenGL ES how it uses the data stored in the buffer. An OpenGL ES implementation can use this hint to alter the strategy it uses for storing the vertex data. In [Listing 8-3](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW3), each call to the glBufferData function provides a usage hint as the last parameter. Passing GL_STATIC_DRAW into glBufferData tells OpenGL ES that the contents of both buffers are never expected to change, which gives OpenGL ES more opportunities to optimize how and where the data is stored.
+> The previous example initialized the vertex buffer once and never changed its contents afterwards. You can change the contents of a vertex buffer. A key part of the design of vertex buffer objects is that the app can inform OpenGL ES how it uses the data stored in the buffer. An OpenGL ES implementation can use this hint to alter the strategy it uses for storing the vertex data. In [Listing 8-3](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW3), each call to the `glBufferData` function provides a usage hint as the last parameter. Passing `GL_STATIC_DRAW` into `glBufferData` tells OpenGL ES that the contents of both buffers are never expected to change, which gives OpenGL ES more opportunities to optimize how and where the data is stored.
 >
 > The OpenGL ES specification defines the following usage cases:
 >
-> - GL_STATIC_DRAW is for vertex buffers that are rendered many times, and whose contents are specified once and never change.
-> - GL_DYNAMIC_DRAW is for vertex buffers that are rendered many times, and whose contents change during the rendering loop.
-> - GL_STREAM_DRAW is for vertex buffers that are rendered a small number of times and then discarded.
+> - `GL_STATIC_DRAW` is for vertex buffers that are rendered many times, and whose contents are specified once and never change.
+> - `GL_DYNAMIC_DRAW` is for vertex buffers that are rendered many times, and whose contents change during the rendering loop.
+> - `GL_STREAM_DRAW` is for vertex buffers that are rendered a small number of times and then discarded.
 >
-> In iOS, GL_DYNAMIC_DRAW and GL_STREAM_DRAW are equivalent. You can use the glBufferSubData function to update buffer contents, but doing so incurs a performance penalty because it flushes the command buffer and waits for all commands to complete. Double or triple buffering can reduce this performance cost somewhat. (See [Use Double Buffering to Avoid Resource Conflicts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW5).) For better performance, use the glMapBufferRange function in OpenGL ES 3.0 or the corresponding function provided by the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 2.0 or 1.1.
+> In iOS, `GL_DYNAMIC_DRAW` and `GL_STREAM_DRAW` are equivalent. You can use the `glBufferSubData` function to update buffer contents, but doing so incurs a performance penalty because it flushes the command buffer and waits for all commands to complete. Double or triple buffering can reduce this performance cost somewhat. (See [Use Double Buffering to Avoid Resource Conflicts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW5).) For better performance, use the `glMapBufferRange` function in OpenGL ES 3.0 or the corresponding function provided by the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 2.0 or 1.1.
 >
-> If different attributes inside your vertex format require different usage patterns, split the vertex data into multiple structures and allocate a separate vertex buffer object for each collection of attributes that share common usage characteristics. Listing 8-5 modifies the previous example to use a separate buffer to hold the color data. By allocating the color buffer using the GL_DYNAMIC_DRAW hint, OpenGL ES can allocate that buffer so that your app maintains reasonable performance.
+> If different attributes inside your vertex format require different usage patterns, split the vertex data into multiple structures and allocate a separate vertex buffer object for each collection of attributes that share common usage characteristics. Listing 8-5 modifies the previous example to use a separate buffer to hold the color data. By allocating the color buffer using the `GL_DYNAMIC_DRAW` hint, OpenGL ES can allocate that buffer so that your app maintains reasonable performance.
 >
 > Listing 8-5  Drawing a model with multiple vertex buffer objects
 
-前面的示例初始化顶点缓冲区一次，之后其内容保持不变。你可以更改顶点缓冲区的内容。顶点缓冲区对象设计的一个关键部分是应用程序可以通知 OpenGL ES 如何使用缓冲区中存储的数据。OpenGL ES 实现可以使用此提示来更改用于存储顶点数据的策略。在 [Listing 8-3](#listing-8-3) 中，每次调用 glBufferData 函数都会提供一个用法提示作为最后一个参数。将 GL_STATIC_DRAW 传递给 glBufferData 告诉 OpenGL ES 两个缓冲区的内容永远不会发生变化，这为 OpenGL ES 提供了更多优化数据存储方式和位置的机会。
+前面的示例初始化顶点缓冲区一次，之后其内容保持不变。你可以更改顶点缓冲区的内容。顶点缓冲区对象设计的一个关键部分是应用程序可以通知 OpenGL ES 如何使用缓冲区中存储的数据。OpenGL ES 实现可以使用此提示来更改用于存储顶点数据的策略。在 [Listing 8-3](#listing-8-3) 中，每次调用 `glBufferData` 函数都会提供一个用法提示作为最后一个参数。将 `GL_STATIC_DRAW` 传递给 `glBufferData` 告诉 OpenGL ES 两个缓冲区的内容永远不会发生变化，这为 OpenGL ES 提供了更多优化数据存储方式和位置的机会。
 
 OpenGL ES 规范定义了以下使用方式：
 
-- GL_STATIC_DRAW 用于多次渲染的顶点缓冲区，其内容指定一次且永不改变。
-- GL_DYNAMIC_DRAW 用于多次渲染的顶点缓冲区，其内容在渲染循环期间发生变化。
-- GL_STREAM_DRAW 用于渲染少量次数然后被丢弃的顶点缓冲区。
+- `GL_STATIC_DRAW` 用于多次渲染的顶点缓冲区，其内容指定一次且永不改变。
+- `GL_DYNAMIC_DRAW` 用于多次渲染的顶点缓冲区，其内容在渲染循环期间发生变化。
+- `GL_STREAM_DRAW` 用于渲染少量次数然后被丢弃的顶点缓冲区。
 
-在 iOS 中，GL_DYNAMIC_DRAW 和 GL_STREAM_DRAW 是等效的。你可以使用 glBufferSubData 函数来更新缓冲区内容，但这样做会导致性能下降，因为它会刷新命令缓冲区并等待所有命令完成。双重或三重缓冲可以在一定程度上降低性能成本。（见 [Use Double Buffering to Avoid Resource Conflicts](#use-double-buffering-to-avoid-resource-conflicts) 。）为了获得更好的性能，请使用 OpenGL ES 3.0 中的 glMapBufferRange 函数或 OpenGL ES 2.0 或 1.1 中 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展提供的相应函数。
+在 iOS 中，`GL_DYNAMIC_DRAW` 和 `GL_STREAM_DRAW` 是等效的。你可以使用 `glBufferSubData` 函数来更新缓冲区内容，但这样做会导致性能下降，因为它会刷新命令缓冲区并等待所有命令完成。双重或三重缓冲可以在一定程度上降低性能成本。（见 [Use Double Buffering to Avoid Resource Conflicts](#use-double-buffering-to-avoid-resource-conflicts) 。）为了获得更好的性能，请使用 OpenGL ES 3.0 中的 `glMapBufferRange` 函数或 OpenGL ES 2.0 或 1.1 中 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展提供的相应函数。
 
-如果顶点格式中的不同属性需要不同的使用模式，将顶点数据拆分为多个结构，并为共享通用使用特征的每个属性集合分配单独的顶点缓冲区对象。Listing 8-5 修改了前一个示例，以使用单独的缓冲区来保存颜色数据。通过使用 GL_DYNAMIC_DRAW 提示分配颜色缓冲区，OpenGL ES 可以分配该缓冲区，以便应用程序保持合理的性能。
+如果顶点格式中的不同属性需要不同的使用模式，将顶点数据拆分为多个结构，并为共享通用使用特征的每个属性集合分配单独的顶点缓冲区对象。Listing 8-5 修改了前一个示例，以使用单独的缓冲区来保存颜色数据。通过使用 `GL_DYNAMIC_DRAW` 提示分配颜色缓冲区，OpenGL ES 可以分配该缓冲区，以便应用程序保持合理的性能。
 
 <span id="listing-8-5">Listing 8-5</span> 使用多个顶点缓冲区对象绘制模型
 
@@ -2403,13 +2403,13 @@ void DrawModelUsingMultipleVertexBuffers()
 
 ### Consolidate Vertex Array State Changes Using Vertex Array Objects
 
-> Take a closer look at the DrawModelUsingMultipleVertexBuffers function in [Listing 8-5](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW4). It enables many attributes, binds multiple vertex buffer objects, and configures attributes to point into the buffers. All of that initialization code is essentially static; none of the parameters change from frame to frame. If this function is called every time the app renders a frame, there’s a lot of unnecessary overhead reconfiguring the graphics pipeline. If the app draws many different kinds of models, reconfiguring the pipeline may become a bottleneck. Instead, use a vertex array object to store a complete attribute configuration. Vertex array objects are part of the core OpenGL ES 3.0 specification and are available in OpenGL ES 2.0 and 1.1 through the [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) extension.
+> Take a closer look at the `DrawModelUsingMultipleVertexBuffers` function in [Listing 8-5](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW4). It enables many attributes, binds multiple vertex buffer objects, and configures attributes to point into the buffers. All of that initialization code is essentially static; none of the parameters change from frame to frame. If this function is called every time the app renders a frame, there’s a lot of unnecessary overhead reconfiguring the graphics pipeline. If the app draws many different kinds of models, reconfiguring the pipeline may become a bottleneck. Instead, use a vertex array object to store a complete attribute configuration. Vertex array objects are part of the core OpenGL ES 3.0 specification and are available in OpenGL ES 2.0 and 1.1 through the [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) extension.
 >
 > Figure 8-7 shows an example configuration with two vertex array objects. Each configuration is independent of the other; each vertex array object can reference a different set of vertex attributes, which can be stored in the same vertex buffer object or split across several vertex buffer objects.
 >
 > Figure 8-7  Vertex array object configuration
 
-仔细看 [Listing 8-5](#listing-8-5) 中的 DrawModelUsingMultipleVertexBuffers 函数。它启用许多属性，绑定多个顶点缓冲区对象，并配置属性以指向缓冲区。所有初始化代码基本上都是静态的；没有参数在帧与帧之间变化。如果每次应用程序渲染帧时都调用此函数，则会有很多不必要的重新配置图形管道的开销。如果应用程序绘制了许多不同类型的模型，重新配置管道可能会成为瓶颈。使用顶点数组对象来存储完整的属性配置。顶点数组对象是核心 OpenGL ES 3.0 规范的一部分，可通过 [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) 扩展在 OpenGL ES 2.0 和 1.1 中使用。
+仔细看 [Listing 8-5](#listing-8-5) 中的 `DrawModelUsingMultipleVertexBuffers` 函数。它启用许多属性，绑定多个顶点缓冲区对象，并配置属性以指向缓冲区。所有初始化代码基本上都是静态的；没有参数在帧与帧之间变化。如果每次应用程序渲染帧时都调用此函数，则会有很多不必要的重新配置图形管道的开销。如果应用程序绘制了许多不同类型的模型，重新配置管道可能会成为瓶颈。使用顶点数组对象来存储完整的属性配置。顶点数组对象是核心 OpenGL ES 3.0 规范的一部分，可通过 [OES_vertex_array_object](http://www.khronos.org/registry/gles/extensions/OES/OES_vertex_array_object.txt) 扩展在 OpenGL ES 2.0 和 1.1 中使用。
 
 Figure 8-7 显示了具有两个顶点数组对象的示例配置。每个配置都独立于另一个；每个顶点数组对象可以引用一组不同的顶点属性，这些属性可以存储在同一个顶点缓冲区对象中，也可以分割成几个顶点缓冲区对象。
 
@@ -2468,19 +2468,19 @@ void ConfigureVertexArrayObject()
 
 ### Map Buffers into Client Memory for Fast Updates
 
-> One of the more challenging problems in OpenGL ES app design is working with dynamic resources, especially if your vertex data needs to change every frame. Efficiently balancing parallelism between the CPU and GPU requires carefully managing data transfers between your app’s memory space and OpenGL ES memory. Traditional techniques, such as using the glBufferSubData function, can reduce performance because they force the GPU to wait while data is transferred, even if it could otherwise be rendering from data elsewhere in the same buffer.
+> One of the more challenging problems in OpenGL ES app design is working with dynamic resources, especially if your vertex data needs to change every frame. Efficiently balancing parallelism between the CPU and GPU requires carefully managing data transfers between your app’s memory space and OpenGL ES memory. Traditional techniques, such as using the `glBufferSubData` function, can reduce performance because they force the GPU to wait while data is transferred, even if it could otherwise be rendering from data elsewhere in the same buffer.
 >
 > For example, you may want to both modify a vertex buffer and draw its contents on each pass through a high frame rate rendering loop. A draw command from the last frame rendered may still be utilizing the GPU while the CPU is attempting to access buffer memory to prepare for drawing the next frame—causing the buffer update call to block further CPU work until the GPU is done. You can improve performance in such scenarios by manually synchronizing CPU and GPU access to a buffer.
 >
-> The glMapBufferRange function provides a more efficient way to dynamically update vertex buffers. (This function is available as core API in OpenGL ES 3.0 and through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 1.1 and 2.0.) Use this function to retrieve a pointer to a region of OpenGL ES memory, which you can then use to write new data. The glMapBufferRange function allows mapping of any subrange of the buffer’s data storage into client memory. It also supports hints that allow for asynchronous buffer modification when you use the function together with a OpenGL sync object, as shown in Listing 8-7.
+> The `glMapBufferRange` function provides a more efficient way to dynamically update vertex buffers. (This function is available as core API in OpenGL ES 3.0 and through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension in OpenGL ES 1.1 and 2.0.) Use this function to retrieve a pointer to a region of OpenGL ES memory, which you can then use to write new data. The `glMapBufferRange` function allows mapping of any subrange of the buffer’s data storage into client memory. It also supports hints that allow for asynchronous buffer modification when you use the function together with a OpenGL sync object, as shown in Listing 8-7.
 >
 > Listing 8-7  Dynamically updating a vertex buffer with manual synchronization
 
-OpenGL ES 应用程序设计中一个更具挑战性的问题是使用动态资源，特别是如果顶点数据需要每帧更改。有效地平衡 CPU 和 GPU 之间的并行性需要仔细管理应用程序内存空间和 OpenGL ES 内存之间的数据传输。传统技术（例如使用 glBufferSubData 函数）可能会降低性能，因为它们会强制 GPU 在传输数据时等待，即使它可能是从同一缓冲区中的其他位置进行渲染。
+OpenGL ES 应用程序设计中一个更具挑战性的问题是使用动态资源，特别是如果顶点数据需要每帧更改。有效地平衡 CPU 和 GPU 之间的并行性需要仔细管理应用程序内存空间和 OpenGL ES 内存之间的数据传输。传统技术（例如使用 `glBufferSubData` 函数）可能会降低性能，因为它们会强制 GPU 在传输数据时等待，即使它可能是从同一缓冲区中的其他位置进行渲染。
 
 例如，你可能希望修改顶点缓冲区并在每次传递时通过高帧速率渲染循环绘制其内容。当 CPU 尝试访问缓冲内存以准备绘制下一帧时，渲染上一帧的绘图命令可能仍然在利用 GPU  - 导致缓冲区更新调用阻止进一步的 CPU 工作直到 GPU 完成。可以通过手工同步 CPU 和 GPU 对缓冲区的访问来提高此类场景的性能。
 
-glMapBufferRange 函数提供了一种更有效的方式来动态更新顶点缓冲区。（此函数在 OpenGL ES 3.0 中作为核心 API 可用以及 OpenGL ES 1.1 和 2.0 中通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展来使用相同的功能。）使用此函数可以检索指向 OpenGL ES 内存区域的指针，然后可以使用该指针写新数据。glMapBufferRange 函数允许将缓冲区数据存储的任何子区间映射到客户端内存。当与 OpenGL 同步对象一起使用该函数时，还支持允许异步缓冲区更新的提示，如 Listing 8-7 所示。
+`glMapBufferRange` 函数提供了一种更有效的方式来动态更新顶点缓冲区。（此函数在 OpenGL ES 3.0 中作为核心 API 可用以及 OpenGL ES 1.1 和 2.0 中通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展来使用相同的功能。）使用此函数可以检索指向 OpenGL ES 内存区域的指针，然后可以使用该指针写新数据。`glMapBufferRange` 函数允许将缓冲区数据存储的任何子区间映射到客户端内存。当与 OpenGL 同步对象一起使用该函数时，还支持允许异步缓冲区更新的提示，如 Listing 8-7 所示。
 
 Listing 8-7 使用手动同步动态更新顶点缓冲区
 
@@ -2515,9 +2515,9 @@ GLboolean UpdateAndDraw(GLuint vbo, GLuint offset, GLuint length, void *data) {
 }
 ```
 
-> The UpdateAndDraw function in this example uses the glFenceSync function to establish a synchronization point, or fence, immediately after submitting drawing commands that use a particular buffer object. It then uses the glClientWaitSync function (on the next pass through the rendering loop) to check that synchronization point before modifying the buffer object. If those drawing commands finish executing on the GPU before the rendering loop comes back around, CPU execution does not block and the UpdateAndDraw function continues to modify the buffer and draw the next frame. If the GPU has not finished executing those commands, the glClientWaitSync function blocks further CPU execution until the GPU reaches the fence. By manually placing synchronization points only around the sections of your code with potential resource conflicts, you can minimize how long the CPU waits for the GPU.
+> The `UpdateAndDraw` function in this example uses the `glFenceSync` function to establish a synchronization point, or fence, immediately after submitting drawing commands that use a particular buffer object. It then uses the glClientWaitSync function (on the next pass through the rendering loop) to check that synchronization point before modifying the buffer object. If those drawing commands finish executing on the GPU before the rendering loop comes back around, CPU execution does not block and the `UpdateAndDraw` function continues to modify the buffer and draw the next frame. If the GPU has not finished executing those commands, the `glClientWaitSync` function blocks further CPU execution until the GPU reaches the fence. By manually placing synchronization points only around the sections of your code with potential resource conflicts, you can minimize how long the CPU waits for the GPU.
 
-此示例中的 UpdateAndDraw 函数使用 glFenceSync 函数在提交使用特定缓冲区对象的绘图命令后立即建立同步点或栅栏。然后它使用 glClientWaitSync 函数（在下一次通过渲染循环时）在修改缓冲区对象之前检查该同步点。如果这些绘图命令在渲染循环返回之前在 GPU 上完成执行，则 CPU 执行不会阻塞，并且 UpdateAndDraw 函数继续修改缓冲区并绘制下一帧。如果 GPU 尚未完成执行这些命令，则 glClientWaitSync 功能会阻止 CPU 执行，直到 GPU 到达栅栏。通过仅在代码中可能存在资源冲突的部分手动放置同步点，可以最大限度地减少 CPU 等待 GPU 的时间。
+此示例中的 `UpdateAndDraw` 函数使用 `glFenceSync` 函数在提交使用特定缓冲区对象的绘图命令后立即建立同步点或栅栏。然后它使用 glClientWaitSync 函数（在下一次通过渲染循环时）在修改缓冲区对象之前检查该同步点。如果这些绘图命令在渲染循环返回之前在 GPU 上完成执行，则 CPU 执行不会阻塞，并且 `UpdateAndDraw` 函数继续修改缓冲区并绘制下一帧。如果 GPU 尚未完成执行这些命令，则 `glClientWaitSync` 功能会阻止 CPU 执行，直到 GPU 到达栅栏。通过仅在代码中可能存在资源冲突的部分手动放置同步点，可以最大限度地减少 CPU 等待 GPU 的时间。
 
 ## Best Practices for Working with Texture Data
 
@@ -2541,17 +2541,17 @@ GLboolean UpdateAndDraw(GLuint vbo, GLuint offset, GLuint length, void *data) {
 
 > Creating and loading textures is an expensive operation. For best results, avoid creating new textures while your app is running. Instead, create and load your texture data during initialization.
 >
-> After you create a texture, avoid changing it except at the beginning or end of a frame. Currently, all iOS devices use a tile-based deferred renderer, making calls to the glTexSubImage and glCopyTexSubImage functions particularly expensive. See [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) for more information.
+> After you create a texture, avoid changing it except at the beginning or end of a frame. Currently, all iOS devices use a tile-based deferred renderer, making calls to the `glTexSubImage` and `glCopyTexSubImage` functions particularly expensive. See [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) for more information.
 
 创建和加载纹理是一项昂贵的操作。为获得最佳效果，避免在应用运行时创建新纹理。而是在初始化期间创建和加载纹理数据。
 
-创建纹理后，避免更改它，除非在帧的开头或结尾处。目前，所有 iOS 设备都使用基于 tile 的延迟渲染器，因此调用 glTexSubImage 和 glCopyTexSubImage 函数代价很高。有关更多信息，见 [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) 。
+创建纹理后，避免更改它，除非在帧的开头或结尾处。目前，所有 iOS 设备都使用基于 tile 的延迟渲染器，因此调用 `glTexSubImage` 和 `glCopyTexSubImage` 函数代价很高。有关更多信息，见 [Tile-Based Deferred Rendering](https://developer.apple.com/library/archive/documentation/OpenGLES/Conceptual/OpenGLESHardwarePlatformGuide_iOS/OpenGLESPlatforms/OpenGLESPlatforms.html#//apple_ref/doc/uid/TP40012935-CH106-SW6) 。
 
 #### Use the GLKit Framework to Load Texture Data
 
 > Loading texture data is a fundamental operation that is important to get right. Using the GLKit framework, the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class makes creating and loading new textures easy. The [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class can load texture data from a variety of sources, including files, URLs, in-memory representations, and CGImages. Regardless of the input source, the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class creates and loads a new texture from data and returns the texture information as a [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object. Properties of [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) objects can be accessed to perform various tasks, including binding the texture to a context and enabling it for drawing.
 >
-> Note: A [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object does not own the OpenGL ES texture object it describes. You must call the glDeleteTextures function to dispose of texture objects when you are done using them.
+> Note: A [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) object does not own the OpenGL ES texture object it describes. You must call the `glDeleteTextures` function to dispose of texture objects when you are done using them.
 >
 > Listing 9-1 presents a typical strategy to load a new texture from a file and to bind and enable the texture for later use.
 >
@@ -2559,7 +2559,7 @@ GLboolean UpdateAndDraw(GLuint vbo, GLuint offset, GLuint length, void *data) {
 
 加载纹理数据是一项重要的基本操作。使用 GLKit 框架，[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类可以轻松创建和加载新纹理。[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类可以从各种来源加载纹理数据，包括文件，URL，内存数据和 CGImages 。无论输入源如何，[GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类都会根据数据创建并加载新纹理，并将纹理信息作为 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象返回。可以访问 [GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象的属性以执行各种任务，包括将纹理绑定到上下文并使其能够用于绘制。
 
-注意：[GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象不拥有它描述的 OpenGL ES 纹理对象。完成使用后，必须调用 glDeleteTextures 函数来释放纹理对象。
+注意：[GLKTextureInfo](https://developer.apple.com/documentation/glkit/glktextureinfo) 对象不拥有它描述的 OpenGL ES 纹理对象。完成使用后，必须调用 `glDeleteTextures` 函数来释放纹理对象。
 
 Listing 9-1 给出了从文件加载新纹理以及绑定和启用纹理以供以后使用的典型策略。
 
@@ -2637,53 +2637,53 @@ OpenGL ES 3.0 还支持 ETC2 和 EAC 压缩纹理格式；但是，在 iOS 设�
 
 > Texture atlases have a few restrictions:
 >
-> - You cannot use a texture atlas if you are using the GL_REPEAT texture wrap parameter.
+> - You cannot use a texture atlas if you are using the `GL_REPEAT` texture wrap parameter.
 > - Filtering may sometimes fetch texels outside the expected range. To use those textures in a texture atlas, you must place padding between the textures that make up the texture atlas.
 > - Because the texture atlas is still a texture, it is subject to the OpenGL ES implementation’s maximum texture size as well as other texture attributes.
 >
-> Xcode can automatically build texture atlases for you from a collection of images. For details on creating a texture atlas, see [Xcode Help](https://help.apple.com/xcode). This feature is provided primarily for developers using the Sprite Kit framework, but any app can make use of the texture atlas files it produces. For each .atlas folder in your project, Xcode creates a .atlasc folder in your app bundle, containing one or more compiled atlas images and a property list (.plist) file. The property list file describes the individual images that make up the atlas and their locations within the atlas image—you can use this information to calculate appropriate texture coordinates for use in OpenGL ES drawing.
+> Xcode can automatically build texture atlases for you from a collection of images. For details on creating a texture atlas, see [Xcode Help](https://help.apple.com/xcode). This feature is provided primarily for developers using the Sprite Kit framework, but any app can make use of the texture atlas files it produces. For each `.atlas` folder in your project, Xcode creates a `.atlasc` folder in your app bundle, containing one or more compiled atlas images and a property list (.plist) file. The property list file describes the individual images that make up the atlas and their locations within the atlas image—you can use this information to calculate appropriate texture coordinates for use in OpenGL ES drawing.
 
 纹理图集有一些限制：
 
-- 如果使用 GL_REPEAT 纹理包装参数，则无法使用纹理图集。
+- 如果使用 `GL_REPEAT` 纹理包装参数，则无法使用纹理图集。
 - 过滤有时可能会获取超出预期范围的纹素。要在纹理图集中使用这些纹理，必须在构成纹理图集的纹理之间放置填充。
 - 因为纹理图集仍然是纹理，所以它受 OpenGL ES 实现的最大纹理大小以及其他纹理属性的影响。
 
-Xcode 可以从一组图像中自动为你构建纹理图集。有关创建纹理图集的详细信息，见 [Xcode Help](https://help.apple.com/xcode) 。此功能主要是为使用 Sprite Kit 框架的开发人员提供的，但任何应用程序都可以使用它生成的纹理图集文件。对于项目中的每个 .atlas 文件夹，Xcode 会在应用包中创建一个 .atlasc 文件夹，其中包含一个或多个已编译的图集图像和一个属性列表（ .plist ）文件。属性列表文件描述构成图集的各个图像及其在图集图像中的位置 - 你可以使用此信息计算用于 OpenGL ES 绘图的适当纹理坐标。
+Xcode 可以从一组图像中自动为你构建纹理图集。有关创建纹理图集的详细信息，见 [Xcode Help](https://help.apple.com/xcode) 。此功能主要是为使用 Sprite Kit 框架的开发人员提供的，但任何应用程序都可以使用它生成的纹理图集文件。对于项目中的每个 `.atlas` 文件夹，Xcode 会在应用包中创建一个 `.atlasc` 文件夹，其中包含一个或多个已编译的图集图像和一个属性列表（ .plist ）文件。属性列表文件描述构成图集的各个图像及其在图集图像中的位置 - 你可以使用此信息计算用于 OpenGL ES 绘图的适当纹理坐标。
 
 ### Use Mipmapping to Reduce Memory Bandwidth Usage
 
 > Your app should provide mipmaps for all textures except those being used to draw 2D unscaled images. Although mipmaps use additional memory, they prevent texturing artifacts and improve image quality. More importantly, when the smaller mipmaps are sampled, fewer texels are fetched from texture memory which reduces the memory bandwidth needed by the graphics hardware, improving performance.
 >
-> The GL_LINEAR_MIPMAP_LINEAR filter mode provides the best quality when texturing but requires additional texels to be fetched from memory. Your app can trade some image quality for better performance by specifying the GL_LINEAR_MIPMAP_NEAREST filter mode instead.
+> The `GL_LINEAR_MIPMAP_LINEAR` filter mode provides the best quality when texturing but requires additional texels to be fetched from memory. Your app can trade some image quality for better performance by specifying the `GL_LINEAR_MIPMAP_NEAREST` filter mode instead.
 >
-> When combining mip maps with texture atlases, use the TEXTURE_MAX_LEVEL parameter in OpenGL ES 3.0 to control how your textures are filtered. (This functionality is also available in OpenGL ES 1.1 and 2.0 through the [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) extension.)
+> When combining mip maps with texture atlases, use the `TEXTURE_MAX_LEVEL` parameter in OpenGL ES 3.0 to control how your textures are filtered. (This functionality is also available in OpenGL ES 1.1 and 2.0 through the [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) extension.)
 
 你的应用应为所有纹理提供 mipmap ，用于绘制 2D 未缩放图像的纹理除外。虽然 mipmaps 使用额外的内存，但它们可以防止纹理瑕疵并提高图像质量。更重要的是，当对较小的 mipmap 进行采样时，只需从纹理内存获取较少的纹素，这减少了图形硬件所需的存储器带宽，从而提高了性能。
 
-GL_LINEAR_MIPMAP_LINEAR 过滤器模式在纹理化时提供最佳质量，但需要从内存中提取额外的其他纹理元素。你的应用可以通过指定 GL_LINEAR_MIPMAP_NEAREST 过滤模式来交换一些图像质量以获得更好的性能。
+`GL_LINEAR_MIPMAP_LINEAR` 过滤器模式在纹理化时提供最佳质量，但需要从内存中提取额外的其他纹理元素。你的应用可以通过指定 `GL_LINEAR_MIPMAP_NEAREST` 过滤模式来交换一些图像质量以获得更好的性能。
 
-将 mip 贴图与纹理图集相结合时，使用 OpenGL ES 3.0 中的 TEXTURE_MAX_LEVEL 参数来控制纹理的过滤方式。（此功能也可通过 [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) 扩展在 OpenGL ES 1.1 和 2.0 中使用。）
+将 mip 贴图与纹理图集相结合时，使用 OpenGL ES 3.0 中的 `TEXTURE_MAX_LEVEL` 参数来控制纹理的过滤方式。（此功能也可通过 [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt) 扩展在 OpenGL ES 1.1 和 2.0 中使用。）
 
 ### Use Multitexturing Instead of Multiple Passes
 
 > Many apps perform multiple passes to draw a model, altering the configuration of the graphics pipeline for each pass. This not only requires additional time to reconfigure the graphics pipeline, but it also requires vertex information to be reprocessed for every pass, and pixel data to be read back from the framebuffer on later passes.
 >
-> All OpenGL ES implementations on iOS support at least two texture units, and most devices support at least eight. Your app should use these texture units to perform as many steps as possible in your algorithm in each pass. You can retrieve the number of texture units available to your app by calling the glGetIntegerv function, passing in GL_MAX_TEXTURE_UNITS as the parameter.
+> All OpenGL ES implementations on iOS support at least two texture units, and most devices support at least eight. Your app should use these texture units to perform as many steps as possible in your algorithm in each pass. You can retrieve the number of texture units available to your app by calling the `glGetIntegerv` function, passing in `GL_MAX_TEXTURE_UNITS` as the parameter.
 >
 > If your app requires multiple passes to render a single object:
 >
 > - Ensure that the position data remains unchanged for every pass.
-> - On the second and later stage, test for pixels that are on the surface of your model by calling the glDepthFunc function with GL_EQUAL as the parameter.
+> - On the second and later stage, test for pixels that are on the surface of your model by calling the `glDepthFunc` function with `GL_EQUAL` as the parameter.
 
 许多应用程序执行多次 pass 来绘制模型，从而需要改变每次 pass 的图形管道配置。这不仅需要额外的时间来重新配置图形管道，而且还需要对每次 pass 重新处理顶点信息，并且在后续的 pass 中要从帧缓冲器读回像素数据。
 
-iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数设备至少支持八个。你的应用应使用这些纹理单元在每次 pass 的算法中执行尽可能多的步骤。你可以通过以 GL_MAX_TEXTURE_UNITS 作为参数调用 glGetIntegerv 函数检索应用程序可用的纹理单元数。
+iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数设备至少支持八个。你的应用应使用这些纹理单元在每次 pass 的算法中执行尽可能多的步骤。你可以通过以 `GL_MAX_TEXTURE_UNITS` 作为参数调用 `glGetIntegerv` 函数检索应用程序可用的纹理单元数。
 
 如果你的应用需要多次 pass 才能呈现单个对象：
 
 - 确保每次 pass 的位置数据保持不变。
-- 在第二阶段和后期阶段，通过使用 GL_EQUAL 作为参数调用 glDepthFunc 函数来测试模型表面上的像素。
+- 在第二阶段和后期阶段，通过使用 `GL_EQUAL` 作为参数调用 `glDepthFunc` 函数来测试模型表面上的像素。
 
 ## Best Practices for Shaders
 
@@ -2693,9 +2693,9 @@ iOS 上的所有 OpenGL ES 实现都支持至少两个纹理单元，大多数�
 
 ### Compile and Link Shaders During Initialization
 
-> Creating a shader program is an expensive operation compared to other OpenGL ES state changes. Compile, link, and validate your programs when your app is initialized. Once you’ve created all your shaders, the app can efficiently switch between them by calling glUseProgram.
+> Creating a shader program is an expensive operation compared to other OpenGL ES state changes. Compile, link, and validate your programs when your app is initialized. Once you’ve created all your shaders, the app can efficiently switch between them by calling `glUseProgram`.
 
-与其他 OpenGL ES 状态更改相比，创建着色器程序是一项昂贵的操作。初始化应用程序时编译，链接和验证你的着色器程序。一旦你创建了所有着色器，应用程序就可以通过调用 glUseProgram 在它们之间高效切换。
+与其他 OpenGL ES 状态更改相比，创建着色器程序是一项昂贵的操作。初始化应用程序时编译，链接和验证你的着色器程序。一旦你创建了所有着色器，应用程序就可以通过调用 `glUseProgram` 在它们之间高效切换。
 
 #### Check for Shader Program Errors When Debugging
 
@@ -2721,7 +2721,7 @@ if(logLen > 0) {
 #endif
 ```
 
-> Similarly, you should call the glValidateProgram function only in development builds. You can use this function to find development errors such as failing to bind all texture units required by a shader program. But because validating a program checks it against the entire OpenGL ES context state, it is an expensive operation. Since the results of program validation are only meaningful during development, you should not call this function in Release builds of your app.
+> Similarly, you should call the `glValidateProgram` function only in development builds. You can use this function to find development errors such as failing to bind all texture units required by a shader program. But because validating a program checks it against the entire OpenGL ES context state, it is an expensive operation. Since the results of program validation are only meaningful during development, you should not call this function in Release builds of your app.
 
 同样，应该仅在开发版本中调用 glValidateProgram 函数。你可以使用此函数来查找开发错误，例如无法绑定着色器程序所需的所有纹理单元。但是因为验证着色器程序会对整个 OpenGL ES 上下文状态进行检查，所以这是一项昂贵的操作。由于程序验证的结果仅在开发期间有意义，因此不应在应用程序的发布版本中调用此函数。
 
@@ -2792,13 +2792,13 @@ OpenGL ES 限制可以在顶点或片段着色器中使用的每种变量类型�
 > Follow these guidelines:
 >
 > - When in doubt, default to high precision.
-> - Colors in the 0.0 to 1.0 range can usually be represented using low precision variables.
+> - Colors in the `0.0` to `1.0` range can usually be represented using low precision variables.
 > - Position data should usually be stored as high precision.
 > - Normals and vectors used in lighting calculations can usually be stored as medium precision.
 > - After reducing precision, retest your app to ensure that the results are what you expect.
 >
 > Listing 10-3 defaults to high precision variables, but calculates the color output using low precision variables because higher precision is not necessary.
-
+>
 > Listing 10-3  Low precision is acceptable for fragment color
 
 GLSL ES 语言规范中增加了精确提示，以满足与嵌入式设备的较小硬件限制相匹配的紧凑着色器变量的需求。每个着色器必须指定默认精度；单个着色器变量可以覆盖此精度，以便向编译器提供有关如何在应用中使用该变量的提示。不要求 OpenGL ES 实现使用该提示信息，但这样做可能生成更有效的着色器。GLSL ES 规范列出了每个提示的范围和精度。
@@ -2808,7 +2808,7 @@ GLSL ES 语言规范中增加了精确提示，以满足与嵌入式设备的较
 请遵循以下准则：
 
 - 当类型不明了时，默认为高精度。
-- 通常可以使用低精度变量表示 0.0 到 1.0 范围内的颜色。
+- 通常可以使用低精度变量表示 `0.0` 到 `1.0` 范围内的颜色。
 - 位置数据通常应以高精度存储。
 - 照明计算中使用的法线和向量通常可以存储为中等精度。
 - 降低精度后，重新测试应用以确保结果符合预期。
@@ -3005,7 +3005,7 @@ Figure 10-2 使用帧缓冲区提取进行可编程混合
 >
 > These effects are possible without the framebuffer fetch extension—for example, grayscale conversion can be done by rendering a scene into a texture, then drawing a full-screen quad using that texture and a fragment shader that converts texel colors to grayscale. However, using this extension generally results in better performance.
 >
-> To enable this feature, your fragment shader must declare that it requires the EXT_shader_framebuffer_fetch extension, as shown in Listing 10-8 and Listing 10-9. The shader code to implement this feature differs between versions of the OpenGL ES Shading Language (GLSL ES).
+> To enable this feature, your fragment shader must declare that it requires the `EXT_shader_framebuffer_fetch` extension, as shown in Listing 10-8 and Listing 10-9. The shader code to implement this feature differs between versions of the OpenGL ES Shading Language (GLSL ES).
 
 此扩展启用了许多高级渲染技术：
 
@@ -3015,15 +3015,15 @@ Figure 10-2 使用帧缓冲区提取进行可编程混合
 
 在没有帧缓冲区获取扩展的情况下也可以实现这些效果 - 例如，可以通过将场景渲染到纹理中，然后使用该纹理绘制全屏四边形并将纹理颜色转换为灰度的片段着色器来完成灰度转换。但是，使用此扩展通常会带来更好的性能。
 
-要启用此特性，片段着色器必须声明它需要 EXT_shader_framebuffer_fetch 扩展，如 Listing 10-8 和 Listing 10-9 所示。实现此功能的着色器代码在 OpenGL ES 着色语言（ GLSL ES ）的版本之间有所不同。
+要启用此特性，片段着色器必须声明它需要 `EXT_shader_framebuffer_fetch` 扩展，如 Listing 10-8 和 Listing 10-9 所示。实现此功能的着色器代码在 OpenGL ES 着色语言（ GLSL ES ）的版本之间有所不同。
 
 #### Using Framebuffer Fetch in GLSL ES 1.0
 
-> For OpenGL ES 2.0 contexts and OpenGL ES 3.0 contexts not using #version 300 es shaders, you use the gl_FragColor builtin variable for fragment shader output and the gl_LastFragData builtin variable to read framebuffer data, as illustrated in Listing 10-8.
+> For OpenGL ES 2.0 contexts and OpenGL ES 3.0 contexts not using `#version 300 es shaders`, you use the `gl_FragColor` builtin variable for fragment shader output and the `gl_LastFragData` builtin variable to read framebuffer data, as illustrated in Listing 10-8.
 >
 > Listing 10-8  Fragment shader for programmable blending in GLSL ES 1.0
 
-对于不使用 #version 300 es 着色器的 OpenGL ES 2.0 上下文和 OpenGL ES 3.0 上下文，可以使用 gl_FragColor 内置变量进行片段着色器输出，使用 gl_LastFragData 内置变量来读取帧缓冲数据，如 Listing 10-8 所示。
+对于不使用 `#version 300 es` 着色器的 OpenGL ES 2.0 上下文和 OpenGL ES 3.0 上下文，可以使用 `gl_FragColor` 内置变量进行片段着色器输出，使用 `gl_LastFragData` 内置变量来读取帧缓冲数据，如 Listing 10-8 所示。
 
 <span id="listing-10-8">Listing 10-8</span> 用于 GLSL ES 1.0 中可编程混合的片段着色器
 
@@ -3055,11 +3055,11 @@ void main()
 
 #### Using Framebuffer Fetch in GLSL ES 3.0
 
-> In GLSL ES 3.0, you use user-defined variables declared with the out qualifier for fragment shader outputs. If you declare a fragment shader output variable with the inout qualifier, it will contain framebuffer data when the fragment shader executes. Listing 10-9 illustrates a grayscale post-processing technique using an inout variable.
+> In GLSL ES 3.0, you use user-defined variables declared with the `out` qualifier for fragment shader outputs. If you declare a fragment shader output variable with the `inout` qualifier, it will contain framebuffer data when the fragment shader executes. Listing 10-9 illustrates a grayscale post-processing technique using an `inout` variable.
 >
 > Listing 10-9  Fragment shader for color post-processing in GLSL ES 3.0
 
-在 GLSL ES 3.0 中，使用用 out 限定符声明的用户定义变量进行片段着色器输出。如果使用 inout 限定符声明片段着色器输出变量，则在片段着色器执行时它将包含帧缓冲区数据。Listing 10-9 说明了使用 inout 变量的灰度后处理技术。
+在 GLSL ES 3.0 中，使用用 `out` 限定符声明的用户定义变量进行片段着色器输出。如果使用 `inout` 限定符声明片段着色器输出变量，则在片段着色器执行时它将包含帧缓冲区数据。Listing 10-9 说明了使用 `inout` 变量的灰度后处理技术。
 
 <span id="listing-10-9">Listing 10-9</span> 用于 GLSL ES 3.0 中颜色后处理的片段着色器
 
@@ -3081,14 +3081,14 @@ void main()
 > In iOS 7.0 and later, vertex shaders can read from currently bound texture units. Using this technique you can access much larger memory buffers during vertex processing, enabling high performance for some advanced rendering techniques. For example:
 >
 > - Displacement mapping. Draw a mesh with default vertex positions, then read from a texture in the vertex shader to alter the position of each vertex. Listing 10-10 demonstrates using this technique to generate three-dimensional geometry from a grayscale height map texture.
-> - Instanced drawing. As described in [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20), instanced drawing can dramatically reduce CPU overhead when rendering a scene that contains many similar objects. However, providing per-instance information to the vertex shader can be a challenge. A texture can store extensive information for many instances. For example, you could render a vast cityscape by drawing hundreds of instances from vertex data describing only a simple cube. For each instance, the vertex shader could use the gl_InstanceID variable to sample from a texture, obtaining a transformation matrix, color variation, texture coordinate offset, and height variation to apply to each building.
+> - Instanced drawing. As described in [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20), instanced drawing can dramatically reduce CPU overhead when rendering a scene that contains many similar objects. However, providing per-instance information to the vertex shader can be a challenge. A texture can store extensive information for many instances. For example, you could render a vast cityscape by drawing hundreds of instances from vertex data describing only a simple cube. For each instance, the vertex shader could use the `gl_InstanceID` variable to sample from a texture, obtaining a transformation matrix, color variation, texture coordinate offset, and height variation to apply to each building.
 >
 > Listing 10-10  Vertex shader for rendering from a height map
 
 在 iOS 7.0 及更高版本中，顶点着色器可以从当前绑定的纹理单元中读取。使用此技术，你可以在顶点处理期间访问更大的内存缓冲区，从而为某些高级渲染技术提供高性能。例如：
 
 - 位移映射。绘制具有默认顶点位置的网格，然后从顶点着色器中读取纹理以更改每个顶点的位置。Listing 10-10 演示了如何使用此技术从灰度高度贴图纹理生成三维几何。
-- 实例绘图。如 [Use Instanced Drawing to Minimize Draw Calls](#use-instanced-drawing-to-minimize-draw-calls) 中所述，实例化绘图可以在渲染包含许多类似对象的场景时显着降低 CPU 开销。但是，向顶点着色器提供每个实例信息可能是一个挑战。纹理可以存储许多实例的大量信息。例如，你可以通过从仅描述简单立方体的顶点数据中绘制数百个实例来渲染大量城市景观。对于每个实例，顶点着色器可以使用 gl_InstanceID 变量从纹理中进行采样，获得应用于每个建筑物的变换矩阵，颜色变化，纹理坐标偏移和高度变化。
+- 实例绘图。如 [Use Instanced Drawing to Minimize Draw Calls](#use-instanced-drawing-to-minimize-draw-calls) 中所述，实例化绘图可以在渲染包含许多类似对象的场景时显着降低 CPU 开销。但是，向顶点着色器提供每个实例信息可能是一个挑战。纹理可以存储许多实例的大量信息。例如，你可以通过从仅描述简单立方体的顶点数据中绘制数百个实例来渲染大量城市景观。对于每个实例，顶点着色器可以使用 `gl_InstanceID` 变量从纹理中进行采样，获得应用于每个建筑物的变换矩阵，颜色变化，纹理坐标偏移和高度变化。
 
 Listing 10-10 用于从高度图渲染的顶点着色器
 
@@ -3112,11 +3112,11 @@ void main()
 
 > You can also use uniform arrays and uniform buffer objects (in OpenGL ES 3.0) to provide bulk data to a vertex shader, but vertex texture access offers several potential advantages. You can store much more data in a texture than in either a uniform array or uniform buffer object, and you can use texture wrapping and filtering options to interpolate the data stored in a texture. Additionally, you can render to a texture, taking advantage of the GPU to produce data for use in a later vertex processing stage.
 >
-> To determine whether vertex texture sampling is available on a device (and the number of texture units available to vertex shaders), check the value of the MAX_VERTEX_TEXTURE_IMAGE_UNITS limit at run time. (See [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3).)
+> To determine whether vertex texture sampling is available on a device (and the number of texture units available to vertex shaders), check the value of the `MAX_VERTEX_TEXTURE_IMAGE_UNITS` limit at run time. (See [Verifying OpenGL ES Capabilities](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW3).)
 
 还可以使用统一数组和统一缓冲对象（在 OpenGL ES 3.0 中）为顶点着色器提供批量数据，但顶点纹理访问提供了几个潜在的优势。可以在纹理中存储比在统一数组或统一缓冲区对象相比更多的数据，并且可以使用纹理包装和过滤选项来对存储在纹理中的数据进行插值。此外，你可以渲染到纹理，利用 GPU 生成数据，以便在以后的顶点处理阶段使用。
 
-要确定设备上是否可以使用顶点纹理采样（以及顶点着色器可用的纹理单元数），请在运行时检查 MAX_VERTEX_TEXTURE_IMAGE_UNITS 限制的值。（见 [Verifying OpenGL ES Capabilities](#verifying-opengl-es-capabilities) 。）
+要确定设备上是否可以使用顶点纹理采样（以及顶点着色器可用的纹理单元数），请在运行时检查 `MAX_VERTEX_TEXTURE_IMAGE_UNITS` 限制的值。（见 [Verifying OpenGL ES Capabilities](#verifying-opengl-es-capabilities) 。）
 
 ## Concurrency and OpenGL ES
 
@@ -3160,7 +3160,7 @@ iOS 中的每个进程都包含一个或多个线程。线程是执行流程，�
 
 > Each thread in iOS has a single current OpenGL ES rendering context. Every time your app calls an OpenGL ES function, OpenGL ES implicitly looks up the context associated with the current thread and modifies the state or objects associated with that context.
 >
-> OpenGL ES is not reentrant. If you modify the same context from multiple threads simultaneously, the results are unpredictable. Your app might crash or it might render improperly. If for some reason you decide to set more than one thread to target the same context, then you must synchronize threads by placing a mutex around all OpenGL ES calls to the context. OpenGL ES commands that block—such as glFinish—do not synchronize threads.
+> OpenGL ES is not reentrant. If you modify the same context from multiple threads simultaneously, the results are unpredictable. Your app might crash or it might render improperly. If for some reason you decide to set more than one thread to target the same context, then you must synchronize threads by placing a mutex around all OpenGL ES calls to the context. OpenGL ES commands that block—such as `glFinish`—do not synchronize threads.
 >
 > GCD and [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) objects can execute your tasks on a thread of their choosing. They may create a thread specifically for that task, or they may reuse an existing thread. But in either case, you cannot guarantee which thread executes the task. For an OpenGL ES app, that means:
 >
@@ -3170,7 +3170,7 @@ iOS 中的每个进程都包含一个或多个线程。线程是执行流程，�
 
 iOS 中的每个线程都有一个当前的 OpenGL ES 渲染上下文。每次应用程序调用 OpenGL ES 函数时，OpenGL ES 都会隐式查找与当前线程关联的上下文，并修改与该上下文关联的状态或对象。
 
-OpenGL ES 不可重入。如果同时从多个线程修改相同的上下文，则结果是不可预测的。应用可能会崩溃或渲染错误。如果由于某种原因决定设置多个线程来操作相同的上下文，则必须通过在所有 OpenGL ES 调用上下文中放置互斥来同步线程。阻塞式的 OpenGL ES 命令（如 glFinish ）不会同步线程。
+OpenGL ES 不可重入。如果同时从多个线程修改相同的上下文，则结果是不可预测的。应用可能会崩溃或渲染错误。如果由于某种原因决定设置多个线程来操作相同的上下文，则必须通过在所有 OpenGL ES 调用上下文中放置互斥来同步线程。阻塞式的 OpenGL ES 命令（如 `glFinish` ）不会同步线程。
 
 GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/operationqueue) 对象可以在他们选择的线程上执行你的任务。他们可能专门为该任务创建一个线程，或者重用现有的线程。但在任何一种情况下，都无法保证哪个线程执行任务。对于 OpenGL ES 应用程序，这意味着：
 
@@ -3200,7 +3200,7 @@ GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/
 >
 > If your application spends a lot of time performing calculations inside OpenGL ES, and you’ve already taken steps to pick ideal data formats, your application might gain an additional benefit by enabling multithreading for the OpenGL ES context. A multithreaded OpenGL ES context automatically creates a worker thread and transfers some of its calculations to that thread. On a multicore device, enabling multithreading allows internal OpenGL ES calculations performed on the CPU to act in parallel with your application, improving performance. Synchronizing functions continue to block the calling thread.
 >
-> To enable OpenGL ES multithreading, set the value of the [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) property of your [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object to YES.
+> To enable OpenGL ES multithreading, set the value of the [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) property of your [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) object to `YES`.
 >
 > Note: Enabling or disabling multithreaded execution causes OpenGL ES to flush previous commands and incurs the overhead of setting up the additional thread. Enable or disable multithreading in an initialization function rather than in the rendering loop.
 >
@@ -3210,7 +3210,7 @@ GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/
 
 如果你的应用程序花费大量时间在 OpenGL ES 中执行计算，并且已经采取了理想的数据格式，那么通过为 OpenGL ES 上下文启用多线程，你的应用程序可能会获得额外的好处。多线程 OpenGL ES 上下文自动创建工作线程并将其部分计算传输到该线程。在多核设备上，启用多线程允许 CPU 上执行的内部 OpenGL ES 计算与应用程序并行运行，从而提高性能。同步函数继续阻塞调用线程。
 
-要启用 OpenGL ES 多线程，设置 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象的 [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) 属性的值为YES。
+要启用 OpenGL ES 多线程，设置 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象的 [multiThreaded](https://developer.apple.com/documentation/opengles/eaglcontext/1624881-multithreaded) 属性的值为 `YES`。
 
 注意：启用或禁用多线程执行会导致 OpenGL ES 刷新以前的命令并导致设置其他线程的开销。在初始化函数中启用或禁用多线程，而不是在渲染循环中启用或禁用多线程。
 
@@ -3224,14 +3224,14 @@ GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/
 >
 > For best performance, avoid copying data between tasks. Rather than calculating the data in one task and copying it into a vertex buffer object in the other, map the vertex buffer object in the setup code and hand the pointer directly to the worker task.
 >
-> If you can further decompose the modifications task into subtasks, you may see better benefits. For example, assume two or more vertex buffer objects, each of which needs to be updated before submitting drawing commands. Each can be recalculated independently of the others. In this scenario, the modifications to each buffer becomes an operation, using an NSOperationQueue object to manage the work:
+> If you can further decompose the modifications task into subtasks, you may see better benefits. For example, assume two or more vertex buffer objects, each of which needs to be updated before submitting drawing commands. Each can be recalculated independently of the others. In this scenario, the modifications to each buffer becomes an operation, using an `NSOperationQueue` object to manage the work:
 >
 > 1. Set the current context.
 > 2. Map the first buffer.
-> 3. Create an NSOperation object whose task is to fill that buffer.
+> 3. Create an `NSOperation` object whose task is to fill that buffer.
 > 4. Queue that operation on the operation queue.
 > 5. Perform steps 2 through 4 for the other buffers.
-> 6. Call waitUntilAllOperationsAreFinished on the operation queue.
+> 6. Call `waitUntilAllOperationsAreFinished` on the operation queue.
 > 7. Unmap the buffers.
 > 8. Execute rendering commands.
 
@@ -3241,14 +3241,14 @@ GCD 和 [NSOperationQueue](https://developer.apple.com/documentation/foundation/
 
 为获得最佳性能，避免在任务之间复制数据。在设置代码中映射顶点缓冲区对象，并直接传递指针给工作任务，而不是在一个任务中计算数据然后将其拷贝到另一个任务的顶点缓冲区对象中。
 
-如果可以将修改任务进一步分解为子任务，可能会看到更好的好处。例如，假设有两个或更多顶点缓冲区对象，每个对象都需要在提交绘图命令之前进行更新。每个对象的更新都不依赖于其他对象。在这种情况下，将对每个缓冲区的修改作为一个操作，使用 NSOperationQueue对 象来管理工作：
+如果可以将修改任务进一步分解为子任务，可能会看到更好的好处。例如，假设有两个或更多顶点缓冲区对象，每个对象都需要在提交绘图命令之前进行更新。每个对象的更新都不依赖于其他对象。在这种情况下，将对每个缓冲区的修改作为一个操作，使用 `NSOperationQueue` 对象来管理工作：
 
 1. 设置当前上下文。
 2. 映射第一个缓冲区。
-3. 创建一个 NSOperation 对象，其任务是填充该缓冲区。
+3. 创建一个 `NSOperation` 对象，其任务是填充该缓冲区。
 4. 将 NSOperation 对象加入队列中。
 5. 对其他缓冲区执行步骤 2 到 4 。
-6. 在操作队列上调用 waitUntilAllOperationsAreFinished 。
+6. 在操作队列上调用 `waitUntilAllOperationsAreFinished` 。
 7. 取消缓冲区映射。
 8. 执行渲染命令。
 
@@ -3325,7 +3325,7 @@ OpenGL ES 3.0 是 OpenGL ES 2.0 规范的超集，因此仅使用核心 OpenGL E
 
 #### Remove Extension Suffixes
 
-> The OpenGL ES 2.0 extensions listed below define APIs that are incorporated into the core OpenGL ES 3.0 specification. To use these features in an OpenGL ES 3.0 context, simply remove the extension suffixes from function and constant names. For example, the name of the glMapBufferRangeEXT function becomes glMapBufferRange, and the DEPTH_COMPONENT24_OES constant (used in the internalformat parameter of the glRenderbufferStorage function) becomes DEPTH_COMPONENT24.
+> The OpenGL ES 2.0 extensions listed below define APIs that are incorporated into the core OpenGL ES 3.0 specification. To use these features in an OpenGL ES 3.0 context, simply remove the extension suffixes from function and constant names. For example, the name of the `glMapBufferRangeEXT` function becomes `glMapBufferRange`, and the `DEPTH_COMPONENT24_OES` constant (used in the `internalformat` parameter of the `glRenderbufferStorage` function) becomes `DEPTH_COMPONENT24`.
 >
 > [OES_depth24](http://www.khronos.org/registry/gles/extensions/OES/OES_depth24.txt)
 > [OES_element_index_uint](http://www.khronos.org/registry/gles/extensions/OES/OES_element_index_uint.txt)
@@ -3342,7 +3342,7 @@ OpenGL ES 3.0 是 OpenGL ES 2.0 规范的超集，因此仅使用核心 OpenGL E
 > [APPLE_sync](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_sync.txt)
 > [APPLE_texture_max_level](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_texture_max_level.txt)
 
-下面列出的 OpenGL ES 2.0 扩展定义了包含在核心 OpenGL ES 3.0 规范中的 API 。要在 OpenGL ES 3.0 上下文中使用这些功能，只需从函数和常量名称中删除扩展名后缀。例如，glMapBufferRangeEXT 函数的名称变为 glMapBufferRange ，而 DEPTH_COMPONENT24_OES 常量（在 glRenderbufferStorage 函数的 internalformat 参数中使用）变为 DEPTH_COMPONENT24 。
+下面列出的 OpenGL ES 2.0 扩展定义了包含在核心 OpenGL ES 3.0 规范中的 API 。要在 OpenGL ES 3.0 上下文中使用这些功能，只需从函数和常量名称中删除扩展名后缀。例如，`glMapBufferRangeEXT` 函数的名称变为 `glMapBufferRange` ，而 `DEPTH_COMPONENT24_OES` 常量（在 `glRenderbufferStorage` 函数的 `internalformat` 参数中使用）变为 `DEPTH_COMPONENT24` 。
 
 [OES_depth24](http://www.khronos.org/registry/gles/extensions/OES/OES_depth24.txt)
 [OES_element_index_uint](http://www.khronos.org/registry/gles/extensions/OES/OES_element_index_uint.txt)
@@ -3367,13 +3367,13 @@ OpenGL ES 2.0 扩展定义的一些功能属于核心 OpenGL ES 3.0 规范，但
 
 ##### Working with Texture Formats
 
-> The [OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt), [OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt), [OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt), and [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) extensions define constants for use in the internalformat and type parameters of the glTexImage family of functions. The functionality defined by these extensions is available in the OpenGL ES 3.0 core API, but with some caveats:
+> The [OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt), [OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt), [OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt), [EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt), and [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) extensions define constants for use in the `internalformat` and `type` parameters of the `glTexImage` family of functions. The functionality defined by these extensions is available in the OpenGL ES 3.0 core API, but with some caveats:
 >
-> - The glTexImage functions do not support internalformat constants without explicit sizes. Use explicitly sized constants instead:
+> - The `glTexImage` functions do not support `internalformat` constants without explicit sizes. Use explicitly sized constants instead:
 
-[OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt)，[OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt)，[OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt) 和 [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) 扩展定义了在 glTexImage 函数系列的 internalformat 和 type 参数中使用的常量。这些扩展定义的功能在 OpenGL ES 3.0 核心 API 中可用，但有一些注意事项：
+[OES_depth_texture](http://www.khronos.org/registry/gles/extensions/OES/OES_depth_texture.txt)，[OES_packed_depth_stencil](http://www.khronos.org/registry/gles/extensions/OES/OES_packed_depth_stencil.txt)，[OES_texture_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[OES_texture_half_float](http://www.khronos.org/registry/gles/extensions/OES/OES_texture_float.txt)，[EXT_texture_rg](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_rg.txt) 和 [EXT_sRGB](http://www.khronos.org/registry/gles/extensions/EXT/EXT_sRGB.txt) 扩展定义了在 `glTexImage` 函数系列的 `internalformat` 和 `type` 参数中使用的常量。这些扩展定义的功能在 OpenGL ES 3.0 核心 API 中可用，但有一些注意事项：
 
-- glTexImage 函数不支持没有显式大小的 internalformat 常量。改为使用明确大小的常量：
+- `glTexImage` 函数不支持没有显式大小的 `internalformat` 常量。改为使用明确大小的常量：
 
 ```objc
 // Replace this OpenGL ES 2.0 code:
@@ -3382,35 +3382,35 @@ glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_HALF_FLOAT
 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, width, height, 0, GL_RGBA, GL_HALF_FLOAT, data);
 ```
 
-> - OpenGL ES 3.0 does not define float or half-float formats for LUMINANCE or LUMINANCE_ALPHA data. Use the corresponding RED or RG formats instead.
-> - The vector returned by depth and depth/stencil texture samplers no longer repeats the depth value in its first three components in OpenGL ES 3.0. Use only the first (.r) component in shader code that samples such textures.
-> - The sRGB format is only valid when used for the internalformat parameter in OpenGL ES 3.0. Use GL_RGB or GL_RGBA for the format parameter for sRGB textures.
+> - OpenGL ES 3.0 does not define float or half-float formats for `LUMINANCE` or `LUMINANCE_ALPHA` data. Use the corresponding `RED` or `RG` formats instead.
+> - The vector returned by depth and depth/stencil texture samplers no longer repeats the depth value in its first three components in OpenGL ES 3.0. Use only the first (`.r`) component in shader code that samples such textures.
+> - The sRGB format is only valid when used for the `internalformat` parameter in OpenGL ES 3.0. Use GL_RGB or GL_RGBA for the format parameter for sRGB textures.
 >
-> Alternatively, replace calls to glTexImage functions with calls to the corresponding glTexStorage functions. Texture storage functions are available in as core API in OpenGL ES 3.0, and through the [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) extension in OpenGL ES 1.1 and 2.0. These functions offer an additional benefit: using a glTexStorage function completely specifies an immutable texture object in one call; it performs all consistency checks and memory allocations immediately, guaranteeing that the texture object can never be incomplete due to missing mipmap levels or inconsistent cube map faces.
+> Alternatively, replace calls to `glTexImage` functions with calls to the corresponding `glTexStorage` functions. Texture storage functions are available in as core API in OpenGL ES 3.0, and through the [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) extension in OpenGL ES 1.1 and 2.0. These functions offer an additional benefit: using a `glTexStorage` function completely specifies an immutable texture object in one call; it performs all consistency checks and memory allocations immediately, guaranteeing that the texture object can never be incomplete due to missing mipmap levels or inconsistent cube map faces.
 
-- OpenGL ES 3.0 没有为 LUMINANCE 或 LUMINANCE_ALPHA 数据定义 float 或 half-float 格式。改用相应的 RED 或 RG 格式。
-- OpenGL ES 3.0中，深度和深度/模板纹理采样器返回的向量不再重复前三个组件中的深度值。在对这样的纹理进行采样的着色器代码中仅使用第一个（.r）成分。
-- sRGB 格式仅当在 OpenGL ES 3.0 中用作 internalformat 参数时才有效。使用 GL_RGB 或 GL_RGBA 作为 sRGB 纹理的 format 参数。
+- OpenGL ES 3.0 没有为 `LUMINANCE` 或 `LUMINANCE_ALPHA` 数据定义 float 或 half-float 格式。改用相应的 `RED` 或 `RG` 格式。
+- OpenGL ES 3.0中，深度和深度/模板纹理采样器返回的向量不再重复前三个组件中的深度值。在对这样的纹理进行采样的着色器代码中仅使用第一个（`.r`）成分。
+- sRGB 格式仅当在 OpenGL ES 3.0 中用作 `internalformat` 参数时才有效。使用 GL_RGB 或 GL_RGBA 作为 sRGB 纹理的 format 参数。
 
-另外，通过调用相应的 glTexStorage 函数替换对 glTexImage 函数的调用。纹理存储功能在 OpenGL ES 3.0 中作为核心 API 提供，OpenGL ES 1.1 和 2.0 中通过 [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) 扩展提供。这些函数提供了额外的好处：使用 glTexStorage 函数在一次调用中完全指定不可变纹理对象；它立即执行所有一致性检查和内存分配，保证纹理对象永远不会因为缺少 mipmap 级别或不一致的立方体贴图面而不完整。
+另外，通过调用相应的 `glTexStorage` 函数替换对 `glTexImage` 函数的调用。纹理存储功能在 OpenGL ES 3.0 中作为核心 API 提供，OpenGL ES 1.1 和 2.0 中通过 [EXT_texture_storage](http://www.khronos.org/registry/gles/extensions/EXT/EXT_texture_storage.txt) 扩展提供。这些函数提供了额外的好处：使用 `glTexStorage` 函数在一次调用中完全指定不可变纹理对象；它立即执行所有一致性检查和内存分配，保证纹理对象永远不会因为缺少 mipmap 级别或不一致的立方体贴图面而不完整。
 
 ##### Mapping Buffer Objects into Client Memory
 
-> The [OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) extension defines the glMapBuffer function for mapping the entire data storage of a buffer object into client memory. OpenGL ES 3.0 instead defines the glMapBufferRange function, which provides additional functionality: it allows mapping a subset of a buffer object’s data storage and includes options for asynchronous mapping. The glMapBufferRange function is also available in OpenGL ES 1.1 and 2.0 contexts through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension.
+> The [OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) extension defines the `glMapBuffer` function for mapping the entire data storage of a buffer object into client memory. OpenGL ES 3.0 instead defines the `glMapBufferRange` function, which provides additional functionality: it allows mapping a subset of a buffer object’s data storage and includes options for asynchronous mapping. The `glMapBufferRange` function is also available in OpenGL ES 1.1 and 2.0 contexts through the [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) extension.
 
-[OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) 扩展定义了 glMapBuffe r函数，用于将缓冲区对象的整个数据存储映射到客户机内存。OpenGL ES 3.0 定义了 glMapBufferRange 函数，其提供了额外的功能：它允许映射缓冲区对象数据存储的子集，并包括异步映射的选项。glMapBufferRange 函数也可以通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展在 OpenGL ES 1.1 和 2.0 上下文中使用。
+[OES_mapbuffer](http://www.khronos.org/registry/gles/extensions/OES/OES_mapbuffer.txt) 扩展定义了 `glMapBuffer` 函数，用于将缓冲区对象的整个数据存储映射到客户机内存。OpenGL ES 3.0 定义了 `glMapBufferRange` 函数，其提供了额外的功能：它允许映射缓冲区对象数据存储的子集，并包括异步映射的选项。`glMapBufferRange` 函数也可以通过 [EXT_map_buffer_range](http://www.khronos.org/registry/gles/extensions/EXT/EXT_map_buffer_range.txt) 扩展在 OpenGL ES 1.1 和 2.0 上下文中使用。
 
 ##### Discarding Framebuffers
 
-> The glInvalidateFramebuffer function in OpenGL ES 3.0 replaces the glDiscardFramebufferEXT function provided by the [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) extension. The parameters and behavior of both functions are identical.
+> The `glInvalidateFramebuffer` function in OpenGL ES 3.0 replaces the `glDiscardFramebufferEXT` function provided by the [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) extension. The parameters and behavior of both functions are identical.
 
-OpenGL ES 3.0 中的 glInvalidateFramebuffer 函数替代了 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供的 glDiscardFramebufferEXT 函数。两个函数的参数和行为是相同的。
+OpenGL ES 3.0 中的 `glInvalidateFramebuffer` 函数替代了 [EXT_discard_framebuffer](http://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt) 扩展提供的 `glDiscardFramebufferEXT` 函数。两个函数的参数和行为是相同的。
 
 ##### Using Multisampling
 
-> OpenGL ES 3.0 incorporates all features of the [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) extension, except for the glResolveMultisampleFramebufferAPPLE function. Instead the glBlitFramebuffer function provides this and other other framebuffer copying options. To resolve a multisampling buffer, set the read and draw framebuffers (as in [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4)) and then use glBlitFramebuffer to copy the entire read framebuffer into the entire draw framebuffer:
+> OpenGL ES 3.0 incorporates all features of the [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) extension, except for the `glResolveMultisampleFramebufferAPPLE` function. Instead the `glBlitFramebuffer` function provides this and other other framebuffer copying options. To resolve a multisampling buffer, set the read and draw framebuffers (as in [Using Multisampling to Improve Image Quality](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW4)) and then use `glBlitFramebuffer` to copy the entire read framebuffer into the entire draw framebuffer:
 
-除 glResolveMultisampleFramebufferAPPLE 函数外，OpenGL ES 3.0 包含 [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) 扩展的所有功能。glBlitFramebuffer 函数提供了此功能和其他帧缓冲拷贝选项。要解析多重采样缓冲区，设置读取和绘制帧缓冲区（如 [Using Multisampling to Improve Image Quality](#using-multisampling-to-improve-image-quality) ），然后使用 glBlitFramebuffer 将整个读取帧缓冲区复制到整个绘制帧缓冲区中：
+除 `glResolveMultisampleFramebufferAPPLE` 函数外，OpenGL ES 3.0 包含 [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) 扩展的所有功能。`glBlitFramebuffer` 函数提供了此功能和其他帧缓冲拷贝选项。要解析多重采样缓冲区，设置读取和绘制帧缓冲区（如 [Using Multisampling to Improve Image Quality](#using-multisampling-to-improve-image-quality) ），然后使用 `glBlitFramebuffer` 将整个读取帧缓冲区复制到整个绘制帧缓冲区中：
 
 ```objc
 glBlitFramebuffer(0,0,w,h, 0,0,w,h, GL_COLOR_BUFFER_BIT, GL_NEAREST);
@@ -3428,27 +3428,27 @@ iOS 设备图形硬件的一些关键功能不是核心 OpenGL ES 3.0 规范的�
 
 ### Adopting OpenGL ES Shading Language version 3.0
 
-> OpenGL ES 3.0 includes a new version of the OpenGL ES Shading Language (GLSL ES). OpenGL ES 3.0 contexts can use shader programs written in either version 1.0 or version 3.0 of GLSL ES, but version 3.0 shaders (marked with a #version 300 es directive in shader source code) are required to access certain new features, such as uniform blocks, 32-bit integers and additional integer operations.
+> OpenGL ES 3.0 includes a new version of the OpenGL ES Shading Language (GLSL ES). OpenGL ES 3.0 contexts can use shader programs written in either version 1.0 or version 3.0 of GLSL ES, but version 3.0 shaders (marked with a `#version 300 es` directive in shader source code) are required to access certain new features, such as uniform blocks, 32-bit integers and additional integer operations.
 >
 > Some language conventions have changed between GLSL ES version 1.0 and 3.0. These changes make shader source code more portable between OpenGL ES 3.0 and desktop OpenGL ES 3.3 or later, but they also require minor changes to existing shader source code when porting to GLSL ES 3.0:
 >
-> - The attribute and varying qualifiers are replaced in GLSL ES 3.0 by by the keywords in and out. In a vertex shader, use the in qualifier for vertex attributes and the out qualifier for varying outputs. In a fragment shader, use the in qualifier for varying inputs.
-> - GLSL ES 3.0 removes the gl_FragData and gl_FragColor builtin fragment output variables. Instead, you declare your own fragment output variables with the out qualifier.
-> - Texture sampling functions have been renamed in GLSL ES 3.0—all sampler types use the same texture function name. For example, you can use the new texture function with either a sampler2D or samplerCube parameter (replacing the texture2D and textureCube functions from GLSL ES 1.0).
+> - The `attribute` and `varying` qualifiers are replaced in GLSL ES 3.0 by by the keywords `in` and `out`. In a vertex shader, use the `in` qualifier for vertex attributes and the `out` qualifier for varying outputs. In a fragment shader, use the `in` qualifier for varying inputs.
+> - GLSL ES 3.0 removes the `gl_FragData` and `gl_FragColor` builtin fragment output variables. Instead, you declare your own fragment output variables with the `out` qualifier.
+> - Texture sampling functions have been renamed in GLSL ES 3.0—all sampler types use the same texture function name. For example, you can use the new `texture` function with either a `sampler2D` or `samplerCube` parameter (replacing the texture2D and textureCube functions from GLSL ES 1.0).
 > - The features added to GLSL ES 1.0 by the [EXT_shader_texture_lod](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_texture_lod.txt), [EXT_shadow_samplers](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shadow_samplers.txt), and [OES_standard_derivatives](http://www.khronos.org/registry/gles/extensions/OES/OES_standard_derivatives.txt) extensions are part of the core GLSL ES specification. When porting shaders that use these features to GLSL ES 3.0, use the corresponding GLSL ES 3.0 functions.
-> - The [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) extension works differently. GLSL ES 3.0 removes the gl_FragData and gl_FragColor builtin fragment output variables in favor of requiring fragment outputs to be declared in the shader. Correspondingly, the gl_LastFragData builtin variable is not present in GLSL ES 3.0 fragment shaders. Instead, any fragment output variables you declare with the inout qualifier contain previous fragment data when the shader runs. For more details, see [Fetch Framebuffer Data for Programmable Blending](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW23).
+> - The [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) extension works differently. GLSL ES 3.0 removes the `gl_FragData` and `gl_FragColor` builtin fragment output variables in favor of requiring fragment outputs to be declared in the shader. Correspondingly, the `gl_LastFragData` builtin variable is not present in GLSL ES 3.0 fragment shaders. Instead, any fragment output variables you declare with the `inout` qualifier contain previous fragment data when the shader runs. For more details, see [Fetch Framebuffer Data for Programmable Blending](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW23).
 >
 > For a complete overview of GLSL ES 3.0, see the OpenGL ES Shading Language 3.0 Specification, available from the [OpenGL ES API Registry](http://www.khronos.org/registry/gles/).
 
-OpenGL ES 3.0 包含一个新版本的 OpenGL ES 着色语言（ GLSL ES ）。OpenGL ES 3.0 上下文可以使用GLSL ES 的 1.0 版或 3.0 版编写的着色器程序，但是需要 3.0 版着色器（在着色器源代码中用 #version 300 es 指令标记）才能访问某些新功能，例如统一块，32 位整数和其他整数运算。
+OpenGL ES 3.0 包含一个新版本的 OpenGL ES 着色语言（ GLSL ES ）。OpenGL ES 3.0 上下文可以使用GLSL ES 的 1.0 版或 3.0 版编写的着色器程序，但是需要 3.0 版着色器（在着色器源代码中用 `#version 300 es` 指令标记）才能访问某些新功能，例如统一块，32 位整数和其他整数运算。
 
 一些语言约定在 GLSL ES 版本 1.0 和 3.0 之间发生了变化。这些更改使得着色器源代码在 OpenGL ES 3.0 和桌面 OpenGL ES 3.3 或更高版本之间更具可移植性，但在移植到 GLSL ES 3.0 时，它们还需要对现有着色器源代码进行微小更改：
 
-- 在GLSL ES 3.0 中，attribute 和 varying 限定符由关键字 in 和 out 替换。在顶点着色器中，顶点属性使用 in 限定符，varying output 使用 out 限定符。在片段着色器中，使用 in 限定符修饰 varying inputs 。
-- GLSL ES 3.0 删除了 gl_FragData 和 gl_FragColor 内置片段输出变量。相反，使用 out 限定符声明自己的片段输出变量。
-- 在 GLSL ES 3.0 中对纹理采样函数进行了重命名 - 所有采样器类型都使用相同的纹理函数名称。例如，你可以将新纹理函数与 sampler2D 或 samplerCube 参数一起使用（替换 GLSL ES 1.0 中的 texture2D 和 textureCube 函数）。
+- 在GLSL ES 3.0 中，`attribute` 和 `varying` 限定符由关键字 `in` 和 `out` 替换。在顶点着色器中，顶点属性使用 `in` 限定符，varying output 使用 `out` 限定符。在片段着色器中，使用 `in` 限定符修饰 varying inputs 。
+- GLSL ES 3.0 删除了 `gl_FragData` 和 `gl_FragColor` 内置片段输出变量。相反，使用 `out` 限定符声明自己的片段输出变量。
+- 在 GLSL ES 3.0 中对纹理采样函数进行了重命名 - 所有采样器类型都使用相同的纹理函数名称。例如，你可以将新 `texture` 函数与 `sampler2D` 或 `samplerCube` 参数一起使用（替换 GLSL ES 1.0 中的 texture2D 和 textureCube 函数）。
 -  通过 [EXT_shader_texture_lod](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_texture_lod.txt)，[EXT_shadow_samplers](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shadow_samplers.txt) 和 [OES_standard_derivatives](http://www.khronos.org/registry/gles/extensions/OES/OES_standard_derivatives.txt) 扩展添加到 GLSL ES 1.0 的功能是核心 GLSL ES 规范的一部分。将使用这些功能的着色器移植到 GLSL ES 3.0 时，请使用相应的 GLSL ES 3.0 功能。
-- [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) 扩展的工作方式不同。GLSL ES 3.0 删除了 gl_FragData 和 gl_FragColor 内置片段输出变量，有利于要求在着色器中声明片段输出。相应地，GLSL ES 3.0 片段着色器中不存在 gl_LastFragData 内置变量。相反，使用 inout 限定符声明的任何片段输出变量都包含着色器运行时的先前片段数据。有关更多详细信息，见 [Fetch Framebuffer Data for Programmable Blending](#fetch-framebuffer-data-for-programmable-blending) 。
+- [EXT_shader_framebuffer_fetch](http://www.khronos.org/registry/gles/extensions/EXT/EXT_shader_framebuffer_fetch.txt) 扩展的工作方式不同。GLSL ES 3.0 删除了 `gl_FragData` 和 `gl_FragColor` 内置片段输出变量，有利于要求在着色器中声明片段输出。相应地，GLSL ES 3.0 片段着色器中不存在 `gl_LastFragData` 内置变量。相反，使用 `inout` 限定符声明的任何片段输出变量都包含着色器运行时的先前片段数据。有关更多详细信息，见 [Fetch Framebuffer Data for Programmable Blending](#fetch-framebuffer-data-for-programmable-blending) 。
 
 有关 GLSL ES 3.0 的完整概述，见 OpenGL ES 着色语言 3.0 规范，该规范可从 [OpenGL ES API Registry](http://www.khronos.org/registry/gles/) 获得。
 
@@ -3490,7 +3490,7 @@ FPS 调试仪和随附的 GPU 报告（如 Figure B-1 所示）提供了应用�
 > The Device bar shows overall GPU usage, incorporating both tiler and renderer usage.
 >
 > - Frame Time. Shows the time spent processing each frame on both the CPU and GPU. This graph can indicate whether your app makes effective use of CPU/GPU parallelism.
-> If your app spends more time in CPU processing, you may be able to improve performance by moving work to the GPU. For example, if each frame requires many similar glDrawArrays or glDrawElements calls, you can use hardware instancing to reduce CPU overhead. (For details, see [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20).)
+> If your app spends more time in CPU processing, you may be able to improve performance by moving work to the GPU. For example, if each frame requires many similar `glDrawArrays` or `glDrawElements` calls, you can use hardware instancing to reduce CPU overhead. (For details, see [Use Instanced Drawing to Minimize Draw Calls](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW20).)
 >
 > If your app spends more time in GPU processing, you may be able to improve performance by moving work to the CPU. For example, if a shader performs the same calculation with the same result for every vertex or fragment during a particular draw call, you can perform that computation once on the CPU and pass its result to the shader in a uniform variable. (See [Use Uniforms or Constants Instead of Computing Values in a Shader](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW11).)
 >
@@ -3516,7 +3516,7 @@ Renderer 栏测量 GPU 的像素处理资源的使用。高 renderer 利用率�
 设备栏显示整体 GPU 使用情况，包括 tiler 和渲染器使用情况。
 
 - 帧时间。显示在 CPU 和 GPU 上处理每帧所花费的时间。此图表可以指示应用是否有效利用 CPU / GPU 的并行性。
-如果应用在 CPU 处理上花费更多时间，可以通过将工作转移到 GPU 来提高性能。例如，如果每帧需要许多类似的 glDrawArrays 或 glDrawElements 调用，则可以使用硬件实例化来减少 CPU 开销。（有关详细信息，见 [Use Instanced Drawing to Minimize Draw Calls](#use-instanced-drawing-to-minimize-draw-calls) 。）
+如果应用在 CPU 处理上花费更多时间，可以通过将工作转移到 GPU 来提高性能。例如，如果每帧需要许多类似的 `glDrawArrays` 或 `glDrawElements` 调用，则可以使用硬件实例化来减少 CPU 开销。（有关详细信息，见 [Use Instanced Drawing to Minimize Draw Calls](#use-instanced-drawing-to-minimize-draw-calls) 。）
 
 如果应用在 GPU 处理上花费更多时间，可以通过将工作转移到 CPU 来提高性能。例如，如果着色器在特定绘制调用期间对每个顶点或片段执行相同的计算并使用相同的结果，则可以在 CPU 上执行一次该计算，并将其结果传递给着色器的统一变量中。（请参阅 [Use Uniforms or Constants Instead of Computing Values in a Shader](#use-uniforms-or-constants-instead-of-computing-values-in-a-shader) 。）
 
@@ -3609,16 +3609,16 @@ Figure B-5 导航器中的弹出菜单
 ##### View Frame By Call
 
 > View the captured frame by call when you want to study OpenGL ES commands in sequence to pinpoint errors, diagnose rendering problems, or identify common performance issues. In this mode, the frame navigator lists commands in the order your app called them. Error or warning icons appear next to commands that result in OpenGL ES errors or that may indicate performance issues.
+>
+> You can add structure to this list by using the `glPushGroupMarkerEXT` and `glPopGroupMarkerEXT` functions to annotate groups of OpenGL ES commands—these groups appear as folders you can expand or collapse to show more or less detail. (For details, see [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6).) You can also expand an OpenGL ES command to show a stack trace indicating where in your application code the command was issued.
+>
+> Use the context menu to choose whether to abbreviate command names and which commands, groups, and warnings to show. Use the flag icon at the bottom of the navigator to switch between showing all OpenGL ES commands and showing only those which draw into the framebuffer.
+>
+> Clicking an OpenGL ES command in the list navigates to that point in the OpenGL ES command sequence, affecting the contents of other areas of the frame debugger interface, as discussed below, and showing the effects of the OpenGL ES calls up to that point on the attached device’s display.
+>
+> 如果要按顺序研究 OpenGL ES 命令以查明错误，诊断渲染问题或识别常见性能问题，选择 View the captured frame by call 。在此模式下，帧导航器按照应用程序调用它们的顺序列出命令。导致 OpenGL ES 错误或可能表示性能问题的命令旁边会出现错误或警告图标。
 
-You can add structure to this list by using the glPushGroupMarkerEXT and glPopGroupMarkerEXT functions to annotate groups of OpenGL ES commands—these groups appear as folders you can expand or collapse to show more or less detail. (For details, see [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW6).) You can also expand an OpenGL ES command to show a stack trace indicating where in your application code the command was issued.
-
-Use the context menu to choose whether to abbreviate command names and which commands, groups, and warnings to show. Use the flag icon at the bottom of the navigator to switch between showing all OpenGL ES commands and showing only those which draw into the framebuffer.
-
-Clicking an OpenGL ES command in the list navigates to that point in the OpenGL ES command sequence, affecting the contents of other areas of the frame debugger interface, as discussed below, and showing the effects of the OpenGL ES calls up to that point on the attached device’s display.
-
-如果要按顺序研究 OpenGL ES 命令以查明错误，诊断渲染问题或识别常见性能问题，选择 View the captured frame by call 。在此模式下，帧导航器按照应用程序调用它们的顺序列出命令。导致 OpenGL ES 错误或可能表示性能问题的命令旁边会出现错误或警告图标。
-
-可以使用 glPushGroupMarkerEXT 和 glPopGroupMarkerEXT 函数为此列表添加结构，以注释 OpenGL ES 命令组 - 这些组显示为可以展开或折叠以显示更多或更少细节的文件夹的形式。（有关详细信息，见 [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](#annotate-your-opengl-es-code-for-informative-debugging-and-profiling) 。）你还可以展开 OpenGL ES 命令以显示堆栈跟踪，指示命令发出的相应应用程序代码的位置。
+可以使用 `glPushGroupMarkerEXT` 和 `glPopGroupMarkerEXT` 函数为此列表添加结构，以注释 OpenGL ES 命令组 - 这些组显示为可以展开或折叠以显示更多或更少细节的文件夹的形式。（有关详细信息，见 [Annotate Your OpenGL ES Code for Informative Debugging and Profiling](#annotate-your-opengl-es-code-for-informative-debugging-and-profiling) 。）你还可以展开 OpenGL ES 命令以显示堆栈跟踪，指示命令发出的相应应用程序代码的位置。
 
 使用上下文菜单选择是否缩写命令名称以及要显示的命令，组和警告。使用导航器底部的标志图标在显示所有 OpenGL ES 命令和仅显示绘制到帧缓冲区的命令之间切换。
 
@@ -3654,11 +3654,11 @@ Clicking an OpenGL ES command in the list navigates to that point in the OpenGL 
 
 ##### Previewing Framebuffer Contents
 
-> The primary editor shows the contents of the framebuffer as rendered by the draw call currently selected in the frame navigator. (If the selected OpenGL ES command in the frame navigator is not a drawing command—for example, a command that sets state such as glUseProgram—the framebuffer reflects the rendering done by the most recent draw call prior to the selection.) You can also navigate the sequence of OpenGL ES commands using the jump bar at the top of the primary editor.
+> The primary editor shows the contents of the framebuffer as rendered by the draw call currently selected in the frame navigator. (If the selected OpenGL ES command in the frame navigator is not a drawing command—for example, a command that sets state such as `glUseProgram`—the framebuffer reflects the rendering done by the most recent draw call prior to the selection.) You can also navigate the sequence of OpenGL ES commands using the jump bar at the top of the primary editor.
 >
 > Figure B-6  Framebuffer info popover
 
-主编辑器显示帧导航器中当前选中的绘制调用渲染的帧缓冲区内容。（如果帧导航器中选定的 OpenGL ES 命令不是绘图命令 - 例如，譬如 glUseProgram 这类设置状态的命令  - 帧缓冲区反映了由选中的命令之前的最近绘制调用所做的渲染。）你还可以使用主编辑器顶部的跳转栏浏览 OpenGL ES 命令序列。
+主编辑器显示帧导航器中当前选中的绘制调用渲染的帧缓冲区内容。（如果帧导航器中选定的 OpenGL ES 命令不是绘图命令 - 例如，譬如 `glUseProgram` 这类设置状态的命令  - 帧缓冲区反映了由选中的命令之前的最近绘制调用所做的渲染。）你还可以使用主编辑器顶部的跳转栏浏览 OpenGL ES 命令序列。
 
 Figure B-6 帧缓冲区信息弹出窗口
 
@@ -3750,9 +3750,9 @@ Figure B-12 OpenGL ES 调试栏
 
 ##### The All GL Objects View
 
-> The All GL Objects view, similar to the Bound GL Objects view shown on the right in [Figure B-13](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW36), lists the same OpenGL ES resources as the graphical overview in the assistant editor. Unlike the graphical overview, however, this view can provide more detailed information about a resource when you expand its disclosure triangle. For example, expanding the listing for a framebuffer or buffer object shows information otherwise available only through OpenGL ES query functions such as glGetBufferParameter and glGetFramebufferAttachmentParameter. Expanding the listing for a shader program shows its status, attribute bindings, and the currently bound value for each uniform variable.
+> The All GL Objects view, similar to the Bound GL Objects view shown on the right in [Figure B-13](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ToolsOverview/ToolsOverview.html#//apple_ref/doc/uid/TP40008793-A2-SW36), lists the same OpenGL ES resources as the graphical overview in the assistant editor. Unlike the graphical overview, however, this view can provide more detailed information about a resource when you expand its disclosure triangle. For example, expanding the listing for a framebuffer or buffer object shows information otherwise available only through OpenGL ES query functions such as `glGetBufferParameter` and `glGetFramebufferAttachmentParameter`. Expanding the listing for a shader program shows its status, attribute bindings, and the currently bound value for each uniform variable.
 
-All GL Objects 视图类似于 [Figure B-13](#figure-b-13) 右侧所示的 Bound GL Objects 视图，列出了与辅助编辑器中的图形概览相同的 OpenGL ES 资源。但是，与图形概述不同的是，当展开其显示三角形时，此视图可以提供有关资源的更详细信息。例如，展开帧缓冲区或缓冲区对象的列表显示仅通过 OpenGL ES 查询函数（例如 glGetBufferParameter 和 glGetFramebufferAttachmentParameter ）可用的信息。 展开着色器程序的列表会显示其状态，属性绑定以及每个统一变量的当前绑定值。
+All GL Objects 视图类似于 [Figure B-13](#figure-b-13) 右侧所示的 Bound GL Objects 视图，列出了与辅助编辑器中的图形概览相同的 OpenGL ES 资源。但是，与图形概述不同的是，当展开其显示三角形时，此视图可以提供有关资源的更详细信息。例如，展开帧缓冲区或缓冲区对象的列表显示仅通过 OpenGL ES 查询函数（例如 `glGetBufferParameter` 和 `glGetFramebufferAttachmentParameter` ）可用的信息。 展开着色器程序的列表会显示其状态，属性绑定以及每个统一变量的当前绑定值。
 
 ##### The Bound GL Objects View
 
@@ -3768,17 +3768,17 @@ Figure B-13 右侧所示的 Bound GL Objects 视图的行为与 All GL Objects �
 
 ##### The GL Context View
 
-> The GL Context view, shown on the left in Figure B-13, lists the entire state vector of the OpenGL ES renderer, organized into functional groups. When you select a call in the frame navigator that changes OpenGL ES state, the changed values appear highlighted. For example, calling the glCullFace or glFrontFace function changes and highlights values in the Culling section of the state list. Enabling blending with the glEnable(GL_BLEND) call or changing blending parameters with the glBlendFunc function changes and highlights values in the Blending section of the state list.
+> The GL Context view, shown on the left in Figure B-13, lists the entire state vector of the OpenGL ES renderer, organized into functional groups. When you select a call in the frame navigator that changes OpenGL ES state, the changed values appear highlighted. For example, calling the `glCullFace` or `glFrontFace` function changes and highlights values in the Culling section of the state list. Enabling blending with the `glEnable(GL_BLEND)` call or changing blending parameters with the `glBlendFunc` function changes and highlights values in the Blending section of the state list.
 
-GL Context 视图（如 Figure B-13 左侧所示）列出了 OpenGL ES 渲染器的整个状态向量，以功能为单位组织。当在帧导航器中选择一个更改 OpenGL ES 状态的调用时，更改的值将突出显示。例如，调用 glCullFace 或 glFrontFace 函数会更改并高亮显示状态列表的 Culling 部分中的值。使用 glEnable（GL_BLEND）调用启用混合或使用 glBlendFunc 函数更改混合参数会更改并高亮显示状态列表的 Blending 部分中的值。
+GL Context 视图（如 Figure B-13 左侧所示）列出了 OpenGL ES 渲染器的整个状态向量，以功能为单位组织。当在帧导航器中选择一个更改 OpenGL ES 状态的调用时，更改的值将突出显示。例如，调用 `glCullFace` 或 `glFrontFace` 函数会更改并高亮显示状态列表的 Culling 部分中的值。使用 `glEnable(GL_BLEND)`调用启用混合或使用 `glBlendFunc` 函数更改混合参数会更改并高亮显示状态列表的 Blending 部分中的值。
 
 ##### The Context Info View
 
-> The Context Info view, shown on the right in Figure B-14, lists static information about the OpenGL ES renderer in use: name, version, capabilities, extensions and similar data. You can look through this data instead of writing your own code to query renderer attributes such as GL_MAX_TEXTURE_IMAGE_UNITS and GL_EXTENSIONS.
+> The Context Info view, shown on the right in Figure B-14, lists static information about the OpenGL ES renderer in use: name, version, capabilities, extensions and similar data. You can look through this data instead of writing your own code to query renderer attributes such as `GL_MAX_TEXTURE_IMAGE_UNITS` and `GL_EXTENSIONS`.
 >
 > Figure B-14  Debug area with Auto and Context Info views
 
-如 Figure B-14 右侧所示，Context Info 视图列出了有关 OpenGL ES 渲染器正在使用的静态信息：名称，版本，功能，扩展和类似数据。你可以直接在该视图中查看此数据，而不用编写自己的代码来查询渲染器属性，例如 GL_MAX_TEXTURE_IMAGE_UNITS 和 GL_EXTENSIONS 。
+如 Figure B-14 右侧所示，Context Info 视图列出了有关 OpenGL ES 渲染器正在使用的静态信息：名称，版本，功能，扩展和类似数据。你可以直接在该视图中查看此数据，而不用编写自己的代码来查询渲染器属性，例如 `GL_MAX_TEXTURE_IMAGE_UNITS` 和 `GL_EXTENSIONS` 。
 
 Figure B-14 具有 Auto 和 Context Info 视图的调试区域
 
@@ -3806,23 +3806,23 @@ Figure B-14 具有 Auto 和 Context Info 视图的调试区域
 
 ## Using texturetool to Compress Textures
 
-> The iOS SDK includes a tool to compress your textures into the PVRTC or ASTC formats, aptly named texturetool. If you have Xcode installed with the iOS 7.0 SDK or later, then texturetool is located at: /Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool.
+> The iOS SDK includes a tool to compress your textures into the PVRTC or ASTC formats, aptly named `texturetool`. If you have Xcode installed with the iOS 7.0 SDK or later, then `texturetool` is located at: `/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool`.
 >
-> texturetool provides various compression options, with tradeoffs between image quality and size. You need to experiment with each texture to determine which setting provides the best compromise.
+> `texturetool` provides various compression options, with tradeoffs between image quality and size. You need to experiment with each texture to determine which setting provides the best compromise.
 >
-> Note: The encoders, formats, and options available with texturetool are subject to change. This document describes those options available as of iOS 7.
+> Note: The encoders, formats, and options available with `texturetool` are subject to change. This document describes those options available as of iOS 7.
 
-iOS SDK 包含一个叫做 texturetool 的工具，可将纹理压缩为 PVRTC 或 ASTC 格式。如果使用具有 iOS 7.0 SDK 或更高版本的 Xcode ，那么 texturetool 位于：/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool 。
+iOS SDK 包含一个叫做 `texturetool` 的工具，可将纹理压缩为 PVRTC 或 ASTC 格式。如果使用具有 iOS 7.0 SDK 或更高版本的 Xcode ，那么 `texturetool` 位于：`/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/texturetool` 。
 
-texturetool 提供了各种压缩选项，在图像质量和大小之间进行权衡。你需要尝试各个纹理以确定哪个设置可以提供最佳折衷。
+`texturetool` 提供了各种压缩选项，在图像质量和大小之间进行权衡。你需要尝试各个纹理以确定哪个设置可以提供最佳折衷。
 
-注意：texturetool 可用的编码器，格式和选项可能会发生变化。本文档介绍了自 iOS 7 起可用的选项。
+注意：`texturetool` 可用的编码器，格式和选项可能会发生变化。本文档介绍了自 iOS 7 起可用的选项。
 
 ### texturetool Parameters
 
-> The parameters that may be passed to texturetool are described in the rest of this section.
+> The parameters that may be passed to `texturetool` are described in the rest of this section.
 
-可以传递给 texturetool 的参数将在本节的其余部分中介绍。
+可以传递给 `texturetool` 的参数将在本节的其余部分中介绍。
 
 ```objc
 user$ texturetool -h
@@ -3847,11 +3847,11 @@ third form:
 -f <format>       Set file <format> for <output> image.
 ```
 
-> Note: The -p option indicates that it requires the -e option. It also requires the -o option.
+> Note: The `-p` option indicates that it requires the `-e` option. It also requires the `-o` option.
 
 Listing C-1  Encoding options
 
-注意：-p 选项表示其需要 -e 选项与 -o 选项。
+注意：`-p` 选项表示其需要 `-e` 选项与 `-o` 选项。
 
 Listing C-1 编码选项
 
@@ -3897,45 +3897,45 @@ PVR
 KTX
 ```
 
-> texturetool defaults to --bits-per-pixel-4, --channel-weighting-linear and -f Raw if no other options are provided.
+> `texturetool` defaults to `--bits-per-pixel-4`, `--channel-weighting-linear` and `-f Raw` if no other options are provided.
 >
-> The --bits-per-pixel-2 and --bits-per-pixel-4 options create PVRTC data that encodes source pixels into 2 or 4 bits per pixel. These options represent a fixed 16:1 and 8:1 compression ratio over the uncompressed 32-bit RGBA image data. There is a minimum data size of 32 bytes; the compressor never produces files smaller than this, and at least that many bytes are expected when uploading compressed texture data.
+> The `--bits-per-pixel-2` and `--bits-per-pixel-4` options create PVRTC data that encodes source pixels into 2 or 4 bits per pixel. These options represent a fixed 16:1 and 8:1 compression ratio over the uncompressed 32-bit RGBA image data. There is a minimum data size of 32 bytes; the compressor never produces files smaller than this, and at least that many bytes are expected when uploading compressed texture data.
 >
-> When compressing, specifying --channel-weighting-linear spreads compression error equally across all channels. By contrast, specifying --channel-weighting-perceptual attempts to reduce error in the green channel compared to the linear option. In general, PVRTC compression does better with photographic images than with line art.
+> When compressing, specifying `--channel-weighting-linear` spreads compression error equally across all channels. By contrast, specifying `--channel-weighting-perceptual` attempts to reduce error in the green channel compared to the linear option. In general, PVRTC compression does better with photographic images than with line art.
 >
-> The -m option automatically generates mipmap levels for the source image. These levels are provided as additional image data in the archive created. If you use the Raw image format, then each level of image data is appended one after another to the archive. If you use the PVR archive format, then each mipmap image is provided as a separate image in the archive.
+> The `-m` option automatically generates mipmap levels for the source image. These levels are provided as additional image data in the archive created. If you use the Raw image format, then each level of image data is appended one after another to the archive. If you use the PVR archive format, then each mipmap image is provided as a separate image in the archive.
 >
-> The (-f) parameter controls the format of its output file. The default format is Raw. This format is raw compressed texture data, either for a single texture level (without the -m option) or for each texture level concatenated together (with the -m option). Each texture level stored in the file is at least 32 bytes in size and must be uploaded to the GPU in its entirety. The PVR format matches the format used by the PVRTexTool found in Imagination Technologies’s PowerVR SDK. To load a PVR-compressed texture, use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class.
+> The (`-f`) parameter controls the format of its output file. The default format is Raw. This format is raw compressed texture data, either for a single texture level (without the `-m` option) or for each texture level concatenated together (with the `-m` option). Each texture level stored in the file is at least 32 bytes in size and must be uploaded to the GPU in its entirety. The PVR format matches the format used by the PVRTexTool found in Imagination Technologies’s PowerVR SDK. To load a PVR-compressed texture, use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class.
 >
-> The -s and -c options print error metrics during encoding. The -s option compares the input (uncompressed) image to the output (encoded) image, and the -c option compares any two images. Results of the comparison include root-mean-square error (rms), perceptually weighted pRms, worst-case texel error (max), and compositing-based versions of each statistic (rmsC, pRmsC, and maxC). Compositing-based errors assume that the image’s alpha channel is used for opacity and that the color in each texel is blended with the worst-case destination color.
+> The `-s` and `-c` options print error metrics during encoding. The `-s` option compares the input (uncompressed) image to the output (encoded) image, and the `-c` option compares any two images. Results of the comparison include root-mean-square error (`rms`), perceptually weighted `pRms`, worst-case texel error (`max`), and compositing-based versions of each statistic (`rmsC`, `pRmsC`, and `maxC`). Compositing-based errors assume that the image’s alpha channel is used for opacity and that the color in each texel is blended with the worst-case destination color.
 >
-> The error metrics used with the -s and -c options and by the encoder when optimizing a compressed image treat the image’s alpha channel as an independent channel by default (or when using the --alpha-is-independent option). The --alpha-is-opacity option changes the error metric to one based on a standard blending operation, as implemented by calling glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA ).
+> The error metrics used with the `-s` and `-c` options and by the encoder when optimizing a compressed image treat the image’s alpha channel as an independent channel by default (or when using the `--alpha-is-independent` option). The `--alpha-is-opacity` option changes the error metric to one based on a standard blending operation, as implemented by calling `glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA )`.
 >
 > PVR Texture compression supports a special punchthrough mode which can be enabled on a per 4x4 block basis. This mode limits the color gradations that can be used within the block, but introduces the option of forcing the pixel’s alpha value to 0. It can defeat PVRTC smooth color interpolation, introducing block boundary artifacts, so it should be used with care. The three punchthrough options are:
 >
-> - --punchthrough-unused — No punchthrough (the default option).
-> - --punchthrough-allowed — The encoder may enable punchthrough on a block by block basis when optimizing for image quality. This option generally improves the objective (per-pixel) error metrics used by the compression algorithm, but may introduce subjective artifacts.
-> - --punchthrough-forced — Punchthrough is enabled on every block, limiting color gradation but making it possible for any pixel in the block to have an alpha of 0. This option is provided principally for completeness, but may be useful when the results can be compared visually to the other options.
+> - `--punchthrough-unused` — No punchthrough (the default option).
+> - `--punchthrough-allowed` — The encoder may enable punchthrough on a block by block basis when optimizing for image quality. This option generally improves the objective (per-pixel) error metrics used by the compression algorithm, but may introduce subjective artifacts.
+> - `--punchthrough-forced` — Punchthrough is enabled on every block, limiting color gradation but making it possible for any pixel in the block to have an alpha of 0. This option is provided principally for completeness, but may be useful when the results can be compared visually to the other options.
 
-若没有提供其他选项，texturetool 默认为 --bits-per-pixel-4 ， -  channel-weighting-linear 和 -f Raw 。
+若没有提供其他选项，`texturetool` 默认为 `--bits-per-pixel-4` ， `-  channel-weighting-linear` 和 `-f Raw` 。
 
--bits-per-pixel-2 和 -bits-per-pixel-4 选项创建 PVRTC 数据，将源像素编码为每像素 2 或 4 位。这些选项表示与未压缩的 32 位 RGBA 图像数据相比具有固定的 16:1 和 8:1 压缩比。压缩之后的数据最小大小为 32 字节；压缩器永远不会生成比此值更小的文件，并且在上传压缩纹理数据时至少需要很多字节。
+`-bits-per-pixel-2` 和 `-bits-per-pixel-4` 选项创建 PVRTC 数据，将源像素编码为每像素 2 或 4 位。这些选项表示与未压缩的 32 位 RGBA 图像数据相比具有固定的 16:1 和 8:1 压缩比。压缩之后的数据最小大小为 32 字节；压缩器永远不会生成比此值更小的文件，并且在上传压缩纹理数据时至少需要很多字节。
 
-压缩时，指定 --channel-weighting-linear 会在所有通道上均匀地传播压缩误差。与线性选项相比，指定 --channel-weighting-perceptual 尝试减少绿色通道中的错误。通常，PVRTC 压缩对于摄影图像的效果好于艺术线条。
+压缩时，指定 `--channel-weighting-linear` 会在所有通道上均匀地传播压缩误差。与线性选项相比，指定 `--channel-weighting-perceptual` 尝试减少绿色通道中的错误。通常，PVRTC 压缩对于摄影图像的效果好于艺术线条。
 
--m 选项自动为源图像生成 mipmap 级别。创建的存档中这些级别作为附件图像数据提供。如果使用原始图像格式，则会将每个级别的图像数据一个接一个地附加到存档中。如果使用 PVR 存档格式，则每个 mipmap 图像在存档中作为单独图像提供。
+`-m` 选项自动为源图像生成 mipmap 级别。创建的存档中这些级别作为附件图像数据提供。如果使用原始图像格式，则会将每个级别的图像数据一个接一个地附加到存档中。如果使用 PVR 存档格式，则每个 mipmap 图像在存档中作为单独图像提供。
 
-（ -f ）参数控制其输出文件的格式。默认格式为 Raw 。此格式是原始压缩纹理数据，可以是单个纹理级别（不带 -m 选项），也可以是连接在一起的每个纹理级别（使用 -m 选项）。存储在该文件中的每个纹理级别的大小至少为 32 个字节，并且必须完整地上传到 GPU 。PVR 格式与 Imagination Technologies 的 PowerVR SDK 中的 PVRTexTool 使用的格式相匹配。要加载 PVR 压缩纹理，请使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类。
+（ `-f` ）参数控制其输出文件的格式。默认格式为 Raw 。此格式是原始压缩纹理数据，可以是单个纹理级别（不带 `-m` 选项），也可以是连接在一起的每个纹理级别（使用 `-m` 选项）。存储在该文件中的每个纹理级别的大小至少为 32 个字节，并且必须完整地上传到 GPU 。PVR 格式与 Imagination Technologies 的 PowerVR SDK 中的 PVRTexTool 使用的格式相匹配。要加载 PVR 压缩纹理，请使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类。
 
--s 和 -c 选项在编码期间打印错误指标。-s 选项将输入（未压缩）图像与输出（编码）图像进行比较，-c 选项比较任意两个图像。比较结果包括均方根误差（ rms ），感知加权 pRms ，最坏情况纹素错误（ max ）以及每个统计量的基于合成的版本（ rmsC，pRmsC 和 maxC ）。基于合成的错误假设图像的 alpha 通道用于不透明度，并且每个纹素的颜色与最坏情况的目标颜色混合。
+`-s` 和 `-c` 选项在编码期间打印错误指标。`-s` 选项将输入（未压缩）图像与输出（编码）图像进行比较，`-c` 选项比较任意两个图像。比较结果包括均方根误差（ `rms` ），感知加权 `pRms` ，最坏情况纹素错误（ `max` ）以及每个统计量的基于合成的版本（ `rmsC`，`pRmsC` 和 `maxC` ）。基于合成的错误假设图像的 alpha 通道用于不透明度，并且每个纹素的颜色与最坏情况的目标颜色混合。
 
-在优化压缩图像时，-s 和 -c 选项与编码器一起使用的误差指标默认将图像的 alpha 通道视为独立通道（或使用 --alpha-is-independent 选项时）。--alpha-is-opacity 选项根据标准混合操作将错误指标更改为 1 ，如通过调用 glBlendFunc（ GL_SRC_ALPHA，GL_ONE_MINUS_SRC_ALPHA ）实现的。
+在优化压缩图像时，`-s` 和 `-c` 选项与编码器一起使用的误差指标默认将图像的 alpha 通道视为独立通道（或使用 `--alpha-is-independent` 选项时）。`--alpha-is-opacity` 选项根据标准混合操作将错误指标更改为 1 ，如通过调用 `glBlendFunc(GL_SRC_ALPHA，GL_ONE_MINUS_SRC_ALPHA)`实现的。
 
 PVR 纹理压缩支持特殊的穿通模式，可以基于每个 4x4 块启用。此模式限制了可在块内使用的颜色等级，但引入了强制像素的 alpha 值为 0 的选项。它可以击败 PVRTC 平滑颜色插值，引入块边界伪像，因此应谨慎使用。三个穿通选项是：
 
-- --punchthrough-unused  - 无穿通（默认选项）。
-- --punchthrough-allowed  - 在优化图像质量时，编码器可以逐块地启用穿通。此选项通常可以改进压缩算法使用的目标（每像素）误差度量，但可能会引入主观伪像。
-- --punchthrough-forced  - 在每个块上启用 Punchthrough ，限制颜色渐变，但使块中的任何像素都可以具有 0 的 alpha 。此选项主要是为了完整性提供，但是当结果可以在视觉上与其他选项进行比较时可能会有用。
+- `--punchthrough-unused`  - 无穿通（默认选项）。
+- `--punchthrough-allowed`  - 在优化图像质量时，编码器可以逐块地启用穿通。此选项通常可以改进压缩算法使用的目标（每像素）误差度量，但可能会引入主观伪像。
+- `--punchthrough-forced`  - 在每个块上启用 Punchthrough ，限制颜色渐变，但使块中的任何像素都可以具有 0 的 alpha 。此选项主要是为了完整性提供，但是当结果可以在视觉上与其他选项进行比较时可能会有用。
 
 > Important: Source images for the encoder must satisfy these requirements:
 > 
@@ -3991,13 +3991,13 @@ Encode Image.png into PVRTC using perceptual weights and 2 bpp, and saving the o
 user$ texturetool -e PVRTC --channel-weighting-perceptual --bits-per-pixel-2 -o ImageP2.pvrtc -p ImageP2.png Image.png
 ```
 
-> Note: It is not possible to create a preview without also specifying the -o parameter and a valid output file. Preview images are always in PNG format.
+> Note: It is not possible to create a preview without also specifying the `-o` parameter and a valid output file. Preview images are always in PNG format.
 
 To load a PVR-compressed texture, use the [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) class.
 
 For an example of working with PVR-compressed data directly, see the [PVRTextureLoader](https://developer.apple.com/library/archive/samplecode/PVRTextureLoader/Introduction/Intro.html#//apple_ref/doc/uid/DTS40008121) sample.
 
-注意：如果不指定 -o 参数和有效的输出文件，则无法创建预览。预览图像始终为 PNG 格式。
+注意：如果不指定 `-o` 参数和有效的输出文件，则无法创建预览。预览图像始终为 PNG 格式。
 
 要加载 PVR 压缩纹理，使用 [GLKTextureLoader](https://developer.apple.com/documentation/glkit/glktextureloader) 类。
 
@@ -4013,12 +4013,12 @@ For an example of working with PVR-compressed data directly, see the [PVRTexture
 
 > These best practices apply to OpenGL ES 3.0 apps on Apple A7 GPUs and later:
 >
-> - Avoid operations that modify OpenGL ES objects already in use by the renderer because of previously submitted drawing commands. When you need to modify OpenGL ES resources, schedule those modifications at the beginning or end of a frame. These commands include glBufferSubData, glBufferData, glMapBuffer, glTexSubImage, glCopyTexImage, glCopyTexSubImage, glReadPixels, glBindFramebuffer, glFlush, and glFinish.
+> - Avoid operations that modify OpenGL ES objects already in use by the renderer because of previously submitted drawing commands. When you need to modify OpenGL ES resources, schedule those modifications at the beginning or end of a frame. These commands include `glBufferSubData`, `glBufferData`, `glMapBuffer`, `glTexSubImage`, `glCopyTexImage`, `glCopyTexSubImage`, `glReadPixels`, `glBindFramebuffer`, `glFlush`, and `glFinish`.
 > - Follow the drawing guidelines found in [Do Not Sort Rendered Objects Unless Necessary](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW7) in [OpenGL ES Programming Guide](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/index.html).
 
 这些最佳实践适用于 Apple A7 GPU 及更高版本的 OpenGL ES 3.0 应用程序：
 
-- 由于先前提交的绘图命令，避免修改已由渲染器使用的 OpenGL ES 对象的操作。当需要修改 OpenGL ES 资源时，在帧的开头或结尾处进行这些修改。这些命令包括 glBufferSubData ，glBufferData ，glMapBuffer ，glTexSubImage ，glCopyTexImage ，glCopyTexSubImage ，glReadPixels ，glBindFramebuffer ，glFlush 和 glFinish 。
+- 由于先前提交的绘图命令，避免修改已由渲染器使用的 OpenGL ES 对象的操作。当需要修改 OpenGL ES 资源时，在帧的开头或结尾处进行这些修改。这些命令包括 `glBufferSubData` ，`glBufferData` ，`glMapBuffer` ，`glTexSubImage` ，`glCopyTexImage` ，`glCopyTexSubImage` ，`glReadPixels` ，`glBindFramebuffer` ，`glFlush` 和 `glFinish` 。
 - 按照 [OpenGL ES Programming Guide](#opengl-es-programming-guide) 中的 [Do Not Sort Rendered Objects Unless Necessary](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW7) 中的绘图指南进行操作。
 
 ### Considerations
@@ -4031,7 +4031,7 @@ For an example of working with PVR-compressed data directly, see the [PVRTexture
 >
 > Always use framebuffer discard operations when your framebuffer contents are no longer needed. The penalty for not doing so is higher than it was on earlier GPUs. For best results, use the [GLKView](https://developer.apple.com/documentation/glkit/glkview) class; it automatically implements framebuffer discard operations.
 >
-> When rendering to multiple targets, limit your app to four image targets (and no more than 128 bits of total data on Apple A7 GPUs and 256 bits of total data on Apple A8 GPUs written to the targets). A single sRGB target counts as 64 bits.
+> When rendering to multiple targets, limit your app to four image targets (and no more than 128 bits of total data on Apple A7 GPUs and 256 bits of total data on Apple A8 GPUs written to the targets). A single `sRGB` target counts as 64 bits.
 
 Apple A7 及其后续的 GPU 使用标量处理器处理所有浮点计算，即使这些值声明为向量。正确使用写掩码和仔细定义计算可以提高着色器的性能。有关更多信息，请参阅 [Perform Vector Calculations Lazily](#perform-vector-calculations-lazily) 。
 
@@ -4041,4 +4041,4 @@ Apple A7 GPU 及更高版本不会惩罚依赖纹理提取。
 
 当不再需要帧缓冲内容时，始终使用帧缓冲丢弃操作。不这样做的代价在后续 GPU 中要高于早期的 GPU 。为获得最佳效果，使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 类；它自动实现帧缓冲丢弃操作。
 
-渲染到多个目标时，将应用程序限制为最多四个图像目标（当写入目标时，Apple A7 GPU 上的总数据不超过 128 位，Apple A8 GPU 上的总数据不超过 256 位）。单个 sRGB 目标计为 64 位。
+渲染到多个目标时，将应用程序限制为最多四个图像目标（当写入目标时，Apple A7 GPU 上的总数据不超过 128 位，Apple A8 GPU 上的总数据不超过 256 位）。单个 `sRGB` 目标计为 64 位。
