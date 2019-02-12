@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render shadow maps
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -27,3 +30,5 @@ vertex ShadowOutput shadow_vertex(device DeferredLightingShadowVertex * position
 
     return out;
 }
+
+#endif

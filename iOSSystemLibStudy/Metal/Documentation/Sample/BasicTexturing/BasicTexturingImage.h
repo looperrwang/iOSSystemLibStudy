@@ -5,6 +5,8 @@ Abstract:
 Header for a very simple container for image data
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 
 // Our image
@@ -24,3 +26,5 @@ Header for a very simple container for image data
 @property (nonatomic, readonly, nonnull) NSData *data;
 
 @end
+
+#endif

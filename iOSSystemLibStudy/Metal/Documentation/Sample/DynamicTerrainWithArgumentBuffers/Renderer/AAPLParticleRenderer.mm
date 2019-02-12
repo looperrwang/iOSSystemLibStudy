@@ -5,6 +5,8 @@ Abstract:
 Implementation of the AAPLParticleRenderer which is responsible for rendering particles.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <MetalKit/MetalKit.h>
 
 #import "AAPLBufferFormats.h"
@@ -441,3 +443,5 @@ MTKMesh* LoadParticleMesh (id <MTLDevice> device, NSString* path)
 }
 
 @end
+
+#endif

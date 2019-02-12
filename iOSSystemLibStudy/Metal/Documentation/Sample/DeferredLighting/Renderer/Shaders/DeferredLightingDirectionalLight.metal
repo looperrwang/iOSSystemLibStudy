@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render deferred directional lighting
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -156,4 +159,6 @@ deferred_directional_lighting_fragment(QuadInOut               in               
 #endif // END macOS directional light shader
 
 #endif // END DEFER_ALL_LIGHTING
+
+#endif
 

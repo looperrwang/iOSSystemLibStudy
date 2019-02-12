@@ -6,6 +6,8 @@ Filter protocol and classes which provide utilities for allocating and manipulat
  textures allocated as a heap resource.
 */
 
+#if TARGET_OS_IPHONE
+
 #ifndef ImageFilteringWithHeapsAndEventsFilter_h
 #define ImageFilteringWithHeapsAndEventsFilter_h
 
@@ -38,3 +40,5 @@ Filter protocol and classes which provide utilities for allocating and manipulat
 @end
 
 #endif /* ImageFilteringWithHeapsAndEventsFilter_h */
+
+#endif

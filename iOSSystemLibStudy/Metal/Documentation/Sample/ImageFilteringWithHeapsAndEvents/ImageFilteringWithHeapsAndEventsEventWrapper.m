@@ -5,6 +5,8 @@ Abstract:
 Implementation of event wrapper class, embedding monotonic event increments functionality
 */
 
+#if TARGET_OS_IPHONE
+
 #import "ImageFilteringWithHeapsAndEventsEventWrapper.h"
 
 
@@ -50,3 +52,5 @@ Implementation of event wrapper class, embedding monotonic event increments func
 }
 
 @end
+
+#endif

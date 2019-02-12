@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering
 */
+
+#if TARGET_OS_IPHONE
+
 @import simd;
 @import MetalKit;
 
@@ -393,3 +396,5 @@ static const NSUInteger AAPLMaxBuffersInFlight = 3;
 }
 
 @end
+
+#endif

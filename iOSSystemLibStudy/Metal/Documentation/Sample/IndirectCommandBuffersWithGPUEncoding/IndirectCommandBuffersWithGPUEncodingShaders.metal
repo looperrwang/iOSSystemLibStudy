@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -106,3 +108,5 @@ IndirectCommandBuffersWithGPUEncodingFragmentShader(RasterizerData in [[ stage_i
 
     return output_color;
 }
+
+#endif

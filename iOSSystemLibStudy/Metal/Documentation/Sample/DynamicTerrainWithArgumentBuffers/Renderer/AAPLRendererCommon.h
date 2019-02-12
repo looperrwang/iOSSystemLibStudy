@@ -5,6 +5,8 @@ Abstract:
 Declaration of utility functions that are shared across renderers.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import "TargetConditionals.h"
@@ -38,3 +40,5 @@ id<MTLTexture> CreateTextureWithDevice (id<MTLDevice>        device,
                                         bool                 sRGB,
                                         bool                 generateMips,
                                         MTLResourceOptions   storageMode = MTLStorageModePrivate);
+
+#endif

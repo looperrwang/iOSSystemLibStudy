@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -105,4 +107,6 @@ grayscaleKernel(texture2d<half, access::read>  inTexture  [[texture(AAPLTextureI
     half  gray     = dot(inColor.rgb, kRec709Luma);
     outTexture.write(half4(gray, gray, gray, 1.0), gid);
 }
+
+#endif
 

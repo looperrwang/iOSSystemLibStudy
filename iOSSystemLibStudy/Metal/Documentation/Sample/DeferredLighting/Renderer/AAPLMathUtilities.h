@@ -6,6 +6,8 @@ Header for vector, matrix, and quaternion math utility functions useful for 3D g
  rendering with Metal
 */
 
+#if TARGET_OS_IPHONE
+
 #import <simd/simd.h>
 
 /// Since these are common methods, allow other libraries to overload the
@@ -235,4 +237,6 @@ vector_float3 AAPL_SIMD_OVERLOAD up_direction_vector_from_quaternion(quaternion_
 /// Returns a vector in the +x direction for the given quaternion (for a left handed coordinate system)
 ///   negate for a right-handed system)
 vector_float3 AAPL_SIMD_OVERLOAD right_direction_vector_from_quaternion(quaternion_float q);
+
+#endif
 

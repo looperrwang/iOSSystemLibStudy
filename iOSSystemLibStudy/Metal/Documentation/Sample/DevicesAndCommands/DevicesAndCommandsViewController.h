@@ -5,6 +5,8 @@ Abstract:
 Header for our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 @import MetalKit;
 
 #import "DevicesAndCommandsRenderer.h"
@@ -13,3 +15,5 @@ Header for our cross-platform view controller
 @interface DevicesAndCommandsViewController : UIViewController
 
 @end
+
+#endif

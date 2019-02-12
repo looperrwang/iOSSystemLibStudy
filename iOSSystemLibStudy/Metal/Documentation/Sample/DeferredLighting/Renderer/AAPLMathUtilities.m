@@ -6,6 +6,8 @@ Implementation of vector, matrix, and quaternion math utility functions useful f
  rendering with Metal
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLMathUtilities.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -578,3 +580,5 @@ vector_float3 AAPL_SIMD_OVERLOAD right_direction_vector_from_quaternion(quaterni
     // Negate for a right-handed coordinate system
     return direction;
 }
+
+#endif

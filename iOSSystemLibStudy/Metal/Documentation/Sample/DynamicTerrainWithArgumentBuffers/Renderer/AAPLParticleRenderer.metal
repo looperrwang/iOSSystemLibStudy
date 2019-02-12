@@ -5,6 +5,8 @@ Abstract:
 Shaders used by the Particle Renderer which are responsible for rendering particles.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <metal_stdlib>
 #import <metal_atomic>
 using namespace metal;
@@ -470,3 +472,5 @@ fragment GBufferFragOut ParticlePs(const ParticleVertexOut in [[stage_in]],
 #endif
     return output;
 }
+
+#endif

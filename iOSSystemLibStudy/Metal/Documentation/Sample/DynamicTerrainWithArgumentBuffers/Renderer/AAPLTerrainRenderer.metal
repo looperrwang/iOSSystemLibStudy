@@ -5,6 +5,8 @@ Abstract:
 Shaders that are used by the terrain renderer.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <metal_stdlib>
 using namespace metal;
 
@@ -461,3 +463,5 @@ kernel void TerrainKnl_UpdateHeightmap (    texture2d<float, access::read_write>
     float h = heightMap.read(tid).r;
     heightMap.write(h+displacement, tid);
 }
+
+#endif

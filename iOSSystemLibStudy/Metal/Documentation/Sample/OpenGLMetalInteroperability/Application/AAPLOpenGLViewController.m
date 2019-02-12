@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of the cross-platform OpenGL view controller AND a minimal cross-platform OpenGL View
 */
+
+#if TARGET_OS_IPHONE
+
 #import "AAPLOpenGLViewController.h"
 #import "AAPLOpenGLRenderer.h"
 #import "AAPLOpenGLMetalInteropTexture.h"
@@ -292,3 +295,5 @@ static CVReturn OpenGLDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 
 @end
+
+#endif

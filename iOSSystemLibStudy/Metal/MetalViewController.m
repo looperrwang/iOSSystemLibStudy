@@ -6,12 +6,13 @@
 //  Copyright © 2018 looperwang. All rights reserved.
 //
 
+#if TARGET_OS_IPHONE
+
 #import "MetalViewController.h"
 #import "CellData.h"
 
 @interface MetalViewController () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<CellData *> *data;
 
 @end
@@ -28,12 +29,12 @@
     self.title = @"Metal";
     self.view.backgroundColor = [UIColor whiteColor];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.dataSource = self;
+    tableView.delegate = self;
     
-    [self.view addSubview:self.tableView];
+    [self.view addSubview:tableView];
 }
 
 - (void)initCellData
@@ -101,3 +102,5 @@
 }
 
 @end
+
+#endif

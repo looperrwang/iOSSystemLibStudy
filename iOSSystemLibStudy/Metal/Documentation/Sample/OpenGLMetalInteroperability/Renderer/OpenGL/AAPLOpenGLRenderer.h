@@ -5,6 +5,8 @@ Abstract:
 Header for renderer class which performs OpenGL state setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #include <CoreGraphics/CoreGraphics.h>
 #include "AAPLGLHeaders.h"
@@ -25,3 +27,5 @@ static const CGSize AAPLInteropTextureSize = {1024, 1024};
 - (void)useTextureFromFileAsBaseMap;
 
 @end
+
+#endif

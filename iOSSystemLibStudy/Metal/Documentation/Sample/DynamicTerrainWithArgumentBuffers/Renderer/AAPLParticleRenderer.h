@@ -6,6 +6,8 @@ Declaration of the AAPLParticleRenderer which is responsible for rendering parti
  rendering operations.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <array>
@@ -37,3 +39,5 @@ Declaration of the AAPLParticleRenderer which is responsible for rendering parti
 #endif
 
 @end
+
+#endif

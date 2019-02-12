@@ -5,6 +5,8 @@ Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 @import simd;
 @import ModelIO;
 @import MetalKit;
@@ -1232,3 +1234,5 @@ static const NSUInteger AAPLColumnLights = AAPLGroundLights  + 0.30 * AAPLNumLig
 #endif // END SUPPORT_BUFFER_EXAMINATION_MODE
 
 @end
+
+#endif

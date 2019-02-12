@@ -5,6 +5,8 @@ Abstract:
 Declaration of the AAPLMainRenderer which is responsible for the highest level rendering operations.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import "TargetConditionals.h"
@@ -31,3 +33,5 @@ Declaration of the AAPLMainRenderer which is responsible for the highest level r
       renderPassDescriptor:(MTLRenderPassDescriptor* _Nonnull) renderPassDescriptor
          waitForCompletion:(bool) waitForCompletion;
 @end
+
+#endif

@@ -12,7 +12,6 @@
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<CellData *> *data;
-@property (nonatomic, strong) UITableView *tableView;
 
 @end
 
@@ -25,12 +24,12 @@
     [self initCellData];
     
     // Do any additional setup after loading the view, typically from a nib.
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
-    self.tableView.backgroundColor = [UIColor whiteColor];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
+    tableView.backgroundColor = [UIColor whiteColor];
+    tableView.dataSource = self;
+    tableView.delegate = self;
     
-    [self.view addSubview:self.tableView];
+    [self.view addSubview:tableView];
     
     self.title = @"iOSSystemLibStudy";
 }
@@ -112,7 +111,7 @@
     //[self.data addObject:[[CellData alloc] initWithText:@"NewsstandKit" vcName:@""]];
     //[self.data addObject:[[CellData alloc] initWithText:@"NotificationCenter" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"OpenAL" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"OpenGLES" vcName:@""]];
+    [self.data addObject:[[CellData alloc] initWithText:@"OpenGLES" vcName:@"OpenGLESViewController"]];
     //[self.data addObject:[[CellData alloc] initWithText:@"PassKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"PDFKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"Photos" vcName:@""]];

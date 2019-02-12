@@ -5,6 +5,8 @@ Abstract:
 Metal compute kernels performing filtering
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 using namespace metal;
 
@@ -48,3 +50,5 @@ kernel void imageFilteringWithHeapsAndFencesGaussianblurVertical(texture2d<half,
 {
     gaussianblur(inTexture, outTexture, lod, int2(0, 1), gid);
 }
+
+#endif

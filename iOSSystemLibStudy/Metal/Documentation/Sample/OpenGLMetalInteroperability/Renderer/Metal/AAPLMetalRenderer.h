@@ -5,6 +5,8 @@ Abstract:
 Header for renderer class which performs Metal setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 @import MetalKit;
 
 // Platform independent renderer class
@@ -25,3 +27,5 @@ Header for renderer class which performs Metal setup and per frame rendering
 
 
 @end
+
+#endif

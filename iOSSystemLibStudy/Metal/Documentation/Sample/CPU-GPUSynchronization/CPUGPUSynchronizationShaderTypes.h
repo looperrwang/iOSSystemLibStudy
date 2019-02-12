@@ -5,6 +5,8 @@ Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
 
+#if TARGET_OS_IPHONE
+
 #ifndef CPUGPUSynchronizationShaderTypes_h
 #define CPUGPUSynchronizationShaderTypes_h
 
@@ -32,3 +34,5 @@ typedef struct
 } AAPLVertex;
 
 #endif /* CPUGPUSynchronizationShaderTypes_h */
+
+#endif

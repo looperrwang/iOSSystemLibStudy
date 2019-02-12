@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -46,4 +48,6 @@ fragment float4 fragmentShader(ColorInOut      in       [[stage_in]],
     const half4 outputColor = (baseColor * (1.0 - labelColor.w)) + (labelColor * labelColor.w);
     return float4(outputColor);
 }
+
+#endif
 

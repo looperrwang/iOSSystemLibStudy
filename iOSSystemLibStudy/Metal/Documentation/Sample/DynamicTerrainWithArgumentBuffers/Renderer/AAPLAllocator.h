@@ -11,6 +11,8 @@ Declaration of the AAPLAllocator and AAPLGpuBuffer class.
  the end of a frame.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #import <vector>
 #import <simd/simd.h>
@@ -115,3 +117,5 @@ AAPLGpuBuffer <TElement> AAPLAllocator::allocBuffer (uint inElementCount)
     currentlyAllocated = offset + size;
     return AAPLGpuBuffer <TElement> (this, offset, size);
 }
+
+#endif

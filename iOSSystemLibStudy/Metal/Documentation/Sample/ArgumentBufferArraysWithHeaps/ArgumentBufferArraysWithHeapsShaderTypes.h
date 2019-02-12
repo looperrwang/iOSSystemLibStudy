@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
+
+#if TARGET_OS_IPHONE
+
 #ifndef ArgumentBufferArraysWithHeapsShaderTypes_h
 #define ArgumentBufferArraysWithHeapsShaderTypes_h
 
@@ -47,3 +50,5 @@ typedef struct AAPLVertex {
 } AAPLVertex;
 
 #endif /* ArgumentBufferArraysWithHeapsShaderTypes_h */
+
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of renderer class which performs OpenGL state setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLOpenGLRenderer.h"
 #import "AAPLMathUtilities.h"
 
@@ -528,3 +530,5 @@ matrix_float4x4 matrix_perspective_gl(float fovyRadians, float aspect, float nea
 }
 
 @end
+
+#endif

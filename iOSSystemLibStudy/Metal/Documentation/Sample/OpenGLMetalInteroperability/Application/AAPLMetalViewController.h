@@ -5,6 +5,8 @@ Abstract:
 Header for the cross-platform Metal view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #if defined(TARGET_IOS) || defined(TARGET_TVOS)
 @import UIKit;
 #define PlatformViewController UIViewController
@@ -20,3 +22,5 @@ Header for the cross-platform Metal view controller
 @interface AAPLMetalViewController : PlatformViewController<MTKViewDelegate>
 
 @end
+
+#endif

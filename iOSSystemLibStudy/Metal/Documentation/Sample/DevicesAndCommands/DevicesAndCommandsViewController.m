@@ -5,6 +5,8 @@ Abstract:
 Implementation of our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #import "DevicesAndCommandsViewController.h"
 #import "DevicesAndCommandsRenderer.h"
 
@@ -50,3 +52,5 @@ Implementation of our cross-platform view controller
 }
 
 @end
+
+#endif

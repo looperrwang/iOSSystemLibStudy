@@ -5,6 +5,8 @@ Abstract:
 Implementation of a very simple container for image data
 */
 
+#if TARGET_OS_IPHONE
+
 #import "HelloComputeImage.h"
 #include <simd/simd.h>
 
@@ -159,3 +161,5 @@ Implementation of a very simple container for image data
 }
 
 @end
+
+#endif

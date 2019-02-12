@@ -5,6 +5,8 @@ Abstract:
 Header defining preprocessor conditional values that control the configuration of the app
 */
 
+#if TARGET_OS_IPHONE
+
 // When enabled, performs specular lighting calculations for the directional light (i.e. the sun).
 // When disabled, the directional light only contributes diffuse values.  
 #define APPLY_DIRECTIONAL_SPECULAR      1
@@ -34,3 +36,5 @@ Header defining preprocessor conditional values that control the configuration o
 // Enables toggling of buffer examination mode at runtime. Code protected by this definition
 // is only useful to examine parts of the underlying implementation (i.e. it's a debug feature).
 #define SUPPORT_BUFFER_EXAMINATION_MODE 1
+
+#endif

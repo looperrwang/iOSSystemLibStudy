@@ -5,6 +5,8 @@ Abstract:
 Vegetation-specific Uniforms structs that are shared between Metal / Objective-C.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <simd/simd.h>
 
 #if METAL
@@ -48,3 +50,5 @@ struct AAPLPopulationRule
     uint    populationStartIndex = 0;   // index in VegetationRenderer::populations
     uint    populationIndexCount = 0;   // a list of populations can be defined; density is evenly distributed between them
 };
+
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -65,3 +67,5 @@ BasicArgumentBuffersFragmentShader(       RasterizerData            in          
     // Add sample and color values together and return the result
     return float4((1.0-textureSample.w) * colorScale * in.color + textureSample);
 }
+
+#endif

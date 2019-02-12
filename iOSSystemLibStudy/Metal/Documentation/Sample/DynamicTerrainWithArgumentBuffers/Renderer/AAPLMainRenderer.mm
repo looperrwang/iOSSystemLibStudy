@@ -5,6 +5,8 @@ Abstract:
 Implementation of the AAPLMainRenderer which is responsible for the highest level rendering operations.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <MetalKit/MetalKit.h>
 #import <ModelIO/ModelIO.h>
 
@@ -576,3 +578,5 @@ using namespace simd;
 }
 
 @end
+
+#endif

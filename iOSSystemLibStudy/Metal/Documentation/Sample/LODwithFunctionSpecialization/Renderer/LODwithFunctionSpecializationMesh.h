@@ -5,6 +5,8 @@ Abstract:
 Header for mesh and submesh objects used for managing models
 */
 
+#if TARGET_OS_IPHONE
+
 @import Foundation;
 @import MetalKit;
 @import simd;
@@ -55,3 +57,5 @@ Header for mesh and submesh objects used for managing models
 @property (nonatomic, readonly, nonnull) NSArray<LODwithFunctionSpecializationSubmesh*> *submeshes;
 
 @end
+
+#endif

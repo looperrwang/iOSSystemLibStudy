@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render buffer examination mode
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -105,5 +108,7 @@ texture_depth_fragment(RenderTextureData   in         [[ stage_in ]],
 
     return sample / depthRange;
 }
+
+#endif
 
 #endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 #import <math.h>
 #import "ImageFilteringWithHeapsAndEventsShaderTypes.h"
 #import "ImageFilteringWithHeapsAndEventsRenderer.h"
@@ -446,3 +448,5 @@ static const uint32_t AAPLNumImages = 6;
 }
 
 @end
+
+#endif

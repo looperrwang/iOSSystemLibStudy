@@ -5,6 +5,8 @@ Abstract:
 Terrain-specific Uniforms structs that are shared between Metal / Objective-C.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <simd/simd.h>
@@ -129,3 +131,5 @@ struct TerrainAdjustParams
     uint32_t        component;
     bool            useTargetMap;
 };
+
+#endif

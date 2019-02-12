@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of utility functions that are shared across renderers.
 */
+
+#if TARGET_OS_IPHONE
+
 #import <MetalKit/MetalKit.h>
 
 #import "AAPLRendererCommon.h"
@@ -47,3 +50,5 @@ id<MTLTexture> CreateTextureWithDevice (id<MTLDevice>        device,
     }
     return texture;
 }
+
+#endif

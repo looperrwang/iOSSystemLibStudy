@@ -6,6 +6,8 @@ Declaration of BufferFormats ; namespace containing global constants defining th
  formats for any framebuffer used.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <Metal/Metal.h>
@@ -22,3 +24,5 @@ namespace BufferFormats
     static const NSUInteger     sampleCount =           1;
     static const MTLPixelFormat backBufferformat =      MTLPixelFormatBGRA8Unorm_sRGB;
 }
+
+#endif

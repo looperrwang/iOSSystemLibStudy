@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header containing structure shared between .metal shader files
 */
+
+#if TARGET_OS_IPHONE
+
 #ifndef DeferredLightingShaderCommon_h
 #define DeferredLightingShaderCommon_h
 
@@ -37,3 +40,5 @@ typedef struct
 } Vertex;
 
 #endif // DeferredLightingShaderCommon_h
+
+#endif

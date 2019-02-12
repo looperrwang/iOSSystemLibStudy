@@ -5,6 +5,8 @@ Abstract:
 Implementation of the vegetation renderer which is responsible for the terrain-specific foliage geometry.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLVegetationRenderer.h"
 #import "AAPLVegetationRenderer_shared.h"
 #import "AAPLTerrainRenderer_shared.h"
@@ -300,3 +302,5 @@ using namespace simd;
 }
 
 @end
+
+#endif

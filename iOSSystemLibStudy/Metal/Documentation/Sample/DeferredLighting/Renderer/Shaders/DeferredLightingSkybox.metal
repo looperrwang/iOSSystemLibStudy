@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render skybox
 */
+
+#if TARGET_OS_IPHONE
+
 #import <metal_stdlib>
 
 using namespace metal;
@@ -47,4 +50,6 @@ fragment half4 skybox_fragment(SkyboxInOut        in             [[ stage_in ]],
 
     return half4(color);
 }
+
+#endif
 

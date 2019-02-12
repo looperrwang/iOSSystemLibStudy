@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
+
+#if TARGET_OS_IPHONE
+
 #ifndef DeferredLightingShaderTypes_h
 #define DeferredLightingShaderTypes_h
 
@@ -118,4 +121,6 @@ typedef struct {
 } DeferredLightingShadowVertex;
 
 #endif /* DeferredLightingShaderTypes_h */
+
+#endif
 

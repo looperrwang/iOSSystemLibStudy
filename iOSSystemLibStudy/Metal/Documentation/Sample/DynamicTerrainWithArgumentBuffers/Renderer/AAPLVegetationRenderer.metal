@@ -5,6 +5,8 @@ Abstract:
 Shaders that are used by the vegetation renderer.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <metal_stdlib>
 #import "AAPLMainRendererUtilities.metal"
 #import "AAPLMainRenderer_shared.h"
@@ -297,3 +299,5 @@ kernel void vegetation_instanceGenerate (       texture2d<float> heightMap      
         }
     }
 }
+
+#endif

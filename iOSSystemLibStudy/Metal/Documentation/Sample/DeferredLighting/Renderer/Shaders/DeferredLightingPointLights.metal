@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render deferred point lighting
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -197,4 +200,6 @@ deferred_point_lighting_fragment(LightInOut              in                     
 }
 
 #endif  // END macOS point light shader
+
+#endif
 

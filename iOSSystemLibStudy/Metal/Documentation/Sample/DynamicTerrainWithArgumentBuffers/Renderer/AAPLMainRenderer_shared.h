@@ -5,6 +5,8 @@ Abstract:
 General Uniforms structs that are shared between Metal / Objective-C.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <simd/simd.h>
@@ -64,3 +66,5 @@ struct AAPLObjVertex
     }
 #endif
 };
+
+#endif

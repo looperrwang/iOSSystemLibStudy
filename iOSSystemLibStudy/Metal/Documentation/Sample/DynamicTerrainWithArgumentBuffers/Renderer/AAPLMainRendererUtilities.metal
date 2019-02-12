@@ -5,6 +5,8 @@ Abstract:
 Metal-only utility functions that are mainly related to geometry buffer packing.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <metal_stdlib>
@@ -119,3 +121,5 @@ inline uint wang_hash (uint seed)
     seed = seed ^ (seed >> 15);
     return seed;
 }
+
+#endif

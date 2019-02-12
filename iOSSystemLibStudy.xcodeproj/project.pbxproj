@@ -115,6 +115,9 @@
 		5FCD5691215A8D4B00E26E01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568F215A8D4B00E26E01 /* LaunchScreen.storyboard */; };
 		5FCD5694215A8D4B00E26E01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5693215A8D4B00E26E01 /* main.m */; };
 		5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD569C215DB37800E26E01 /* ImageIOViewController.m */; };
+		5FD0A50A2200506F00560B7A /* OpenGLESViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A5092200506F00560B7A /* OpenGLESViewController.m */; };
+		5FD0A5102201425700560B7A /* OpenGLLearningFootprintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */; };
+		5FD0A5132201426700560B7A /* OfficialSamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */; };
 		5FE5249821CA781200B5F956 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4DF97F21B9457800DC9FCD /* MetalKit.framework */; };
 		5FE5249A21CA781200B5F956 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249921CA781200B5F956 /* Metal.framework */; };
 		5FE5249C21CA781800B5F956 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249B21CA781800B5F956 /* ModelIO.framework */; };
@@ -382,6 +385,12 @@
 		5FCD569B215DB37800E26E01 /* ImageIOViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOViewController.h; sourceTree = "<group>"; };
 		5FCD569C215DB37800E26E01 /* ImageIOViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageIOViewController.m; sourceTree = "<group>"; };
 		5FCD569E215DB6E600E26E01 /* ImageIOHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOHeader.h; sourceTree = "<group>"; };
+		5FD0A5082200506F00560B7A /* OpenGLESViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLESViewController.h; sourceTree = "<group>"; };
+		5FD0A5092200506F00560B7A /* OpenGLESViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLESViewController.m; sourceTree = "<group>"; };
+		5FD0A50E2201425700560B7A /* OpenGLLearningFootprintsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLLearningFootprintsViewController.h; sourceTree = "<group>"; };
+		5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLLearningFootprintsViewController.m; sourceTree = "<group>"; };
+		5FD0A5112201426700560B7A /* OfficialSamplesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfficialSamplesViewController.h; sourceTree = "<group>"; };
+		5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfficialSamplesViewController.m; sourceTree = "<group>"; };
 		5FE5249921CA781200B5F956 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		5FE5249B21CA781800B5F956 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5FE5249E21CB5D6100B5F956 /* Mixing Metal and OpenGL Rendering in a View.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Mixing Metal and OpenGL Rendering in a View.md"; sourceTree = "<group>"; };
@@ -440,7 +449,11 @@
 		5F15B786219833DB00A997D6 /* OpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				5FD0A50D2201423900560B7A /* OfficialSamples */,
+				5FD0A50C2201422F00560B7A /* OpenGLLearningFootprints */,
 				5F15B7872198341A00A997D6 /* OpenGL ES Programming Guide - 翻译.md */,
+				5FD0A5082200506F00560B7A /* OpenGLESViewController.h */,
+				5FD0A5092200506F00560B7A /* OpenGLESViewController.m */,
 			);
 			path = OpenGLES;
 			sourceTree = "<group>";
@@ -922,6 +935,24 @@
 			path = ImageIO;
 			sourceTree = "<group>";
 		};
+		5FD0A50C2201422F00560B7A /* OpenGLLearningFootprints */ = {
+			isa = PBXGroup;
+			children = (
+				5FD0A50E2201425700560B7A /* OpenGLLearningFootprintsViewController.h */,
+				5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */,
+			);
+			path = OpenGLLearningFootprints;
+			sourceTree = "<group>";
+		};
+		5FD0A50D2201423900560B7A /* OfficialSamples */ = {
+			isa = PBXGroup;
+			children = (
+				5FD0A5112201426700560B7A /* OfficialSamplesViewController.h */,
+				5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */,
+			);
+			path = OfficialSamples;
+			sourceTree = "<group>";
+		};
 		5FE524E221CBCE3D00B5F956 /* LODwithFunctionSpecialization */ = {
 			isa = PBXGroup;
 			children = (
@@ -1107,6 +1138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FEEE71A21CA6CEC0019D0FB /* AAPLCamera.mm in Sources */,
+				5FD0A5102201425700560B7A /* OpenGLLearningFootprintsViewController.m in Sources */,
 				5F7168EA21C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsRenderer.m in Sources */,
 				5F462D0B21BDFD5E0035143E /* BasicBuffersShaders.metal in Sources */,
 				5FEEE71B21CA6CEC0019D0FB /* AAPLParticleRenderer.mm in Sources */,
@@ -1180,6 +1212,7 @@
 				5F462D6521C0FC4B0035143E /* DeferredLightingViewController.m in Sources */,
 				5F462D5B21C0B1740035143E /* DeferredLightingMesh.m in Sources */,
 				5FEEE71921CA6CEC0019D0FB /* AAPLParticleRenderer.metal in Sources */,
+				5FD0A50A2200506F00560B7A /* OpenGLESViewController.m in Sources */,
 				5F462D4D21C0B1110035143E /* DeferredLightingDirectionalLight.metal in Sources */,
 				5FA221DE21CE5A7100937444 /* AAPLMetalViewController.m in Sources */,
 				5FEEE71721CA6CEC0019D0FB /* AAPLMainRendererUtilities.metal in Sources */,
@@ -1187,6 +1220,7 @@
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
 				5FEEE71D21CA6CEC0019D0FB /* AAPLVegetationRenderer.mm in Sources */,
 				5F462D4E21C0B1110035143E /* DeferredLightingGBuffer.metal in Sources */,
+				5FD0A5132201426700560B7A /* OfficialSamplesViewController.m in Sources */,
 				5FA221CC21CE58F100937444 /* AAPLMetalRenderer.m in Sources */,
 				5F7168CF21C8979A00DC9957 /* BasicArgumentBuffersViewController.m in Sources */,
 				5FA221AF21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal in Sources */,

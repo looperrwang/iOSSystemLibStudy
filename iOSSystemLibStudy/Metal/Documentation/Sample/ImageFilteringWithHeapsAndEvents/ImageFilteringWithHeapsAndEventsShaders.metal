@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used for rendering
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -47,3 +50,5 @@ fragment half4 imageFilteringWithHeapsAndEventsTexturedQuadFragment(RasterizerDa
 
     return color;
 }
+
+#endif

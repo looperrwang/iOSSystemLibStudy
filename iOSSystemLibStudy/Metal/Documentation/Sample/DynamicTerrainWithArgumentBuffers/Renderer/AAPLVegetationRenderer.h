@@ -5,6 +5,8 @@ Abstract:
 Declaration of the vegetation renderer which is responsible for the terrain-specific foliage geometry.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #import "AAPLAllocator.h"
 #import "AAPLObjLoader.h"
@@ -47,6 +49,8 @@ Declaration of the vegetation renderer which is responsible for the terrain-spec
                  cascadeIndex:(uint) index;
 
 @end
+
+#endif
 
 
 

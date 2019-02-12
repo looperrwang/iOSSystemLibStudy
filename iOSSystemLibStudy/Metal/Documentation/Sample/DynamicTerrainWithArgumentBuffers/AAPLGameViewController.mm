@@ -5,6 +5,8 @@ Abstract:
 Implementation of the sample's main view controller that drives the main renderer.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLGameViewController.h"
 #import "AAPLMainRenderer.h"
 #import "AAPLBufferFormats.h"
@@ -262,3 +264,5 @@ NS_OPTIONS(uint8_t, Controls)
 }
 
 @end
+
+#endif

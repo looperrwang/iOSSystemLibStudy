@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation for Mesh and Submesh objects
 */
+
+#if TARGET_OS_IPHONE
+
 @import MetalKit;
 @import ModelIO;
 
@@ -425,3 +428,5 @@ Implementation for Mesh and Submesh objects
 }
 
 @end
+
+#endif

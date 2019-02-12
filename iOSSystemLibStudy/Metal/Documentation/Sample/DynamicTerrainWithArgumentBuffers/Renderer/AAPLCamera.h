@@ -5,6 +5,8 @@ Abstract:
 Declaration of the AAPLCamera object.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
 
@@ -147,3 +149,5 @@ Declaration of the AAPLCamera object.
 -(void) setFarPlane:    (float)         newFarPlane;
 -(void) setAspectRatio: (float)         newAspectRatio;
 @end
+
+#endif

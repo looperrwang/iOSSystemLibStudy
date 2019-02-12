@@ -5,6 +5,8 @@ Abstract:
 Implemenation of class representing a texture shared between OpenGL and Metal
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #import <Metal/Metal.h>
 #import "AAPLGLHeaders.h"
@@ -33,3 +35,5 @@ Implemenation of class representing a texture shared between OpenGL and Metal
 @property (readonly, nonatomic) CGSize size;
 
 @end
+
+#endif

@@ -6,6 +6,8 @@ Declaration of the AAPLObjLoader.
  This class manaully transforms attributes needed for the sample, such as vertex texture coordinates into vertex color.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <Foundation/Foundation.h>
 #import <simd/simd.h>
 #import <vector>
@@ -42,3 +44,5 @@ template<> struct std::hash<AAPLObjVertex>
 -(AAPLObjMesh*) loadFromUrl:(NSURL*) inUrl;
 
 @end
+
+#endif

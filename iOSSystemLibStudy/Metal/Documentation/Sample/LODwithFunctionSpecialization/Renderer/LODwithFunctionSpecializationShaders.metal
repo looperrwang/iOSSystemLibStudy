@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -307,3 +309,5 @@ vertex ColorInOut vertexTransform(Vertex in [[stage_in]],
     
     return out;
 }
+
+#endif

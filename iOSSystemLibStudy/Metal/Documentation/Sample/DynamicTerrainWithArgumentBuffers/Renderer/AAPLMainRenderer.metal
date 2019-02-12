@@ -5,6 +5,8 @@ Abstract:
 Shaders used by the Main renderer: shadows and deferred lighting.
 */
 
+#if TARGET_OS_IPHONE
+
 #import <metal_stdlib>
 using namespace metal;
 
@@ -224,3 +226,5 @@ kernel void mousePositionUpdate ( depth2d<float, access::read> depthBuffer      
     const float3 worldMousePosition = GetWorldPositionAndViewDirFromDepth (mousePos, mouseDepth, globalUniforms, viewDir);
     outWorldPos = float4(worldMousePosition, 666.0);
 }
+
+#endif

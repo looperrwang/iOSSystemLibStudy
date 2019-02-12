@@ -5,6 +5,8 @@ Abstract:
 Implementation of our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #import "ArgumentBufferArraysWithHeapsViewController.h"
 #import "ArgumentBufferArraysWithHeapsRenderer.h"
 
@@ -45,3 +47,5 @@ Implementation of our cross-platform view controller
 }
 
 @end
+
+#endif

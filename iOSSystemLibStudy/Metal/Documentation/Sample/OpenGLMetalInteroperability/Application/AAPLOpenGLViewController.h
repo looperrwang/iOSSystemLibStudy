@@ -5,6 +5,8 @@ Abstract:
 Header for the cross-platform OpenGL view controller AND a minimal cross-platform OpenGL View
 */
 
+#if TARGET_OS_IPHONE
+
 #if defined(TARGET_IOS) || defined(TARGET_TVOS)
 @import UIKit;
 #define PlatformViewBase UIView
@@ -22,3 +24,5 @@ Header for the cross-platform OpenGL view controller AND a minimal cross-platfor
 @interface AAPLOpenGLViewController : PlatformViewController
 
 @end
+
+#endif

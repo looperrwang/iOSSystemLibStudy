@@ -5,6 +5,8 @@ Abstract:
 Declaration of the terrain renderer which is responsible for rendering tesselated terrain patches.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import "AAPLRendererCommon.h"
@@ -42,3 +44,5 @@ Declaration of the terrain renderer which is responsible for rendering tesselate
                    mouseBuffer:(id<MTLBuffer>) mouseBuffer;
 
 @end
+
+#endif

@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to create G-buffer
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -152,4 +155,6 @@ fragment GBufferData gbuffer_fragment(ColorInOut             in           [[ sta
 
     return gBuffer;
 }
+
+#endif
 

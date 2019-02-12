@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
+
+#if TARGET_OS_IPHONE
+
 #ifndef ImageFilteringWithHeapsAndFencesShaderTypes_h
 #define ImageFilteringWithHeapsAndFencesShaderTypes_h
 
@@ -47,3 +50,5 @@ typedef struct AAPLVertex {
 } AAPLVertex;
 
 #endif // ImageFilteringWithHeapsAndFencesShaderTypes_h
+
+#endif

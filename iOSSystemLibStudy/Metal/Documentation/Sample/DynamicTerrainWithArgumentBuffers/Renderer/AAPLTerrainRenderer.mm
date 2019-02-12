@@ -5,6 +5,8 @@ Abstract:
 Implementation of the terrain renderer which is responsible for rendering tesselated terrain patches.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "TargetConditionals.h"
 #import <type_traits>
 #import <array>
@@ -549,3 +551,5 @@ static void EncodeParam (id <MTLArgumentEncoder> paramsEncoder,
 }
 
 @end
+
+#endif

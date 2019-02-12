@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -87,3 +89,5 @@ ArgumentBufferArraysWithHeapsFragmentShader(       RasterizerData            in 
 
     return color;
 }
+
+#endif

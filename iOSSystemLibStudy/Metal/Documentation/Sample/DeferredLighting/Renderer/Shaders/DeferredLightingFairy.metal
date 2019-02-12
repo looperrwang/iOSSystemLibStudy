@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Metal shaders used to render fairies
 */
+
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 
 using namespace metal;
@@ -61,4 +64,6 @@ fragment half4 fairy_fragment(FairyInOut      in       [[ stage_in ]],
 
     return half4(fragColor, c.x);
 }
+
+#endif
 

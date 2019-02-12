@@ -5,6 +5,8 @@ Abstract:
 Header for our our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #if defined(TARGET_IOS) || defined(TARGET_TVOS)
 @import UIKit;
 #define PlatformViewController UIViewController
@@ -21,3 +23,5 @@ Header for our our cross-platform view controller
 @interface HelloComputeViewController : PlatformViewController
 
 @end
+
+#endif

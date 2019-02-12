@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of filter classes providing utilities for allocating and manipulating textures allocated as a heap resource.
 */
+
+#if TARGET_OS_IPHONE
+
 #import "ImageFilteringWithHeapsAndEventsFilter.h"
 #import "ImageFilteringWithHeapsAndEventsShaderTypes.h"
 
@@ -250,3 +253,5 @@ static const NSUInteger AAPLThreadgroupDepth  = 1;
 }
 
 @end
+
+#endif

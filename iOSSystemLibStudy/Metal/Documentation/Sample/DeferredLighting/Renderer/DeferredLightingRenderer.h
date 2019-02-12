@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header for renderer class which performs Metal setup and per frame rendering
 */
+
+#if TARGET_OS_IPHONE
+
 #import "DeferredLightingConfig.h"
 #import "DeferredLightingBufferExamination.h"
 
@@ -109,3 +112,5 @@ static const float AAPLFarPlane = 150;
 #endif // END SUPPORT_BUFFER_EXAMINATION_MODE
 
 @end
+
+#endif

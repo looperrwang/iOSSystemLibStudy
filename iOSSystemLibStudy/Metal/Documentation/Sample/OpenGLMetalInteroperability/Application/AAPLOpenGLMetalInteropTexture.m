@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implemenation of class representing a texture shared between OpenGL and Metal
 */
+
+#if TARGET_OS_IPHONE
+
 #import "AAPLOpenGLMetalInteropTexture.h"
 
 typedef struct {
@@ -240,3 +243,5 @@ const AAPLTextureFormatInfo *const textureFormatInfoFromMetalPixelFormat(MTLPixe
 }
 
 @end
+
+#endif

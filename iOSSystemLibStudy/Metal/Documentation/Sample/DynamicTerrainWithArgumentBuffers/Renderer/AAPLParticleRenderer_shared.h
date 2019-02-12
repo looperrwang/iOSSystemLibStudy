@@ -5,6 +5,8 @@ Abstract:
 Particle Renderer's uniforms that are shared between Metal / Objective-C.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import <simd/simd.h>
@@ -38,4 +40,6 @@ struct ParticleSpawnParams
     float           sinAlpha;
     float           radiusScale;
 };
+
+#endif
 

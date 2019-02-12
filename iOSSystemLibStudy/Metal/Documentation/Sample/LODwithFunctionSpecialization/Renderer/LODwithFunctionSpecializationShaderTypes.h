@@ -5,6 +5,8 @@ Abstract:
 Header containing types and enum constants shared between Metal shaders and C/ObjC source
 */
 
+#if TARGET_OS_IPHONE
+
 #ifndef LODwithFunctionSpecializationShaderTypes_h
 #define LODwithFunctionSpecializationShaderTypes_h
 
@@ -102,3 +104,4 @@ typedef struct
 
 #endif /* LODwithFunctionSpecializationShaderTypes_h */
 
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #import "DeferredLightingViewController.h"
 #import "DeferredLightingRenderer_iOS.h"
 
@@ -125,3 +127,5 @@ Implementation of our cross-platform view controller
 #endif // END TARGET_MACOS
 
 @end
+
+#endif

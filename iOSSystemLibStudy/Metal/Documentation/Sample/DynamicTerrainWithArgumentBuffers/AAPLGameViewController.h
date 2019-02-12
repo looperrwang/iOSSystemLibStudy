@@ -5,6 +5,8 @@ Abstract:
 Declaration of this sample's main view controller that drives the main renderer.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 
 #import "TargetConditionals.h"
@@ -33,4 +35,6 @@ Declaration of this sample's main view controller that drives the main renderer.
 #else
 @interface AAPLGameViewController : NSViewController <MTKViewDelegate>
 @end
+#endif
+
 #endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of our platform independent renderer class, which performs Metal setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 @import simd;
 @import MetalKit;
 
@@ -155,3 +157,5 @@ Implementation of our platform independent renderer class, which performs Metal 
 }
 
 @end
+
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Event wrapper protocol and class providing basic synchronization routines to facilitate encoders ordering. On signaling it advances the internal counter for integrity.
 */
 
+#if TARGET_OS_IPHONE
+
 #ifndef ImageFilteringWithHeapsAndEventsEventWrapper_h
 #define ImageFilteringWithHeapsAndEventsEventWrapper_h
 
@@ -24,4 +26,6 @@ Event wrapper protocol and class providing basic synchronization routines to fac
 @end
 
 #endif /* APPLEventWrapper_h */
+
+#endif
 

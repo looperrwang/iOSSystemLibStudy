@@ -5,6 +5,8 @@ Abstract:
 Metal shaders used for this sample
 */
 
+#if TARGET_OS_IPHONE
+
 #include <metal_stdlib>
 #include <simd/simd.h>
 
@@ -70,4 +72,6 @@ fragment float4 CPUGPUSynchronizationfragmentShader(RasterizerData in [[stage_in
     // We return the color we just set which will be written to our color attachment.
     return in.color;
 }
+
+#endif
 

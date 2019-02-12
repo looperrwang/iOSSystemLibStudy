@@ -5,6 +5,8 @@ Abstract:
 Implementation of the AAPLAllocator object.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLAllocator.h"
 
 AAPLAllocator::AAPLAllocator (id<MTLDevice> device, size_t size, uint8_t ringSize) :
@@ -43,4 +45,6 @@ bool AAPLAllocator::isWriteable () const
 {
     return !isFrozen;
 }
+
+#endif
     

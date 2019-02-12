@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering
 */
+
+#if TARGET_OS_IPHONE
+
 #import "DeferredLightingBufferExamination.h"
 
 #if SUPPORT_BUFFER_EXAMINATION_MODE
@@ -665,3 +668,5 @@ Implementation of renderer class which performs Metal setup and per frame render
 @end
 
 #endif // END SUPPORT_BUFFER_EXAMINATION_MODE
+
+#endif

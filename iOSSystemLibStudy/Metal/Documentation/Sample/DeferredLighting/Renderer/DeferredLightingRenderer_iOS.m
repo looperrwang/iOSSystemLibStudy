@@ -5,6 +5,8 @@ Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering for iOS & tvOS
 */
 
+#if TARGET_OS_IPHONE
+
 #import "DeferredLightingRenderer_iOS.h"
 
 // Include header shared between C code here, which executes Metal API commands, and .metal files
@@ -206,3 +208,5 @@ Implementation of renderer class which performs Metal setup and per frame render
 #endif
 
 @end
+
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of our cross-platform view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #import "IndirectCommandBuffersWithGPUEncodingViewController.h"
 #import "IndirectCommandBuffersWithGPUEncodingRenderer.h"
 
@@ -56,3 +58,5 @@ Implementation of our cross-platform view controller
 }
 
 @end
+
+#endif

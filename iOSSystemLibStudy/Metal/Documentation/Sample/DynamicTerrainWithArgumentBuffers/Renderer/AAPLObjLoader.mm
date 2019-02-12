@@ -6,6 +6,8 @@ Implementation of the AAPLObjLoader.
  This class manaully transforms attributes needed for the sample, such as vertex texture coordinates into vertex color.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLObjLoader.h"
 #include <stdio.h>
 
@@ -201,3 +203,5 @@ static constexpr uint kBufferSize = 2048;
 }
 
 @end
+
+#endif

@@ -5,6 +5,8 @@ Abstract:
 Implementation of the AAPLCamera object.
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLCamera.h"
 using namespace simd;
 
@@ -213,5 +215,7 @@ static simd::float4 sPlaneNormalize(const simd::float4& inPlane)
 }
 
 @end
+
+#endif
 
 

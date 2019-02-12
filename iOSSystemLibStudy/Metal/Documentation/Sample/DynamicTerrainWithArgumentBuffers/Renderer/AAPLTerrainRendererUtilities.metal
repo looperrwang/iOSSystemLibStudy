@@ -6,6 +6,8 @@ Metal-only utility functions, specifically used for procedural terrain evaluatio
  Used by several renderers.
 */
 
+#if TARGET_OS_IPHONE
+
 #pragma once
 #import <metal_stdlib>
 using namespace metal;
@@ -118,3 +120,5 @@ static void EvaluateTerrainAtLocation(float2 uv,
     
     outHabitat[TerrainHabitatTypeRock] = remainder;
 }
+
+#endif

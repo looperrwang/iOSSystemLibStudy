@@ -5,6 +5,8 @@ Abstract:
 Implementation of the cross-platform Metal view controller
 */
 
+#if TARGET_OS_IPHONE
+
 #import "AAPLMetalViewController.h"
 #import "AAPLMetalRenderer.h"
 #import "AAPLOpenGLMetalInteropTexture.h"
@@ -162,3 +164,5 @@ static const MTLPixelFormat AAPLMetalViewInteropPixelFormat = MTLPixelFormatBGRA
 }
 
 @end
+
+#endif

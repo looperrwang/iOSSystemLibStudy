@@ -5,6 +5,8 @@ Abstract:
 Implementation of renderer class which performs Metal setup and per frame rendering
 */
 
+#if TARGET_OS_IPHONE
+
 @import simd;
 @import MetalKit;
 
@@ -234,4 +236,6 @@ Implementation of renderer class which performs Metal setup and per frame render
 }
 
 @end
+
+#endif
 

@@ -4,6 +4,9 @@ See LICENSE folder for this sample’s licensing information.
 Abstract:
 Header for collection of OpenGL header and definitinms
 */
+
+#if TARGET_OS_IPHONE
+
 #ifndef AAPLGLHeaders_h
 #define AAPLGLHeaders_h
 
@@ -94,3 +97,5 @@ static inline const char * GetGLErrorString(GLenum error)
 }
 
 #endif /* AAPLGLHeaders_h */
+
+#endif
