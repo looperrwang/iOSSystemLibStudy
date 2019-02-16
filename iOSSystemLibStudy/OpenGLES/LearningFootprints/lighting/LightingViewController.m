@@ -1,21 +1,21 @@
 //
-//  OpenGLLearningFootprintsViewController.m
+//  LightingViewController.m
 //  iOSSystemLibStudy
 //
-//  Created by looperwang on 2019/1/30.
+//  Created by looperwang on 2019/2/16.
 //  Copyright © 2019 looperwang. All rights reserved.
 //
 
-#import "OpenGLLearningFootprintsViewController.h"
+#import "LightingViewController.h"
 #import "CellData.h"
 
-@interface OpenGLLearningFootprintsViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface LightingViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<CellData *> *data;
 
 @end
 
-@implementation OpenGLLearningFootprintsViewController
+@implementation LightingViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +24,7 @@
     self.data = [NSMutableArray array];
     [self initCellData];
     
-    self.title = @"OpenGLLearningFootprints";
+    self.title = @"Lighting";
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
@@ -37,7 +37,7 @@
 
 - (void)initCellData
 {
-    [self.data addObject:[[CellData alloc] initWithText:@"" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"Translate" vcName:@"TranslateViewController"]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -49,7 +49,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *reuseIdentifier = @"OpenGLLearningFootprints";
+    static NSString *reuseIdentifier = @"Lighting";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {

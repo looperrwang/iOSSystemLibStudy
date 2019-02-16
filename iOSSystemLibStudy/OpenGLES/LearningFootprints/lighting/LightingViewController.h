@@ -1,8 +1,8 @@
 //
-//  OpenGLLearningFootprintsViewController.h
+//  LightingViewController.h
 //  iOSSystemLibStudy
 //
-//  Created by looperwang on 2019/1/30.
+//  Created by looperwang on 2019/2/16.
 //  Copyright © 2019 looperwang. All rights reserved.
 //
 
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface OpenGLLearningFootprintsViewController : UIViewController
+@interface LightingViewController : UIViewController
 
 @end
 

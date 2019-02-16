@@ -1,21 +1,21 @@
 //
-//  OpenGLESViewController.m
+//  LearningFootprintsViewController.m
 //  iOSSystemLibStudy
 //
-//  Created by looperwang on 2019/1/29.
+//  Created by looperwang on 2019/1/30.
 //  Copyright © 2019 looperwang. All rights reserved.
 //
 
-#import "OpenGLESViewController.h"
+#import "LearningFootprintsViewController.h"
 #import "CellData.h"
 
-@interface OpenGLESViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface LearningFootprintsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<CellData *> *data;
 
 @end
 
-@implementation OpenGLESViewController
+@implementation LearningFootprintsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +24,7 @@
     self.data = [NSMutableArray array];
     [self initCellData];
     
-    self.title = @"OpenGLES";
+    self.title = @"LearningFootprints";
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
@@ -37,8 +37,12 @@
 
 - (void)initCellData
 {
-    [self.data addObject:[[CellData alloc] initWithText:@"LearningFootprints" vcName:@"LearningFootprintsViewController"]];
-    [self.data addObject:[[CellData alloc] initWithText:@"OfficialSamples" vcName:@"OfficialSamplesViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Triangle" vcName:@"TriangleViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"IndexedDrawing" vcName:@"IndexedDrawingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Textures" vcName:@"TexturesViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ModelTransformation" vcName:@"ModelTransformationViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ViewTransformation" vcName:@"ViewTransformationViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Lighting" vcName:@"LightingViewController"]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -50,7 +54,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *reuseIdentifier = @"OpenGLES";
+    static NSString *reuseIdentifier = @"LearningFootprints";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {

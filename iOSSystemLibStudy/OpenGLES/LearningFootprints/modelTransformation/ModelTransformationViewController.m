@@ -1,21 +1,21 @@
 //
-//  OpenGLESViewController.m
+//  ModelTransformationViewController.m
 //  iOSSystemLibStudy
 //
-//  Created by looperwang on 2019/1/29.
+//  Created by looperwang on 2019/2/16.
 //  Copyright © 2019 looperwang. All rights reserved.
 //
 
-#import "OpenGLESViewController.h"
+#import "ModelTransformationViewController.h"
 #import "CellData.h"
 
-@interface OpenGLESViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface ModelTransformationViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<CellData *> *data;
 
 @end
 
-@implementation OpenGLESViewController
+@implementation ModelTransformationViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,7 +24,7 @@
     self.data = [NSMutableArray array];
     [self initCellData];
     
-    self.title = @"OpenGLES";
+    self.title = @"ModelTransformation";
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height) style:UITableViewStylePlain];
@@ -37,8 +37,10 @@
 
 - (void)initCellData
 {
-    [self.data addObject:[[CellData alloc] initWithText:@"LearningFootprints" vcName:@"LearningFootprintsViewController"]];
-    [self.data addObject:[[CellData alloc] initWithText:@"OfficialSamples" vcName:@"OfficialSamplesViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Translate" vcName:@"TranslateViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Scale" vcName:@"ScaleViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Rotate" vcName:@"RotateViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Reflection" vcName:@"ReflectionViewController"]];
 }
 
 #pragma mark - UITableViewDataSource
@@ -50,7 +52,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *reuseIdentifier = @"OpenGLES";
+    static NSString *reuseIdentifier = @"ModelTransformation";
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
     if (!cell) {

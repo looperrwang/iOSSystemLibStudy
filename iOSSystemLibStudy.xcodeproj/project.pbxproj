@@ -20,6 +20,7 @@
 		5F31CE9121C3DE7A00B8514B /* HelloComputeImage.tga in Resources */ = {isa = PBXBuildFile; fileRef = 5F31CE8A21C3DE7900B8514B /* HelloComputeImage.tga */; };
 		5F31CE9221C3DE7A00B8514B /* HelloComputeShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F31CE8B21C3DE7A00B8514B /* HelloComputeShaders.metal */; };
 		5F31CE9321C3DE7A00B8514B /* HelloComputeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F31CE8D21C3DE7A00B8514B /* HelloComputeViewController.m */; };
+		5F41AEA4221828CD00646A7D /* LightingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F41AEA3221828CD00646A7D /* LightingViewController.m */; };
 		5F462C8421BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */; };
 		5F462C8621BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */; };
 		5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F462C8921BB8E840035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m */; };
@@ -82,6 +83,8 @@
 		5F4DF99421B9620600DC9FCD /* CPUGPUSynchronizationShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF99121B9620500DC9FCD /* CPUGPUSynchronizationShaders.metal */; };
 		5F4DF99721B9620D00DC9FCD /* CPUGPUSynchronizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4DF99521B9620C00DC9FCD /* CPUGPUSynchronizationViewController.m */; };
 		5F4DF99F21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F4DF99E21B9623F00DC9FCD /* CPU-GPUSynchronization.storyboard */; };
+		5F6591322216D9C70040966F /* TranslateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F6591312216D9C70040966F /* TranslateViewController.m */; };
+		5F6591352216D9E40040966F /* TranslateRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F6591342216D9E40040966F /* TranslateRenderer.mm */; };
 		5F7168CD21C8979A00DC9957 /* BasicArgumentBuffersShaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 5F7168C621C8979900DC9957 /* BasicArgumentBuffersShaders.metal */; };
 		5F7168CE21C8979A00DC9957 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5F7168C821C8979A00DC9957 /* Assets.xcassets */; };
 		5F7168CF21C8979A00DC9957 /* BasicArgumentBuffersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7168C921C8979A00DC9957 /* BasicArgumentBuffersViewController.m */; };
@@ -108,6 +111,11 @@
 		5FA221DF21CE5A7100937444 /* AAPLOpenGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221DC21CE5A7100937444 /* AAPLOpenGLViewController.m */; };
 		5FA221E021CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FA221DD21CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m */; };
 		5FA221E221CE616E00937444 /* OpenGLMetalInteroperability.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FA221E121CE616E00937444 /* OpenGLMetalInteroperability.storyboard */; };
+		5FAEA98122169F9500A714C0 /* modelUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FAEA97622169F9500A714C0 /* modelUtil.c */; };
+		5FAEA98222169F9500A714C0 /* matrixUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FAEA97822169F9500A714C0 /* matrixUtil.c */; };
+		5FAEA98322169F9500A714C0 /* sourceUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FAEA97922169F9500A714C0 /* sourceUtil.c */; };
+		5FAEA98422169F9500A714C0 /* vectorUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FAEA97E22169F9500A714C0 /* vectorUtil.c */; };
+		5FAEA98522169F9500A714C0 /* imageUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FAEA97F22169F9500A714C0 /* imageUtil.m */; };
 		5FCD5686215A8D4800E26E01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5685215A8D4800E26E01 /* AppDelegate.m */; };
 		5FCD5689215A8D4800E26E01 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5688215A8D4800E26E01 /* ViewController.m */; };
 		5FCD568C215A8D4800E26E01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FCD568A215A8D4800E26E01 /* Main.storyboard */; };
@@ -116,8 +124,17 @@
 		5FCD5694215A8D4B00E26E01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD5693215A8D4B00E26E01 /* main.m */; };
 		5FCD569D215DB37800E26E01 /* ImageIOViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD569C215DB37800E26E01 /* ImageIOViewController.m */; };
 		5FD0A50A2200506F00560B7A /* OpenGLESViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A5092200506F00560B7A /* OpenGLESViewController.m */; };
-		5FD0A5102201425700560B7A /* OpenGLLearningFootprintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */; };
+		5FD0A5102201425700560B7A /* LearningFootprintsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A50F2201425700560B7A /* LearningFootprintsViewController.m */; };
 		5FD0A5132201426700560B7A /* OfficialSamplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */; };
+		5FD6AAC0221706850011248C /* ScaleRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AABF221706850011248C /* ScaleRenderer.mm */; };
+		5FD6AAC3221706910011248C /* ScaleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAC2221706910011248C /* ScaleViewController.m */; };
+		5FD6AAC722170AF80011248C /* RotateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAC622170AF80011248C /* RotateViewController.m */; };
+		5FD6AACA22170B070011248C /* RotateRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAC922170B070011248C /* RotateRenderer.mm */; };
+		5FD6AACE2217B5450011248C /* ReflectionRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AACD2217B5450011248C /* ReflectionRenderer.mm */; };
+		5FD6AAD12217B55A0011248C /* ReflectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAD02217B55A0011248C /* ReflectionViewController.m */; };
+		5FD6AAD72217CE130011248C /* ModelTransformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAD62217CE130011248C /* ModelTransformationViewController.m */; };
+		5FD6AADA2217D2ED0011248C /* ViewTransformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AAD92217D2ED0011248C /* ViewTransformationViewController.m */; };
+		5FD6AADD2217D3040011248C /* ViewTransformationRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD6AADC2217D3040011248C /* ViewTransformationRenderer.mm */; };
 		5FE5249821CA781200B5F956 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4DF97F21B9457800DC9FCD /* MetalKit.framework */; };
 		5FE5249A21CA781200B5F956 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249921CA781200B5F956 /* Metal.framework */; };
 		5FE5249C21CA781800B5F956 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249B21CA781800B5F956 /* ModelIO.framework */; };
@@ -141,6 +158,15 @@
 		5FEEE72421CA6D210019D0FB /* DynamicTerrainWithArgumentBuffers.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEE72321CA6D210019D0FB /* DynamicTerrainWithArgumentBuffers.storyboard */; };
 		5FEEE72821CA6F610019D0FB /* DynamicTerrainWithArgumentBuffersMeshes in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEE72621CA6F600019D0FB /* DynamicTerrainWithArgumentBuffersMeshes */; };
 		5FEEE72921CA6F610019D0FB /* Textures in Resources */ = {isa = PBXBuildFile; fileRef = 5FEEE72721CA6F610019D0FB /* Textures */; };
+		5FFA9E0E2212CD4500E46B09 /* EAGLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E0D2212CD4500E46B09 /* EAGLViewController.m */; };
+		5FFA9E122212CDD500E46B09 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E112212CDD500E46B09 /* EAGLView.m */; };
+		5FFA9E162213C18C00E46B09 /* TriangleRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E152213C18C00E46B09 /* TriangleRenderer.mm */; };
+		5FFA9E2A221569A500E46B09 /* IndexedDrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E29221569A500E46B09 /* IndexedDrawingViewController.m */; };
+		5FFA9E2D22156E6C00E46B09 /* TriangleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E2C22156E6C00E46B09 /* TriangleViewController.m */; };
+		5FFA9E302215745400E46B09 /* EAGLRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E2F2215745400E46B09 /* EAGLRenderer.m */; };
+		5FFA9E3322158A6400E46B09 /* IndexedDrawingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E3222158A6400E46B09 /* IndexedDrawingRenderer.mm */; };
+		5FFA9E382216627400E46B09 /* TexturesRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E372216627400E46B09 /* TexturesRenderer.mm */; };
+		5FFA9E3B2216628500E46B09 /* TexturesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFA9E3A2216628500E46B09 /* TexturesViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -179,6 +205,8 @@
 		5F31CE9721C3F20F00B8514B /* About the Metal Shading Language Filename Extension.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "About the Metal Shading Language Filename Extension.md"; sourceTree = "<group>"; };
 		5F31CE9821C3F4E600B8514B /* Building a Library with Metal's Command-Line Tools.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Building a Library with Metal's Command-Line Tools.md"; sourceTree = "<group>"; };
 		5F3F591821BD6B4700CD1226 /* Basic Texturing.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Basic Texturing.md"; sourceTree = "<group>"; };
+		5F41AEA2221828CD00646A7D /* LightingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightingViewController.h; sourceTree = "<group>"; };
+		5F41AEA3221828CD00646A7D /* LightingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LightingViewController.m; sourceTree = "<group>"; };
 		5F462C8221BB8E0E0035143E /* ImageFilteringWithHeapsAndEventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFilteringWithHeapsAndEventsViewController.h; sourceTree = "<group>"; };
 		5F462C8321BB8E0F0035143E /* ImageFilteringWithHeapsAndEventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFilteringWithHeapsAndEventsViewController.m; sourceTree = "<group>"; };
 		5F462C8521BB8E740035143E /* ImageFilteringWithHeapsAndEvents.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ImageFilteringWithHeapsAndEvents.storyboard; sourceTree = "<group>"; };
@@ -314,6 +342,11 @@
 		5F4DF9D121BA7A1900DC9FCD /* Synchronizing Events Between a GPU and the CPU.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Synchronizing Events Between a GPU and the CPU.md"; sourceTree = "<group>"; };
 		5F4DF9D221BA974200DC9FCD /* Image Filter Graph with Heaps and Events.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image Filter Graph with Heaps and Events.md"; sourceTree = "<group>"; };
 		5F5B156F219FBB83004EE6BF /* Metal Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Metal Programming Guide - 翻译.md"; sourceTree = "<group>"; };
+		5F65912D2216B1270040966F /* texture.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = texture.h; sourceTree = "<group>"; };
+		5F6591302216D9C70040966F /* TranslateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslateViewController.h; sourceTree = "<group>"; };
+		5F6591312216D9C70040966F /* TranslateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TranslateViewController.m; sourceTree = "<group>"; };
+		5F6591332216D9E40040966F /* TranslateRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TranslateRenderer.h; sourceTree = "<group>"; };
+		5F6591342216D9E40040966F /* TranslateRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TranslateRenderer.mm; sourceTree = "<group>"; };
 		5F71684E21C5007C00DC9957 /* Resource Objects.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Resource Objects.md"; sourceTree = "<group>"; };
 		5F71684F21C5043100DC9957 /* Setting Resource Storage Modes.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Setting Resource Storage Modes.md"; sourceTree = "<group>"; };
 		5F71685021C5061200DC9957 /* Choosing a Resource Storage Mode in iOS and tvOS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Choosing a Resource Storage Mode in iOS and tvOS.md"; sourceTree = "<group>"; };
@@ -372,6 +405,17 @@
 		5FA6C54621C1535B00692123 /* Viewing Pipeline Statistics of a Draw.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Pipeline Statistics of a Draw.md"; sourceTree = "<group>"; };
 		5FA6C54721C1540F00692123 /* Viewing Performance Metrics with GPU Counters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Viewing Performance Metrics with GPU Counters.md"; sourceTree = "<group>"; };
 		5FA79EBC219324AA002397EB /* Image IO Programming Guide - 翻译.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Image IO Programming Guide - 翻译.md"; sourceTree = "<group>"; };
+		5FAEA97622169F9500A714C0 /* modelUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = modelUtil.c; sourceTree = "<group>"; };
+		5FAEA97722169F9500A714C0 /* sourceUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sourceUtil.h; sourceTree = "<group>"; };
+		5FAEA97822169F9500A714C0 /* matrixUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrixUtil.c; sourceTree = "<group>"; };
+		5FAEA97922169F9500A714C0 /* sourceUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sourceUtil.c; sourceTree = "<group>"; };
+		5FAEA97A22169F9500A714C0 /* modelUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = modelUtil.h; sourceTree = "<group>"; };
+		5FAEA97B22169F9500A714C0 /* glUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glUtil.h; sourceTree = "<group>"; };
+		5FAEA97C22169F9500A714C0 /* imageUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imageUtil.h; sourceTree = "<group>"; };
+		5FAEA97D22169F9500A714C0 /* matrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrixUtil.h; sourceTree = "<group>"; };
+		5FAEA97E22169F9500A714C0 /* vectorUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vectorUtil.c; sourceTree = "<group>"; };
+		5FAEA97F22169F9500A714C0 /* imageUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = imageUtil.m; sourceTree = "<group>"; };
+		5FAEA98022169F9500A714C0 /* vectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vectorUtil.h; sourceTree = "<group>"; };
 		5FCD5681215A8D4800E26E01 /* iOSSystemLibStudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSSystemLibStudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FCD5684215A8D4800E26E01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		5FCD5685215A8D4800E26E01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -387,10 +431,28 @@
 		5FCD569E215DB6E600E26E01 /* ImageIOHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageIOHeader.h; sourceTree = "<group>"; };
 		5FD0A5082200506F00560B7A /* OpenGLESViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLESViewController.h; sourceTree = "<group>"; };
 		5FD0A5092200506F00560B7A /* OpenGLESViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLESViewController.m; sourceTree = "<group>"; };
-		5FD0A50E2201425700560B7A /* OpenGLLearningFootprintsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OpenGLLearningFootprintsViewController.h; sourceTree = "<group>"; };
-		5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OpenGLLearningFootprintsViewController.m; sourceTree = "<group>"; };
+		5FD0A50E2201425700560B7A /* LearningFootprintsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LearningFootprintsViewController.h; sourceTree = "<group>"; };
+		5FD0A50F2201425700560B7A /* LearningFootprintsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LearningFootprintsViewController.m; sourceTree = "<group>"; };
 		5FD0A5112201426700560B7A /* OfficialSamplesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OfficialSamplesViewController.h; sourceTree = "<group>"; };
 		5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OfficialSamplesViewController.m; sourceTree = "<group>"; };
+		5FD6AABE221706850011248C /* ScaleRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScaleRenderer.h; sourceTree = "<group>"; };
+		5FD6AABF221706850011248C /* ScaleRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ScaleRenderer.mm; sourceTree = "<group>"; };
+		5FD6AAC1221706910011248C /* ScaleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScaleViewController.h; sourceTree = "<group>"; };
+		5FD6AAC2221706910011248C /* ScaleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScaleViewController.m; sourceTree = "<group>"; };
+		5FD6AAC522170AF80011248C /* RotateViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RotateViewController.h; sourceTree = "<group>"; };
+		5FD6AAC622170AF80011248C /* RotateViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RotateViewController.m; sourceTree = "<group>"; };
+		5FD6AAC822170B070011248C /* RotateRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RotateRenderer.h; sourceTree = "<group>"; };
+		5FD6AAC922170B070011248C /* RotateRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RotateRenderer.mm; sourceTree = "<group>"; };
+		5FD6AACC2217B5450011248C /* ReflectionRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReflectionRenderer.h; sourceTree = "<group>"; };
+		5FD6AACD2217B5450011248C /* ReflectionRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ReflectionRenderer.mm; sourceTree = "<group>"; };
+		5FD6AACF2217B55A0011248C /* ReflectionViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReflectionViewController.h; sourceTree = "<group>"; };
+		5FD6AAD02217B55A0011248C /* ReflectionViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReflectionViewController.m; sourceTree = "<group>"; };
+		5FD6AAD52217CE130011248C /* ModelTransformationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelTransformationViewController.h; sourceTree = "<group>"; };
+		5FD6AAD62217CE130011248C /* ModelTransformationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelTransformationViewController.m; sourceTree = "<group>"; };
+		5FD6AAD82217D2ED0011248C /* ViewTransformationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewTransformationViewController.h; sourceTree = "<group>"; };
+		5FD6AAD92217D2ED0011248C /* ViewTransformationViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewTransformationViewController.m; sourceTree = "<group>"; };
+		5FD6AADB2217D3040011248C /* ViewTransformationRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewTransformationRenderer.h; sourceTree = "<group>"; };
+		5FD6AADC2217D3040011248C /* ViewTransformationRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewTransformationRenderer.mm; sourceTree = "<group>"; };
 		5FE5249921CA781200B5F956 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		5FE5249B21CA781800B5F956 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5FE5249E21CB5D6100B5F956 /* Mixing Metal and OpenGL Rendering in a View.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Mixing Metal and OpenGL Rendering in a View.md"; sourceTree = "<group>"; };
@@ -430,6 +492,25 @@
 		5FEEE72321CA6D210019D0FB /* DynamicTerrainWithArgumentBuffers.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = DynamicTerrainWithArgumentBuffers.storyboard; sourceTree = "<group>"; };
 		5FEEE72621CA6F600019D0FB /* DynamicTerrainWithArgumentBuffersMeshes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DynamicTerrainWithArgumentBuffersMeshes; sourceTree = "<group>"; };
 		5FEEE72721CA6F610019D0FB /* Textures */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Textures; sourceTree = "<group>"; };
+		5FFA9E0C2212CD4500E46B09 /* EAGLViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EAGLViewController.h; sourceTree = "<group>"; };
+		5FFA9E0D2212CD4500E46B09 /* EAGLViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EAGLViewController.m; sourceTree = "<group>"; };
+		5FFA9E102212CDD500E46B09 /* EAGLView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
+		5FFA9E112212CDD500E46B09 /* EAGLView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
+		5FFA9E142213C18C00E46B09 /* TriangleRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriangleRenderer.h; sourceTree = "<group>"; };
+		5FFA9E152213C18C00E46B09 /* TriangleRenderer.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = TriangleRenderer.mm; sourceTree = "<group>"; };
+		5FFA9E222215503B00E46B09 /* Shader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Shader.h; sourceTree = "<group>"; };
+		5FFA9E28221569A500E46B09 /* IndexedDrawingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IndexedDrawingViewController.h; sourceTree = "<group>"; };
+		5FFA9E29221569A500E46B09 /* IndexedDrawingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IndexedDrawingViewController.m; sourceTree = "<group>"; };
+		5FFA9E2B22156E6C00E46B09 /* TriangleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TriangleViewController.h; sourceTree = "<group>"; };
+		5FFA9E2C22156E6C00E46B09 /* TriangleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TriangleViewController.m; sourceTree = "<group>"; };
+		5FFA9E2E2215745400E46B09 /* EAGLRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EAGLRenderer.h; sourceTree = "<group>"; };
+		5FFA9E2F2215745400E46B09 /* EAGLRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EAGLRenderer.m; sourceTree = "<group>"; };
+		5FFA9E3122158A6400E46B09 /* IndexedDrawingRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IndexedDrawingRenderer.h; sourceTree = "<group>"; };
+		5FFA9E3222158A6400E46B09 /* IndexedDrawingRenderer.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = IndexedDrawingRenderer.mm; sourceTree = "<group>"; };
+		5FFA9E362216627400E46B09 /* TexturesRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TexturesRenderer.h; sourceTree = "<group>"; };
+		5FFA9E372216627400E46B09 /* TexturesRenderer.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = TexturesRenderer.mm; sourceTree = "<group>"; };
+		5FFA9E392216628500E46B09 /* TexturesViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TexturesViewController.h; sourceTree = "<group>"; };
+		5FFA9E3A2216628500E46B09 /* TexturesViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TexturesViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -449,8 +530,9 @@
 		5F15B786219833DB00A997D6 /* OpenGLES */ = {
 			isa = PBXGroup;
 			children = (
+				5FAEA97522169F5F00A714C0 /* Utility */,
 				5FD0A50D2201423900560B7A /* OfficialSamples */,
-				5FD0A50C2201422F00560B7A /* OpenGLLearningFootprints */,
+				5FD0A50C2201422F00560B7A /* LearningFootprints */,
 				5F15B7872198341A00A997D6 /* OpenGL ES Programming Guide - 翻译.md */,
 				5FD0A5082200506F00560B7A /* OpenGLESViewController.h */,
 				5FD0A5092200506F00560B7A /* OpenGLESViewController.m */,
@@ -484,6 +566,15 @@
 				5F31CE8821C3DE7900B8514B /* HelloCompute.storyboard */,
 			);
 			path = HelloCompute;
+			sourceTree = "<group>";
+		};
+		5F41AEA1221828AC00646A7D /* lighting */ = {
+			isa = PBXGroup;
+			children = (
+				5F41AEA2221828CD00646A7D /* LightingViewController.h */,
+				5F41AEA3221828CD00646A7D /* LightingViewController.m */,
+			);
+			path = lighting;
 			sourceTree = "<group>";
 		};
 		5F462C8121BB8C930035143E /* ImageFilteringWithHeapsAndEvents */ = {
@@ -789,6 +880,30 @@
 			path = Metal;
 			sourceTree = "<group>";
 		};
+		5F65912E2216D9740040966F /* modelTransformation */ = {
+			isa = PBXGroup;
+			children = (
+				5FD6AACB2217B5270011248C /* reflection */,
+				5FD6AAC42217097A0011248C /* rotate */,
+				5FD6AABD221706710011248C /* scale */,
+				5F65912F2216D9950040966F /* translate */,
+				5FD6AAD52217CE130011248C /* ModelTransformationViewController.h */,
+				5FD6AAD62217CE130011248C /* ModelTransformationViewController.m */,
+			);
+			path = modelTransformation;
+			sourceTree = "<group>";
+		};
+		5F65912F2216D9950040966F /* translate */ = {
+			isa = PBXGroup;
+			children = (
+				5F6591302216D9C70040966F /* TranslateViewController.h */,
+				5F6591312216D9C70040966F /* TranslateViewController.m */,
+				5F6591332216D9E40040966F /* TranslateRenderer.h */,
+				5F6591342216D9E40040966F /* TranslateRenderer.mm */,
+			);
+			path = translate;
+			sourceTree = "<group>";
+		};
 		5F7168C421C8975900DC9957 /* BasicArgumentBuffers */ = {
 			isa = PBXGroup;
 			children = (
@@ -876,6 +991,24 @@
 			path = Application;
 			sourceTree = "<group>";
 		};
+		5FAEA97522169F5F00A714C0 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				5FAEA97B22169F9500A714C0 /* glUtil.h */,
+				5FAEA97C22169F9500A714C0 /* imageUtil.h */,
+				5FAEA97F22169F9500A714C0 /* imageUtil.m */,
+				5FAEA97822169F9500A714C0 /* matrixUtil.c */,
+				5FAEA97D22169F9500A714C0 /* matrixUtil.h */,
+				5FAEA97622169F9500A714C0 /* modelUtil.c */,
+				5FAEA97A22169F9500A714C0 /* modelUtil.h */,
+				5FAEA97922169F9500A714C0 /* sourceUtil.c */,
+				5FAEA97722169F9500A714C0 /* sourceUtil.h */,
+				5FAEA97E22169F9500A714C0 /* vectorUtil.c */,
+				5FAEA98022169F9500A714C0 /* vectorUtil.h */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
 		5FCD5678215A8D4800E26E01 = {
 			isa = PBXGroup;
 			children = (
@@ -935,13 +1068,27 @@
 			path = ImageIO;
 			sourceTree = "<group>";
 		};
-		5FD0A50C2201422F00560B7A /* OpenGLLearningFootprints */ = {
+		5FD0A50C2201422F00560B7A /* LearningFootprints */ = {
 			isa = PBXGroup;
 			children = (
-				5FD0A50E2201425700560B7A /* OpenGLLearningFootprintsViewController.h */,
-				5FD0A50F2201425700560B7A /* OpenGLLearningFootprintsViewController.m */,
+				5F41AEA1221828AC00646A7D /* lighting */,
+				5FD6AAD22217B7770011248C /* viewTransformation */,
+				5FD0A50E2201425700560B7A /* LearningFootprintsViewController.h */,
+				5FD0A50F2201425700560B7A /* LearningFootprintsViewController.m */,
+				5FFA9E222215503B00E46B09 /* Shader.h */,
+				5FFA9E2E2215745400E46B09 /* EAGLRenderer.h */,
+				5FFA9E2F2215745400E46B09 /* EAGLRenderer.m */,
+				5F65912D2216B1270040966F /* texture.h */,
+				5FFA9E0C2212CD4500E46B09 /* EAGLViewController.h */,
+				5FFA9E0D2212CD4500E46B09 /* EAGLViewController.m */,
+				5FFA9E102212CDD500E46B09 /* EAGLView.h */,
+				5FFA9E112212CDD500E46B09 /* EAGLView.m */,
+				5F65912E2216D9740040966F /* modelTransformation */,
+				5FFA9E342216623C00E46B09 /* textures */,
+				5FFA9E272215696300E46B09 /* indexedDrawing */,
+				5FFA9E0B2212B08C00E46B09 /* triangle */,
 			);
-			path = OpenGLLearningFootprints;
+			path = LearningFootprints;
 			sourceTree = "<group>";
 		};
 		5FD0A50D2201423900560B7A /* OfficialSamples */ = {
@@ -951,6 +1098,50 @@
 				5FD0A5122201426700560B7A /* OfficialSamplesViewController.m */,
 			);
 			path = OfficialSamples;
+			sourceTree = "<group>";
+		};
+		5FD6AABD221706710011248C /* scale */ = {
+			isa = PBXGroup;
+			children = (
+				5FD6AABE221706850011248C /* ScaleRenderer.h */,
+				5FD6AABF221706850011248C /* ScaleRenderer.mm */,
+				5FD6AAC1221706910011248C /* ScaleViewController.h */,
+				5FD6AAC2221706910011248C /* ScaleViewController.m */,
+			);
+			path = scale;
+			sourceTree = "<group>";
+		};
+		5FD6AAC42217097A0011248C /* rotate */ = {
+			isa = PBXGroup;
+			children = (
+				5FD6AAC522170AF80011248C /* RotateViewController.h */,
+				5FD6AAC622170AF80011248C /* RotateViewController.m */,
+				5FD6AAC822170B070011248C /* RotateRenderer.h */,
+				5FD6AAC922170B070011248C /* RotateRenderer.mm */,
+			);
+			path = rotate;
+			sourceTree = "<group>";
+		};
+		5FD6AACB2217B5270011248C /* reflection */ = {
+			isa = PBXGroup;
+			children = (
+				5FD6AACC2217B5450011248C /* ReflectionRenderer.h */,
+				5FD6AACD2217B5450011248C /* ReflectionRenderer.mm */,
+				5FD6AACF2217B55A0011248C /* ReflectionViewController.h */,
+				5FD6AAD02217B55A0011248C /* ReflectionViewController.m */,
+			);
+			path = reflection;
+			sourceTree = "<group>";
+		};
+		5FD6AAD22217B7770011248C /* viewTransformation */ = {
+			isa = PBXGroup;
+			children = (
+				5FD6AAD82217D2ED0011248C /* ViewTransformationViewController.h */,
+				5FD6AAD92217D2ED0011248C /* ViewTransformationViewController.m */,
+				5FD6AADB2217D3040011248C /* ViewTransformationRenderer.h */,
+				5FD6AADC2217D3040011248C /* ViewTransformationRenderer.mm */,
+			);
+			path = viewTransformation;
 			sourceTree = "<group>";
 		};
 		5FE524E221CBCE3D00B5F956 /* LODwithFunctionSpecialization */ = {
@@ -1032,6 +1223,39 @@
 				5FEEE72721CA6F610019D0FB /* Textures */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		5FFA9E0B2212B08C00E46B09 /* triangle */ = {
+			isa = PBXGroup;
+			children = (
+				5FFA9E142213C18C00E46B09 /* TriangleRenderer.h */,
+				5FFA9E152213C18C00E46B09 /* TriangleRenderer.mm */,
+				5FFA9E2B22156E6C00E46B09 /* TriangleViewController.h */,
+				5FFA9E2C22156E6C00E46B09 /* TriangleViewController.m */,
+			);
+			path = triangle;
+			sourceTree = "<group>";
+		};
+		5FFA9E272215696300E46B09 /* indexedDrawing */ = {
+			isa = PBXGroup;
+			children = (
+				5FFA9E28221569A500E46B09 /* IndexedDrawingViewController.h */,
+				5FFA9E29221569A500E46B09 /* IndexedDrawingViewController.m */,
+				5FFA9E3122158A6400E46B09 /* IndexedDrawingRenderer.h */,
+				5FFA9E3222158A6400E46B09 /* IndexedDrawingRenderer.mm */,
+			);
+			path = indexedDrawing;
+			sourceTree = "<group>";
+		};
+		5FFA9E342216623C00E46B09 /* textures */ = {
+			isa = PBXGroup;
+			children = (
+				5FFA9E362216627400E46B09 /* TexturesRenderer.h */,
+				5FFA9E372216627400E46B09 /* TexturesRenderer.mm */,
+				5FFA9E392216628500E46B09 /* TexturesViewController.h */,
+				5FFA9E3A2216628500E46B09 /* TexturesViewController.m */,
+			);
+			path = textures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1137,9 +1361,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FFA9E382216627400E46B09 /* TexturesRenderer.mm in Sources */,
 				5FEEE71A21CA6CEC0019D0FB /* AAPLCamera.mm in Sources */,
-				5FD0A5102201425700560B7A /* OpenGLLearningFootprintsViewController.m in Sources */,
+				5FD0A5102201425700560B7A /* LearningFootprintsViewController.m in Sources */,
+				5FFA9E162213C18C00E46B09 /* TriangleRenderer.mm in Sources */,
 				5F7168EA21C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsRenderer.m in Sources */,
+				5FD6AACE2217B5450011248C /* ReflectionRenderer.mm in Sources */,
 				5F462D0B21BDFD5E0035143E /* BasicBuffersShaders.metal in Sources */,
 				5FEEE71B21CA6CEC0019D0FB /* AAPLParticleRenderer.mm in Sources */,
 				5F462CCB21BC188E0035143E /* ImageFilteringWithHeapsAndFencesShaders.metal in Sources */,
@@ -1162,6 +1389,7 @@
 				5F462D6021C0B1740035143E /* DeferredLightingBufferExamination.m in Sources */,
 				5F31CE8F21C3DE7A00B8514B /* HelloComputeRenderer.m in Sources */,
 				5FCD5694215A8D4B00E26E01 /* main.m in Sources */,
+				5FD6AAC722170AF80011248C /* RotateViewController.m in Sources */,
 				5FA221C421CE58E000937444 /* AAPLOpenGLRenderer.m in Sources */,
 				5F31CE9221C3DE7A00B8514B /* HelloComputeShaders.metal in Sources */,
 				5F462D1721BE34AD0035143E /* BasicTexturingRenderer.m in Sources */,
@@ -1177,6 +1405,7 @@
 				5FA221B521CE566800937444 /* LODwithFunctionSpecializationRenderer.m in Sources */,
 				5FEEE71521CA6CEC0019D0FB /* AAPLTerrainRenderer.mm in Sources */,
 				5F462C9021BB8E870035143E /* ImageFilteringWithHeapsAndEventsEventWrapper.m in Sources */,
+				5FFA9E0E2212CD4500E46B09 /* EAGLViewController.m in Sources */,
 				5F462C9321BB8E870035143E /* ImageFilteringWithHeapsAndEventsShaders.metal in Sources */,
 				5F462CE321BCFC660035143E /* BasicIndirectCommandBuffersViewController.m in Sources */,
 				5F462D1821BE34AD0035143E /* BasicTexturingShaders.metal in Sources */,
@@ -1190,6 +1419,7 @@
 				5FEEE71E21CA6CEC0019D0FB /* AAPLTerrainRendererUtilities.metal in Sources */,
 				5F462CE621BCFC660035143E /* BasicIndirectCommandBuffersShaders.metal in Sources */,
 				5FEEE71321CA6CEC0019D0FB /* AAPLMainRenderer.metal in Sources */,
+				5F6591322216D9C70040966F /* TranslateViewController.m in Sources */,
 				5FEEE72221CA6D0E0019D0FB /* AAPLGameViewController.mm in Sources */,
 				5F4DF99321B9620600DC9FCD /* CPUGPUSynchronizationRenderer.m in Sources */,
 				5F7168E921C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsViewController.m in Sources */,
@@ -1198,6 +1428,8 @@
 				5FEEE71821CA6CEC0019D0FB /* AAPLTerrainRenderer.metal in Sources */,
 				5F7168ED21C8BFD500DC9957 /* ArgumentBufferArraysWithHeapsShaders.metal in Sources */,
 				5F4DF97821B9426600DC9FCD /* DevicesAndCommandsRenderer.m in Sources */,
+				5FD6AAD72217CE130011248C /* ModelTransformationViewController.m in Sources */,
+				5FD6AACA22170B070011248C /* RotateRenderer.mm in Sources */,
 				5F2F557B218EB52F00D9B9B5 /* ImageInputTypeViewController.m in Sources */,
 				5F2F557E218EB54F00D9B9B5 /* ImageOutputTypeViewController.m in Sources */,
 				5F462D4821C0B1110035143E /* DeferredLightingFairy.metal in Sources */,
@@ -1206,31 +1438,49 @@
 				5F462C9221BB8E870035143E /* ImageFilteringWithHeapsAndEventsFilter.m in Sources */,
 				5F462CF121BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingShaders.metal in Sources */,
 				5F4DF97321B93F4C00DC9FCD /* CellData.m in Sources */,
+				5FD6AAC0221706850011248C /* ScaleRenderer.mm in Sources */,
 				5F4DF97021B93DA600DC9FCD /* MetalViewController.m in Sources */,
 				5FEEE71C21CA6CEC0019D0FB /* AAPLVegetationRenderer.metal in Sources */,
 				5F462C9121BB8E870035143E /* ImageFilteringWithHeapsAndEventsRenderer.m in Sources */,
+				5FFA9E122212CDD500E46B09 /* EAGLView.m in Sources */,
 				5F462D6521C0FC4B0035143E /* DeferredLightingViewController.m in Sources */,
+				5F41AEA4221828CD00646A7D /* LightingViewController.m in Sources */,
 				5F462D5B21C0B1740035143E /* DeferredLightingMesh.m in Sources */,
 				5FEEE71921CA6CEC0019D0FB /* AAPLParticleRenderer.metal in Sources */,
 				5FD0A50A2200506F00560B7A /* OpenGLESViewController.m in Sources */,
 				5F462D4D21C0B1110035143E /* DeferredLightingDirectionalLight.metal in Sources */,
 				5FA221DE21CE5A7100937444 /* AAPLMetalViewController.m in Sources */,
+				5FFA9E302215745400E46B09 /* EAGLRenderer.m in Sources */,
 				5FEEE71721CA6CEC0019D0FB /* AAPLMainRendererUtilities.metal in Sources */,
+				5FD6AADA2217D2ED0011248C /* ViewTransformationViewController.m in Sources */,
 				5F462CF021BCFDE10035143E /* IndirectCommandBuffersWithGPUEncodingRenderer.m in Sources */,
+				5FAEA98122169F9500A714C0 /* modelUtil.c in Sources */,
 				5F2F5578218EB04F00D9B9B5 /* ImageOutputViewController.m in Sources */,
+				5FFA9E3B2216628500E46B09 /* TexturesViewController.m in Sources */,
+				5FAEA98222169F9500A714C0 /* matrixUtil.c in Sources */,
 				5FEEE71D21CA6CEC0019D0FB /* AAPLVegetationRenderer.mm in Sources */,
+				5FAEA98422169F9500A714C0 /* vectorUtil.c in Sources */,
 				5F462D4E21C0B1110035143E /* DeferredLightingGBuffer.metal in Sources */,
+				5FFA9E2A221569A500E46B09 /* IndexedDrawingViewController.m in Sources */,
 				5FD0A5132201426700560B7A /* OfficialSamplesViewController.m in Sources */,
+				5FAEA98522169F9500A714C0 /* imageUtil.m in Sources */,
+				5FFA9E2D22156E6C00E46B09 /* TriangleViewController.m in Sources */,
+				5F6591352216D9E40040966F /* TranslateRenderer.mm in Sources */,
+				5FD6AADD2217D3040011248C /* ViewTransformationRenderer.mm in Sources */,
 				5FA221CC21CE58F100937444 /* AAPLMetalRenderer.m in Sources */,
+				5FFA9E3322158A6400E46B09 /* IndexedDrawingRenderer.mm in Sources */,
 				5F7168CF21C8979A00DC9957 /* BasicArgumentBuffersViewController.m in Sources */,
 				5FA221AF21CE561E00937444 /* LODwithFunctionSpecializationShaders.metal in Sources */,
 				5F7168CD21C8979A00DC9957 /* BasicArgumentBuffersShaders.metal in Sources */,
 				5FA221CB21CE58F100937444 /* AAPLShaders.metal in Sources */,
 				5FA221E021CE5A7100937444 /* AAPLOpenGLMetalInteropTexture.m in Sources */,
+				5FD6AAC3221706910011248C /* ScaleViewController.m in Sources */,
+				5FD6AAD12217B55A0011248C /* ReflectionViewController.m in Sources */,
 				5F31CE8E21C3DE7A00B8514B /* HelloComputeImage.m in Sources */,
 				5FA221B221CE563100937444 /* LODwithFunctionSpecializationMesh.m in Sources */,
 				5F462D0A21BDFD5E0035143E /* BasicBuffersRenderer.m in Sources */,
 				5F7168D121C8979A00DC9957 /* BasicArgumentBuffersRenderer.m in Sources */,
+				5FAEA98322169F9500A714C0 /* sourceUtil.c in Sources */,
 				5F462CFC21BD40280035143E /* HelloTriangleRenderer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1393,6 +1643,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = looperwang.iOSSystemLibStudy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				WARNING_CFLAGS = "-Wno-deprecated-declarations";
 			};
 			name = Debug;
 		};
