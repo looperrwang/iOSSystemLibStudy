@@ -32,6 +32,12 @@
     [self.view addSubview:tableView];
     
     self.title = @"iOSSystemLibStudy";
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:56 inSection:0] atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+        [self tableView:tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:56 inSection:0]];
+    });
 }
 
 - (void)initCellData

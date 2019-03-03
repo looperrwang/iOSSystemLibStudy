@@ -46,11 +46,12 @@
     glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, _colorRenderbuffer);
     
     //构造顶点数据
+    //position+color
     GLfloat vertices[] = {
-        -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, //0
-        0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,  //1
-        0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f,  //2
-        0.0f, -0.5f, 0.0f, 1.0f, 1.0f, 0.0f  //3
+        -0.5f, 0.0f, 0.0f,     1.0f, 0.0f, 0.0f, //0
+        0.5f, 0.0f, 0.0f,      0.0f, 1.0f, 0.0f,  //1
+        0.0f, 0.5f, 0.0f,      0.0f, 0.0f, 1.0f,  //2
+        0.0f, -0.5f, 0.0f,     1.0f, 1.0f, 0.0f  //3
     };
     GLushort indices[] = {
         0, 1, 2, //上三角

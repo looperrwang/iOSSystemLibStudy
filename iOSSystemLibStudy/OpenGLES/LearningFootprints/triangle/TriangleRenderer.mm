@@ -46,10 +46,11 @@
     
     //构造顶点数据
     //position数据为什么是这样，因为不考虑model/view/projection的话，这里的position直接就是NDC坐标
+    //position+color
     GLfloat vertices[] = {
-        -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-         0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+        -0.5f, 0.0f, 0.0f,     1.0f, 0.0f, 0.0f,
+         0.5f, 0.0f, 0.0f,     0.0f, 1.0f, 0.0f,
+         0.0f, 0.5f, 0.0f,     0.0f, 0.0f, 1.0f
     };
     //生成VAO/VBO对象
     GLuint VAOId, VBOId;

@@ -37,7 +37,16 @@
 
 - (void)initCellData
 {
-    //[self.data addObject:[[CellData alloc] initWithText:@"Translate" vcName:@"TranslateViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Phong shading - LightingInWorldSpace - 片段着色器中进行光照计算" vcName:@"LightingInWorldSpaceViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Phong shading - LightingInViewSpace - 片段着色器中进行光照计算" vcName:@"LightingInViewSpaceViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"GouraudShading - 顶点着色器中进行光照计算" vcName:@"GouraudShadingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"LightWithMaterial - 不同物体不同材质属性" vcName:@"LightWithMaterialViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"LightWithMap - 同一个物体不同部分不同材质属性" vcName:@"LightWithMapViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"DirectionalLight" vcName:@"DirectionalLightViewController"]]; //渲染有问题
+    [self.data addObject:[[CellData alloc] initWithText:@"PointLight" vcName:@"PointLightViewController"]]; //渲染有问题
+    [self.data addObject:[[CellData alloc] initWithText:@"SpotLight" vcName:@"SpotLightViewController"]]; //渲染有问题
+    [self.data addObject:[[CellData alloc] initWithText:@"SpotLightSoftEdge" vcName:@"SpotLightSoftEdgeViewController"]]; //渲染有问题
+    [self.data addObject:[[CellData alloc] initWithText:@"MultipleLight" vcName:@"MultipleLightViewController"]]; //渲染有问题
 }
 
 #pragma mark - UITableViewDataSource

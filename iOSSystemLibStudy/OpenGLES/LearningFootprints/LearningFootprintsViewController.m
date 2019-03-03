@@ -43,6 +43,13 @@
     [self.data addObject:[[CellData alloc] initWithText:@"ModelTransformation" vcName:@"ModelTransformationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"ViewTransformation" vcName:@"ViewTransformationViewController"]];
     [self.data addObject:[[CellData alloc] initWithText:@"Lighting" vcName:@"LightingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"ModelLoading" vcName:@"ModelLoadingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"DepthTesting" vcName:@"DepthTestingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"StencilTesting" vcName:@"StencilTestingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"Blend" vcName:@"BlendViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"FaceCulling" vcName:@"FaceCullingViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"FrameBufferObject" vcName:@"FrameBufferObjectViewController"]];
+    [self.data addObject:[[CellData alloc] initWithText:@"SkyBox" vcName:@"SkyBoxViewController"]];
 }
 
 #pragma mark - UITableViewDataSource
