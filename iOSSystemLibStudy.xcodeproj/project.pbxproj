@@ -134,7 +134,6 @@
 		5FD352F6222BCDAE00B91F67 /* matrix3x3.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5FD352D6222BCDAE00B91F67 /* matrix3x3.inl */; };
 		5FD352F7222BCDAE00B91F67 /* SmoothingGroups.inl in Resources */ = {isa = PBXBuildFile; fileRef = 5FD352E6222BCDAE00B91F67 /* SmoothingGroups.inl */; };
 		5FD352F8222BCDAE00B91F67 /* libzlibstatic-fat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD352EB222BCDAE00B91F67 /* libzlibstatic-fat.a */; };
-		5FD352F9222BCDAE00B91F67 /* libassimp-fat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FD352EC222BCDAE00B91F67 /* libassimp-fat.a */; };
 		5FD9A647222BA94D00A38C62 /* SelectableDrawingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A57C222BA94C00A38C62 /* SelectableDrawingViewController.m */; };
 		5FD9A648222BA94D00A38C62 /* SelectableDrawingRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A57D222BA94C00A38C62 /* SelectableDrawingRenderer.mm */; };
 		5FD9A649222BA94D00A38C62 /* PlanarReflectionRenderer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5FD9A580222BA94C00A38C62 /* PlanarReflectionRenderer.mm */; };
@@ -584,7 +583,6 @@
 		5FD352E9222BCDAE00B91F67 /* scene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scene.h; sourceTree = "<group>"; };
 		5FD352EA222BCDAE00B91F67 /* LogStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LogStream.hpp; sourceTree = "<group>"; };
 		5FD352EB222BCDAE00B91F67 /* libzlibstatic-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libzlibstatic-fat.a"; sourceTree = "<group>"; };
-		5FD352EC222BCDAE00B91F67 /* libassimp-fat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libassimp-fat.a"; sourceTree = "<group>"; };
 		5FD9A576222BA94C00A38C62 /* EAGLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLViewController.h; sourceTree = "<group>"; };
 		5FD9A578222BA94C00A38C62 /* StencilTestingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StencilTestingViewController.h; sourceTree = "<group>"; };
 		5FD9A57A222BA94C00A38C62 /* SelectableDrawingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectableDrawingViewController.h; sourceTree = "<group>"; };
@@ -798,7 +796,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FD352F9222BCDAE00B91F67 /* libassimp-fat.a in Frameworks */,
 				5FE5249C21CA781800B5F956 /* ModelIO.framework in Frameworks */,
 				5FE5249A21CA781200B5F956 /* Metal.framework in Frameworks */,
 				5FD352F8222BCDAE00B91F67 /* libzlibstatic-fat.a in Frameworks */,
@@ -1334,7 +1331,6 @@
 				5FD35291222BCDAE00B91F67 /* libIrrXML-fat.a */,
 				5FD35292222BCDAE00B91F67 /* assimp */,
 				5FD352EB222BCDAE00B91F67 /* libzlibstatic-fat.a */,
-				5FD352EC222BCDAE00B91F67 /* libassimp-fat.a */,
 			);
 			path = Third;
 			sourceTree = "<group>";
