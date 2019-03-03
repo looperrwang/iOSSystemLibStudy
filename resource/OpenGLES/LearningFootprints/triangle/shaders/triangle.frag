@@ -1,7 +1,9 @@
 #version 300 es
 
-in mediump vec3 vertColor;
-out mediump vec4 color;
+precision mediump float;
+
+in vec3 vertColor;
+out vec4 color;
 
 void main()
 {

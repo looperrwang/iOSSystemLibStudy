@@ -1,11 +1,13 @@
 #version 300 es
 
-in mediump vec3 VertColor;
-in mediump vec2 TextCoord;
+precision mediump float;
+
+in vec3 VertColor;
+in vec2 TextCoord;
 
 uniform sampler2D tex;
 
-out mediump vec4 color;
+out vec4 color;
 
 void main()
 {
