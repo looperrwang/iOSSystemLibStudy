@@ -219,6 +219,7 @@
 		5FDE7024222BF7B100E31DED /* libassimp_armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE7023222BF7B000E31DED /* libassimp_armv7.a */; };
 		5FDE7026222BF87C00E31DED /* libassimp_armv7s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE7025222BF87B00E31DED /* libassimp_armv7s.a */; };
 		5FDE7028222BFB1C00E31DED /* libassimp_i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE7027222BFB1C00E31DED /* libassimp_i386.a */; };
+		5FDE702A222BFC3100E31DED /* libassimp_x86_64.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FDE7029222BFC3100E31DED /* libassimp_x86_64.a */; };
 		5FE5249821CA781200B5F956 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F4DF97F21B9457800DC9FCD /* MetalKit.framework */; };
 		5FE5249A21CA781200B5F956 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249921CA781200B5F956 /* Metal.framework */; };
 		5FE5249C21CA781800B5F956 /* ModelIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE5249B21CA781800B5F956 /* ModelIO.framework */; };
@@ -760,6 +761,7 @@
 		5FDE7023222BF7B000E31DED /* libassimp_armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp_armv7.a; sourceTree = "<group>"; };
 		5FDE7025222BF87B00E31DED /* libassimp_armv7s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp_armv7s.a; sourceTree = "<group>"; };
 		5FDE7027222BFB1C00E31DED /* libassimp_i386.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp_i386.a; sourceTree = "<group>"; };
+		5FDE7029222BFC3100E31DED /* libassimp_x86_64.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libassimp_x86_64.a; sourceTree = "<group>"; };
 		5FE5249921CA781200B5F956 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		5FE5249B21CA781800B5F956 /* ModelIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ModelIO.framework; path = System/Library/Frameworks/ModelIO.framework; sourceTree = SDKROOT; };
 		5FE5249E21CB5D6100B5F956 /* Mixing Metal and OpenGL Rendering in a View.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Mixing Metal and OpenGL Rendering in a View.md"; sourceTree = "<group>"; };
@@ -816,6 +818,7 @@
 				5FDE7020222BF2BA00E31DED /* libassimp_arm64.a in Frameworks */,
 				5FE5249821CA781200B5F956 /* MetalKit.framework in Frameworks */,
 				5FD352ED222BCDAE00B91F67 /* libIrrXML-fat.a in Frameworks */,
+				5FDE702A222BFC3100E31DED /* libassimp_x86_64.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1343,6 +1346,7 @@
 		5FD35290222BCDAE00B91F67 /* Third */ = {
 			isa = PBXGroup;
 			children = (
+				5FDE7029222BFC3100E31DED /* libassimp_x86_64.a */,
 				5FDE7027222BFB1C00E31DED /* libassimp_i386.a */,
 				5FDE7025222BF87B00E31DED /* libassimp_armv7s.a */,
 				5FDE7023222BF7B000E31DED /* libassimp_armv7.a */,
