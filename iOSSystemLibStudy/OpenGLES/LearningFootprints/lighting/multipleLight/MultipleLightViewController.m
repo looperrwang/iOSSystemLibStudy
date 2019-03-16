@@ -22,7 +22,7 @@
     self.title = @"MultipleLight";
 }
 
-- (MultipleLightRenderer *)renderer
+- (EAGLRenderer *)renderer
 {
     return [[MultipleLightRenderer alloc] init];
 }

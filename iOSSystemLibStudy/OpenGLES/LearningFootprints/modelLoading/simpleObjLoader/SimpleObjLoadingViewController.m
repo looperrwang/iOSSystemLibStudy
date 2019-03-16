@@ -22,7 +22,7 @@
     self.title = @"SimpleObjLoading";
 }
 
-- (SimpleObjLoadingRenderer *)renderer
+- (EAGLRenderer *)renderer
 {
     return [[SimpleObjLoadingRenderer alloc] init];
 }

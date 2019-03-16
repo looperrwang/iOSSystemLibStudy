@@ -22,7 +22,7 @@
     self.title = @"SelectableDrawing";
 }
 
-- (SelectableDrawingRenderer *)renderer
+- (EAGLRenderer *)renderer
 {
     return [[SelectableDrawingRenderer alloc] init];
 }

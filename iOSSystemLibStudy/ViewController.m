@@ -77,7 +77,7 @@
     [self.data addObject:[[CellData alloc] initWithText:@"CoreTelephony" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreText" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"CoreVideo" vcName:@""]];
-    [self.data addObject:[[CellData alloc] initWithText:@"DeviceCheck" vcName:@""]];
+    //[self.data addObject:[[CellData alloc] initWithText:@"DeviceCheck" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"EventKit" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"EventKitUI" vcName:@""]];
     [self.data addObject:[[CellData alloc] initWithText:@"ExternalAccessory" vcName:@""]];
