@@ -8,7 +8,7 @@
 >
 > *OpenGL for Embedded Systems (OpenGL ES)* is a simplified version of OpenGL that eliminates redundant functionality to provide a library that is both easier to learn and easier to implement in mobile graphics hardware.
 
-*Open Graphics Library (OpenGL)* 用来可视化 2D 与 3D 数据。它是一个多用途的开放标准图形库，支持 2D 和 3D 数字内容创建、机械和建筑设计、虚拟原型设计、飞行模拟、视频游戏等应用。你可以使用 OpenGL 配置 3D 图形管线并向其提交数据。顶点数据经过变换组装成图元，经过光栅化创建出 2D 图像。OpenGL 旨在将函数调用转换为可以发送到底层图形硬件的图形命令。因为此底层硬件专用于处理图形命令，因此 OpenGL 绘制通常非常快。
+*Open Graphics Library (OpenGL)* 用于可视化 2D 与 3D 数据。它是一个多用途的开放标准图形库，支持 2D 和 3D 数字内容创建、机械和建筑设计、虚拟原型设计、飞行模拟、视频游戏等应用。你可以使用 OpenGL 配置 3D 图形管线并向其提交数据。顶点数据经过变换、图元组装、光栅化之后，创建出 2D 图像。<font color=#ff0000>OpenGL 旨在将函数调用转换为可以发送至底层图形硬件的图形命令。</font>因为此底层硬件专用于处理图形命令，因此 OpenGL 绘制通常非常快。
 
 *OpenGL for Embedded Systems (OpenGL ES)* 是 OpenGL 的简化版本，它消除了冗余功能，提供了一个既易于学习更易于在移动图形硬件上实现的库。
 
@@ -25,11 +25,11 @@
 > - Core Animation provides the hardware-accelerated graphics rendering and animation infrastructure for all iOS apps, as well as a simple declarative programming model that makes it simple to implement sophisticated user interface animations. (See [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514).)
 > - You can add animation, physics-based dynamics, and other special effects to Cocoa Touch user interfaces using features in the UIKit framework.
 
-OpenGL 允许应用程序利用底层图形处理器的强大功能。iOS 设备上的 GPU 可以执行复杂的 2D 和 3D 绘图，以及最终图像中每个像素的复杂着色计算。如果你的应用程序的设计要求需要最直接和全面的 GPU 硬件访问，你应该使用 OpenGL ES 。OpenGL ES 的典型客户包括呈现 3D 图形的视频游戏和模拟。
+OpenGL 允许应用程序利用底层图形处理器的强大能力。iOS 设备上的 GPU 可以执行复杂的 2D 和 3D 绘图，以及最终图像中每像素的复杂着色计算。如果你的应用程序的设计要求需要最直接和全面的 GPU 硬件访问，你应该使用 OpenGL ES 。OpenGL ES 的典型客户包括呈现 3D 图形的视频游戏和模拟。
 
-OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最强大和最灵活的图形处理工具，但它也具有陡峭的学习曲线，并对应用程序的整体设计产生重大影响。对于需要高性能图形以用于更专业用途的应用程序，iOS 提供了几个更高级别的框架：
+OpenGL ES 是一个底层的，专注于硬件的 API 。虽然它提供了最强大和最灵活的图形处理工具，但其同样具有陡峭的学习曲线，并对应用程序的整体设计也会产生重大影响。对于需要高性能图形以用于更专业用途的应用程序，iOS 提供了几个更高级别的框架：
 
-- Sprite Kit 框架提供了一个硬件加速动画系统，该系统针对创建 2D 游戏进行了优化。（见 [SpriteKit Programming Guide](https://developer.apple.com/library/archive/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013043) ）
+- Sprite Kit 框架提供了一个硬件加速的动画系统，该系统针对创建 2D 游戏进行了优化。（见 [SpriteKit Programming Guide](https://developer.apple.com/library/archive/documentation/GraphicsAnimation/Conceptual/SpriteKit_PG/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013043) ）
 - Core Image 框架为静态和视频图像提供实时滤镜和分析。（见 [Core Image Programming Guide](https://developer.apple.com/library/archive/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_intro/ci_intro.html#//apple_ref/doc/uid/TP30001185) ）
 - Core Animation 为所有 iOS 应用程序提供硬件加速的图形渲染和动画基础架构，以及简单的声明性编程模型，使得实现复杂的用户界面动画变得简单。（见 [Core Animation Programming Guide](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/CoreAnimation_guide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40004514) ）
 - 你可以使用 UIKit 框架中的功能向 Cocoa Touch 用户界面添加动画，基于物理的动态和其他特殊效果。
@@ -40,7 +40,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 >
 > Relevant Chapters: [Checklist for Building OpenGL ES Apps for iOS](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESontheiPhone/OpenGLESontheiPhone.html#//apple_ref/doc/uid/TP40008793-CH101-SW1), [Configuring OpenGL ES Contexts](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithOpenGLESContexts/WorkingwithOpenGLESContexts.html#//apple_ref/doc/uid/TP40008793-CH2-SW1)
 
-由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范没有定义窗口层；相反，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 *framebuffer* ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
+由于 OpenGL ES 是基于 C 的 API ，因此它是可移植且受到广泛支持的。作为 C API ，它与 Objective-C Cocoa Touch 应用程序无缝集成。OpenGL ES 规范并没有定义窗口层；取而代之的是，托管操作系统必须提供函数来创建一个接收命令的 OpenGL ES 渲染上下文和一个 *framebuffer* ，其中任何绘图命令的结果写入该缓冲区。在 iOS 上使用 OpenGL ES 需要使用 iOS 类来设置和呈现绘图表面，并使用与平台无关的 API 来渲染其内容。
 
 相关章节：[Checklist for Building OpenGL ES Apps for iOS](#checklist-for-building-opengl-es-apps-for-ios)，[Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts)
 
@@ -50,7 +50,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 >
 > Relevant Chapters: [Drawing with OpenGL ES and GLKit](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/DrawingWithOpenGLES/DrawingWithOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH503-SW1)
 
-由 UIKit 框架定义的视图和视图控制器控制 iOS 上可视内容的呈现。GLKit 框架提供这些类的 OpenGL ES 感知版本。在开发 OpenGL ES 应用程序时，可以使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象来呈现 OpenGL ES 内容。还可以使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 对象来管理视图并支持在其内容上做动画。
+由 UIKit 框架定义的视图和视图控制器控制 iOS 上可视内容的呈现。GLKit 框架提供这些类的 OpenGL ES 感知版本。在开发 OpenGL ES 应用程序时，可以使用 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 对象来呈现 OpenGL ES 内容。还可以使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 对象来管理视图并提供动画支持。
 
 相关章节：[Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit)
 
@@ -60,7 +60,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 >
 > Relevant Chapters: [Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1)
 
-除了绘制内容以填充整个屏幕或视图层次结构的一部分之外，还可以将 OpenGL ES 帧缓冲区对象用于其他渲染策略。iOS 实现了标准的 OpenGL ES 帧缓冲对象，你可以将其用于渲染到离屏缓冲区或纹理以供 OpenGL ES 场景中的其他地方使用。 此外，iOS 上的 OpenGL ES 支持渲染到 Core Animation layer（ [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类），然后你可以将其与其他图层组合以构建应用程序的用户界面或其他可视化显示。
+除了绘制内容以填充整个屏幕或视图层次结构的一部分之外，还可以使用 OpenGL ES 帧缓冲区对象用于其他渲染策略。iOS 实现了标准的 OpenGL ES 帧缓冲对象，可以使用其进行离屏缓冲区或纹理的渲染，进而将渲染完成的离屏缓冲区或纹理应用于 OpenGL ES 场景中的其他地方。 此外，iOS 上的 OpenGL ES 支持渲染到 Core Animation layer（ [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类），然后你可以将其与其他图层组合以构建应用程序的用户界面或其他可视化显示。
 
 相关章节：[Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations)
 
@@ -74,7 +74,7 @@ OpenGL ES 是一种底层，以硬件为重点的 API 。虽然它提供了最�
 >
 > Relevant Chapters: [OpenGL ES Design Guidelines](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/OpenGLESApplicationDesign/OpenGLESApplicationDesign.html#//apple_ref/doc/uid/TP40008793-CH6-SW1), [Best Practices for Working with Vertex Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesforWorkingwithVertexData/TechniquesforWorkingwithVertexData.html#//apple_ref/doc/uid/TP40008793-CH107-SW1), [Best Practices for Working with Texture Data](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/TechniquesForWorkingWithTextureData/TechniquesForWorkingWithTextureData.html#//apple_ref/doc/uid/TP40008793-CH104-SW1), [Best Practices for Shaders](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/BestPracticesforShaders/BestPracticesforShaders.html#//apple_ref/doc/uid/TP40008793-CH7-SW3), [Tuning Your OpenGL ES App](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/Performance/Performance.html#//apple_ref/doc/uid/TP40008793-CH105-SW1)
 
-图形处理器是针对图形操作优化的并行设备。要在你的应用中获得出色的性能，你必须仔细设计你的应用以向 OpenGL ES 提供数据和命令，以便图形硬件与你的应用并行运行。调整不佳的应用程序会强制 CPU 或 GPU 等待另一个完成处理命令。
+图形处理器是针对图形操作优化的并行设备。要在你的应用中获得出色的性能，你必须仔细设计你的应用以向 OpenGL ES 提供数据和命令，以便图形硬件与你的应用并行运行。调整不佳的应用程序会强制 CPU 或 GPU 等待对方完成处理命令。
 
 你应该设计你的应用程序以有效地使用 OpenGL ES API 。完成应用程序构建后，使用 Instruments 调整应用程序的性能。如果你的应用程序在 OpenGL ES 中存在瓶颈，请使用本指南中提供的信息来优化应用程序的性能。
 
@@ -98,7 +98,7 @@ Xcode 提供的工具可以帮助你提高 OpenGL ES 应用程序的性能。
 >
 > Relevant Chapters: [Concurrency and OpenGL ES](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ConcurrencyandOpenGLES/ConcurrencyandOpenGLES.html#//apple_ref/doc/uid/TP40008793-CH409-SW2)
 
-利用并发性设计应用程序可以帮助提高应用程序的性能。如果你打算为 OpenGL ES 应用程序添加并发性，则必须确保它不会同时从两个不同的线程访问相同的上下文。
+利用并发性设计应用程序可以帮助提高应用程序的性能。如果你打算为 OpenGL ES 应用程序添加并发性，则必须确保它不会同时在两个不同的线程访问相同的上下文。
 
 相关章节：[Concurrency and OpenGL ES](#concurrency-and-opengl-es)
 
@@ -165,11 +165,11 @@ OpenGL ES 是 Khronos Group 定义的开放标准。有关 OpenGL ES 标准的�
 
 OpenGL ES 规范定义了一个平台无关的 API ，用于使用 GPU 硬件渲染图形。实现 OpenGL ES 的平台提供用于执行 OpenGL ES 命令的渲染上下文，用于保存渲染结果的帧缓冲区，以及用于显示帧缓冲区内容的一个或多个渲染目的地。在 iOS 中，[EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 类实现了渲染上下文。iOS 仅提供一种类型的帧缓冲，OpenGL ES 帧缓冲对象，[GLKView](https://developer.apple.com/documentation/glkit/glkview) 和 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类实现渲染目标。
 
-在 iOS 中构建 OpenGL ES 应用程序需要考虑几个因素，其中一些是 OpenGL ES 编程的通用代码，其中一些特定于 iOS 。按照此清单和下面的详细部分开始：
+在 iOS 中构建 OpenGL ES 应用程序需要考虑几个因素，其中一些是 OpenGL ES 编程的通用代码，其中一些特定于 iOS 。按照此清单和下面描述的详细章节开始：
 
 1. 确定哪个版本的 OpenGL ES 具有适合应用的功能集，并创建 OpenGL ES 上下文。
 2. 在运行时验证设备是否支持你要使用的 OpenGL ES 功能。
-3. 选择 OpenGL ES 内容渲染的位置。
+3. 选择将 OpenGL ES 内容渲染至何处。
 4. 确保你的应用在 iOS 中正常运行。
 5. 实现渲染引擎。
 6. 使用 Xcode 和 Instruments 调试 OpenGL ES 应用程序并对其进行调整以获得最佳性能。
@@ -188,9 +188,9 @@ OpenGL ES 规范定义了一个平台无关的 API ，用于使用 GPU 硬件渲
 确定你的应用程序是否应支持 OpenGL ES 3.0 ，OpenGL ES 2.0 ，OpenGL ES 1.1 或多个版本。
 
 - OpenGL ES 3.0 是 iOS 7 中的新功能。它增加了许多新功能，支持更高性能，通用 GPU 计算技术，以及以前只能在桌面级硬件和游戏机上实现的更复杂的视觉效果。
-- OpenGL ES 2.0 是 iOS 设备的基线配置，具有基于可编程着色器的可配置图形管道。
-- OpenGL ES 1.1 仅提供基本的固定功能图形管道，主要用于向后兼容。
-您应该选择支持与你的应用最相关的功能和设备的 OpenGL ES 版本。要了解有关 iOS 设备的 OpenGL ES 功能的更多信息，阅读 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 。
+- OpenGL ES 2.0 是 iOS 设备的基线配置，具有基于可编程着色器的可配置图形管线。
+- OpenGL ES 1.1 仅提供基本的固定功能图形管线，主要用于向后兼容。
+你应该选择支持与你的应用最相关的功能和设备的 OpenGL ES 版本。要了解有关 iOS 设备的 OpenGL ES 功能的更多信息，阅读 [iOS Device Compatibility Reference](https://developer.apple.com/library/archive/documentation/DeviceInformation/Reference/iOSDeviceCompatibility/Introduction/Introduction.html#//apple_ref/doc/uid/TP40013599) 。
 
 要为计划支持的 OpenGL ES 版本创建上下文，阅读 [Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts) 。要了解你选择的 OpenGL ES 版本如何与你可能在应用程序中使用的渲染算法相关，阅读 [OpenGL ES Versions and Renderer Architecture](#opengl-es-versions-and-renderer-architecture) 。
 
@@ -237,11 +237,11 @@ BOOL CheckForExtension(NSString *searchName)
 >
 > To learn about rendering to an offscreen buffer, a texture, or a Core Animation layer, read [Drawing to Other Rendering Destinations](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/WorkingwithEAGLContexts/WorkingwithEAGLContexts.html#//apple_ref/doc/uid/TP40008793-CH103-SW1).
 
-在 iOS 中，帧缓冲对象存储绘图命令的结果。（ iOS 不实现窗口系统提供的帧缓冲区。）可以通过多种方式使用帧缓冲区对象的内容：
+在 iOS 中，帧缓冲对象存储绘图命令的结果。（ iOS 没有实现窗口系统提供的帧缓冲区。）可以通过多种方式使用帧缓冲区对象的内容：
 
 - GLKit 框架提供了一个视图，用于绘制 OpenGL ES 内容并管理自己的帧缓冲对象，以及一个支持动画 OpenGL ES 内容的视图控制器。使用这些类可以创建全屏视图或使 OpenGL ES 内容融入 UIKit 视图层次结构。要了解这些类，见 [Drawing with OpenGL ES and GLKit](#drawing-with-opengl-es-and-glkit) 。
 - [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类提供了一种将 OpenGL ES 内容作为 Core Animation layer 组件渲染的方式。使用此类时，必须创建自己的 framebuffer 对象。
-- 与任何 OpenGL ES 实现一样，你也可以使用 framebuffers 进行离屏图形处理或渲染到纹理，以便在图形管道中的其他位置使用。使用 OpenGL ES 3.0 ，可以在使用多个渲染目标的渲染算法中使用离屏缓冲区。
+- 与任何 OpenGL ES 实现一样，你也可以使用 framebuffers 进行离屏图形处理或渲染到纹理，以便在图形管线中的其他位置使用。使用 OpenGL ES 3.0 ，可以在使用多个渲染目标的渲染算法中使用离屏缓冲区。
 
 要了解有关渲染到屏幕外缓冲区，纹理或核心动画层的信息，见 [Drawing to Other Rendering Destinations](#drawing-to-other-rendering-destinations) 。
 
@@ -253,7 +253,7 @@ BOOL CheckForExtension(NSString *searchName)
 >
 > To learn about supporting these and other iOS features, read [Multitasking, High Resolution, and Other iOS Features](https://developer.apple.com/library/archive/documentation/3DDrawing/Conceptual/OpenGLES_ProgrammingGuide/ImplementingaMultitasking-awareOpenGLESApplication/ImplementingaMultitasking-awareOpenGLESApplication.html#//apple_ref/doc/uid/TP40008793-CH5-SW1).
 
-iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中正确处理此功能需要额外考虑。不正确地使用 OpenGL ES 会导致你的应用在后台时被系统杀死。
+iOS 应用程序默认支持多任务处理，但在 OpenGL ES 应用程序中正确处理此特性需要额外考虑。不正确地使用 OpenGL ES 会导致你的应用在后台时被系统杀死。
 
 许多 iOS 设备都包含高分辨率显示器，因此你的应用应支持多种显示尺寸和分辨率。
 
@@ -317,9 +317,9 @@ iOS 应用中的每个线程都有一个当前上下文；当你调用 OpenGL ES
 
 调用 `EAGLContext` 类方法 [currentContext](https://developer.apple.com/documentation/opengles/eaglcontext/1624880-currentcontext) 来检索线程的当前上下文。
 
-注意：如果你的应用程序在同一个线程上经常在两个或多个上下文之间进行切换，在将新上下文设置为当前上下文之前调用 `glFlush` 函数。这确保了先前提交的命令以及时的方式传递到图形硬件。
+注意：<font color=#ff0000>如果你的应用程序在同一个线程上经常在两个或多个上下文之间进行切换，在将新上下文设置为当前上下文之前调用 `glFlush` 函数。这确保了先前提交的命令以及时的方式传递到图形硬件。</font>
 
-OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。（如果使用手动引用计数，OpenGL ES 会保留此对象。）当调用 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 方法来更改当前的上下文，OpenGL ES 不再引用先前的上下文。（如果使用手动引用计数，OpenGL ES 将释放 `EAGLContext` 对象。）为防止 `EAGLContext` 对象在不是当前上下文时被释放，你的应用必须保留对这些对象的强引用（或保留）。
+OpenGL ES 拥有与当前上下文对应的 `EAGLContext` 对象的强引用。（如果使用手动引用计数，OpenGL ES 会 retain 此对象。）当调用 [setCurrentContext:](https://developer.apple.com/documentation/opengles/eaglcontext/1624882-setcurrentcontext) 方法来更改当前的上下文，OpenGL ES 不再引用先前的上下文。（如果使用手动引用计数，OpenGL ES 将释放 `EAGLContext` 对象。）为防止 `EAGLContext` 对象在不是当前上下文时被释放，你的应用必须保留对这些对象的强引用（或 retain ）。
 
 ### Every Context Targets a Specific Version of OpenGL ES
 
@@ -364,9 +364,9 @@ EAGLContext* CreateBestEAGLContext()
 >
 > Figure 2-1  Two contexts sharing OpenGL ES objects
 
-虽然上下文保持 OpenGL ES 状态，但它不直接管理 OpenGL ES 对象。相反，OpenGL ES 对象由 [EAGLSharegroup](https://developer.apple.com/documentation/opengles/eaglsharegroup) 对象创建和维护。每个上下文都包含一个 [EAGLSharegroup](https://developer.apple.com/documentation/opengles/eaglsharegroup) 对象，上下文将对象的创建委托给该 EAGLSharegroup 对象。
+<font color=#ff0000>虽然上下文保持 OpenGL ES 状态，但它不直接管理 OpenGL ES 对象。</font>相反，OpenGL ES 对象由 [EAGLSharegroup](https://developer.apple.com/documentation/opengles/eaglsharegroup) 对象创建和维护。每个上下文都包含一个 [EAGLSharegroup](https://developer.apple.com/documentation/opengles/eaglsharegroup) 对象，上下文将对象的创建委托给该 EAGLSharegroup 对象。
 
-当两个或多个上下文引用同一个 sharegroup 时，sharegroup 的优势变得明显，如 Figure 2-1 所示。当多个上下文连接到公共 sharegroup 时，任何上下文创建的 OpenGL ES 对象都可在所有上下文中使用；如果在另一个上下文而不是创建对象的上下文中绑定相同的对象标识符，则会引用相同的 OpenGL ES 对象。移动设备上的资源往往很受限；在多个上下文中创建相同内容的多个副本是浪费的。共享公共资源可以更好地利用设备上可用的图形资源。
+当两个或多个上下文引用同一个 sharegroup 时，sharegroup 的优势将变得明显，如 Figure 2-1 所示。当多个上下文连接到公共 sharegroup 时，任何上下文创建的 OpenGL ES 对象都可在所有上下文中使用；如果在另一个上下文而不是创建对象的上下文中绑定相同的对象标识符，则会引用相同的 OpenGL ES 对象。移动设备上的资源往往很受限；在多个上下文中创建相同内容的多个副本是浪费的。共享公共资源可以更好地利用设备上可用的图形资源。
 
 sharegroup 是一个不透明的对象；它没有应用可以调用的方法或属性。使用 sharegroup 对象的上下文保留了对它的强引用。
 
@@ -419,8 +419,8 @@ EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API]
 当多个上下文共享 sharegroup 时，你的应用程序负责管理 OpenGL ES 对象的状态更改。以下是规则：
 
 - 如果对象没有变更，你的应用可以同时跨多个上下文访问该对象。
-- 当发送到上下文的命令正在修改对象时，不得在任何其他上下文中读取或修改该对象。
-- 修改对象后，所有上下文必须重新绑定对象才能查看更改。如果上下文在绑定对象之前引用它，则该对象的内容是未定义的。
+- 当发送到某个上下文的命令正在修改对象时，不得在任何其他上下文中读取或修改该对象。
+- 修改对象后，所有上下文必须重新绑定对象才能感知其更改。如果上下文在绑定对象之前引用它，则该对象的内容是未定义的。
 
 以下是应用程序更新 OpenGL ES 对象时应遵循的步骤：
 
@@ -429,7 +429,7 @@ EAGLContext* secondContext = [[EAGLContext alloc] initWithAPI:[firstContext API]
 3. 在接收状态修改命令的上下文中调用 `glFlush` 。
 4. 在每个其他上下文中，重新绑定对象标识符。
 
-注意：共享对象的另一种方法是使用单个渲染上下文，但使用多个目标帧缓冲区。在渲染时，应用程序绑定相应的帧缓冲区并根据需要渲染其帧。由于单个上下文引用所有的 OpenGL ES 对象，所以它们使用相同的 OpenGL ES 数据。此模式使用较少的资源，但仅适用于可以仔细控制上下文状态的单线程应用程序。
+注意：共享对象的另一种方法是使用单个渲染上下文，但使用多个目标帧缓冲区。在渲染时，应用程序绑定相应的帧缓冲区并按需渲染。由于单个上下文引用所有的 OpenGL ES 对象，所以它们使用相同的 OpenGL ES 数据。此模式使用较少的资源，但仅适用于可以精细控制上下文状态的单线程应用程序。
 
 ## Drawing with OpenGL ES and GLKit
 
@@ -544,7 +544,7 @@ Listing 3-2 GLKit 视图的绘图方法示例
 - 在调用绘图方法之前，视图进行以下操作：
     - 设置其 [EAGLContext](https://developer.apple.com/documentation/opengles/eaglcontext) 对象为当前上下文
     - 根据当前大小，比例因子和可绘制属性，按需创建帧缓冲对象和渲染缓冲区
-    - 将 framebuffer 对象绑定为绘图命令的当前目标
+    - 绑定 framebuffer 对象为绘图命令的当前目标
     - 设置 OpenGL ES 视口以匹配帧缓冲区大小
 - 绘图方法返回后，视图进行以下操作：
     - 解决多重采样缓冲区（如果启用了多重采样）
@@ -561,7 +561,7 @@ Listing 3-2 GLKit 视图的绘图方法示例
 
 许多 OpenGL ES 应用程序在自定义类中实现呈现代码。这种方法的一个优点是，它允许你通过为每个算法定义不同的渲染器类来轻松支持多种渲染算法。共享通用功能的渲染算法可以从超类继承共享函数。例如，你可以使用不同的渲染器类来支持 OpenGL ES 2.0 和 3.0（见 [Configuring OpenGL ES Contexts](#configuring-opengl-es-contexts) ）。或者你可以使用它们自定义渲染，以便在具有更强大硬件的设备上获得更好的图像质量。
 
-GLKit 非常适合这种方法 - 你可以使渲染器对象成为标准 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例的委托。渲染器类遵循 [GLKViewDelegate](https://developer.apple.com/documentation/glkit/glkviewdelegate) 协议并实现 [glkView:drawInRect:](https://developer.apple.com/documentation/glkit/glkviewdelegate/1615595-glkview) 方法，而不是继承 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 并实现 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 方法。Listing 3-3 演示了如何在应用程序启动时根据硬件特性选择渲染器类。
+GLKit 非常适合这种方法 - 你可以使渲染器对象成为标准 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例的委托。渲染器类遵循 [GLKViewDelegate](https://developer.apple.com/documentation/glkit/glkviewdelegate) 协议并实现 [glkView:drawInRect:](https://developer.apple.com/documentation/glkit/glkviewdelegate/1615595-glkview) 方法，而无需继承 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 无需实现 [drawRect:](https://developer.apple.com/documentation/uikit/uiview/1622529-draw) 方法。Listing 3-3 演示了如何在应用程序启动时根据硬件特性选择渲染器类。
 
 Listing 3-3 根据硬件特性选择渲染器类
 
@@ -615,7 +615,7 @@ Figure 3-2 动画循环
 
 对于更新阶段，视图控制器调用自己的 `update` 方法（或其委托的 [glkViewControllerUpdate:](https://developer.apple.com/documentation/glkit/glkviewcontrollerdelegate/1620710-glkviewcontrollerupdate) 方法）。在此方法中，应该为下一帧的绘制做准备。例如，游戏可以使用此方法基于自上一帧以来接收的输入事件来确定玩家和敌人角色的位置，科学可视化可以使用该方法来运行其模拟步骤。如果你需要时序信息来确定应用程序的下一帧状态，使用视图控制器的时序属性之一，例如 [timeSinceLastUpdate](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620726-timesincelastupdate) 属性。在 Figure 3-2 中，更新阶段递增 `angle` 变量并使用它来计算变换矩阵。
 
-对于显示阶段，视图控制器调用其视图的 [display](https://developer.apple.com/documentation/glkit/glkview/1615571-display) 方法，该方法又调用你的绘图方法。在绘图方法中，向 GPU 提交 OpenGL ES 绘图命令以渲染内容。为获得最佳性能，你的应用应在渲染新帧的开始时修改 OpenGL ES 对象，然后提交绘图命令。在 Figure 3-2 中，显示阶段设置着色器程序中的统一变量为在更新阶段计算的矩阵，然后提交绘图命令以渲染新内容。
+对于显示阶段，视图控制器调用其视图的 [display](https://developer.apple.com/documentation/glkit/glkview/1615571-display) 方法，该方法又调用你的绘图方法。在绘图方法中，向 GPU 提交 OpenGL ES 绘图命令以渲染内容。为获得最佳性能，你的应用应在渲染新帧的开始处修改 OpenGL ES 对象，然后提交绘图命令。在 Figure 3-2 中，显示阶段设置着色器程序中的 uniform 变量为在更新阶段计算的矩阵，然后提交绘图命令以渲染新内容。
 
 动画循环以视图控制器的 [framesPerSecond](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620723-framespersecond) 属性指示的速率在这两个阶段之间交替。你可以使用 [preferredFramesPerSecond](https://developer.apple.com/documentation/glkit/glkviewcontroller/1620702-preferredframespersecond) 属性设置所需的帧率 - 为了优化当前显示硬件的性能，视图控制器会自动选择接近设置的首选值的最佳帧速率。
 
@@ -627,9 +627,9 @@ Figure 3-2 动画循环
 >
 > Listing 3-4  Using a GLKit view and view controller to draw and animate OpenGL ES content
 
-Listing 3-4 演示了使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类和 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例渲染动画 OpenGL ES 内容的典型策略。
+Listing 3-4 演示了使用 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类和 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例渲染动画的 OpenGL ES 内容的典型策略。
 
-Listing 3-4 使用 GLKi t视图和视图控制器来绘制和动画 OpenGL ES 内容
+Listing 3-4 使用 GLKit 视图和视图控制器来绘制和动画 OpenGL ES 内容
 
 ```objc
 @implementation PlanetViewController // subclass of GLKViewController
@@ -683,7 +683,7 @@ Listing 3-4 使用 GLKi t视图和视图控制器来绘制和动画 OpenGL ES �
 
 The view controller is automatically the delegate of its view, so it implements both the update and display phases of the animation loop. In the `update` method, it calculates the transformation matrices needed to display a rotating planet. In the `glkView:drawInRect:` method, it provides those matrices to a shader program and submits drawing commands to render the planet geometry.
 
-在此示例中，从故事板加载 `PlanetViewController` 类（自定义 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类）的实例，以及标准[GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例及其可绘制属性。`viewDidLoad` 方法创建 OpenGL ES 上下文并将其提供给视图，设置动画循环的帧速率。
+在此示例中，从故事板加载 `PlanetViewController` 类（自定义 [GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 子类）的实例，同时加载了标准 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 实例及其可绘制属性。`viewDidLoad` 方法创建 OpenGL ES 上下文并将其提供给视图，为动画循环设置了帧速率。
 
 视图控制器自动成为其视图的代理，因此它实现了动画循环的更新和显示阶段。在 `update` 方法中，它计算显示旋转行星所需的变换矩阵。在 `glkView:drawInRect:` 方法中，它将这些矩阵提供给着色器程序并提交绘图命令以渲染行星几何体。
 
@@ -697,13 +697,13 @@ The view controller is automatically the delegate of its view, so it implements 
 
 > OpenGL ES 2.0 and later doesn’t provide built-in functions for creating or specifying transformation matrices. Instead, programmable shaders provide vertex transformation, and you specify shader inputs using generic uniform variables. The GLKit framework includes a comprehensive library of vector and matrix types and functions, optimized for high performance on iOS hardware. (See [GLKit Framework Reference](https://developer.apple.com/documentation/glkit).)
 
-OpenGL ES 2.0 及更高版本不提供用于创建或指定转换矩阵的内置函数。相反，可编程着色器提供顶点变换，可以使用通用统一变量指定着色器输入。GLKit 框架包含一个全面的矢量和矩阵类型和函数库，针对 iOS 硬件进行了高性能的优化。（参见 [GLKit Framework Reference](https://developer.apple.com/documentation/glkit) 。）
+OpenGL ES 2.0 及更高版本不提供用于创建或指定变换矩阵的内置函数。相反，可编程着色器提供顶点变换，可以使用通用 uniform 变量指定着色器输入。GLKit 框架包含一个全面的矢量和矩阵类型以及函数的库，该库针对 iOS 硬件进行了高性能的优化。（参见 [GLKit Framework Reference](https://developer.apple.com/documentation/glkit) 。）
 
 #### Migrating from the OpenGL ES 1.1 Fixed-Function Pipeline
 
 > OpenGL ES 2.0 and later removes all functionality associated with the OpenGL ES 1.1 fixed-function graphics pipeline. The [GLKBaseEffect](https://developer.apple.com/documentation/glkit/glkbaseeffect) class provides an Objective-C analog to the transformation, lighting and shading stages of the OpenGL ES 1.1 pipeline, and the [GLKSkyboxEffect](https://developer.apple.com/documentation/glkit/glkskyboxeffect) and [GLKReflectionMapEffect](https://developer.apple.com/documentation/glkit/glkreflectionmapeffect) classes add support for common visual effects. See the reference documentation for these classes for details.
 
-OpenGL ES 2.0 及更高版本移除了与 OpenGL ES 1.1 固定功能图形管道相关的所有功能。[GLKBaseEffect](https://developer.apple.com/documentation/glkit/glkbaseeffect) 类为 OpenGL ES 1.1 管线的转换，光照和着色阶段提供了 Objective-C 的模拟，[GLKSkyboxEffect](https://developer.apple.com/documentation/glkit/glkskyboxeffect) 和 [GLKReflectionMapEffect](https://developer.apple.com/documentation/glkit/glkreflectionmapeffect) 类添加对常见视觉效果的支持。有关详细信息，请参阅这些类的参考文档。
+OpenGL ES 2.0 及更高版本移除了与 OpenGL ES 1.1 固定功能图形管线相关的所有功能。[GLKBaseEffect](https://developer.apple.com/documentation/glkit/glkbaseeffect) 类为 OpenGL ES 1.1 管线的转换，光照和着色阶段提供了 Objective-C 的模拟，[GLKSkyboxEffect](https://developer.apple.com/documentation/glkit/glkskyboxeffect) 和 [GLKReflectionMapEffect](https://developer.apple.com/documentation/glkit/glkreflectionmapeffect) 类添加对常见视觉效果的支持。有关详细信息，请参阅这些类的参考文档。
 
 #### Loading Texture Data
 
@@ -717,7 +717,7 @@ OpenGL ES 2.0 及更高版本移除了与 OpenGL ES 1.1 固定功能图形管道
 >
 > Figure 4-1  Framebuffer with color and depth renderbuffers
 
-Framebuffer 对象是渲染命令的目标。创建帧缓冲对象时，可以精确控制其用于颜色，深度和模板数据的存储。可以通过将图像附加到帧缓冲区来提供此存储，如 Figure 4-1 所示。最常见的图像附件是渲染缓冲对象。你还可以将 OpenGL ES 纹理附加到帧缓冲区的颜色附加点，这意味着任何绘图命令都会渲染到纹理中。之后，纹理可以作为未来渲染命令的输入。还可以在单个渲染上下文中创建多个帧缓冲对象。你可以这样做，以便可以在多个帧缓冲区之间共享相同的渲染管道和 OpenGL ES 资源。
+Framebuffer 对象是渲染命令写入渲染结果的地方。创建帧缓冲对象时，可以精确控制其用于颜色，深度和模板数据的存储。可以通过将图像附加到帧缓冲区来提供此存储，如 Figure 4-1 所示。最常见的图像附件是 renderbuffer 对象。你还可以将 OpenGL ES 纹理附加到帧缓冲区的颜色附加点，这意味着任何绘图命令都会渲染到纹理中。之后，纹理可以作为未来渲染命令的输入。还可以在单个渲染上下文中创建多个帧缓冲对象。你可以这样做，以便可以在多个帧缓冲区之间共享相同的渲染管道和 OpenGL ES 资源。
 
 Figure 4-1 具有颜色和深度渲染缓冲区的帧缓冲区
 
@@ -725,7 +725,7 @@ Figure 4-1 具有颜色和深度渲染缓冲区的帧缓冲区
 
 > All of these approaches require manually creating framebuffer and renderbuffer objects to store the rendering results from your OpenGL ES context, as well as writing additional code to present their contents to the screen and (if needed) run an animation loop.
 
-所有这些方法都需要手动创建 framebuffer 和 renderbuffer 对象来存储来自 OpenGL ES 上下文的渲染结果，以及编写其他代码以将其内容呈现给屏幕并（如果需要）运行动画循环。
+所有这些方法都需要手动创建 framebuffer 和 renderbuffer 对象来存储来自 OpenGL ES 上下文的渲染结果，以及编写额外代码以将其内容呈现给屏幕并（如果需要）运行动画循环。
 
 ### Creating a Framebuffer Object
 
@@ -757,9 +757,9 @@ glGenFramebuffers(1, &framebuffer);
 glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
 ```
 
-2. Create a color renderbuffer, allocate storage for it, and attach it to the framebuffer’s color attachment point.
+> 2. Create a color renderbuffer, allocate storage for it, and attach it to the framebuffer’s color attachment point.
 
-创建颜色渲染缓冲区，为其分配存储空间，并将其附加到帧缓冲区的颜色附加点。
+2. 创建颜色渲染缓冲区，为其分配存储空间，并将其附加到帧缓冲区的颜色附加点。
 
 ```objc
 GLuint colorRenderbuffer;
@@ -769,9 +769,9 @@ glRenderbufferStorage(GL_RENDERBUFFER, GL_RGBA8, width, height);
 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, colorRenderbuffer);
 ```
 
-3. Create a depth or depth/stencil renderbuffer, allocate storage for it, and attach it to the framebuffer’s depth attachment point.
+> 3. Create a depth or depth/stencil renderbuffer, allocate storage for it, and attach it to the framebuffer’s depth attachment point.
 
-创建深度或深度/模板渲染缓冲区，为其分配存储空间，并将其附加到帧缓冲区的深度附加点。
+3. 创建深度或深度/模板渲染缓冲区，为其分配存储空间，并将其附加到帧缓冲区的深度附加点。
 
 ```objc
 GLuint depthRenderbuffer;
@@ -781,9 +781,9 @@ glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
 glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderbuffer);
 ```
 
-4. Test the framebuffer for completeness. This test only needs to be performed when the framebuffer’s configuration changes.
+> 4. Test the framebuffer for completeness. This test only needs to be performed when the framebuffer’s configuration changes.
 
-测试帧缓冲的完整性。只有在帧缓冲区配置发生变化时才需要执行此测试。
+4. 测试帧缓冲的完整性。只有在帧缓冲区配置发生变化时才需要执行此测试。
 
 ```objc
 GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER) ;
@@ -834,7 +834,7 @@ glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, text
 >
 > Figure 4-2  Core Animation shares the renderbuffer with OpenGL ES
 
-Core Animation 是 iOS 上图形渲染和动画的核心基础架构。你可以使用图层来组合应用程序的用户界面或其他可视化显示，这些图层的内容可以使用不同的 iOS 子系统渲染，如 UIKit，Quartz 2D 和 OpenGL ES 。OpenGL ES 通过 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类连接到 Core Animation ，CAEAGLLayer 类是一种特殊类型的 Core Animation 层，其内容来自 OpenGL ES 渲染缓冲区。Core Animation 将渲染缓冲区的内容与其他图层合成，并在屏幕上显示生成的图像。
+Core Animation 是 iOS 上图形渲染和动画的核心基础架构。你可以使用图层来组合应用程序的用户界面或其他可视化显示，这些图层可以持有由不同的 iOS 子系统渲染的内容，如 UIKit，Quartz 2D 和 OpenGL ES 。OpenGL ES 通过 [CAEAGLLayer](https://developer.apple.com/documentation/quartzcore/caeagllayer) 类连接到 Core Animation ，CAEAGLLayer 类是一种特殊类型的 Core Animation 层，其内容来自 OpenGL ES 渲染缓冲区。Core Animation 将渲染缓冲区的内容与其他图层合成，并在屏幕上显示生成的图像。
 
 Figure 4-2 Core Animation 与 OpenGL ES 共享渲染缓冲区
 
@@ -885,6 +885,7 @@ glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER,
 > Note: When the Core Animation layer’s bounds or properties change, your app should reallocate the renderbuffer’s storage. If you do not reallocate the renderbuffers, the renderbuffer size won’t match the size of the layer; in this case, Core Animation may scale the image’s contents to fit in the layer.
 >
 > 5. Retrieve the height and width of the color renderbuffer.
+
 注意：当 Core Animation 图层的边界或属性发生更改时，应用应重新分配 renderbuffer 的存储。如果不重新分配渲染缓冲区，则渲染缓冲区大小将与图层的大小不匹配；在这种情况下，Core Animation 将会缩放图像的内容以适合图层。
 
 5. 检索颜色渲染缓冲区的高度和宽度。
@@ -928,7 +929,7 @@ glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &height);
 
 对于按需绘图，实现自己的方法来绘制和呈现渲染缓冲区，并在想要显示新内容时调用它。
 
-要使用动画循环绘制，请使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 对象。该对象是 Core Animation 提供的一种计时器，允许你将绘图与屏幕的刷新率同步。[Listing 4-1](#listing-4-1) 显示了如何检索显示视图的屏幕，使用该屏幕创建新的 display link 对象并将该对象添加到运行循环。
+要使用动画循环绘制，请使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 对象。该对象是 Core Animation 提供的一种计时器，允许你将绘图与屏幕的刷新率同步。[Listing 4-1](#listing-4-1) 显示了如何检索显示视图的屏幕，使用该屏幕创建新的 display link 对象并将该对象添加到 run loop 中。
 
 注意：[GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 类自动使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 对象来为 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 内容设置动画。仅在 GLKit 框架提供的能力不足以满足应用程序所需时才直接使用 [CADisplayLink](https://developer.apple.com/documentation/quartzcore/cadisplaylink) 类。
 
@@ -945,7 +946,7 @@ displayLink = [myView.window.screen displayLinkWithTarget:self selector:@selecto
 >
 > Important: For best results, choose a frame rate your app can consistently achieve. A smooth, consistent frame rate produces a more pleasant user experience than a frame rate that varies erratically.
 
-在 `drawFrame` 方法的实现中，读取display link 的 [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) 属性以获取要渲染的下一帧的时间戳。可以使用该值来计算下一帧中对象的位置。
+在 `drawFrame` 方法的实现中，读取 display link 的 [timestamp](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621257-timestamp) 属性以获取要渲染的下一帧的时间戳。可以使用该值来计算下一帧中对象的位置。
 
 通常，每次屏幕刷新时都会触发 display link 对象；该值通常为 60 Hz ，但可能因设备而异。大多数应用程序不需要每秒更新屏幕 60 次。可以将 display link 的 [frameInterval](https://developer.apple.com/documentation/quartzcore/cadisplaylink/1621231-frameinterval) 属性设置为调用方法之前经过的实际帧数。例如，如果帧间隔设置为 `3` ，则每隔三帧调用一次应用程序，大约每秒 20 帧。
 
@@ -969,7 +970,7 @@ Figure 4-3 显示了 OpenGL ES 应用程序在 iOS 上渲染和呈现帧的步�
 >
 > Listing 4-2  Clear framebuffer attachments
 
-在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中来自前一帧的内容不需要在下一帧中进行绘制了。调用 `glClear` 函数，传入一个位掩码，清除所有缓冲区，如 Listing 4-2 所示。
+在每帧的开始处，擦除所有帧缓冲附件的内容，这些附件中存储着前一帧的内容，这些内容不需要在下一帧中进行绘制了。调用 `glClear` 函数，传入一个位掩码，清除所有缓冲区，如 Listing 4-2 所示。
 
 Listing 4-2 清除帧缓冲附件
 
@@ -1014,7 +1015,7 @@ glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
 
 丢弃操作是一个性能提示，告诉 OpenGL ES 不再需要一个或多个渲染缓冲区的内容。通过向 OpenGL ES 暗示不再需要渲染缓冲区的内容，缓冲区中的数据可以被丢弃掉，并且可以避免用于保持这些缓冲区内容更新的昂贵任务。
 
-在渲染循环的这个阶段，应用已经提交了该帧的所有绘图命令。当应用需要将颜色渲染缓冲区显示到屏幕时，它可能不需要深度缓冲区的内容。Listing 4-3 丢弃了深度缓冲区的内容。
+在渲染循环的这个阶段，应用已经提交了该帧的所有绘图命令。此时应用需要将颜色渲染缓冲区显示到屏幕上，它可能不再需要深度缓冲区的内容。Listing 4-3 丢弃了深度缓冲区的内容。
 
 Listing 4-3 丢弃深度帧缓冲区
 
@@ -1061,7 +1062,7 @@ glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 
 多重采样是一种抗锯齿形式，可以在大多数 3D 应用中平滑锯齿状边缘并提高图像质量。OpenGL ES 3.0 包括多重采样作为核心规范的一部分，iOS 通过 [APPLE_framebuffer_multisample](http://www.khronos.org/registry/gles/extensions/APPLE/APPLE_framebuffer_multisample.txt) 扩展在 OpenGL ES 1.1 和 2.0 中提供它。多重采样使用更多的内存和片段处理时间来渲染图像，但与使用其他方法相比，它可以以更低的性能成本提高图像质量。
 
-Figure 4-4 显示了多重采样的工作原理。应用需要创建了两个帧缓冲区，而不是一个。多重采样缓冲区包含渲染内容所需的所有附件（通常是颜色和深度缓冲区）。解析缓冲区仅包含向用户显示渲染图像所需的附件（通常是颜色渲染缓冲区，但可能是纹理），使用 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中的相应过程创建。使用与解析帧缓冲区相同的维度分配多重采样渲染缓冲区，但每个渲染缓冲区都包含一个附加参数，该参数指定要为每个像素存储的样本数。应用程序渲染内容到多重采样缓冲区，然后通过解析这些样本到解析缓冲区中来生成最终的抗锯齿图像。
+Figure 4-4 显示了多重采样的工作原理。应用需要创建两个帧缓冲区，而不是一个。多重采样缓冲区包含渲染内容所需的所有附件（通常是颜色和深度缓冲区）。解析缓冲区仅包含向用户显示渲染图像所需的附件（通常是颜色渲染缓冲区，也可能是纹理），使用 [Creating a Framebuffer Object](#creating-a-framebuffer-object) 中的相应过程创建。使用与解析帧缓冲区相同的维度分配多重采样渲染缓冲区，但每个渲染缓冲区都包含一个附加参数，该参数指定为每个像素存储的样本数。应用程序渲染内容到多重采样缓冲区，然后通过解析这些样本到解析缓冲区中来生成最终的抗锯齿图像。
 
 Figure 4-4 多重采样的工作原理
 
@@ -1119,7 +1120,7 @@ glResolveMultisampleFramebufferAPPLE();
 
 > 3. In the Discard step, you can discard both renderbuffers attached to the multisample framebuffer. This is because the contents you plan to present are stored in the resolve framebuffer.
 
-3. 在 Discard 步骤中，你可以丢弃附加到多重采样帧缓冲区的两个渲染缓冲区。这是因为计划呈现的内容已经存储在 resolve framebuffer 中了。
+3. 在 Discard 步骤中，你可以丢弃附加到多重采样帧缓冲区的两个渲染缓冲区中的内容。这是因为计划呈现的内容已经存储在 resolve framebuffer 中了。
 
 ```objc
 const GLenum discards[]  = {GL_COLOR_ATTACHMENT0,GL_DEPTH_ATTACHMENT};
@@ -1139,7 +1140,7 @@ glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 >
 > Note: The above code assumes an OpenGL ES 1.1 or 2.0 context. Multisampling is part of the core OpenGL ES 3.0 API, but the functions are different. See the specification for details.
 
-多重采样不是无开销的；需要额外的内存来存储额外的样本，并且将样本解析为解析帧缓冲需要一定的时间。如果向应用添加多重采样，请始终测试应用的性能，以确保其仍然处于可以接受的状态。
+多重采样不是无开销的；需要额外的内存来存储额外的样本，并且将样本解析至 resolve framebuffer 中也需要一定的时间。如果向应用添加多重采样，请始终测试应用的性能，以确保其仍然处于可以接受的状态。
 
 注意：上面的代码假定是 OpenGL ES 1.1 或 2.0 上下文。多重采样是核心 OpenGL ES 3.0 API 的一部分，但相应的函数是不同的。有关详细信息，请参阅规范。
 
@@ -1147,7 +1148,7 @@ glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer);
 
 > Many aspects of working with OpenGL ES are platform neutral, but some details of working with OpenGL ES on iOS bear special consideration. In particular, an iOS app using OpenGL ES must handle multitasking correctly or risk being terminated when it moves to the background. You should also consider display resolution and other device features when developing OpenGL ES content for iOS devices.
 
-使用 OpenGL ES 的许多方面都是平台无关的，但在 iOS 上使用 OpenGL ES 的一些细节需要特别考虑。特别是，使用 OpenGL ES 的 iOS 应用程序必须正确处理多任务处理，否则在退出到后台时可能会被终止。在为 iOS 设备开发 OpenGL ES 内容时，还应考虑显示分辨率和其他设备特性。
+使用 OpenGL ES 的许多方面都是平台无关的，但在 iOS 上使用 OpenGL ES 的一些细节需要特别考虑。特别是，使用 OpenGL ES 的 iOS 应用程序必须正确处理多任务，否则在退出到后台时可能会被终止。在为 iOS 设备开发 OpenGL ES 内容时，还应考虑显示分辨率和其他设备特性。
 
 ### Implementing a Multitasking-Aware OpenGL ES App
 
@@ -1174,18 +1175,18 @@ OpenGL ES 应用程序退到后台时必须执行额外的其他工作。如果�
 >
 > To summarize, your app needs to call the `glFinish` function to ensure that all previously submitted commands are drained from the command buffer and are executed by OpenGL ES. After it moves into the background, you must avoid all use of OpenGL ES until it moves back into the foreground.
 
-如果 OpenGL ES 应用程序尝试在图形硬件上执行 OpenGL ES 命令，则会被终止|。iOS 不允许后台应用程序访问图形处理器，以便最前端的应用程序始终能够为用户提供出色的体验。应用程序如果在后台时发出 OpenGL ES 调用或者在后台时之前提交的命令到达 GPU 都会被系统杀死。应用必须确保所有先前提交的命令在进入后台之前都已完成执行。
+如果 OpenGL ES 应用程序尝试在图形硬件上执行 OpenGL ES 命令，则会被终止。iOS 不允许后台应用程序访问图形处理器，以便最前端的应用程序始终能够为用户提供出色的体验。应用程序如果在后台时发出 OpenGL ES 调用或者在后台时之前提交的命令到达 GPU 都会被系统杀死。应用必须确保所有先前提交的命令在进入后台之前都已执行完成。
 
-如果你使用 GLKit 视图与视图控制器，并且仅在绘图方法期间提交 OpenGL ES 命令，则当应用程序移动到后台时，它会自动正常运行。默认情况下，[GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 类会在应用变为非活动状态时暂停其动画计时器，从而确保你的绘图方法不会被调用。
+如果你使用 GLKit 视图与视图控制器，并且仅在绘图方法期间提交 OpenGL ES 命令，则当应用程序移动到后台时，它会自动进行相应处理。默认情况下，[GLKViewController](https://developer.apple.com/documentation/glkit/glkviewcontroller) 类会在应用变为非活动状态时暂停其动画计时器，从而确保你的绘图方法不会被调用。
 
 如果不使用 GLKit 视图或视图控制器，或者如果在 [GLKView](https://developer.apple.com/documentation/glkit/glkview) 绘图方法之外提交 OpenGL ES 命令，则必须执行以下步骤以确保你的应用程序不会在后台被终止：
 
 1. 在你的 app delegate 的 [applicationWillResignActive:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622950-applicationwillresignactive) 方法中，你的 app 应该停止它的动画计时器（如果有的话），将自己置于一个已知的良好状态，然后调用 `glFinish` 函数。
-2. 在你的 app delegate 的 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法中，你的应用可能希望删除一些 OpenGL ES 对象，以为前台应用程序留出足够可用的内存和资源。调用 `glFinish` 函数以确保资源被立即删除。
-3. 在应用程序退出其 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法后，它不能进行任何新的 OpenGL ES 调用。如果它进行 OpenGL ES 调用，它将被 iOS 终止。
-4. 在应用程序的 [applicationWillEnterForeground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground) 方法中，重新创建任何对象并重新启动动画计时器。
+2. 在你的 app delegate 的 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法中，你的应用可能希望删除一些 OpenGL ES 对象，从而为前台应用程序留出足够可用的内存和资源。调用 `glFinish` 函数以确保资源被立即删除。
+3. 在应用程序退出其 [applicationDidEnterBackground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1622997-applicationdidenterbackground) 方法后，它不能进行任何新的 OpenGL ES 调用。如果执行 OpenGL ES 调用，就将被 iOS 终止。
+4. 在应用程序的 [applicationWillEnterForeground:](https://developer.apple.com/documentation/uikit/uiapplicationdelegate/1623076-applicationwillenterforeground) 方法中，重新创建所需对象并重新启动动画计时器。
 
-总而言之，应用程序需要调用 `glFinish` 函数以确保所有先前提交的命令都从命令缓冲区中排出并由 OpenGL ES 执行。移动到后台后，必须避免使用 OpenGL ES ，直到它回到前台。
+总而言之，应用程序需要调用 `glFinish` 函数以确保所有先前提交的命令都从命令缓冲区中排出并由 OpenGL ES 执行。移动到后台后，必须避免使用 OpenGL ES ，直到再次回到前台。
 
 #### Delete Easily Re-Created Resources Before Moving to the Background
 
