@@ -30,6 +30,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
+        eaglLayer.contentsScale = [UIScreen mainScreen].scale;
         
         eaglLayer.opaque = YES;
         eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:@(NO), kEAGLDrawablePropertyRetainedBacking, kEAGLColorFormatRGBA8, kEAGLDrawablePropertyColorFormat, nil];
